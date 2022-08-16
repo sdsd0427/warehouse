@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Community-Mapper">
+
+	<sql id="search">
+		<if test="searchType == 'c'.toString()">
+			and cname like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'n'.toString()">
+			and eno = (select distinct a.eno
+                         from community a, employee b
+                        where  a.eno = b.eno
+                         and b.name like '%'||#{keyword}||'%')
+		</if>
+		<if test="searchType == 'cn'.toString()">
+			and (
+			cname like '%'||#{keyword}||'%'
+			or
+			eno = (select distinct a.eno
+                         from community a, employee b
+                        where  a.eno = b.eno
+                         and b.name like '%'||#{keyword}||'%')
+			)
+		</if>
+	</sql>
+	
+	<sql id="postSearch">
+		<if test="searchType == 't'.toString()">
+			and a.title like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'w'.toString()">
+			and a.eno = (select distinct a.eno
+                         from community a, employee b
+                        where  a.eno = b.eno
+                         and b.name like '%'||#{keyword}||'%')
+		</if>
+		<if test="searchType == 'tw'.toString()">
+			and (
+			a.title like '%'||#{keyword}||'%'
+			or
+			a.eno = (select distinct a.eno
+                         from community a, employee b
+                        where  a.eno = b.eno
+                         and b.name like '%'||#{keyword}||'%')
+			)
+		</if>
+	</sql>
+
+	<select id="selectSearchCommunityList" resultType="community">
+		SELECT
+	    cmno
+	   ,cname
+	   ,intro
+	   ,open
+	   ,eno
+	   ,approve
+	   ,regdate
+	FROM
+	    community
+	where OPEN = 0
+	  and APPROVE = 1
+	  <include refid="search" />
+	  order by regDate desc
+	</select>
+	
+	<select id="selectSearchCommunityListCount" resultType="int">
+		SELECT
+	   count(*)
+	FROM
+	    community
+	where OPEN = 0
+	  and APPROVE = 1
+	  <include refid="search" />
+	</select>
+	
+	<select id="selectName" resultType="str">
+		select name
+		  from community a, employee b
+		 where a.eno = b.eno
+		   and a.eno = #{eno}
+		   and a.cmno = #{cmno}
+	</select>
+	
+	<select id="selectJoinCommuList" resultType="community">
+		select  a.cmno
+			   ,a.cname
+			   ,a.intro
+			   ,a.open
+			   ,a.eno
+			   ,a.approve
+			   ,a.regdate
+	     from community a, joincommu b
+	    where a.cmno = b.cmno
+	      and b.eno = #{eno}
+	      order by regDate
+	
+	</select>
+	
+	
+	<select id="selectJoinCommuCount" resultType="int">
+		select count(*)
+  		  from community a, joincommu b
+ 		 where a.cmno = b.cmno
+ 		   and a.cmno = #{cmno}
+	</select>
+
+
+	<select id="selectSubCommuList" resultType="community">
+		SELECT
+		    a.cmno
+		   ,a.cname
+		   ,a.intro
+		   ,a.open
+		   ,a.eno
+		   ,a.approve
+		   ,a.regdate
+		FROM
+		    community a, SUBCOMMU b
+		where a.cmno = b.cmno
+		  and b.eno = #{eno}
+	</select>
+	
+	<select id="selectBestCommuList" resultType="community">
+		 select  cmno
+			   ,cname
+			   ,intro
+			   ,open
+			   ,eno
+			   ,approve
+			   ,regdate
+	           ,joinCnt
+	           ,image
+	   from( SELECT
+			   a.*
+			   ,count(a.cmno) as joinCnt
+			FROM
+			    community a, JOINCOMMU b
+			where a.cmno = b.cmno
+			  and a.approve = 1
+              and a.open = 0
+			group by a.cmno,a.cname,a.intro,a.open,a.eno,a.approve,a.regdate,a.image
+			order by joinCnt desc, a.regDate asc )
+			<![CDATA[
+	  where rownum <=3
+	  ]]>
+	</select>
+	
+	<select id="selectMyApproveCommuList" resultType="community">
+		SELECT
+		    cmno
+		   ,cname
+		   ,intro
+		   ,open
+		   ,eno
+		   ,approve
+		   ,regdate
+		FROM
+		    community
+		where eno = #{eno}
+		  and approve = 0
+	</select>
+	
+	<select id="checkJoinCommu" resultType="int">
+		SELECT
+		    COUNT(*)
+		FROM
+		    joincommu
+		WHERE
+		    eno = #{checkEno}
+		    AND   cmno = #{cmno}
+	</select>
+	
+	<update id="deleteSubCommu">
+	DELETE 
+	  FROM 
+	       subcommu
+	 WHERE
+	       cmno = #{cmno}
+	       AND   eno = #{eno}
+	</update>
+	
+	<update id="deleteCommu">
+	DELETE 
+	  FROM 
+	        community
+	  WHERE 
+	  		cmno = #{cmno}
+	</update>
+	
+	<update id="insertSubCommu">
+	INSERT INTO subcommu (
+		    eno
+		   ,cmno
+		) VALUES (
+		   #{eno} 
+		   ,#{cmno}
+		)
+	</update>
+	
+	<update id="insertJoinCommu">
+	  INSERT INTO joincommu (
+		    eno
+		   ,cmno
+		   ,authority
+		) VALUES (
+		    #{eno}
+		   ,#{cmno}
+		   ,#{authority}
+		)
+	</update>
+	
+	<select id="checkSubCommu" resultType="int">
+		SELECT
+		    count(*)
+		FROM
+		    subcommu
+		where cmno = #{cmno}
+		  and eno = #{eno}
+	</select>
+	
+	<select id="selectCommunity" resultType="community">
+		SELECT
+		    a.cmno
+		   ,a.cname
+		   ,a.intro
+		   ,a.open
+		   ,a.eno
+		   ,a.approve
+		   ,a.regdate
+		   ,b.name
+		   ,a.image
+		   ,count(*) as joinCnt
+		FROM
+		    community a, EMPLOYEE b, joincommu c
+		where a.eno = b.eno
+		  and a.cmno = c.cmno
+		  and a.cmno = #{cmno}
+		  group by a.cmno, a.cname ,a.intro ,a.open ,a.eno ,a.approve ,a.regdate ,b.name,a.image
+	</select>
+	
+	<update id="insertCommunity">
+		INSERT INTO community (
+		    cmno
+		   ,cname
+		   ,intro
+		   ,open
+		   ,eno
+		   ,image
+		) VALUES (
+		    #{cmno}
+		   ,#{cname}
+		   ,#{intro}
+		   ,#{open}
+		   ,#{eno}
+		   ,#{image}
+		)
+	</update>
+	
+	<select id="selectCmno" resultType="str">
+		SELECT 'CM' ||
+		trim(nvl(max(to_char(to_number(substr(cmno,3))+1,'000000')),'000001'))
+		as cmno
+		from community
+
+		union
+
+		select nvl(null,'CM000001') as cmno
+		from
+		dual
+		where not exists (select cmno
+		from community)
+	</select>
+	
+	<select id="selectOpenCommuList" resultType="community">
+		SELECT
+		    a.cmno
+		   ,a.cname
+		   ,a.intro
+		   ,a.open
+		   ,a.eno
+		   ,a.approve
+		   ,a.regdate
+		   ,b.name
+		   ,count(*) as joinCnt
+		FROM
+		    community a, EMPLOYEE b, joincommu c
+		where a.eno = b.eno
+		  and a.cmno = c.cmno
+          and a.approve = 1
+          and a.open = 0
+          <![CDATA[
+          and rownum <= 5
+          ]]>
+		  group by a.cmno, a.cname ,a.intro ,a.open ,a.eno ,a.approve ,a.regdate ,b.name
+          order by regdate desc
+	</select>
+	
+	
+	<select id="selectApproveCommuList" resultType="community">
+		SELECT
+		    cmno
+		   ,cname
+		   ,intro
+		   ,open
+		   ,eno
+		   ,approve
+		   ,regdate
+           ,name
+		FROM
+		    community a, (select name , eno as empEno
+                            from EMPLOYEE) b
+		where eno =  empEno
+          and approve = 0
+         <include refid="search" />
+         order by regdate
+	</select>
+	
+	<select id="selectApproveCommuListCount" resultType="int">
+		SELECT
+				 count(*)
+		  FROM
+			    community a, (select name , eno as empEno
+	                            from EMPLOYEE) b
+		 where eno =  empEno
+	           and approve = 0
+			   <include refid="search" />
+	</select>
+	
+	<update id="approveCommunity">
+		UPDATE community
+		    SET
+		       APPROVE = 1
+		       ,regDate = sysdate
+		WHERE
+		    cmno = #{cmno}
+	</update>
+	
+	<update id="approveDeleteCommunity">
+		DELETE 
+		  FROM community
+		 WHERE
+		      cmno = #{cmno}
+	</update>
+	
+	<select id="selectEmpOpenCommuList" resultType="community">
+		SELECT
+	    a.cmno
+	   ,a.cname
+	   ,a.intro
+	   ,a.open
+	   ,a.eno
+	   ,a.approve
+	   ,a.regdate
+	   ,b.name
+	   ,count(*) as joinCnt
+	FROM
+	    community a, employee b, joincommu c
+	where a.eno = b.eno
+	  and a.cmno = c.cmno
+	  and a.approve = 1
+	  and a.eno = #{eno}
+	group by a.cmno
+	   ,a.cname
+	   ,a.intro
+	   ,a.open
+	   ,a.eno
+	   ,a.approve
+	   ,a.regdate
+	   ,b.name
+	   order by regDate desc
+	</select>
+	
+	<select id="selectCboardNo" resultType="str">
+		SELECT 'CB' ||
+		trim(nvl(max(to_char(to_number(substr(CBOARDNO,3))+1,'000000')),'000001'))
+		as CBOARDNO
+		from COMMUBOARD
+
+		union
+
+		select nvl(null,'CB000001') as CBOARDNO
+		from
+		dual
+		where not exists (select CBOARDNO
+		from COMMUBOARD)
+	</select>
+	
+	<update id="insertCommuBoard">
+		INSERT INTO commuboard (
+	    cboardno
+	   ,cmno
+	   ,cbname
+	   ,cbintro
+	   ,replyopen
+	   ,writeopen
+	) VALUES (
+	    #{cboardNo}
+	   ,#{cmno}
+	   ,#{cbName}
+	   ,#{cbIntro}
+	   ,#{replyOpen}
+	   ,#{writeOpen}
+	)
+	</update>
+	
+	<select id="selectCommuBoardList" resultType="commuBoard">
+	SELECT
+	    cboardno
+	   ,cmno
+	   ,cbname
+	   ,cbintro
+	   ,replyopen
+	   ,writeopen
+	FROM
+	    commuboard
+	where cmno = #{cmno}
+	</select>
+	
+	<select id="selectJoinCommuEmpList" resultType="joinCommu">
+		SELECT
+		    a.eno
+		   ,a.name
+		   ,a.photo
+		   ,a.call
+		   ,b.dname
+		   ,c.authority
+		   ,c.jdate
+		   ,c.cmno
+		   ,d.ppsname
+		   ,e.cname
+		FROM
+		    employee a, department b, joincommu c, postposition d, community e
+		where a.dno = b.dno
+		  and a.eno = c.eno
+		  and a.ppscode = d.ppscode
+		  and c.cmno = e.cmno
+		  and c.cmno = #{cmno}
+		  order by c.authority desc, c.jdate
+	</select>
+	
+	<select id="selectRecentCommuPostList" resultType="commuPost">
+		SELECT
+		    a.cpostno
+		   ,a.cboardno
+		   ,a.title
+		   ,a.eno
+		   ,a.content
+		   ,a.regdate
+		   ,a.viewcnt
+		   ,a.updatedate
+		   ,c.name
+		   ,b.cbname
+		   ,b.replyopen
+		FROM
+		    commupost a, commuboard b, employee c
+		where a.cboardno = b.cboardno
+		  and a.eno = c.eno
+		  and b.cmno = #{cmno}
+		  <![CDATA[
+		  and rownum <=10
+		  ]]>
+		  order by a.regdate desc
+	</select>
+	
+	<update id="removeJoinCommu">
+		DELETE FROM joincommu
+		WHERE
+		    eno = #{eno}
+		    AND cmno = #{cmno}
+	</update>
+	
+	<update id="insertInviteCommu">
+		INSERT INTO invitecommu (
+		    cmno
+		   ,eno
+		) VALUES (
+		    #{cmno}
+		   ,#{eno}
+		)
+	</update>
+	
+	<select id="selectInviteCommu" resultType="community">
+		SELECT
+	    a.cmno
+	   ,a.cname
+	   ,a.intro
+	   ,a.open
+	   ,a.eno
+	   ,a.approve
+	   ,a.regdate
+       ,d.name
+       ,count(*) as joinCnt
+	FROM
+	    community a,invitecommu b, joincommu c, employee d
+	where a.cmno = b.cmno
+      and a.cmno = c.cmno
+      and a.eno = d.eno
+	  and b.eno = #{eno}
+    group by a.cmno
+	   ,a.cname
+	   ,a.intro
+	   ,a.open
+	   ,a.eno
+	   ,a.approve
+	   ,a.regdate
+       ,d.name
+	</select>
+	
+	<update id="deleteInviteCommu">
+		DELETE FROM invitecommu
+		WHERE
+		    cmno =#{cmno}
+		    AND   eno = #{eno}
+	</update>
+	
+	<select id="selectCommuBoard" resultType="commuBoard">
+		SELECT
+		    cboardno
+		   ,cmno
+		   ,cbname
+		   ,cbintro
+		   ,replyopen
+		   ,writeopen
+		FROM
+		    commuboard
+		where cboardno = #{cboardNo}
+	</select>
+	
+	<select id="selectCommuPostList" resultType="commupost">
+		 SELECT
+		    a.cpostno
+		   ,a.cboardno
+		   ,a.title
+		   ,a.eno
+		   ,a.content
+		   ,a.regdate
+		   ,a.viewcnt
+		   ,a.updatedate
+		   ,b.name
+           ,C.REPLYOPEN
+		FROM
+		    commupost a, employee b, commuboard c
+		where a.eno = b.eno
+          and a.cboardno = c.cboardno
+		  and a.cboardno = #{cboardNo}
+		  <include refid="postSearch" />
+		 order by a.regDate desc
+	</select>
+	
+	<select id="selectCommuPostListCount" resultType="int">
+		SELECT
+		    count(*)
+		FROM
+		    commupost a, employee b
+		where a.eno = b.eno
+		  and cboardno = #{cboardNo}
+		 <include refid="postSearch" />
+		 
+	</select>
+	
+	<select id="selectCpostNo" resultType="str">
+		SELECT 'CP' ||
+		trim(nvl(max(to_char(to_number(substr(cpostno,3))+1,'000000')),'000001'))
+		as cpostno
+		from commupost
+
+		union
+
+		select nvl(null,'CP000001') as cpostno
+		from
+		dual
+		where not exists (select cpostno
+		from commupost)
+	</select>
+	
+	<update id="insertCommuPost">
+		INSERT INTO commupost (
+	    cpostno
+	   ,cboardno
+	   ,title
+	   ,eno
+	   ,content
+	) VALUES (
+	    #{cpostNo}
+	   ,#{cboardNo}
+	   ,#{title}
+	   ,#{eno}
+	   ,#{content}
+	)
+	</update>
+	
+	<select id="selectCommuPostByCpostNo" resultType="commupost">
+		    SELECT
+		    a.cpostno
+		   ,a.cboardno
+		   ,a.title
+		   ,a.eno
+		   ,a.content
+		   ,a.regdate
+		   ,a.viewcnt
+		   ,a.updatedate
+		   ,b.name
+           ,c.replyopen
+		FROM
+		    commupost a, employee b, commuboard c
+		where a.eno = b.eno
+          and a.cboardno = c.cboardno
+		  and cpostno = #{cpostNo}
+	</select>
+	
+	<update id="updateCommuPost">
+		UPDATE commupost
+		    SET
+		        title = #{title}
+		        ,content = #{content}
+		        ,updatedate = sysdate
+		WHERE
+		    cpostno = #{cpostNo}
+	</update>
+	
+	<update id="increaseViewCnt" parameterType="str">
+		update
+		commupost
+		set
+		viewcnt = viewcnt+1
+		where cpostNo =#{cpostNo}
+	</update>
+	
+	<update id="deleteCommuPost" parameterType="str">
+		delete
+		from commupost
+		where
+		cpostNo = #{cpostNo}
+	</update>
+	
+	<update id="updateCommunity">
+		UPDATE community
+		    SET
+		       cname= #{cname}
+		      ,intro = #{intro}
+		      ,open = #{open}
+		      ,image = #{image}
+		WHERE
+		    cmno = #{cmno}
+   
+	</update>
+	
+	<update id="updateCommuBoard">
+		UPDATE commuboard
+		    SET
+		        cbname = #{cbName}
+		       ,cbintro = #{cbIntro} 
+		       ,replyopen = #{replyOpen}
+		       ,writeopen = #{writeOpen}
+		WHERE
+		    cboardno = #{cboardNo}
+	</update>
+	
+	<update id="deleteCommuBoard">
+		DELETE FROM commuboard
+	WHERE
+	    cboardno = #{cboardNo}
+	</update>
+	
+	<select id="selectAuthority" resultType="str">
+		select authority
+		  from joincommu
+		 where eno = #{eno}
+		   and cmno = #{cmno}
+	</select>
+	
+	<update id="updateJoinCommu">
+		UPDATE joincommu
+	    SET
+	       authority = #{authority}
+	WHERE
+	   cmno = #{cmno}
+	   and eno = #{eno}
+	</update>
+	
+	<select id="selectSubCommu" resultType="subCommu">
+				SELECT
+		    a.eno
+		   ,a.name
+		   ,a.photo
+		   ,a.call
+		   ,b.dname
+		   ,c.regdate
+		   ,c.cmno
+           ,d.ppsname
+           ,e.cname
+		FROM
+		    employee a, department b, subcommu c, postposition d ,community e
+		where a.dno = b.dno
+		  and a.eno = c.eno
+          and a.ppscode = d.ppscode
+          and c.cmno = e.cmno
+		  and c.cmno = #{cmno}
+		  order by c.regdate desc
+	</select>
+	
+	
+	
+	
+	
+	
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

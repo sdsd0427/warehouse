@@ -1,0 +1,54 @@
+package kr.or.warehouse.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.or.warehouse.dao.CalendarDAO;
+import kr.or.warehouse.dto.CalAlarmVO;
+import kr.or.warehouse.dto.CalRefVO;
+import kr.or.warehouse.dto.CalendarVO;
+
+@Service
+public class CalendarServiceImpl implements CalendarService{
+	
+	@Autowired
+	private CalendarDAO calendarDAO;
+
+	@Override
+	public List<CalendarVO> getCalendarList() throws Exception {
+		return calendarDAO.selectSearchCalendarList();
+	}
+
+	@Override
+	public void registCalendar(CalendarVO calendar, CalRefVO calref, CalAlarmVO calalarm) throws Exception {
+		int ccode = calendarDAO.selectCalendarSeqNext();
+		String ccodeStr = "" + ccode;
+		calendar.setCcode(ccodeStr);
+		
+		calendarDAO.insertCalRef(calref);
+		calendarDAO.insertCalAlarm(calalarm);
+		
+		//insert
+		calendarDAO.insertCalendar(calendar);
+	}
+
+
+
+
+//	@Override
+//	public void modify(CalendarVO calendar) throws SQLException {
+	// select시 사용
+//		calendar.setCalAlarmList(calAlarmList);
+//		calendar.setCalRefList(calRefList);
+//		
+//	}
+//
+//	@Override
+//	public void remove(int ccode) throws SQLException {
+//		// TODO Auto-generated method stub
+//		
+//	}
+
+}

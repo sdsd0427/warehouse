@@ -1,0 +1,48 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<head>
+	<style>
+		th{
+			vertical-align: middle!important;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<h3 class="title">보고서 작성</h3>
+		<div class="card">
+			<table class="table">
+				<tr>
+					<th>작성자</th>
+					<td>
+						<input type="text" class="form-control" value="장문석 팀장" disabled="disabled">
+					</td>
+				</tr>
+				<tr>
+					<th>제목</th>
+					<td>
+						<input type="text" class="form-control" placeholder="보고서 제목을 입력해주세요.">
+					</td>
+				</tr>
+				<tr>
+					<th>등록일</th>
+					<td>
+						<input type="date" class="form-control" value="2022-07-08">
+					</td>
+				</tr>
+				<tr>
+					<th>첨부파일</th>
+					<td>
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" id="customFile">
+							<label class="custom-file-label" for="customFile" style="color: gray">
+								첨부파일을 등록해주세요.
+							</label>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</body>

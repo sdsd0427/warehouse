@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BoardAttach-Mapper">
+	<select id="selectAttachByBoardNo" resultType="attach">
+		select
+		attachNo
+	   ,uploadPath
+	   ,fileName
+	   ,fileType
+	   ,regDate
+	   ,boardNo as refNo
+	   ,eno
+		from attach
+		where boardNo = #{refNo}
+	</select>
+
+	<select id="selectAttachByAttachNo" resultType="attach">
+		select
+		attachNo
+	   ,uploadPath
+	   ,fileName
+	   ,fileType
+	   ,regDate
+	   ,boardNo as refNo
+	   ,eno
+		from attach
+		where attachNo=#{attachNo}
+	</select>
+
+	<select id="selectAttachNo" resultType="str">
+		SELECT 'BA' ||
+		trim(nvl(max(to_char(to_number(substr(attachNo,3))+1,'000000')),'000001'))
+		as attachNo
+		from attach
+
+		union
+
+		select nvl(null,'BA000001') as attachNo
+		from
+		dual
+		where not exists (select attachNo
+		from attach)
+	</select>
+
+	<update id="insertAttach">
+		insert into
+		attach (attachNo, uploadPath, fileName, fileType, boardNo, eno)
+		values (#{attachNo}, #{uploadPath},#{fileName},#{fileType},#{refNo},#{eno})
+	</update>
+
+	<update id="deleteAttach">
+		delete
+		from attach
+		where attachNo = #{attachNo}
+	</update>
+
+	<update id="deleteAllAttach">
+		delete
+		from attach
+		where boardNo = #{refNo}
+	</update>
+</mapper>
+

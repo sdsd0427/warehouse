@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+
+
+.title{
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+.list li{
+	font-size: 0.85em;
+}
+
+.visually-hidden, .visually-hidden-focusable:not(:focus):not(:focus-within) {
+    position: absolute!important;
+    width: 1px!important;
+    height: 1px!important;
+    padding: 0!important;
+    margin: -1px!important;
+    overflow: hidden!important;
+    clip: rect(0,0,0,0)!important;
+    white-space: nowrap!important;
+    border: 0!important;
+}
+
+.bottom-0 {
+    bottom: 0!important;
+}
+
+th{
+	text-align: center;
+}
+.page-link {
+    line-height: 1;
+    color: #001f3f;
+    background-color: #fff;
+}
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #001f3f;
+    border-color: #001f3f;
+}

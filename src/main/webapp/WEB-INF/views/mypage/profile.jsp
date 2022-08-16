@@ -1,0 +1,529 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="myList" value="${dataMyLine.myList }" />
+
+<head>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+	integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA="
+	crossorigin="anonymous" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css"
+	integrity="sha512-0/rEDduZGrqo4riUlwqyuHDQzp2D1ZCgH/gFIfjMIL5az8so6ZiXyhf1Rg8i6xsjv+z/Ubc4tt1thLigEcu6Ug=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+</head>
+
+<style>
+
+</style>
+<body>
+
+
+<div class="wrapper">
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row md-2">
+				<div class="col-sm-6">
+					<h3>마이페이지 > 내 정보</h3>
+				</div>
+				<div class="col-sm-6">
+					<button class="btn btn-block btn-outline-secondary"
+						style="margin-left: 20px;width: 80px;float: right;" type="button" onclick="history.back() ">취소</button>
+					<button class="btn btn-block btn-outline-primary" style="margin-left: 20px; width: 80px;float: right;margin-top: 0px;"
+						type="button" onclick="modify_go();">수정</button>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="content">
+		<div class=" container-fluid">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="card card-navy card-outline">
+						<div class="card-body box-profile">
+							<div class="text-center" id="Myphoto">
+								<img class="profile-user-img img-fluid img-circle"
+								    id="empPicture"
+									src="${myList.photo }"
+									alt="User profile picture" >
+							</div>
+							
+							<h3 class="profile-username text-center">${myList.name} ${myList.ppsname}</h3>
+
+							<ul class="list-group list-group-unbordered mb-3">
+								<li class="list-group-item"><strong><i
+										class="fas fa-briefcase"></i> 사원번호</strong>
+								<p class="float-right">${myList.eno}</p></li>
+								<li class="list-group-item"><strong><i
+										class="fas fa-building"></i> 부서</strong>
+								<p class="float-right">${myList.dname}</p></li>
+								<li class="list-group-item"><strong><i
+										class="fas fa-pencil-alt mr-1"></i> 직위</strong>
+									<p class="float-right">${myList.ppsname}</p></li>
+								<li class="list-group-item"><strong><i
+										class="fas fa-book"></i> 직책</strong>
+									<p class="float-right">${myList.job}</p></li>
+								<li class="list-group-item"><strong><i
+										class="fas fa-phone"></i> 내선번호</strong>
+									<p class="float-right">${myList.call}</p></li>
+								<li class="list-group-item"><strong><i
+										class="far fa-calendar-alt"></i> 입사일</strong>
+									<p class="float-right"><fmt:formatDate pattern="yyyy-MM-dd" value="${myList.hiredate}"/></p></li>
+							</ul>
+							
+						</div>
+						
+					</div>
+			<form role="form" class="form-horizontal" action="modify.do" method="post" enctype="multipart/form-data">	
+
+					<div class="card-navy card-outline">
+						<div class="card-body box-profile">
+							<strong><i class="fas fa-key"></i> 비밀번호 변경</strong>
+							 <input
+								type="password" class="form-control form-control-border pwdInput" name="pwd"
+								id="exampleInputBorder1" placeholder="변경할 비밀번호를 입력하세요" value="${myList.pwd}"><br>
+							<strong><i class="fas fa-key"></i> 비밀번호 확인</strong> 
+							<input
+								type="password" class="form-control form-control-border pwdInput"
+								id="exampleInputBorder2" placeholder="변경할 비밀번호를 다시 입력하세요" value="${myList.pwd}">
+						</div>
+						<font id="chkNotice" size="2" style="margin-left: 25px;"></font>
+					</div>
+				</div>
+
+				<div class="col-md-8">
+					<div class="card card-navy card-outline">
+						<div class="card-body box-profile">
+							<div class="row">
+							
+								
+
+
+							<input type="file" id="inputFile" onchange="changePicture_go();" name="picture" style="display:none" />
+								<strong class="col-sm-3"><i class="fas fa-file-image"></i>사진 변경</strong>
+								<div class="input-group input-group-sm col-sm-9"style="margin-right: auto; margin-left: auto;">
+									<div class="custom-file">
+										<input type="file" class="custom-file-input" id="inputFileName" value="${myList.photo }" name="uploadFile"
+										  onchange="changePicture_go()"> 
+											<label class="custom-file-label" for="inputFileName" ></label>
+									</div>
+									<span class="input-group-append">
+										<!-- <button type="button" class="btn btn-secondary btn-append" onclick="upload_go();">Upload</button> -->
+									</span>
+									<input id="oldFile" type="hidden" name="oldPicture" value="${myList.photo }" />
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+							<!-- <input type="hidden" name="oldPicture"  value=""/> -->
+							<input type="file" id="inputFile2" onchange="changePicture_go();" name="picture2" style="display:none" />
+								<strong class="col-sm-3"><i class="fas fa-file-export"></i>
+									결재수단 변경</strong>
+								<div class="input-group input-group-sm col-sm-9"style="margin-right: auto; margin-left: auto;">
+									<div class="custom-file">
+										<input type="file" class="custom-file-input"id="signInputFile" name="signFile" value="${myList.signpath}"
+												onchange="changePicture_go()"> 
+											<label class="custom-file-label" for="signInputFile"></label>
+											<input id="oldSignFile" type="hidden" name="oldSignFile" value="${myList.signpath }" />
+									</div>
+									<span class="input-group-append">
+										<!-- <button type="button" class="btn btn-secondary btn-append" onclick="upload_go2();">Upload</button> -->
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card card-navy">
+						<div class="card-header">개인정보</div>
+
+						<div class="card-body">
+							<strong><i class="fas fa-user"></i> 이름</strong>
+							 <input type="text" class="form-control form-control-border"
+									id="exampleInputBorder" value="${myList.name }"  name="name"> <br> <strong><i
+									class="fas fa-heart"> 
+									</i> MBTI</strong> 
+									<select name="mbti"
+										class="custom-select form-control-border"
+										id="exampleSelectBorder">
+										<option value="ISTJ" ${myList.mbti eq 'ISTJ' ? 'selected' : '' }>ISTJ</option>
+										<option value="ISFJ" ${myList.mbti eq 'ISFJ' ? 'selected' : '' }>ISFJ</option>
+										<option value="INFJ" ${myList.mbti eq 'INFJ' ? 'selected' : '' }>INFJ</option>
+										<option value="INTJ" ${myList.mbti eq 'INTJ' ? 'selected' : '' } >INTJ</option>
+										<option value="ISTP" ${myList.mbti eq 'ISTP' ? 'selected' : '' }>ISTP</option>
+										<option value="ISFP" ${myList.mbti eq 'ISFP' ? 'selected' : '' }>ISFP</option>
+										<option value="INFP" ${myList.mbti eq 'INFP' ? 'selected' : '' }>INFP</option>
+										<option value="IFTP" ${myList.mbti eq 'IFTP' ? 'selected' : '' }>IFTP</option>
+										<option value="ESTP" ${myList.mbti eq 'ESTP' ? 'selected' : '' }>ESTP</option>
+										<option value="ENFP" ${myList.mbti eq 'ENFP' ? 'selected' : '' }>ENFP</option>
+										<option value="ENTP" ${myList.mbti eq 'ENTP' ? 'selected' : '' }>ENTP</option>
+										<option value="ESTJ" ${myList.mbti eq 'ESTJ' ? 'selected' : '' }>ESTJ</option>
+										<option value="ESFJ" ${myList.mbti eq 'ESFJ' ? 'selected' : '' }>ESFJ</option>
+										<option value="ENFJ" ${myList.mbti eq 'ENFJ' ? 'selected' : '' }>ENFJ</option>
+										<option value="ENTJ" ${myList.mbti eq 'ENTJ' ? 'selected' : '' }>ENTJ</option>
+							</select> <br>
+							<br> <strong><i class="fas fa-mobile"></i> 휴대폰번호</strong> 
+							<input
+								type="text" class="form-control form-control-border"
+								id="exampleInputBorder" value="${myList.phone}" name="phone"> <br> <strong><i
+								class="fas fa-at" >
+								
+								</i> 이메일</strong> 
+								<input type="text"
+								class="form-control form-control-border" id="exampleInputBorder" value="${myList.email}" name="email">
+							<br> <strong><i class="fas fa-map-marker-alt mr-1"></i>
+								주소</strong>
+							<div class="row" style="margin-bottom: 20px">
+								<%-- <div style="display: block;">
+								<p class="float-right">${myList.address}</p> 
+								</div><br> --%>
+							<!-- 	<div style="display: block;">
+									<strong><i class="fas fa-map-marker-alt mr-1"></i>
+										변경할 주소</strong><br>
+								</div> -->
+								<div class="input-group input-group-mg col-12"style="">
+									<div class="input-group input-group-sm col-sm-3">
+									<input type="text" class="form-control"  id="sample6_postcode" placeholder="우편번호" name="zipCode" value="${myList.zipCode}">
+									</div>
+									<div class="input-group input-group-sm col-sm-6"
+									style="margin-left: -14px">
+									<input type="text" class="form-control"   id="sample6_address" placeholder="주소" name="address" value="${myList.address}">
+									</div>
+								
+									<div class="input-group input-group-sm col-sm-3" style="margin-left: -12px;height: 30px;">
+									<span class="input-group-append">
+										<button type="button"
+											class="btn btn-default btn-sm btn-append" onclick="sample6_execDaumPostcode()"  value="우편번호 찾기">우편번호찾기</button>
+									</span>
+									</div>
+								</div>
+								<br>
+							<!-- 	<div class="input-group input-group-sm col-sm-7"
+									style="padding-top: 10px;">
+									<input type="text" class="form-control"   id="sample6_address" placeholder="주소" value="">
+								</div> -->
+							</div>
+							<input type="text" class="form-control form-control-border"
+								 placeholder="상세주소 입력를 입력하세요." id="sample6_detailAddress" value="${myList.address2}" name="address2">
+						
+					</div>
+				</div>
+			</form>			
+			</div>
+		</div>
+	</section>
+</div>
+
+
+
+
+
+<div class="modal fade show" id="myModal" style="display: none;backdrop-filter: blur(10px);" aria-modal="true" role="dialog">
+	<div class="modal-dialog modal-sm " >
+		<div class="modal-content" >
+			<div class="modal-header">
+				<h4 class="modal-title">비밀번호 확인</h4>
+				<button type="button" class="close" onclick="modalHide();" aria-label="Close">
+				<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body ">
+				<div class="form-group row">
+					<div class="input-group input-group-md">
+						<input type="text" class="form-control" placeholder="비밀번호를 입력하세요"  id="ModalPwd" value="">
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer ">
+				<button type="button" class="btn btn-block btn-outline-secondary" onclick="modalHide();" data-dismiss="modal" style="width: 120px;margin-right: 13px;">취소</button>
+				<button type="button" class="btn btn-block btn-outline-primary" onclick="btnModalGo()" style="width: 120px;margin-right: 13px;margin-top: 5px">확인</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+<script>
+
+function btnModalGo(){
+	
+	if($('#ModalPwd').val() != '${myList.pwd}'){
+		Swal.fire({
+		      icon: 'warning',
+		      title: '비밀번호가 일치하지 않습니다.',
+		      confirmButtonColor: '#3085d6',
+		    });
+		return;
+	}
+		Swal.fire({
+	      icon: 'success',
+	      title: '인증되었습니다.',
+	      confirmButtonColor: '#3085d6',
+	    }).then(function(){
+			 $("#myModal").hide();
+	      });
+}
+
+$(function(){
+    $('#exampleInputBorder1').keyup(function(){
+      $('#chkNotice').html('');
+    });
+
+    $('#exampleInputBorder2').keyup(function(){
+
+        if($('#exampleInputBorder1').val() != $('#exampleInputBorder2').val()){
+          $('#chkNotice').html('비밀번호 일치하지 않음<br><br>');
+          $('#chkNotice').attr('color', 'red');
+        } else{
+          $('#chkNotice').html('비밀번호 일치함<br><br>');
+          $('#chkNotice').attr('color', '#199894b3');
+        }
+
+    });
+});
+
+
+ 
+ var inputFileName = document.getElementById("inputFileName").value;
+ console.log("사진",inputFileName)
+ 
+
+function upload_go(){
+	//alert("upload btn click");
+	
+     var formData = new FormData();
+     var picture = $('#inputFileName')[0];
+     formData.append("pictureFile", picture.files[0]);
+     formData.append("oldPicture", $('input[name="oldPicture"]').val());
+   
+     var picture2 = $('#signInputFile')[0];
+     formData.append("pictureFile", picture.files[0]);
+     formData.append("oldSignFile", $('input[name="oldSignFile"]').val());
+     
+     
+	$.ajax({
+		url:"<%=request.getContextPath()%>/myPage/picture.do",
+		data:formData,
+		type:"post",
+	    processData:false,
+        contentType:false,
+        success:function(data){
+//        	  //업로드 확인변수 세팅
+//           $('input[name="checkUpload"]').val(1);
+//           //저장된 파일명 저장.
+//           $('input#oldFile').val(data); // 변경시 삭제될 파일명	          
+//           $('form[role="form"]  input[name="picture"]').val(data);	    	  
+			console.log(data);
+			Swal.fire({
+			      icon: 'success',
+			      title: '사진이 업로드 되었습니다.',
+			      confirmButtonColor: '#3085d6',
+			    });
+        },
+        error:function(error){
+        	Swal.fire({
+			      icon: 'error',
+			      title: '현재 사진 업로드가 불가합니다.\n 관리자에게 연락바랍니다.',
+			      confirmButtonColor: '#3085d6',
+			    });
+        }
+	});
+}
+  
+ 
+/*  
+  var uploadCheck = $('input[name="checkUpload"]').val();   
+  if(uploadCheck=="0"){
+     alert("사진업로드는 필수 입니다");      
+     return;
+  }
+  */ 
+   
+  
+ 	 function changePicture_go(){
+ 		//alert("file change");
+ 		
+ 		var picture = $('input#inputFileName')[0];
+ 		//var signPicture = $('input#signInputFile')[0];
+ 		
+ 		var fileFormat = picture.value.substr(picture.value.lastIndexOf(".")+1).toUpperCase();
+ 		//var signFileFormat = signPicture.value.substr(signPicture.value.lastIndexOf(".")+1).toUpperCase();
+ 		
+ 		//이미지 확장자 jpg 확인
+ /*		
+		if(!(fileFormat=="JPG" || fileFormat=="JPEG")){
+			alert("이미지는 jpg 형식만 가능합니다.");
+			return;
+		} 
+ 		
+		if(!(signFileFormat=="JPG" || signFileFormat=="JPEG")){
+			alert("이미지는 jpg 형식만 가능합니다.");
+			return;
+		} 
+*/		
+		
+		//이미지 파일 용량 체크
+		if(picture.files[0].size>1024*1024*1){
+			Swal.fire({
+			      icon: 'warning',
+			      title: '사진 용량은 1MB 이하만 가능합니다.',
+			      confirmButtonColor: '#3085d6',
+			    });
+			return;
+		};
+
+		
+		$('label[for="inputFileName"]').val(picture.files[0].name)
+		
+		if (picture.files && picture.files[0]) {
+ 			var reader = new FileReader();
+			 
+			 reader.onload = function (e) {
+		        	//이미지 미리보기	        	
+		        	$('img#empPicture')
+		        	.attr({'src' : e.target.result
+		        		});
+		        }
+		        
+		       reader.readAsDataURL(picture.files[0]);
+		}
+		
+// 		// 이미지 변경 확인
+// 		$('input[name="uploadPicture"]').val(picture.files[0].name);
+ 	 }
+ 	 
+ 	function modify_go(){
+ 		//alert("수정클릭");
+		
+ 		/*  if($('#chkNotice').attr('color', 'red')){
+ 			 alert("비밀번호가 일치하지 않습니다");
+ 			 return;
+ 		 } */
+ 		 
+  		 console.log("exampleInputBorder1",exampleInputBorder1);
+  		 console.log("exampleInputBorder2",exampleInputBorder2);
+  		 
+  		if($('#exampleInputBorder1').val() != $('#exampleInputBorder2').val()){
+  			Swal.fire({
+			      icon: 'warning',
+			      title: '비밀번호가 일치하지 않습니다. 다시 확인해주세요',
+			      confirmButtonColor: '#3085d6',
+			    });
+  			return;
+  		}
+  		
+  		var form=$('form[role="form"]');
+  		//form.attr("action","modify.do");
+  		
+  		Swal.fire({
+		      icon: 'success',
+		      title: '정보가 수정되었습니다.',
+		      confirmButtonColor: '#3085d6',
+		    }).then(function(){
+		    	form.submit();
+		      });
+//   		alert("정보가 수정되었습니다.")
+  		
+  	}
+ 	
+ 	
+ 	$('#inputFileName').on('change', function(){
+ 		var fileName = $('#inputFileName').val();
+ 		$('label[for="inputFileName"]').text(fileName);
+ 	});
+	$(function(){
+
+ 		$('label[for="inputFileName"]').text('${myList.photo}');
+	})
+ 	
+	
+ 	$('#signInputFile').on('change', function(){
+ 		var fileName2 = $('#signInputFile').val();
+ 		$('label[for="signInputFile"]').text(fileName2);
+ 	});
+	$(function(){
+
+ 		$('label[for="signInputFile"]').text('${myList.signpath}');
+	})
+ 	 
+  </script>
+  
+  
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    function sample6_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+             /*    // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    document.getElementById("sample6_extraAddress").value = extraAddr;
+                
+                } else {
+                    document.getElementById("sample6_extraAddress").value = '';
+                }
+ */
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample6_postcode').value = data.zonecode;
+                document.getElementById("sample6_address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("sample6_detailAddress").focus();
+            }
+        }).open();
+    }
+    
+    function modalHide(){
+    	var check = window.confirm("비밀번호 확인 후 수정이 가능합니다. 이대로 닫으시겠습니까?");
+    	if(check){
+    		history.back();
+    	}
+    }
+</script>
+
+
+<c:if test="${refer ne 'M23' }">
+	<script>
+		$('#myModal').show();
+		
+	</script>
+</c:if>
+</body>

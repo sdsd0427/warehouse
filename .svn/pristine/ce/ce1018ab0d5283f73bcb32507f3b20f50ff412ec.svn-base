@@ -1,0 +1,236 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<head>
+	<style>
+		.approve-search{
+			display: flex;
+			margin-top: 10px;
+		}
+		.table th,.table td{
+			padding: 4px 0.75rem;
+		}
+
+		.card-body.p-0 .table tbody>tr>td:last-of-type{
+			padding-right: 0;
+		}
+		.card-body.p-0 .table tbody>tr>td:first-of-type{
+			padding-left: 0.75rem;
+		}
+		.card-header{
+			padding: 4px 1.25rem;
+		}
+		.card-body{
+			padding: 0.75rem 1.25rem;
+		}
+		.small-box{
+			margin: 0;
+		}
+		.table{
+			margin: 0;
+		}
+		.page-link {
+		    line-height: 1;
+		    color: #0c4b8d;
+		    background-color: #fff;
+		    border: 1px solid #0c4b8d;
+		}
+		.page-item.active .page-link {
+		    z-index: 3;
+		    color: #fff;
+		    background-color: #0c4b8d;
+		    border-color: #0c4b8d;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0;">
+			<h3 class="title">전자결재</h3>
+		</div>
+		<div class="row" style="padding: 7.5px;">
+			<div class="col-md-12" style="display:flex; justify-content: space-between; padding:0;">
+				<div class="col-md-3" style="width: 240px !important;">
+					<div class="small-box bg-success">
+						<div class="inner">
+							<h3>1</h3>
+							<p>긴급 결재 문서</p>
+						</div>
+						<a class="small-box-footer">바로가기</a>
+					</div>
+				</div>
+				<div class="col-md-3" style="width: 240px !important;">
+					<div class="small-box bg-danger">
+						<div class="inner">
+							<h3>1</h3>
+							<p>기안 반려 문서</p>
+						</div>
+						<a class="small-box-footer">바로가기</a>
+					</div>
+				</div>
+				<div class="col-md-3" style="width: 240px !important;">
+					<div class="small-box bg-warning">
+						<div class="inner">
+							<h3>1</h3>
+							<p>기안 보류 문서</p>
+						</div>
+						<a class="small-box-footer">바로가기</a>
+					</div>
+				</div>
+				<div class="col-md-3" style="width: 240px !important;">
+					<div class="small-box bg-info">
+						<div class="inner">
+							<h3>1</h3>
+							<p>결재 예정 문서</p>
+						</div>
+						<a class="small-box-footer">바로가기</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row" style="margin-left: 20px">
+			<div class="card card-info card-outline col-md-12">
+				<div class="card-header">진행중인 기안</div>
+				<table class="table table-hover text-nowrap">
+					<thead>
+						<tr>
+							<th style="width: 15%">기안일</th>
+							<th style="width: 15%">결재양식</th>
+							<th style="width: 40%">제목</th>
+							<th style="width: 15%">현재 결재자</th>
+							<th style="width: 15%">결재상태</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr onclick="goDetail('<%=request.getContextPath()%>/approval/draftListProceedingDetailGo.do', '${menu.upcode}')">
+							<td>2022-07-04</td>
+							<td>휴가신청서</td>
+							<td>테스트 휴가신청서<span class="badge bg-danger">긴급</span></td>
+							<td>최민규 팀장</td>
+							<td>대기</td>
+						</tr>
+						<tr>
+							<td>2022-07-04</td>
+							<td>휴가신청서</td>
+							<td>테스트 휴가신청서</td>
+							<td>최민규 팀장</td>
+							<td>대기</td>
+						</tr>
+						<tr>
+							<td>2022-07-04</td>
+							<td>휴가신청서</td>
+							<td>테스트 휴가신청서</td>
+							<td>최민규 팀장</td>
+							<td>대기</td>
+						</tr>
+						<tr>
+							<td>2022-07-04</td>
+							<td>휴가신청서</td>
+							<td>테스트 휴가신청서</td>
+							<td>최민규 팀장</td>
+							<td>대기</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="card-footer">
+					<ul class="pagination pagination-sm m-0 float-right">
+						<li class="page-item">
+							<a class="page-link" href="#"><<</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">1</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">2</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">3</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">>></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="row" style="margin-left:20px">
+			<div class="card card-info card-outline col-md-12">
+				<div class="card-header">최근 작성중인 기안문서</div>
+				<table class="table table-hover text-nowrap">
+					<thead>
+						<tr>
+							<th style="width: 15%">생성일</th>
+							<th style="width: 15%">결재양식</th>
+							<th style="width: 40%">제목</th>
+							<th style="width: 15%">수정일</th>
+							<th style="width: 15%">결재상태</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>2022-07-01</td>
+							<td>업무기안</td>
+							<td>테스트 기안</td>
+							<td>2022-07-02</td>
+							<td>임시저장</td>
+						</tr>
+						<tr>
+							<td>2022-07-01</td>
+							<td>업무기안</td>
+							<td>테스트 기안</td>
+							<td>2022-07-02</td>
+							<td>임시저장</td>
+						</tr>
+						<tr>
+							<td>2022-07-01</td>
+							<td>업무기안</td>
+							<td>테스트 기안</td>
+							<td>2022-07-02</td>
+							<td>임시저장</td>
+						</tr>
+						<tr>
+							<td>2022-07-01</td>
+							<td>업무기안</td>
+							<td>테스트 기안</td>
+							<td>2022-07-02</td>
+							<td>임시저장</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="card-footer">
+					<ul class="pagination pagination-sm m-0 float-right">
+						<li class="page-item">
+							<a class="page-link" href="#"><<</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">1</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">2</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">3</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">>></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function(){
+			getProceedingDraftDocList(1);
+			getRecentTempSaveDocList(1);
+			getSignMyTurnDocList(1);
+		})
+	</script>
+	<%@ include file="./main_js.jsp" %>
+	<c:if test="${from eq 'regist' }">
+		<script>
+			alert("결재가 요청되었습니다.");
+		</script>
+	</c:if>
+</body>

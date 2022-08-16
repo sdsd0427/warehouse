@@ -1,0 +1,524 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<head>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<style>
+#modal-fdefault td:nth-child(2n+1) {
+	background-color: #EEEEEE;
+}
+
+.badge {
+	width: 50px;
+	height: 22px;
+	font-size: 0.85em;
+}
+
+/* .card { */
+/* 	border: 1px solid rgb(111, 204, 237); */
+/* 	border-radius: 10px; */
+/* } */
+
+.mailbox-attachment i {
+	margin-left: 10px;
+}
+
+.material-symbols-outlined{
+	color: red;
+	margin-left: 3px;
+}
+.page-link {
+    line-height: 1;
+    color: #17a2b8;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+th{
+	text-align: center !important;
+}
+</style>
+</head>
+
+<body>
+	<div class="wrapper">
+		<h3 class="title">기안문서함</h3>
+		<div class="row">
+			<div class="col-6" style="margin-top: 24px;">
+				<div class="field" data-toggle="modal" data-target="#modal-fdefault">
+					<button type="button" class="btn btn-default btn-sm" style="float: left; margin-left: 1.5rem!important;">
+						<i class="fas fa-cog">&nbsp;필드설정</i>
+					</button>
+				</div>
+<!-- 				<div> -->
+					<button type="button" class="btn btn-default btn-sm" style="float: left; margin-left: 10px!important;" onclick="remove();">
+						<i class="fas fa-trash-alt">&nbsp;삭제</i>
+					</button>
+<!-- 				</div> -->
+			</div>
+			<div class="col-6">
+				<div
+					style="display: flex; justify-content: space-between; float: right;">
+					<div class="approve-search"
+						style="display: flex; margin-top: 10px;">
+						<select class="form-control col-md-3">
+							<option>전체기간</option>
+							<option>1개월</option>
+							<option>6개월</option>
+							<option>1년</option>
+						</select> <select class="form-control col-md-3">
+							<option>제목</option>
+							<option>결재양식</option>
+							<option>기안자</option>
+						</select> <input class="form-control" type="search" placeholder="검색어를 입력하세요">
+						<span
+									class="input-group-append">
+									<button class="btn btn-info" type="button"
+										data-card-widget="search">
+										<i class="fa fa-fw fa-search"></i>
+									</button>
+								</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade show" id="modal-fdefault"
+			style="display: none;" aria-modal="true" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content" style="width: 620px;">
+					<div class="modal-header">
+						<h4 class="modal-title">필드 설정</h4>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<td>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input"
+												id="exampleCheck1"> <label class="form-check-label"
+												for="exampleCheck1">기안일</label>
+										</div>
+									</td>
+									<td>최종 결재문서가 시작된 날짜를 표시합니다.</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input"
+												id="exampleCheck1"> <label class="form-check-label"
+												for="exampleCheck1">결재양식</label>
+										</div>
+									</td>
+									<td>최종 결재가 되어 결재 문서의 진행이 완료된 날짜입니다.</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input"
+												id="exampleCheck1"> <label class="form-check-label"
+												for="exampleCheck1">긴급</label>
+										</div>
+									</td>
+									<td>긴급으로 기안한 문서가 표시됩니다.</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input"
+												id="exampleCheck1"> <label class="form-check-label"
+												for="exampleCheck1">제목</label>
+										</div>
+									</td>
+									<td>문서의 제목이 표시됩니다.</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input"
+												id="exampleCheck1"> <label class="form-check-label"
+												for="exampleCheck1">첨부</label>
+										</div>
+									</td>
+									<td>첨부파일이 포함되었는지 표시합니다.</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input"
+												id="exampleCheck1"> <label class="form-check-label"
+												for="exampleCheck1">기안부서</label>
+										</div>
+									</td>
+									<td>기안자가 소속된 부서를 표시합니다.</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input"
+												id="exampleCheck1"> <label class="form-check-label"
+												for="exampleCheck1">최종 결재자</label>
+										</div>
+									</td>
+									<td>이 문서의 마지막 결재자를 표시합니다.</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input"
+												id="exampleCheck1"> <label class="form-check-label"
+												for="exampleCheck1">문서번호</label>
+										</div>
+									</td>
+									<td>문서의 고유한 문서번호를 표시합니다.</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input"
+												id="exampleCheck1"> <label class="form-check-label"
+												for="exampleCheck1">결재상태</label>
+										</div>
+									</td>
+									<td>현재 결재 상태를 표시합니다.</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input"
+												id="exampleCheck1"> <label class="form-check-label"
+												for="exampleCheck1">완료일</label>
+										</div>
+									</td>
+									<td>최종 결재가 일어난 날짜를 표시합니다.</td>
+								</tr>
+							</tbody>
+						</table>
+
+
+					</div>
+					<div class="modal-footer " style="float: right;">
+						<button type="button" class="btn btn-info">확인</button>
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">취소</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 필드 설정 -->
+
+
+		<div class="row ml-4">
+
+			<div class="card card-info card-outline col-md-12" style="margin-top: 15px;">
+				<div class="card-header p-0 pt-1 border-bottom-0">
+					<ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+						<li class="nav-item"><a class="nav-link"
+							id="custom-tabs-three-home-tab" data-toggle="pill" role="tab"
+							aria-controls="custom-tabs-three-home" aria-selected="true">대기(4)</a>
+						</li>
+						<li class="nav-item"><a class="nav-link"
+							id="custom-tabs-three-home-tab" data-toggle="pill" role="tab"
+							aria-controls="custom-tabs-three-home" aria-selected="true">보류(2)</a>
+						</li>
+						<li class="nav-item"><a class="nav-link"
+							id="custom-tabs-three-home-tab" data-toggle="pill" role="tab"
+							aria-controls="custom-tabs-three-home" aria-selected="true">진행중(8)</a>
+						</li>
+						<li class="nav-item"><a class="nav-link"
+							id="custom-tabs-three-home-tab" data-toggle="pill" role="tab"
+							aria-controls="custom-tabs-three-home" aria-selected="true">반려(4)</a>
+						</li>
+						<li class="nav-item"><a class="nav-link"
+							id="custom-tabs-three-home-tab" data-toggle="pill" role="tab"
+							aria-controls="custom-tabs-three-home" aria-selected="true">완료(14)</a>
+						</li>
+						<li class="nav-item"><a class="nav-link active"
+							id="custom-tabs-three-home-tab" data-toggle="pill" role="tab"
+							aria-controls="custom-tabs-three-home" aria-selected="true">전체(32)</a>
+						</li>
+					</ul>
+				</div>
+
+				<table class="table table-hover text-nowrap projects">
+					<thead>
+						<tr>
+							<th style="width: 5%">
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input"
+										id="exampleCheck1"> <label class="form-check-label"
+										for="exampleCheck1">&nbsp;&nbsp;</label>
+								</div>
+							</th>
+							<th style="width: 15%">기안일</th>
+							<th style="width: 15%">결재양식</th>
+
+							<th style="width: 10%">긴급</th>
+							<th style="width: 15%">제목</th>
+							<th style="width: 10%">첨부</th>
+							<th style="width: 20%">문서번호</th>
+							<th style="width: 10%">결재상태</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input"
+										id="exampleCheck1"> <label class="form-check-label"
+										for="exampleCheck1">&nbsp;&nbsp;</label>
+								</div>
+							</td>
+							<td>2022-07-07</td>
+							<td>업무기안</td>
+							<td><span class="material-symbols-outlined">e911_emergency </span></td>
+							<td>테스트</td>
+							<td></td>
+							<td>그룹-2022-00084</td>
+							<td><span class="badge bg-primary">진행중</span></td>
+						</tr>
+						<tr>
+							<td>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input"
+										id="exampleCheck1"> <label class="form-check-label"
+										for="exampleCheck1">&nbsp;&nbsp;</label>
+								</div>
+							</td>
+							<td>2022-07-07</td>
+							<td>경조화신청</td>
+							<td></td>
+							<td>경조화 신청서</td>
+							<td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>
+							<td>그룹-2022-00082</td>
+							<td><span class="badge bg-success">완료</span></td>
+						</tr>
+						<tr>
+							<td>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input"
+										id="exampleCheck1"> <label class="form-check-label"
+										for="exampleCheck1">&nbsp;&nbsp;</label>
+								</div>
+							</td>
+							<td>2022-07-07</td>
+							<td>업무협조</td>
+							<td></td>
+							<td>업무협조</td>
+							<td></td>
+							<td>그룹-2022-00080</td>
+							<td><span class="badge bg-success">완료</span></td>
+						</tr>
+						<tr>
+							<td>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input"
+										id="exampleCheck1"> <label class="form-check-label"
+										for="exampleCheck1">&nbsp;&nbsp;</label>
+								</div>
+							</td>
+							<td>2022-07-07</td>
+							<td>택배/퀵 신청서</td>
+							<td></td>
+							<td>택배/퀵 신청서</td>
+							<td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>
+							<td>그룹-2022-00075</td>
+							<td><span class="badge bg-secondary">대기</span></td>
+						</tr>
+						<tr>
+							<td>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input"
+										id="exampleCheck1"> <label class="form-check-label"
+										for="exampleCheck1">&nbsp;&nbsp;</label>
+								</div>
+							</td>
+							<td>2022-07-07</td>
+							<td>업무기안</td>
+							<td></td>
+							<td>기안테스트</td>
+							<td></td>
+							<td>그룹-2022-00071</td>
+							<td><span class="badge bg-warning">반려</span></td>
+						</tr>
+
+
+						<tr>
+							<td>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input"
+										id="exampleCheck1"> <label class="form-check-label"
+										for="exampleCheck1">&nbsp;&nbsp;</label>
+								</div>
+							</td>
+							<td>2022-07-05</td>
+							<td>업무기안</td>
+							<td><span class="material-symbols-outlined">e911_emergency </span></td>
+							<td>테스트</td>
+							<td></td>
+							<td>그룹-2022-00066</td>
+							<td><span class="badge bg-success">완료</span></td>
+						</tr>
+						<tr>
+							<td>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input"
+										id="exampleCheck1"> <label class="form-check-label"
+										for="exampleCheck1">&nbsp;&nbsp;</label>
+								</div>
+							</td>
+							<td>2022-07-05</td>
+							<td>경조화신청</td>
+							<td></td>
+							<td>경조화 신청서</td>
+							<td></td>
+							<td>그룹-2022-00064</td>
+							<td><span class="badge bg-info">보류</span></td>
+						</tr>
+						<tr>
+							<td>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input"
+										id="exampleCheck1"> <label class="form-check-label"
+										for="exampleCheck1">&nbsp;&nbsp;</label>
+								</div>
+							</td>
+							<td>2022-07-05</td>
+							<td>업무협조</td>
+							<td></td>
+							<td>업무협조</td>
+							<td></td>
+							<td>그룹-2022-00059</td>
+							<td><span class="badge bg-info">보류</span></td>
+						</tr>
+						<tr>
+							<td>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input"
+										id="exampleCheck1"> <label class="form-check-label"
+										for="exampleCheck1">&nbsp;&nbsp;</label>
+								</div>
+							</td>
+							<td>2022-07-03</td>
+							<td>택배/퀵 신청서</td>
+							<td></td>
+							<td>택배/퀵 신청서</td>
+							<td></td>
+							<td>그룹-2022-00057</td>
+							<td><span class="badge bg-secondary">대기</span></td>
+						</tr>
+						<tr>
+							<td>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input"
+										id="exampleCheck1"> <label class="form-check-label"
+										for="exampleCheck1">&nbsp;&nbsp;</label>
+								</div>
+							</td>
+							<td>2022-07-02</td>
+							<td>업무기안</td>
+							<td></td>
+							<td>기안테스트</td>
+							<td></td>
+							<td>그룹-2022-00056</td>
+							<td><span class="badge bg-primary">진행중</span></td>
+						</tr>
+
+						<tr>
+							<td>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input"
+										id="exampleCheck1"> <label class="form-check-label"
+										for="exampleCheck1">&nbsp;&nbsp;</label>
+								</div>
+							</td>
+							<td>2022-07-01</td>
+							<td>휴가신청</td>
+							<td></td>
+							<td>연차관리연동</td>
+							<td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>
+							<td>그룹-2022-00044</td>
+							<td><span class="badge bg-success">완료</span></td>
+						</tr>
+						<tr>
+							<td>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input"
+										id="exampleCheck1"> <label class="form-check-label"
+										for="exampleCheck1">&nbsp;&nbsp;</label>
+								</div>
+							</td>
+							<td>2022-07-01</td>
+							<td>유류대실비청구서</td>
+							<td></td>
+							<td>유류대실비청구서</td>
+							<td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>
+							<td>그룹-2022-00042</td>
+							<td><span class="badge bg-info">보류</span></td>
+						</tr>
+						<tr>
+							<td>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input"
+										id="exampleCheck1"> <label class="form-check-label"
+										for="exampleCheck1">&nbsp;&nbsp;</label>
+								</div>
+							</td>
+							<td>2022-07-01</td>
+							<td>업무기안</td>
+							<td><span class="material-symbols-outlined">e911_emergency </span></td>
+							<td>협의부탁</td>
+							<td></td>
+							<td>그룹-2022-00033</td>
+							<td><span class="badge bg-warning">반려</span></td>
+						</tr>
+						<tr>
+							<td>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input"
+										id="exampleCheck1"> <label class="form-check-label"
+										for="exampleCheck1">&nbsp;&nbsp;</label>
+								</div>
+							</td>
+							<td>2022-07-01</td>
+							<td>자율 출퇴근 신청서</td>
+							<td><span class="material-symbols-outlined">e911_emergency </span></td>
+							<td>자율 출퇴근 신청서</td>
+							<td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>
+							<td>그룹-2022-00031</td>
+							<td><span class="badge bg-success">완료</span></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="card-footer">
+					<ul class="pagination justify-content-center m-0">
+						<li class="page-item"><a class="page-link" href=""><i
+								class="fas fa-angle-double-left"></i></a></li>
+						<li class="page-item"><a class="page-link" href=""><i
+								class="fas fa-angle-left"></i></a></li>
+						<li class="page-item active"><a class="page-link" href="">1</a>
+						</li>
+						<li class="page-item"><a class="page-link" href="">2</a></li>
+						<li class="page-item"><a class="page-link" href=""><i
+								class="fas fa-angle-double-right"></i></a></li>
+						<li class="page-item"><a class="page-link" href=""><i
+								class="fas fa-angle-right"></i></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+</body>

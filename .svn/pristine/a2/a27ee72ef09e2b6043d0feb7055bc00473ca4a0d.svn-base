@@ -1,0 +1,63 @@
+package kr.or.warehouse.dto;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+public class HrVO {
+	private String hrcode;
+	private int eno;
+	private int state;
+	private int hrTime;
+	private int overTime;
+	private String onTime;
+	private String offTime;
+	public String getHrcode() {
+		return hrcode;
+	}
+	public void setHrcode(String hrcode) {
+		this.hrcode = hrcode;
+	}
+	public int getEno() {
+		return eno;
+	}
+	public void setEno(int eno) {
+		this.eno = eno;
+	}
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
+	}
+	public int getHrTime() {
+		return hrTime;
+	}
+	public void setHrTime(int hrTime) {
+		this.hrTime = hrTime;
+	}
+	public int getOverTime() {
+		return overTime;
+	}
+	public void setOverTime(int overTime) {
+		this.overTime = overTime;
+	}
+	public String getOnTime() {
+		return onTime;
+	}
+	public void setOnTime(String onTime) {
+		this.onTime = onTime;
+	}
+	public String getOffTime() {
+		return offTime;
+	}
+	public void setOffTime(String offTime) {
+		this.offTime = offTime;
+	}
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
+
+
+}

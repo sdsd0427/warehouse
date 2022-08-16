@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+
+.wrapper{
+	padding-left: 40px;
+}
+
+.title{
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+.header-padding{
+	padding: 20 20;
+}
+
+.file-manager-grid>.col {
+    position: relative;
+}
+
+@media (min-width: 1200px)
+.row-cols-xl-5>* {
+    flex: 0 0 auto;
+    width: 20%;
+}

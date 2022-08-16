@@ -1,0 +1,47 @@
+package kr.or.warehouse.controller.view;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/work")
+public class WorkController {
+	
+	@RequestMapping("/main")
+	public String main(Model model) throws Exception{
+		String url = "work/main";
+		
+		return url;
+	}
+	
+	@RequestMapping("/myWorkList")
+	public String myWorkList() throws Exception{
+		String url = "work/myWorkList";
+		
+		return url;
+	}
+	
+	@RequestMapping("/toReqList")
+	public String toReqList() throws Exception{
+		String url = "work/toReqList";
+		
+		return url;
+	}
+	
+	@RequestMapping("/depWorkList")
+	public String depWorkList() throws Exception{
+		String url = "work/depWorkList";
+		
+		return url;
+	}
+	
+	@RequestMapping("/declareList")
+	public String declareList() throws Exception{
+		String url = "work/declareList";
+		
+		return url;
+	}
+	
+	
+}

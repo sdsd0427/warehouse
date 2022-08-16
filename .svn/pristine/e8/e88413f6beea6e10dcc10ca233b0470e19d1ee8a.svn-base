@@ -1,0 +1,19 @@
+package kr.or.warehouse.dao;
+
+import java.util.List;
+import java.util.Map;
+
+import kr.or.warehouse.dto.HrTypeVO;
+import kr.or.warehouse.dto.HrVO;
+
+public interface HrDAO {
+
+	//근태 리스트
+	List<HrVO> selectHrList(int eno) throws Exception;
+
+	//근무유형
+	HrTypeVO selectHrType(int eno) throws Exception;
+
+	//근태(하루)
+	HrVO selectHrByDate(Map<String, Object> paramMap) throws Exception;
+}

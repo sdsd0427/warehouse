@@ -1,0 +1,268 @@
+package kr.or.warehouse.service;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.or.warehouse.dao.HrDAO;
+import kr.or.warehouse.dto.HrTypeVO;
+import kr.or.warehouse.dto.HrVO;
+
+@Service
+public class HrServiceImpl implements HrService {
+
+	@Autowired
+	private HrDAO hrDAO;
+
+	@Override
+	public List<HrVO> getHrList(int eno) throws Exception {
+		List<HrVO> hrList = null;
+		hrList = hrDAO.selectHrList(eno);
+		return hrList;
+	}
+
+	@Override
+	public List<HrVO> getHrListForHrTable(int eno) throws Exception {
+		List<HrVO> hrList = new ArrayList<HrVO>();
+		Map<String, Object> paramMap = null;
+
+		//해당 주차의 날짜 구하기
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date today = new Date();
+		String[] daysOfWeek = getDaysOfWeek(today);
+
+		for(String date : daysOfWeek) {
+			paramMap = new HashMap<String, Object>();
+			paramMap.put("eno", eno);
+			paramMap.put("hrDate", date);
+
+			HrVO hr = hrDAO.selectHrByDate(paramMap);
+			if(hr != null) hrList.add(hr);
+			else if(hr == null) {
+				hr = new HrVO();
+				hr.setHrcode("-");
+				hr.setEno(eno);
+				hr.setHrTime("-");
+				hr.setOverTime("-");
+				hr.setOnTime("-");
+				hr.setOffTime("-");
+				hr.setHrDate(date);
+
+				hrList.add(hr);
+			}
+		}
+
+		return hrList;
+	}
+
+	@Override
+	public HrTypeVO getHrType(int eno) throws Exception {
+		HrTypeVO hrType = null;
+		hrType = hrDAO.selectHrType(eno);
+		return hrType;
+	}
+
+	@Override
+	public Map<String, Object> calcHr(int eno) throws Exception {
+		Map<String, Object> result = null;
+
+		Map<String, Object> paramMap = null;
+		List<String> hrTimes = new ArrayList<String>();
+
+		//해당 주차의 날짜 구하기
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date today = new Date();
+		String[] daysOfWeek = getDaysOfWeek(today);
+
+		for(String date : daysOfWeek) {
+//			System.out.println("Service_Date"+date);
+			paramMap = new HashMap<String, Object>();
+			paramMap.put("eno", eno);
+			paramMap.put("hrDate", date);
+
+			HrVO hr = hrDAO.selectHrByDate(paramMap);
+//			System.out.println("Service_Hr"+hr);
+			if(hr != null) hrTimes.add(hr.getHrTime());
+		}
+
+		//잔여, 초과 시간
+		HrTypeVO hrType = null;
+		hrType = hrDAO.selectHrType(eno);
+
+		result = getRemainTime(getHrTime(hrTimes), hrType.getWeekTime());
+		result.put("hrTime", getHrTime(hrTimes));
+
+		//주차 구하기
+		int weekOfMonth = getWeekOfMonth(sdf.format(today));
+		result.put("weekOfMonth", weekOfMonth);
+		System.out.println(result);
+		return result;
+	}
+
+
+
+
+
+
+
+
+	//해당월의 주차 구하기
+	public int getWeekOfMonth(String date) {
+		Calendar calendar = Calendar.getInstance();
+		String[] dates = date.split("-");
+		int year = Integer.parseInt(dates[0]);
+		int month = Integer.parseInt(dates[1]);
+		int day = Integer.parseInt(dates[2]);
+		calendar.set(year, month - 1, day);
+		return calendar.get(Calendar.WEEK_OF_MONTH);
+	}
+
+	//입력받은 날짜의 해당 주차 날짜 구하기
+	public static String[] getDaysOfWeek(Date date) {
+		String[] arrYMD = new String[7];
+
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+
+			int inYear = cal.get(cal.YEAR);
+		    int inMonth = cal.get(cal.MONTH);
+		    int inDay = cal.get(cal.DAY_OF_MONTH);
+
+		    int dayOfTheWeek = cal.get(cal.DAY_OF_WEEK); //요일나오게하기(숫자로)
+		    if(dayOfTheWeek != 1){   //해당요일이 일요일이 아닌경우
+		        dayOfTheWeek = dayOfTheWeek-2;
+		     }else{           //해당요일이 일요일인경우
+		        dayOfTheWeek = 7;
+		     }
+		    inDay = inDay-dayOfTheWeek;
+
+		    for(int i = 0; i < 7; i++){
+				cal.set(inYear, inMonth, inDay+i);
+				String y = Integer.toString(cal.get(cal.YEAR));
+				String m = Integer.toString(cal.get(cal.MONTH)+1);
+				String d = Integer.toString(cal.get(cal.DAY_OF_MONTH));
+				if(m.length() == 1) m = "0" + m;
+				if(d.length() == 1) d = "0" + d;
+
+			    arrYMD[i] = y +"-"+m +"-"+d;
+		    }
+		} catch (Exception e) {
+
+		}
+
+		return arrYMD;
+	}
+
+	//남은시간, 초과시간 계산
+	public Map<String, Object> getRemainTime(String hrTime, String weekTime) {
+		Map<String, Object> result = new HashMap<String, Object>();
+
+		int hh = 0; int hm = 0; int hs = 0;
+
+		String[] splitHH = hrTime.split("h");
+		String[] splitHM = splitHH[1].split("m");
+		String[] splitHS = splitHM[1].split("s");
+
+		hh += Integer.parseInt(splitHH[0]);
+		hm += Integer.parseInt(splitHM[0]);
+		hs += Integer.parseInt(splitHS[0]);
+
+		int calcHt = (hh * 10000) + (hm *100) + hs;
+
+		int wh = 0; int wm = 0; int ws = 0;
+
+		String[] splitWH = weekTime.split("h");
+		String[] splitWM = splitWH[1].split("m");
+		String[] splitWS = splitWM[1].split("s");
+
+		wh += Integer.parseInt(splitWH[0]);
+		wm += Integer.parseInt(splitWM[0]);
+		ws += Integer.parseInt(splitWS[0]);
+
+		int calcWt = (wh * 10000) + (wm *100) + ws;
+
+		String remainTime = "0h0m0s";
+		String overTime = "0h0m0s";
+
+		int rh = 0; int rm = 0; int rs = 0;
+
+		if(calcWt > calcHt) {
+			if(hs>ws) {
+				wm -= 1;
+				ws += 60;
+			}
+			rs = ws-hs;
+
+			if(hm>wm) {
+				wh -= 1;
+				wm += 60;
+			}
+			rm = wm-hm;
+
+			rh = wh-hh;
+
+			remainTime = rh + "h" + rm + "m" + rs + "s";
+
+		} else if(calcWt < calcHt) {
+			if(ws>hs) {
+				hm -= 1;
+				hs += 60;
+			}
+			rs = hs-ws;
+			if(wm>hm) {
+				hh -= 1;
+				hm += 60;
+			}
+			rm = hm-wm;
+
+			rh = hh-wh;
+
+			overTime = rh + "h" + rm + "m" + rs + "s";
+		}
+
+		result.put("remainTime", remainTime);
+		result.put("overTime", overTime);
+
+		return result;
+	}
+
+	//근무시간 계산
+	public String getHrTime(List<String> times) {
+		String result = "";
+
+		int h = 0; int m = 0; int s = 0;
+
+		for(String time : times) {
+			String[] splitH = time.split("h");
+			String[] splitM = splitH[1].split("m");
+			String[] splitS = splitM[1].split("s");
+
+			h += Integer.parseInt(splitH[0]);
+			m += Integer.parseInt(splitM[0]);
+			s += Integer.parseInt(splitS[0]);
+		}
+
+		if(s > 59) {
+			s -= 60;
+			m += 1;
+		}
+		if(m > 59) {
+			m -= 60;
+			h += 1;
+		}
+
+		result = h + "h" + m + "m" + s + "s";
+
+		return result;
+	}
+
+}

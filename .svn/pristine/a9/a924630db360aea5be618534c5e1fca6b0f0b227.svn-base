@@ -1,0 +1,71 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<script>
+	function getProceedingDraftDocList(page){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/approval/getProceedingDraftDocList.do?page=" + page,
+			type : 'get',
+			success : function(res){
+				console.log(res);
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function getRecentTempSaveDocList(page){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/approval/getRecentTempSaveDocList.do?page=" + page,
+			type : 'get',
+			success : function(res){
+				console.log(res);
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function getSignMyTurnDocList(page){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/approval/getSignMyTurnDocList.do?page=" + page,
+			type : 'get',
+			success : function(res){
+				console.log(res);
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function detail_go(signNo){
+		goDetail('approval/detailGo.do?signNo=' + signNo ,'${menu.mcode }')
+	}
+</script>
+
+<script type="text/x-handlebars-template"  id="proceedList-template" >
+{{#each .}}
+<tr onclick="detail_go({{signNo}})" style="cursor:pointer">
+	<td>{{title}}</td>
+	<td>
+		<div style="align-items: center; display: flex;">
+			<div>
+				<img class="table-avatar emp_profile" src="{{writer.photo }}">
+			</div>
+			<div>
+				<span style="font-size:12px; font-weight:bold">{{writer.name }} {{writer.ppsname }}</span>
+				<div style="font-size:8px;">
+					<p>{{writer.dname }}</p>
+				</div>
+			</div>
+		</div>
+	</td>
+	<td>{{dateFormat regDate}}</td>
+	<td>
+		{{fileCheck fileName}}
+	</td>
+</tr>
+{{/each}}
+</script>

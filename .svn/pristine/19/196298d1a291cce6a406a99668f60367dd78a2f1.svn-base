@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<decorators defaultdir="/WEB-INF/decorator">
+	<decorator name="main" page="main_decorator.jsp">
+		<pattern>/index.do</pattern>
+	</decorator>
+
+	<decorator name="iframe" page="iframe_decorator.jsp">
+		<pattern>/**/*.do</pattern>
+		<pattern>/**/main.do</pattern>
+	</decorator>
+
+	<decorator name="open" page="open_decorator.jsp">
+		<pattern>/**/*Form.do</pattern>
+		<pattern>/**/*detail.do</pattern>
+		<pattern>/**/*apply.do</pattern>
+		<pattern>/community/management.do</pattern>
+	</decorator>
+
+	<excludes>
+		<pattern>/resources/*</pattern>
+	</excludes>
+</decorators>

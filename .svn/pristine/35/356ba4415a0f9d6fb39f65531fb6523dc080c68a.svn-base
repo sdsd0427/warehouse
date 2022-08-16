@@ -1,0 +1,94 @@
+package kr.or.warehouse.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.dto.ManualVO;
+
+@Repository
+public class ManualDAOImpl implements ManualDAO {
+
+	@Autowired
+	private SqlSession session;
+
+	@Override
+	public ManualVO selectNameNTitle(String manualNo) throws SQLException {
+		return session.selectOne("Manual-Mapper.selectNameNTitle", manualNo);
+	}
+
+	@Override
+	public List<ManualVO> selectManualCriteria(Criteria cri, RowBounds rowBounds) throws SQLException {
+		return session.selectList("Manual-Mapper.selectSearchManualList", cri, rowBounds);
+	}
+
+	@Override
+	public int selectManualCriteriaTotalCount(Criteria cri) throws SQLException {
+		return session.selectOne("Manual-Mapper.selectSearchManualListCount", cri);
+	}
+
+	@Override
+	public ManualVO selectManualByManualNo(String manualNo) throws SQLException {
+		return session.selectOne("Manual-Mapper.selectManualByManualNo", manualNo);
+	}
+
+	@Override
+	public List<ManualVO> selectViewManualCriteria(Criteria cri, RowBounds rowBounds) throws SQLException {
+		return session.selectList("Manual-Mapper.selectViewManualList", cri, rowBounds);
+	}
+
+	@Override
+	public void insertManual(ManualVO manual) throws SQLException {
+		session.update("Manual-Mapper.insertManual",manual);
+	}
+
+	@Override
+	public void updateManual(ManualVO manual) throws SQLException {
+		session.update("Manual-Mapper.updateManual",manual);
+
+	}
+
+	@Override
+	public void deleteManual(String manualNo) throws SQLException {
+		session.update("Manual-Mapper.deleteManual",manualNo);
+	}
+
+	@Override
+	public void increaseViewCnt(String manualNo) throws SQLException {
+		session.update("Manual-Mapper.increaseViewCnt",manualNo);
+	}
+
+	@Override
+	public String selectManualNo() throws SQLException {
+		return session.selectOne("Manual-Mapper.selectManualNo");
+	}
+
+	@Override
+	public List<ManualVO> selectSearchFAVManualList(Criteria cri, RowBounds rowBounds) throws SQLException {
+		return session.selectList("Manual-Mapper.selectSearchFAVManualList", cri, rowBounds);
+	}
+
+	@Override
+	public int selectFavManualCriteriaTotalCount(Criteria cri) throws SQLException {
+		return session.selectOne("Manual-Mapper.selectSearchFavManualListCount", cri);
+	}
+
+	@Override
+	public void insertFavManual(ManualVO manual) throws SQLException {
+		session.update("Manual-Mapper.insertFavManual",manual);
+	}
+
+	@Override
+	public void deleteFavManual(ManualVO manual) throws SQLException {
+		session.update("Manual-Mapper.deleteFavManual",manual);
+	}
+
+
+
+
+}

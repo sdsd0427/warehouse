@@ -1,0 +1,712 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<c:set var="pageMaker" value="${personalMap.pageMaker }" />
+<c:set var="cri" value="${personalMap.pageMaker.cri }" />
+<c:set var="mygroupList" value="${groupMap.mygroupList }" />
+<c:set var="myPersonalList" value="${personalMap.myPersonalList }" />
+
+<head>
+
+
+
+<style>
+	.upWord .word{
+	    list-style-type: none;
+	    float: left;
+	    margin: 5px;
+	}
+
+.btn_submenu {
+    display: inline-block;
+}
+
+	span#RecName{
+		margin-left: 120px;
+	}
+
+
+	pribut{
+	 border:1px solid;
+
+	}
+	div#chart {
+    padding-top: 10px;
+}
+
+	select#perPageNum ,select#searchType {
+	list-style-type: none;
+    width: 140px;
+    float: left;
+}
+
+input.form-control{
+list-style-type: none;
+    width: 180px;
+    float: left;
+}
+
+div#inName {
+ 	width: 290px;
+ 	height: 30px;
+    margin-left: 8px;
+     margin-top: 3px;
+     background-color: #ffc107;
+}
+
+div#botle {
+    margin-left: 500px;
+
+}
+div#b {
+    border-radius: 5px;
+}
+.sename{
+color:black;"
+}
+div#bottom {
+    margin-left: 40px;
+    margin-top: -30PX;
+}
+ul.upWord {
+    margin-left: -30px;
+}
+div#bmi {
+    margin-right: 160px;
+    border-radius: 5px;
+    margin-left: 18px;
+    height: 45px; width:120px;
+}
+button.groupbtn.btn.btn-info.btn-lg {
+    height: 45px;
+    font-size: 1.1em;
+}
+div#allgroupadd {
+    margin-top: 30px;
+    margin-left: 20px;
+}
+ul.mt-3 {
+    margin-left: 20px;
+}
+.allAdd {
+    margin-left: 30px;
+    margin-top: 30px;
+}
+
+.allgroup.card {
+    margin-top: 30px;
+}
+.emailcur{
+cursor:pointer;
+}
+</style>
+
+
+
+</head>
+
+
+
+<body>
+<script>
+$('.modal-backdrop').remove();
+</script>
+
+<div class="wrapper">
+		<div class="row" style="height: 100%;margin-left: -30px;">
+			<div class="col-2 " style="border: 2px solid #001f3f; height: inherit;height: 100vh">
+				<div id= "allgroupadd" style="margin-top: 60px">
+<button type="button" class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#myModalAdd" data-backdrop="false" style="font-size: 1.0em;margin-left: -10px;"><strong>그룹 추가</strong></button>
+
+				</div><!-- id= "allgroupadd" -->
+
+				<div class="allgroup card">
+					<div class="card-header">
+						<h3 class="card-title"><strong>그룹</strong></h3>
+					</div>
+
+					<div class="card-body p-0" style="overflow: scroll;overflow-x: hidden;">
+						<table class="table table-sm">
+							<tbody>
+							<c:forEach items="${mygroupList }" var="groupList">
+								<tr>
+							<!-- 		<td><a href="#" onclick="goNoticeInfo('${groupList.cogroupcode}')" id="cogroupname" value="${groupList.cogroupname }">${groupList.cogroupname }</a></td>
+								 -->
+									<td id="clickName" onclick="clickNameTd()">
+										<a href="#" onclick="goNoticeInfo('${groupList.cogroupcode}', '${groupList.cogroupname }')" id="cogroupname" value="${groupList.cogroupname }" style="color: black;">${groupList.cogroupname }</a>
+										<a href="#" onclick="removeName('${groupList.cogroupcode}')"><i class="fas fa-times" style="float: right;color: #001f3f;"></i></a>
+									</td>
+
+								</tr>
+
+
+							</c:forEach>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<section class="content-header col-10 ">
+			<section class="content-header" style="padding-top: 0px;">
+					<div class="row md-2">
+						<div id= "UpgroupName" class="col-sm-12" style="margin-left: 40px;">
+							<h3 class="clickName">개인 주소록
+							</h3>
+						</div>
+					</div>
+				</section>
+			<div id="bottom">
+			<div style="display: flex; justify-content: space-between; padding: 20px 0 ">
+
+
+
+
+				<!-- Modal -->
+    <button type="button" class="groupbtn btn btn-block btn-outline-primary" style="width: 130px"data-toggle="modal" data-target="#myModal" data-backdrop="false" >
+    	<strong>그룹지정</strong></button>
+
+
+
+		  <!-- Modal -->
+		  <div class="modal fade" id="myModal" role="dialog">
+		    <div class="modal-dialog modal-sm">
+		      <div class="modal-content">
+		        <div class="modal-header">
+
+		          <h4 class="modal-title">그룹지정</h4>
+		           <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        </div>
+		        <div class="modal-body">
+		            <label>
+			            <c:forEach items="${mygroupList }" var="groupList">
+							<input type="radio" id="radioName" name="radioName" value="${groupList.cogroupcode }" style="margin-right: 10px;" onclick="inputValue('${groupList.cogroupcode }','${groupList.cogroupname }')">${groupList.cogroupname }<br>
+						</c:forEach>
+		            </label>
+		        </div>
+		        <div class="modal-footer">
+		          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+       			   <button id="groupsave"type="button" class="btn btn-info" data-dismiss="modal" onclick='clickSave()'>저장</button>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+			<!-- Modal 끝-->
+
+
+
+ 			<button type="button" class="btn btn-block btn-outline-danger" style="margin-left: -150px;width: 130px" onclick="clickRemove()">
+ 			<strong>연락처삭제</strong></button>
+
+
+				<div id="c">
+					<ul class="upWord" name="searchFirstType" id="searchFirstType">
+						<li class="word" ><a href="#" onclick="allReload()" class="sename"><strong>전체</strong></a></li>
+						<li class="word" ><a href="#" class="sename" onclick="PseFirstName()"><strong>ㄱ</strong></a></li>
+						<li class="word" ><a href="#" class="sename" onclick="PseNiName()"><strong>ㄴ</strong></a></li>
+						<li class="word" ><a href="#" class="sename" onclick="PseDiName()"><strong>ㄷ</strong></a></li>
+						<li class="word"><a href="#" class="sename" onclick="PseRiName()"><strong>ㄹ</strong></a></li>
+						<li class="word"><a href="#" class="sename" onclick="PseMiName()"><strong>ㅁ</strong></a></li>
+						<li class="word"><a href="#" class="sename" onclick="PseBiName()"><strong>ㅂ</strong></a></li>
+						<li class="word"><a href="#" class="sename" onclick="PseXiName()"><strong>ㅅ</strong></a></li>
+						<li class="word"><a href="#" class="sename" onclick="PseOiName()"><strong>ㅇ</strong></a></li>
+						<li class="word"><a href="#" class="sename" onclick="PseJiName()"><strong>ㅈ</strong></a></li>
+						<li class="word"><a href="#" class="sename" onclick="PseCiName()"><strong>ㅊ</strong></a></li>
+						<li class="word"><a href="#" class="sename" onclick="PseCaiName()"><strong>ㅋ</strong></a></li>
+						<li class="word"><a href="#" class="sename" onclick="PseTiName()"><strong>ㅌ</strong></a></li>
+						<li class="word"><a href="#" class="sename" onclick="PsePiName()"><strong>ㅍ</strong></a></li>
+						<li class="word"><a href="#" class="sename" onclick="PseHiName()"><strong>ㅎ</strong></a></li><!-- </li> -->
+					</ul>
+						<!-- <li class="word"> -->
+				</div>  <!-- ㄱ,ㄴ,ㄷ -->
+			</div>
+		<div class="row" style="justify-content: space-between;">
+			<div id="bot" class="col-lg-12">
+				<div class="card card-navy card-outline">
+					<div class="card-header with-border">
+						<div id="" class="card-tools">
+							<div class="input-group row">
+								<select class="form-control col-md-3" name="perPageNum"
+									id="perPageNum" onchange="list_go(1);">
+									<option value="10">정렬</option>
+									<option value="20" ${cri.perPageNum == 20 ? 'selected':''}>20</option>
+									<option value="50" ${cri.perPageNum == 50 ? 'selected':''}>50</option>
+									<option value="100" ${cri.perPageNum == 100 ? 'selected':''}>100</option>
+								</select> <select class="form-control col-md-3"
+									name="searchType" id="searchType">
+									<option value="pn"
+										${cri.searchType eq 'pn' ? 'selected':'' }>전체</option>
+									<option value="n" ${cri.searchType eq 'n' ? 'selected':'' }>이름</option>
+									<option value="p" ${cri.searchType eq 'p' ? 'selected':'' }>직위</option>
+								</select> 
+								<input class="form-control" type="text"
+									name="keyword" placeholder="검색어를 입력하세요"
+									value="${param.keyword }"> <span class="input-group-append">
+									<button class="btn bg-navy" type="button"
+										onclick="list_go(1);" data-card-widget="search">
+										<i class="fa fa-fw fa-search"></i>
+									</button>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="card-body table-responsive p-0">
+						<div id="botallTable">
+							 <table class="table table-hover text-nowrap">
+								<thead>
+									<tr>
+										<th >
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+										</th>
+											<th >사진</th>
+											<th >이름</th>
+											<th >직위</th>
+											<th >휴대폰</th>
+											<th style="margin-left: -10px">이메일</th>
+											<th >부서</th>
+											<th >내선번호</th>
+											<th >메일</th>
+											<th >그룹</th>
+									</tr>
+								</thead>
+								<tbody id="tall">
+
+								<c:if test="${empty myPersonalList }">
+									<tr>
+										<td colspan="6"><strong>해당 내용이 없습니다.</strong></td>
+									</tr>
+								</c:if>
+								<c:forEach items="${myPersonalList }" var="contact">
+									<tr style='font-size: 0.85em;cursor:pointer;'  >
+										<td style="padding: 0.3rem;">
+											<div class="icheck-primary" style="margin-top: 10px;" >
+												<input style="margin-left: 20px" type="checkbox" class="empCheckbox " id="${contact.eno }" name="eno" onclick="inputEmpList(${contact.eno})">
+												<label for="${contact.name }"></label>
+											</div>
+										</td>
+										<td class="Photohover" onclick="OpenWindow('../contact/ContactHrDetail.do?eno=${contact.eno }','인사정보',800,500);" style="margin-top: 10px;padding: 0.3rem;" >
+											<div>
+												<img class="table-avatar emp_profile" src="${contact.photo}" style="border-radius: 50px; transition: all 0.2s linear;">
+											</div>
+									   </td>
+										<td style="padding: 0.3rem;" onclick="OpenWindow('../contact/ContactHrDetail.do?eno=${contact.eno }','인사정보',800,500);">
+											<div style="margin-top: 13px;margin-left: 7px">
+												${contact.name}
+											<c:if test="${contact.condition eq '업무중'}">
+												<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden"></span></span>
+											</c:if>
+											<c:if test="${contact.condition eq '업무종료'}">
+												<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1" style="background-color: #e10a14!important;"><span class="visually-hidden"></span></span>
+											</c:if>
+											<c:if test="${contact.condition eq '자리비움'}">
+												<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1" style="background-color: #ffc107!important;"><span class="visually-hidden"></span></span>
+											</c:if>
+											</div>
+										</td>
+										<td style="padding: 0.3rem;" onclick="OpenWindow('../contact/ContactHrDetail.do?eno=${contact.eno }','인사정보',800,500);"><div style="margin-top: 13px;margin-left: 10px">${contact.ppsname }</div></td>
+										<td style="padding: 0.3rem;" onclick="OpenWindow('../contact/ContactHrDetail.do?eno=${contact.eno }','인사정보',800,500);"><div style="margin-top: 13px;margin-left: 7px">${contact.phone }</div></td>
+										<td style="padding: 0.3rem;" onclick="OpenWindow('../contact/ContactHrDetail.do?eno=${contact.eno }','인사정보',800,500);"><div style="margin-top: 10px;margin-left: 10px">${contact.email }</div></td>
+										<td style="padding: 0.3rem;" onclick="OpenWindow('../contact/ContactHrDetail.do?eno=${contact.eno }','인사정보',800,500);"><div style="margin-top: 13px;margin-left: 10px">${contact.dname }</div></td>
+										<td style="padding: 0.3rem;" onclick="OpenWindow('../contact/ContactHrDetail.do?eno=${contact.eno }','인사정보',800,500);"><div style="margin-top: 13px;margin-left: 13px">${contact.call }</div></td>
+										<td style="padding: 0.3rem;" onclick="OpenWindow('../mail/registForm.do?mFrom=${contact.eno}','메일보내기',1000,800);">
+										<div style="margin-top: 13px;margin-left: 13px">
+										<i class="fas fa-envelope"></i></div>
+									</td>
+									<td style="padding: 0.3rem;"><div style="margin-top: 13px;margin-left: 13px">${contact.cogroupname }</div></td>
+									</tr>
+								</c:forEach>
+								</tbody>
+							</table>
+							<div class="card-footer">
+							<%@ include file="/WEB-INF/views/common/pagination.jsp" %>
+							</div>
+							<!-- <div class="card-footer">
+							<ul class="pagination justify-content-center m-0">
+								<li class="page-item">
+									<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+								</li><li class="page-item">
+									<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+								</li>
+									<li class="page-item active">
+										<a class="page-link" href="">1</a>
+									</li>
+								<li class="page-item">
+									<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+								</li>
+								<li class="page-item">
+									<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+								</li>
+							</ul>
+						</div> -->
+
+						</div><!-- <div id="botallTable"> -->
+
+					</div>
+					</div>
+				</div>
+			</div> <!-- <div id="bottom"> -->
+		</div><!-- bottom  -->
+	</section>
+</div>
+</div>
+
+
+  <!-- 그룹 추가 Modal -->
+
+  <div class="modal fade" id="myModalAdd" role="dialog" style="display:none">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">그룹이름</h5>
+           <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <label>
+            <span>그룹 </span>&nbsp;
+            <input id="groupname" name=cogroupname type="text" placeholder="예) 커뮤니티그룹">
+            </label>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+        <!--    <button id="groupsave"type="button" class="btn btn-info" data-dismiss="modal" onclick="location.href='personalList.do'" >저장</button>-->
+          <button id="groupsave"type="button" class="btn btn-info" data-dismiss="modal" onclick='clickEvent()'>저장</button>
+        </div>
+      </div>
+    </div>
+  </div>
+	<!-- Modal 끝-->
+
+<form id="oa">
+	<input type='hidden' name="page" value="" />
+	<input type='hidden' name="perPageNum" value=""/>
+	<input type='hidden' name="searchType" value="" />
+	<input type='hidden' name="keyword" value="" />
+	<input type="hidden" name="mCode" value="${menu.mcode }"/>
+</form>
+
+
+<script>
+
+//pagination
+function list_go(page,url){
+	//alert(page);
+	if(!url) url="personalList.do";
+
+	var jobForm=$('#jobForm');
+	jobForm.find("[name='page']").val(page);
+	jobForm.find("[name='perPageNum']").val($('select[name="perPageNum"]').val());
+	jobForm.find("[name='searchType']").val($('select[name="searchType"]').val());
+	jobForm.find("[name='keyword']").val($('div.input-group>input[name="keyword"]').val());
+
+	jobForm.attr({
+		action:url,
+		method:'get'
+	}).submit();
+
+
+}
+
+
+
+
+
+
+
+
+
+//전체 클릭
+function allReload(){
+window.location.reload();
+}
+
+</script>
+
+
+
+
+<script>
+//pagination
+function list_go(page,url){
+	//alert(page);
+	if(!url) url="personalList.do";
+
+	var jobForm=$('#jobForm');
+	jobForm.find("[name='page']").val(page);
+	jobForm.find("[name='perPageNum']").val($('select[name="perPageNum"]').val());
+	jobForm.find("[name='searchType']").val($('select[name="searchType"]').val());
+	jobForm.find("[name='keyword']").val($('div.input-group>input[name="keyword"]').val());
+
+	jobForm.attr({
+		action:url,
+		method:'get'
+	}).submit();
+
+
+}
+</script>
+<script>
+function clickNameTd(){
+	//console.log("asdas");
+}
+
+
+
+
+
+
+	var cogroupcode ="";
+
+function goNoticeInfo(code, test){
+
+	//$('#clickName').css('background','#17a2b8');
+	var cogroupname = document.getElementById('cogroupname');
+	console.log("cogroupname",cogroupname);
+	//console.log("챙",code);
+	cogroupcode = code;
+
+	 var data = code;
+		//console.log(data)
+
+
+	  $.ajax({
+		url : '<%=request.getContextPath()%>/contact/getGroupList.do?cogroupcode=' + code,
+		type:'get',
+		success:function(response){
+			console.log("count",response);
+	 		res='';
+	 	 	res+='<table class="table table-hover text-nowrap">';
+			res+='	<thead>                                                   ';
+			res+='		<tr>                                                  ';
+			res+='			<th >                                             ';
+			res+='				<input type="checkbox" value="" id="check1">  ';
+			res+='				<label for="check1"></label>                  ';
+			res+='			</th>                                             ';
+			res+='				<th ></th>                                ';
+			res+='				<th >이름</th>                                ';
+			res+='				<th >직위</th>                                ';
+			res+='				<th >휴대폰</th>                              ';
+			res+='				<th >이메일</th>                              ';
+			res+='				<th >부서</th>                                ';
+			res+='				<th >내선번호</th>                            ';
+			res+='				<th >메일</th>                            ';
+			res+='		</tr>                                                 ';
+			res+='	</thead>                                                  ';
+			res+='	<tbody id="tall"> ';
+
+			$.each(response.mygroupList, function(i, v){
+//					console.log("name", v.name);
+				res+='<tr style="font-size: 0.85em;cursor:pointer;">';
+				res+='	<td style="padding: 0.3rem;">  ';
+				res+='		<div class="icheck-primary" style="margin-top: 10px;">  ';
+				res+='			<input style="margin-left: 20px" type="checkbox"  id=v.eno name="eno" onclick="inputEmpList(' + v.eno + ')"> ';
+				res+='			<label for="check1"></label> ';
+				res+='		</div> ';
+				res+='	</td> ';
+		 	 	res+='	<td  class="Photohover" style="margin-top: 10px;padding: 0.3rem;" onclick=OpenWindow("../contact/ContactHrDetail.do?eno='+ v.eno +'","인사정보",800,500)><img class="table-avatar emp_profile" src="'+v.photo+'" style="border-radius: 50px;"></td>';
+
+				res+='	<td style="padding: 0.3rem;"><div style="margin-top: 13px;" onclick=OpenWindow("../contact/ContactHrDetail.do?eno='+ v.eno +'","인사정보",800,500)>'+v.name+'';
+
+		 	 	if(v.condition == '업무중'){
+		 	 	res+='<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden"></span></span>';
+		 	 	} else if (v.condition == '업무종료'){
+		 	 	res+='<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1" style="background-color: #e10a14!important;"><span class="visually-hidden"></span></span>';
+		 	 	} else
+		 	 	res+='<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1" style="background-color: #ffc107!important;"><span class="visually-hidden"></span></span>';
+				res+='</div></td>';
+				res+='	<td style="padding: 0.3rem;"><div style="margin-top: 13px;margin-left: 10px" onclick=OpenWindow("../contact/ContactHrDetail.do?eno='+ v.eno +'","인사정보",800,500)>'+v.ppsname+'</div></td> ';
+				res+='	<td style="padding: 0.3rem;"><div style="margin-top: 13px;" onclick=OpenWindow("../contact/ContactHrDetail.do?eno='+ v.eno +'","인사정보",800,500)>'+v.phone+'</div></td>';
+				res+='	<td  style="padding: 0.3rem;" onclick=OpenWindow("../contact/ContactHrDetail.do?eno='+ v.eno +'","인사정보",800,500)><div style="margin-top: 13px;">'+v.email+'</div></td>';
+				res+='	<td style="padding: 0.3rem;" onclick=OpenWindow("../contact/ContactHrDetail.do?eno='+ v.eno +'","인사정보",800,500)><div style="margin-top: 13px;margin-left: 10px">'+v.dname+'</div></td>';
+				res+='	<td style="padding: 0.3rem;" onclick=OpenWindow("../contact/ContactHrDetail.do?eno='+ v.eno +'","인사정보",800,500)><div style="margin-top: 13px;margin-left: 10px">'+v.call+'</div></td>';
+				res+='		<td style="padding: 0.3rem;" onclick=OpenWindow("../mail/registForm.do?mFrom='+v.eno+'","메일보내기",1000,800)><div style="margin-top: 13px;margin-left: 10px">';
+				res+='			<i class="fas fa-envelope"></i></div></td>';
+				res+='</tr>';
+			});
+				res+='		</tbody>';
+				res+='		</table>';
+
+			res+='	<div class="card-footer">';
+			res+='		<ul class="pagination justify-content-center m-0">';
+			res+='			<li class="page-item">';
+			res+='				<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>';
+			res+='			</li><li class="page-item">';
+			res+='				<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>';
+			res+='			</li>';
+			res+='				<li class="page-item active">';
+			res+='					<a class="page-link" href="">1</a>';
+			res+='				</li>';
+			res+='			<li class="page-item">';
+			res+='				<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>';
+			res+='			</li>';
+			res+='			<li class="page-item">';
+			res+='				<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>';
+			res+='			</li>';
+			res+='		</ul>';
+			res+='	</div>';
+
+			$('#botallTable').html(res);
+			$('.clickName').text("개인주소록" + " > "+test);
+		},
+
+		error : function(xhr){
+			alert("상태 : " + xhr.status);
+		},
+
+		});
+
+	}
+
+</script>
+
+<script>
+
+
+
+var empList = [];
+function clickEvent(){
+
+	 console.log($("form[role='form']"));
+	if($("input[name='cogroupname']").val()==""){
+		alert("그룹은 필수입니다.");
+		$("input[name='cogroupname']").focus();
+		return;
+	}
+
+	var formData = new FormData();
+
+	formData.append("cogroupname", $('input[name="cogroupname"]').val());
+	formData.append("empList", empList);
+	console.log('empList',empList)
+	console.log('formData',formData)
+	var request = new XMLHttpRequest();
+	request.open("POST", "<%=request.getContextPath()%>/contact/groupRegist.do");
+	request.send(formData);
+
+
+	//formData 정보
+	for (var pair of formData.entries()) {
+	    console.log(pair[0]+ ', ' + pair[1]);
+	}
+
+	alert("개인주소록에 추가되었습니다.")
+		location.href='personalList.do';
+
+}
+
+
+var appendGroup;
+//그룹지정
+function clickSave(){
+	//console.log(appendGroup);
+	//console.log(appendGroup.cogroupcode);
+	//console.log(appendGroup.cogroupname);
+
+	if($("input:radio[name='radioName']").is(':checked')==false ){
+		alert("그룹선택은 필수입니다.");
+		return;
+	}
+	
+	
+	var formData = new FormData();
+
+	formData.append("cogroupcode", appendGroup.cogroupcode);
+	formData.append("empList", empList);
+	console.log('empList',empList)
+	console.log('formData',formData)
+	var request = new XMLHttpRequest();
+	request.open("POST", "<%=request.getContextPath()%>/contact/registGroupAssign.do");
+	request.send(formData);
+
+	alert("그룹에 지정되었습니다.")
+		location.href='personalList.do';
+
+}
+
+
+function inputValue(cogroupcode,cogroupname){
+	console.log("cogroupcode" , cogroupcode);
+	console.log("cogroupname" , cogroupname);
+
+	appendGroup = {
+		"cogroupcode" : cogroupcode,
+		"cogroupname" : cogroupname
+	}
+
+
+
+
+}
+
+
+
+
+function inputEmpList(id){
+
+
+
+	console.log("v.eno",id)
+	//console.log("value",${groupList.cogroupcode });
+	empList.push(id);
+	console.log('type : ',typeof this.id)
+}
+
+
+//연락처 삭제
+function clickRemove(){
+	
+	if($("input:checkbox[name='eno']").is(':checked')==false ){
+		alert("사원 선택은 필수입니다.");
+		return;
+	}
+	
+	
+    console.log("cogroupcode",cogroupcode);  // 그룹코드
+    console.log("empList",empList);  // eno
+
+
+	var formData = new FormData();
+
+
+	formData.append("empList", empList);
+	formData.append("cogroupcode",cogroupcode);
+
+	var request = new XMLHttpRequest();
+	request.open("POST", "<%=request.getContextPath()%>/contact/remove.do");
+	request.send(formData);
+
+	alert("그룹에서 연락처를 삭제하였습니다.")
+	location.href='personalList.do';
+}
+
+//그룹삭제
+function removeName(cogroupcode){
+ //console.log("code",code);
+
+ //alert("그룹을 삭제하시겠습니까?");
+
+var result = confirm("삭제하시겠습니까?");
+
+if(result == true){
+
+	 var formData = new FormData();
+
+	 formData.append("cogroupcode",cogroupcode);
+
+	 var request = new XMLHttpRequest();
+		request.open("POST", "<%=request.getContextPath()%>/contact/removeGr.do");
+		request.send(formData);
+
+	alert("그룹이 삭제되었습니다.");
+	}
+else{
+	alert("취소되었습니다.");
+}
+	location.href='personalList.do';
+}
+
+</script>
+<%@ include file="./contact_js.jsp" %>
+</body>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="WorkReply-Mapper">
+	<select id="selectReplyList" resultType="workreply">
+		SELECT
+		    wrno
+		   ,wrcontent
+		   ,wrregdate
+		   ,updatedate
+		   ,wcode
+		   ,eno
+		   ,wrrno
+		FROM
+		    workreply
+		WHERE wcode = #{wcode}
+	</select>
+
+	<select id="selectReplyTotalCount" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			workreply
+		WHERE wcode = #{wcode}
+	</select>
+
+	<select id="selectMaxReplyNo" resultType="str">
+		select 'WR' ||
+		trim(nvl(max(to_char(to_number(substr(wrno,3))+1,'000000')),'000001'))
+		as wrno
+		from workreply
+
+		union
+
+		select nvl(null,'WR000001') as wrno
+		from
+		dual
+		where not exists (select wrno
+		from workreply)
+	</select>
+
+	<update id="insertWorkReply">
+		INSERT INTO workreply (
+		    wrno
+		   ,wrcontent
+		   ,wrregdate
+		   ,updatedate
+		   ,wcode
+		   ,eno
+		   ,wrrno
+		) VALUES (
+		    #{wrno}
+		   ,#{wrContent}
+		   ,sysdate
+		   ,sysdate
+		   ,#{wcode}
+		   ,#{eno}
+		   ,#{wrRno}
+		)
+	</update>
+
+	<select id="selectReplyWriterByEno" resultType="employee">
+		SELECT
+		    a.eno
+		   ,b.dname
+		   ,a.birth
+		   ,a.email
+		   ,a.name
+		   ,a.photo
+		   ,c.ppsname
+		   ,a.job
+		   ,a.phone
+		   ,a.call
+		   ,a.hiredate
+		   ,a.enabled
+		   ,a.mbti
+		   ,a.address
+		   ,a.retiredate
+		   ,a.retirereason
+		   ,a.pwd
+		   ,a.ipaddress
+		   ,a.signtype
+		   ,a.signpath
+		   ,a.condition
+		   ,a.year
+		FROM
+		    employee a, department b, postposition c
+		WHERE a.dno = b.dno
+		  AND a.ppscode = c.ppscode
+		  AND a.eno = #{eno}
+	</select>
+
+	<update id="deleteWorkReply">
+		delete from workreply
+		where wrno = #{wrno}
+	</update>
+</mapper>
+

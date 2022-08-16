@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ManualReply-Mapper">
+	<select id="selectReplyNo" resultType="str">
+		SELECT 'MR' ||
+		trim(nvl(max(to_char(to_number(substr(mrno,3))+1,'000000')),'000001'))
+		as mrno
+		from menualreply
+
+		union
+
+		select nvl(null,'BR000001') as mrno
+		from
+		dual
+		where not exists (select mrno
+		from menualreply)
+	</select>
+
+	<select id="selectReplyList" resultType="reply">
+		select
+		mrno as rno
+		,content as replyText
+		,regDate
+		,updateDate
+		,manualno as refNo
+		,eno
+		from menualreply
+		where manualno=#{refNo}
+		order by mrno asc
+	</select>
+
+	<select id="countReply" resultType="int">
+		select count(manualno)
+		from
+		menualreply
+		where manualno=#{refNo}
+	</select>
+
+	<select id="selectName" resultType="str">
+		select b.name
+		from menualreply a, employee b
+		where a.eno = b.eno
+		and a.mrno = #{rno}
+	</select>
+
+	<select id="selectPhoto" resultType="str">
+		select b.photo
+		from menualreply a, employee b
+		where a.eno = b.eno
+		and a.mrno = #{rno}
+	</select>
+
+	<update id="insertReply">
+		insert into menualreply(mrno,manualno,content,eno)
+		values(#{rno},#{refNo},#{replyText},#{eno})
+	</update>
+
+	<update id="updateReply" parameterType="reply">
+		update menualreply
+		set
+		content=#{replyText}
+		where mrno=#{rno}
+	</update>
+
+	<update id="deleteReply" parameterType="str">
+		delete
+		from menualreply
+		where
+		mrno=#{rno}
+	</update>
+</mapper>
+

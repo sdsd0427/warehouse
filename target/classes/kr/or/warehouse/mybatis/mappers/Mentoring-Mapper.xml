@@ -1,0 +1,643 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Mentoring-Mapper">
+
+	<select id="recommendMbti" resultType="submentoring">
+		select *
+			from (
+				select a.name, a.mbti, a.photo, a.job, c.ppsname, e.dname, f.score, a.eno
+				from employee a, postposition c, department e, (select a.score, a.mbti2
+		                                                          from mbti a, employee b
+		                                                          where a.mbti=b.mbti
+		                                                          and b.eno=#{eno}) f
+				where a.ppscode=c.ppscode
+				and a.dno=e.dno
+				and a.mbti=f.mbti2
+				and a.eno != #{eno}
+				and a.mbti in (select a.mbti2
+			                      from mbti a, employee b
+			                      where a.mbti=b.mbti
+			                      and b.eno=#{eno})
+				order by f.score desc)
+		where rownum <![CDATA[<=]]> 6
+	</select>
+
+	<select id="selectMbti" resultType="employee">
+		select a.mbti2
+		from mbti a, (  select  mbti
+		                from employee
+		                where eno = #{eno}) b
+		where a.mbti = b.mbti
+	</select>
+
+	<select id="selectPhoto" resultType="str">
+		select photo
+		from
+		employee
+		where eno = #{eno}
+	</select>
+
+	<update id="updateReadCheck" parameterType="str">
+		update
+			submentoring
+		set
+		   readCheck=1
+		where
+			smno=#{smno}
+	</update>
+
+	<select id="selectMyMenteeMain" parameterType="int" resultType="submentoring">
+		select
+		    a.name,
+		    a.ppsname,
+		    a.condition,
+		    a.startDate,
+		    a.endDate,
+		    a.job,
+		    a.dname,
+		    a.mtno,
+		    a.photo,
+		    a.mentee,
+		    count(b.wcode) as workCnt
+				from (select
+							a.name, c.ppsname, a.condition, d.startDate, d.endDate, a.job, e.dname, d.mtno, a.photo, b.mentee
+						from
+							employee a, submentoring b, postposition c, mentoring d, department e
+						where b.mentee=a.eno
+						and a.ppscode=c.ppscode
+						and b.smno=d.smno
+						and a.dno=e.dno
+						and b.mento=#{eno}
+				        and b.approve=1
+				        and rownum <![CDATA[<=]]> 4
+		                order by d.startdate
+		                )a, work b, workmanager c
+		        where a.mentee = c.eno
+		        and c.wcode = b.wcode
+		        and b.wstatus != '신고'
+		        and b.wdate between TRUNC(SYSDATE,'D') and (LAST_DAY(SYSDATE))
+		group by a.name,
+			 	a.ppsname,
+			    a.condition,
+			    a.startDate,
+			    a.endDate,
+			    a.job,
+			    a.dname,
+			    a.mtno,
+			    a.photo,
+			    a.mentee
+	</select>
+
+	<select id="selectMyMentee" parameterType="int" resultType="submentoring">
+		select
+			a.name, c.ppsname, a.condition, d.startDate, d.endDate, a.job, e.dname, d.mtno, a.photo, d.smno
+		from
+			employee a, submentoring b, postposition c, mentoring d, department e
+		where b.mentee=a.eno
+		and a.ppscode=c.ppscode
+		and b.smno=d.smno
+		and a.dno=e.dno
+		and b.mento=#{eno}
+        and b.approve=1
+        order by d.startdate
+	</select>
+
+	<select id="selectMyMenteeCount" resultType="int">
+		select
+			count(*)
+		from
+			submentoring
+		where mento=#{eno}
+        and approve=1
+	</select>
+
+	<select id="selectMyMentoMain" parameterType="int" resultType="submentoring">
+		select
+		    a.name,
+		    a.ppsname,
+		    a.condition,
+		    a.startDate,
+		    a.endDate,
+		    a.job,
+		    a.dname,
+		    a.mtno,
+		    a.photo,
+		    a.mento,
+		    count(b.wcode) as workCnt
+				from (select
+							a.name, c.ppsname, a.condition, d.startDate, d.endDate, a.job, e.dname, d.mtno, a.photo, b.mento
+						from
+							employee a, submentoring b, postposition c, mentoring d, department e
+						where b.mento=a.eno
+						and a.ppscode=c.ppscode
+						and b.smno=d.smno
+						and a.dno=e.dno
+						and b.mentee=#{eno}
+				        and b.approve=1
+				        and rownum <![CDATA[<=]]> 4
+		                order by d.startdate
+		                )a, work b, workmanager c
+		        where a.mento = c.eno
+		        and c.wcode = b.wcode
+		        and b.wstatus != '신고'
+		        and b.wdate between TRUNC(SYSDATE,'D') and (LAST_DAY(SYSDATE))
+		group by a.name,
+			 	a.ppsname,
+			    a.condition,
+			    a.startDate,
+			    a.endDate,
+			    a.job,
+			    a.dname,
+			    a.mtno,
+			    a.photo,
+			    a.mento
+	</select>
+
+	<select id="selectMyMento" parameterType="int" resultType="submentoring">
+		select
+			a.name, c.ppsname, a.condition, d.startDate, d.endDate, a.job, e.dname, d.mtno, a.photo, d.smno
+		from
+			employee a, submentoring b, postposition c, mentoring d, department e
+		where b.mento=a.eno
+		and a.ppscode=c.ppscode
+		and b.smno=d.smno
+		and a.dno=e.dno
+		and b.mentee=#{eno}
+        and b.approve=1
+        order by d.startdate
+	</select>
+
+	<select id="selectMyMentoCount" resultType="int">
+		select
+			count(*)
+		from
+			submentoring
+		where mentee=#{eno}
+        and approve=1
+	</select>
+
+	<select id="selectMentoRank" resultType="submentoring">
+		select *
+		from (select
+            	count(a.mento) as count, b.name, c.ppsname, b.condition, b.photo
+	        from
+	            submentoring a, employee b, postposition c
+	        where a.mento = b.eno
+	        and b.ppscode=c.ppscode
+	        group by a.mento, b.name, c.ppsname, b.condition, b.photo
+	        order by count(a.mento) desc)
+		where rownum <![CDATA[<=]]> 4
+	</select>
+
+	<select id="subMentoringList" parameterType="int" resultType="submentoring">
+		select
+			a.name, c.ppsname, b.regdate, b.smno, b.readCheck, a.photo
+		from
+			employee a, submentoring b, postposition c
+		where b.mentee=a.eno
+		and a.ppscode=c.ppscode
+		and b.mento=#{eno}
+        and b.approve=0
+	</select>
+
+	<select id="subMentoringListCount" resultType="int">
+		select
+			count(mentee)
+		from
+			submentoring
+		where mento=#{eno}
+		and approve=0
+	</select>
+
+	<select id="subMenteeDetail" resultType="submentoring">
+		select
+			a.name, c.ppsName, a.job, b.intro, b.period, d.dname, a.mbti, b.smno, a.photo, b.mentee
+		from
+			employee a, submentoring b, postposition c, department d
+		where b.mentee=a.eno
+		and a.ppscode=c.ppscode
+		and a.dno=d.dno
+		and b.smno=#{smno}
+        and b.approve=0
+	</select>
+
+	<select id="selectMtno" resultType="String">
+		select 'MT' ||
+		trim(nvl(max(to_char(to_number(substr(mtno,3))+1,'000000')),'000001'))
+		as mtno
+		from mentoring
+
+		union
+
+		select nvl(null,'MT000001') as mtno
+		from
+		dual
+		where not exists (select mtno
+		from mentoring)
+	</select>
+
+	<update id="acceptMentoring" parameterType="mentoring">
+		{call
+			declare
+				begin
+
+				update submentoring
+		        set approve=1
+		        where smno=#{smno};
+
+				insert into mentoring(mtno,smno,startDate,endDate)
+       		 	values(#{mtno},#{smno},sysdate,#{endDate});
+		end}
+	</update>
+
+	<select id="endMentoringList" resultType="submentoring" parameterType="int">
+		select
+			a.name, c.ppsname, a.condition, d.startDate, d.endDate, a.photo, b.mento, to_date(d.endDate)-to_date(sysdate) as dDay
+		from
+			employee a, submentoring b, postposition c, mentoring d
+		where b.mentee=a.eno
+		and a.ppscode=c.ppscode
+		and b.smno=d.smno
+		and b.mento=#{eno}
+        and b.approve=1
+        and to_date(d.endDate)-to_date(sysdate) <![CDATA[<=]]> 3
+
+        union all
+
+        select
+			a.name, c.ppsname, a.condition, d.startDate, d.endDate, a.photo, b.mento, to_date(d.endDate)-to_date(sysdate) as dDay
+		from
+			employee a, submentoring b, postposition c, mentoring d
+		where b.mento=a.eno
+		and a.ppscode=c.ppscode
+		and b.smno=d.smno
+		and b.mentee=#{eno}
+        and b.approve=1
+        and to_date(d.endDate)-to_date(sysdate) <![CDATA[<=]]> 3
+	</select>
+
+	<update id="exdateApply" parameterType="submentoring">
+		update submentoring
+        set regDate=sysdate, period=#{period}, approve=0
+        where mento=#{mento}
+        and mentee=#{mentee}
+	</update>
+
+	<select id="endMentoringListCount" resultType="int">
+		select sum(cnt) as count from
+		(select
+			count(*) as cnt
+		from
+			submentoring b, mentoring d
+		where b.smno=d.smno
+		and b.mento=#{eno}
+        and b.approve=1
+        and to_date(d.endDate)-to_date(sysdate) <![CDATA[<=]]> 3
+
+        union all
+
+        select
+			count(*) as cnt
+		from
+			submentoring b,  mentoring d
+		where b.smno=d.smno
+		and b.mentee=#{eno}
+        and b.approve=1
+        and to_date(d.endDate)-to_date(sysdate) <![CDATA[<=]]> 3)
+	</select>
+
+	<select id="myWorkList" parameterType="int" resultType="work">
+		select *
+		from (select
+					a.wtitle, b.viewCnt
+				from
+					work a, knowhow b, employee c, workmanager d
+				where d.wcode=b.wcode
+				and a.wcode=b.wcode
+				and d.eno=c.eno
+				and d.eno=#{eno}
+				order by b.viewCnt desc)
+		where rownum <![CDATA[<=]]> 5
+	</select>
+
+	<update id="applyMentoring" parameterType="submentoring">
+		insert into
+			submentoring(smno, intro, period, mentee, mento)
+		values(#{smno}, #{intro}, #{period}, #{mentee}, #{mento})
+	</update>
+
+	<select id="subMentoring" parameterType="int" resultType="int">
+		select
+			count(*)
+		from
+			submentoring
+		where mento = #{mento}
+		and mentee = #{mentee}
+	</select>
+
+	<select id="selectSmno" resultType="String">
+		select 'SM' ||
+		trim(nvl(max(to_char(to_number(substr(smno,3))+1,'000000')),'000001'))
+		as smno
+		from submentoring
+
+		union
+
+		select nvl(null,'SM000001') as smno
+		from
+		dual
+		where not exists (select smno
+		from submentoring)
+	</select>
+
+	<select id="myMentoWorkList" parameterType="int" resultType="submentoring">
+		select
+			a.name, c.ppsname, e.dname, f.wtitle, f.wend, f.wstatus, f.wcode, a.photo
+		from
+			employee a, submentoring b, postposition c, department e, work f, workmanager d
+		where b.mento=a.eno
+		and a.ppscode=c.ppscode
+		and a.dno=e.dno
+		and b.mentee=#{eno}
+        and b.approve=1
+        and d.eno=a.eno
+        and f.wopen=1
+        and d.wcode=f.wcode
+        and f.wstatus != '신고'
+
+	</select>
+
+	<select id="myMentoWorkListCount" parameterType="int" resultType="int">
+		select
+			count(*)
+		from
+			employee a, submentoring b, work f, workmanager d
+		where b.mento=a.eno
+		and b.mentee=#{eno}
+        and b.approve=1
+        and a.eno=d.eno
+        and f.wopen=1
+        and d.wcode=f.wcode
+        and f.wstatus != '신고'
+	</select>
+
+	<select id="myMentoDocList" parameterType="int" resultType="submentoring">
+		select
+			a.name, c.ppsname, e.dname, f.ddate, f.title, f.state, g.formclass, a.photo, f.signNo
+		from
+			employee a, submentoring b, postposition c, department e, signdoc f, signform g
+		where b.mento=a.eno
+		and a.ppscode=c.ppscode
+		and a.dno=e.dno
+		and b.mentee=#{eno}
+        and b.approve=1
+        and a.eno=f.eno
+        and f.sformno=g.sformno
+        and f.sopen=1
+	</select>
+
+	<select id="myMentoDocListCount" parameterType="int" resultType="int">
+		select
+			count(*)
+		from
+			employee a, submentoring b, signdoc f, signform g
+		where b.mento=a.eno
+		and b.mentee=#{eno}
+        and b.approve=1
+        and a.eno=f.eno
+        and f.sformno=g.sformno
+        and f.sopen=1
+	</select>
+
+	<update id="endMentoring" parameterType="str">
+		{call
+			declare
+				begin
+
+				delete
+				from submentoring
+		        where smno = #{smno};
+
+				delete
+				from mentoring
+				where smno=#{smno};
+
+
+		end}
+	</update>
+
+	<select id="myMenteeWorkList" parameterType="int" resultType="submentoring">
+		select
+			a.name, c.ppsname, e.dname, f.wtitle, f.wend, f.wstatus, f.wcode, a.photo
+		from
+			employee a, submentoring b, postposition c, department e, work f, workmanager d
+		where b.mentee=a.eno
+		and a.ppscode=c.ppscode
+		and a.dno=e.dno
+		and b.mento=#{eno}
+        and b.approve=1
+        and a.eno=d.eno
+        and f.wopen=1
+        and d.wcode=f.wcode
+        and f.wstatus != '신고'
+	</select>
+
+	<select id="myMenteeWorkListCount" parameterType="int" resultType="int">
+		select
+			count(*)
+		from
+			employee a, submentoring b, work f, workmanager d
+		where b.mentee=a.eno
+		and b.mento=#{eno}
+        and b.approve=1
+        and a.eno=d.eno
+        and f.wopen=1
+        and d.wcode=f.wcode
+        and f.wstatus != '신고'
+	</select>
+
+	<select id="myMenteeDocList" parameterType="int" resultType="submentoring">
+		select
+			a.name, c.ppsname, e.dname, f.ddate, f.title, f.state, g.formclass, a.photo, f.signNo
+		from
+			employee a, submentoring b, postposition c, department e, signdoc f, signform g
+		where b.mentee=a.eno
+		and a.ppscode=c.ppscode
+		and a.dno=e.dno
+		and b.mento=#{eno}
+        and b.approve=1
+        and a.eno=f.eno
+        and f.sformno=g.sformno
+        and f.sopen=0
+	</select>
+
+	<select id="myMenteeDocListCount" parameterType="int" resultType="int">
+		select
+			count(*)
+		from
+			employee a, submentoring b, signdoc f, signform g
+		where b.mentee=a.eno
+		and b.mento=#{eno}
+        and b.approve=1
+        and a.eno=f.eno
+        and f.sformno=g.sformno
+        and f.sopen=0
+	</select>
+
+	<select id="sysdateMentoWork" resultType="submentoring">
+		select
+			a.name, c.ppsName, f.wtitle, f.wdate, a.photo
+		from
+			employee a, submentoring b, postposition c, work f, workmanager d
+		where b.mento=a.eno
+		and a.ppscode=c.ppscode
+		and b.mentee=#{eno}
+        and b.approve=1
+        and a.eno=d.eno
+        and f.wopen=1
+        and d.wcode=f.wcode
+        and f.wstatus != '신고'
+        and f.wdate between TRUNC(SYSDATE,'D') and (LAST_DAY(SYSDATE))
+        order by f.wdate desc
+	</select>
+
+	<select id="sysdateMentoWorkCount" resultType="int">
+		select
+			count(*)
+		from
+			employee a, submentoring b, work f, workmanager d
+		where b.mento=a.eno
+		and b.mentee=#{eno}
+        and b.approve=1
+        and a.eno=d.eno
+        and f.wopen=1
+        and d.wcode=f.wcode
+        and f.wstatus != '신고'
+        and f.wdate between TRUNC(SYSDATE,'D') and (LAST_DAY(SYSDATE))
+	</select>
+
+	<select id="sysdateMenteeWork" resultType="submentoring">
+		select
+			a.name, c.ppsName, f.wtitle, f.wdate, a.photo
+		from
+			employee a, submentoring b, postposition c, work f, workmanager d
+		where b.mentee=a.eno
+		and a.ppscode=c.ppscode
+		and b.mento=#{eno}
+        and b.approve=1
+        and a.eno=d.eno
+        and f.wopen=1
+        and d.wcode=f.wcode
+        and f.wstatus != '신고'
+        and f.wdate between TRUNC(SYSDATE,'D') and (LAST_DAY(SYSDATE))
+        order by f.wdate desc
+	</select>
+
+	<select id="sysdateMenteeWorkCount" resultType="int">
+		select
+			count(*)
+		from
+			employee a, submentoring b, work f, workmanager d
+		where b.mentee=a.eno
+		and b.mento=#{eno}
+        and b.approve=1
+        and a.eno=d.eno
+        and f.wopen=1
+        and d.wcode=f.wcode
+        and f.wstatus != '신고'
+        and f.wdate between TRUNC(SYSDATE,'D') and (LAST_DAY(SYSDATE))
+	</select>
+
+	<select id="sysdateMentoringAllWork" resultType="submentoring">
+
+		select
+			a.name, c.ppsName, f.wtitle, f.wdate, a.photo
+		from
+			employee a, submentoring b, postposition c, work f, workmanager d
+		where b.mentee=a.eno
+		and a.ppscode=c.ppscode
+		and b.mento=#{eno}
+        and b.approve=1
+        and a.eno=d.eno
+        and f.wopen=1
+        and d.wcode=f.wcode
+        and f.wstatus != '신고'
+        and f.wdate between TRUNC(SYSDATE,'D') and (LAST_DAY(SYSDATE))
+
+        union all
+
+        select
+			a.name, c.ppsName, f.wtitle, f.wdate, a.photo
+		from
+			employee a, submentoring b, postposition c, work f, workmanager d
+		where b.mento=a.eno
+		and a.ppscode=c.ppscode
+		and b.mentee=#{eno}
+        and b.approve=1
+        and a.eno=d.eno
+        and f.wopen=1
+        and d.wcode=f.wcode
+        and f.wstatus != '신고'
+        and f.wdate between TRUNC(SYSDATE,'D') and (LAST_DAY(SYSDATE))
+        order by wdate desc
+	</select>
+
+	<select id="sysdateMentoringAllWorkCount" resultType="int">
+		select sum(cnt) as count from
+		(select
+			count(*) as cnt
+		from
+			employee a, submentoring b, work f, workmanager d
+		where b.mento=a.eno
+		and b.mentee=#{eno}
+        and b.approve=1
+        and a.eno=d.eno
+        and f.wopen=1
+        and d.wcode=f.wcode
+        and f.wstatus != '신고'
+        and f.wdate between TRUNC(SYSDATE,'D') and (LAST_DAY(SYSDATE))
+
+        union all
+
+        select
+			count(*) as cnt
+		from
+			employee a, submentoring b, work f, workmanager d
+		where b.mentee=a.eno
+		and b.mento=#{eno}
+        and b.approve=1
+        and a.eno=d.eno
+        and f.wopen=1
+        and d.wcode=f.wcode
+        and f.wstatus != '신고'
+        and f.wdate between TRUNC(SYSDATE,'D') and (LAST_DAY(SYSDATE)))
+	</select>
+
+	<update id="deleteEndDateMentoring">
+		{call
+			declare
+				begin
+
+		        delete from submentoring b
+		        where exists (
+		            select smno
+		            from mentoring a
+		            where a.smno=b.smno
+		            and to_date(endDate) <![CDATA[<]]> to_date(sysdate));
+
+				delete from mentoring
+		        where to_date(endDate) <![CDATA[<]]> to_date(sysdate);
+
+		end}
+	</update>
+
+	<update id="refuseSubMentoring">
+		delete from submentoring
+		where smno=#{smno}
+	</update>
+
+</mapper>
+

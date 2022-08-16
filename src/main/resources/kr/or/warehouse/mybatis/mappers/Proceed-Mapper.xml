@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  <mapper namespace="Proceed-Mapper">
+  	<update id="insertProceed" parameterType="proceeding">
+  		INSERT INTO proceeding (
+  			prono
+		   ,wcode
+		   ,eno
+		   ,title
+		   ,content
+		   ,regdate
+		   ,filename
+		   ,uploadpath
+		) VALUES (
+			proceed_seq.nextval
+		   ,#{wcode}
+		   ,#{eno}
+		   ,#{title}
+		   ,#{content}
+		   ,sysdate
+		   ,#{fileName}
+		   ,#{uploadPath}
+		)
+  	</update>
+
+  	<select id="selectProceedList" resultType="proceeding">
+  		SELECT
+  			prono
+		   ,wcode
+		   ,eno
+		   ,title
+		   ,content
+		   ,regdate
+		   ,filename
+		   ,uploadpath
+		FROM
+		    proceeding
+		WHERE wcode = #{wcode}
+  	</select>
+
+  	<select id="selectProceedTotalCount" resultType="int">
+  		SELECT
+  			count(*)
+  		FROM
+  			proceeding
+  		WHERE wcode = #{wcode}
+  	</select>
+
+  	<select id="selectProceedByProNo" resultType="proceeding">
+  		SELECT
+  			prono
+		   ,wcode
+		   ,eno
+		   ,title
+		   ,content
+		   ,regdate
+		   ,filename
+		   ,uploadpath
+		FROM
+		    proceeding
+		WHERE prono = #{prono}
+  	</select>
+
+  	<update id="deleteProceedFile">
+  		UPDATE
+  			proceeding
+  		SET
+  			filename = null,
+  			uploadPath = null
+  		WHERE prono = #{prono}
+  	</update>
+
+  	<update id="updateProceed" parameterType="proceeding">
+  		UPDATE
+  			proceeding
+  		SET
+  			title = #{title},
+  			content = #{content},
+  			filename = #{fileName},
+  			uploadPath = #{uploadPath}
+  		WHERE prono = #{proNo}
+  	</update>
+
+  	<update id="deleteProceed">
+  		DELETE FROM proceeding
+  		WHERE prono = #{prono}
+  	</update>
+  </mapper>

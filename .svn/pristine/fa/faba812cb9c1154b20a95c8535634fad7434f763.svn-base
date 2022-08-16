@@ -1,0 +1,12 @@
+package kr.or.warehouse.dto;
+
+public class BoardVO {
+	private String boardno;
+	private String boardtitle;
+	private String boardcontent;
+	private int regdate;
+	private int updatedate;
+	private int viewcnt;
+	private int eno;
+	private String classcode;
+}

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Kw-Mapper">
+
+	<select id="selectPopularHashTag" resultType="popularHashtag">
+		select nvl(f.hashTag,G.hashTag) as hashtag,nvl(f.knowHowCnt,0) as knowHowCnt,nvl(G.approvalCnt,0) as approvalCnt, (nvl(f.knowHowCnt,0) + nvl(G.approvalCnt,0)) as cnt
+          from (select d.hashTag,count(d.hashTag) as knowHowCnt
+                  from (SELECT REGEXP_SUBSTR(a.tagcontent,'[^ ]+', 1, b.lv) AS hashTag
+                          FROM hashtag a, knowhow c
+                               , (SELECT LEVEL AS lv 
+                                    FROM dual 
+                                    <![CDATA[
+                        CONNECT BY LEVEL <= 10) b --최대 개수 10개
+                          ]]>
+                 WHERE A.HASHNO = c.wcode
+                   and REGEXP_SUBSTR(a.tagcontent, '[^ ]+', 1, b.lv) IS NOT NULL
+                   and classcode = 'B103') d
+                 group by d.hashTag
+                  order by knowHowCnt desc) f
+          full outer join(select d.hashTag,count(*) as approvalCnt
+                    from (SELECT REGEXP_SUBSTR(a.tagcontent,'[^ ]+', 1, b.lv) AS hashTag
+                            FROM hashtag a, approval c
+                                 , (SELECT LEVEL AS lv 
+                                      FROM dual
+                                       <![CDATA[
+                                    CONNECT BY LEVEL <= 10) b --최대 개수 10개
+                                      ]]>
+                           WHERE A.HASHNO = c.signno
+                             and REGEXP_SUBSTR(a.tagcontent, '[^ ]+', 1, b.lv) IS NOT NULL
+                             and classcode = 'C101') d
+                           group by d.hashTag
+                           order by approvalCnt desc) g
+           on F.hashTag = G.hashTag
+        order by cnt desc
+	
+	</select>
+	
+	<select id="selectPopularEmp" resultType="popularEmp">
+		select f.popEno as eno, g.name, i.ppsname, h.dname, f.appCnt, f.knowCnt, f.cnt
+	      from (select nvl(e.eno,d.eno) as popEno,nvl(d.dcnt,0) as appCnt, nvl(e.wcnt,0) as knowCnt, (nvl(d.dcnt,0) + nvl(e.wcnt,0)) as cnt
+	              from (select b.eno,c.name, count(*) as dcnt
+	                      from FAVDOC a, SIGNDOC b, EMPLOYEE c
+	             where A.SIGNNO = b.SIGNNO
+	               and b.eno = C.ENO
+	             group by b.ENO,c.name) d
+	      full outer join
+	           (select b.eno, c.name, count(*) as wcnt
+	              from favknowhow a, workmanager b, EMPLOYEE c 
+	             where a.wcode = b.wcode
+	               and b.eno = c.eno
+	             group by b.eno, c.name) e on d.eno = e.eno
+	             order by cnt desc) f, EMPLOYEE g, DEPARTMENT h, POSTPOSITION i
+	   where f.popEno = g.eno
+	     and g.dno = h.dno
+	     and g.ppscode = i.ppscode
+	     <![CDATA[
+	     and ROWNUM <=5
+	     ]]>
+	</select>
+	
+	
+</mapper>
+

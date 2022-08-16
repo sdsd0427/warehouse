@@ -1,0 +1,181 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/ehr.css">
+<title>내 연차 관리</title>
+<style>
+
+select#searchType {
+    list-style-type: none;
+    width: 140px;
+    float: left;
+}
+
+.td1{
+	font-size: 3.2em;
+	margin-left: 20px;
+	text-align: center;
+	color: #3399FF;
+	font-weight: bold;
+}
+
+.th1{
+	text-align: center;
+	font-size: 1.2em;
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+	<h3 class="title">내 연차 관리</h3>
+	<div>
+		<h3 style="font-weight: bold; text-align:center;">&lt;&nbsp;2022.07.04&nbsp;&gt;</h3>
+	</div>
+	
+	<hr>
+	<div class="row">
+		
+		<div class="col-5">
+			<table class="table table-borderless">
+				<tbody>
+					<tr>
+						<td><img alt="" src="/warehouse/resources/images/indexPage/chopa.jpg" style="width:150px; height: 160px;"></td>
+						<td style="text-align:center; vertical-align:middle !important; font-weight: bold; font-size: 1.5em;">강정인 대표이사</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="col-7">
+			<table class="table table-borderless">
+				<thead>
+					<tr>
+						<th class="th1">발생 연차</th>
+						<th class="th1">총 연차</th>
+						<th class="th1">사용 연차</th>
+						<th class="th1">잔여 연차</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="td1">1</td>
+						<td class="td1">0</td>
+						<td class="td1">0</td>
+						<td class="td1">0</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<hr>
+	
+	<div class="row">
+		<div class="input-group col-12">
+			<span style="font-size: 1.1em; margin-left: 20px; margin-top: 5px;">연차 사용기간  : </span>
+			<div class="col-3 ml-3">
+				<select id="inputState" class="form-control">
+					<option value="" selected>2021-01-01 ~ 2021-12-31</option>
+					<option value="" >2020-01-01 ~ 2020-12-31</option> 
+					<option value="" >2019-01-01 ~ 2019-12-31</option> 
+					<option value="" >2018-01-01 ~ 2018-12-31</option> 
+				</select>
+			</div>
+		</div>
+	</div>
+	<br>
+
+	<div class="row">
+		<div class="col-12">
+			<div class="card card-info card-outline">
+				<div class="card-header">
+					<h3 class="card-title">사용내역</h3>
+				</div>
+
+				<div class="card-body table-responsive p-0">
+					<table class="table table-hover text-nowrap">
+						<thead>
+							<tr>
+								<th>이름</th>
+								<th>부서</th>
+								<th>사용 기간</th>
+								<th>사용 연차 일수</th>
+								<th>휴가 내용</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>강정인</td>
+								<td>영업팀</td>
+								<td>2022-07-04 ~ 2022-07-08</td>
+								<td>5</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>강정인</td>
+								<td>영업팀</td>
+								<td>2021-05-15 ~ 2021-05-15</td>
+								<td>0.5</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>강정인</td>
+								<td>영업팀</td>
+								<td>2020-12-22 ~ 2020-12-28</td>
+								<td>7</td>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="row">
+		<div class="col-12">
+			<div class="card card-info card-outline">
+				<div class="card-header">
+					<h3 class="card-title">생성내역</h3>
+				</div>
+				<div class="card-body table-responsive p-0">
+					<table class="table table-hover text-nowrap">
+						<thead>
+							<tr>
+								<th>등록일</th>
+								<th>사용 기간</th>
+								<th>발생일수</th>
+								<th>내용</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>2021-05-12</td>
+								<td>2021-12-31</td>
+								<td>15</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>2021-01-01</td>
+								<td>2021-12-31</td>
+								<td>0</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>2021-01-01</td>
+								<td>2021-12-30</td>
+								<td>0</td>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

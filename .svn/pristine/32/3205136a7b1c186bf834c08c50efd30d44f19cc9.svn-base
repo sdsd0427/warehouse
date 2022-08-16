@@ -1,0 +1,143 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<head>
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/bootstrap/plugins/summernote/summernote-bs4.min.css">
+	
+<style>
+.timeline::before {
+	left: 20px;
+}
+
+</style>	
+</head>
+
+<body>
+
+<div class="wrapper" style="padding-left: 40px;">
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row md-2">
+				<div class="col-sm-6">
+					<h3>경조사게시판</h3>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="content container-fluid">
+		<div class="card card-info card-outline">
+			<div class="card-header">
+				<h3 class="card-title">상세보기</h3>
+				<div class="col-lg-12">
+					<button class="btn btn-danger float-right" style="margin-left:20px;" type="button" onclick="remove_go();">삭제</button>
+					<button class="btn btn-info float-right" style="margin-left:20px;" type="button" onclick="location.href='modifyForm.do'">수정</button>
+					<button class="btn btn-secondary float-right" type="button" onclick="history.go(-1);">목록</button>
+				</div>
+			</div>
+			
+			<div class="card-body">
+			
+			<h5 style="font-weight:bold;">경조사게시판입니다</h5>
+			<div class="form-group row">
+				<div class="user-panel pb-3 d-flex">
+					<div class="image">
+						<img src="<%=request.getContextPath() %>/resources/images/indexPage/chopa.jpg" class="img-circle elevation-2" alt="User Image">
+						</div>
+						<div class="info">
+						<span>서난희</span>
+						<span class="date">&nbsp;&nbsp;2022-06-27</span>
+					</div>
+				</div>
+			</div>
+			
+					<div class="form-group">
+						fkffkfkfkffk                  
+					</div>	
+					
+					<div class="form-group">
+                        <span class="ic_classic ic_reply"></span>
+                        <span class="txt_b">댓글 <span class="num txt_b" id="commentCount">0 </span>개</span>
+                        <span class="part">&nbsp;|&nbsp;</span>
+                        <span class="txt_ txt_b">
+                            조회
+                            <span>17</span>
+                            
+                        </span>
+            </div>
+					
+					<div class="card card-light card-outline">
+						<div class="card-header">
+						<h5 class="card-title"><i class="fas fa-paperclip"></i>&nbsp;&nbsp;첨부파일</h5>
+						
+						</div>
+						<div class="card-footer fileInput"></div>
+					</div>
+						
+			</div>
+			
+		</div>
+	
+	
+<div class="card card-info">
+								<div class="card-header">
+									<h3 class="card-title">
+										<i class="fas fa-comments"></i>&nbsp;&nbsp;댓글
+									</h3>
+								</div>
+
+								<div class="card-body row">
+									<input type="text" class="form-control col-11" id="" value="">
+									<button type="button" id="" class="btn btn-default col-1">
+										<i class="fas fa-edit"></i>
+									</button>
+								</div>
+
+								<div class="card-footer">
+									<div class="timeline">
+
+										<div class="time-label">
+											<span class="bg-success">댓글 목록</span>
+										</div>
+
+
+										<div>
+											<img class="direct-chat-img img-circle elevation-2" src="<%=request.getContextPath() %>/resources/images/indexPage/chopa.jpg">
+											<div class="timeline-item">
+												<span class="time"><i class="fas fa-clock"></i>&nbsp;12:05&nbsp;
+												<a class="btn btn-info btn-xs">수정</a> 
+													<a class="btn btn-danger btn-xs">삭제</a>
+												</span>
+												<h3 class="timeline-header">
+													<p>홍길동</p> 
+												</h3>
+												<div class="timeline-body">반가워요
+													</div>
+												<div class="timeline-footer">
+												
+												</div>
+											</div>
+										</div>
+
+
+									
+
+									</div>
+								</div>
+
+							</div>
+							</section>
+
+</div>
+
+<script>
+window.onload=function(){
+   summernote_go($('#content'),'<%=request.getContextPath()%>'); 
+}
+
+function remove_go(){
+	alert("정말 삭제하시겠습니까?");
+}	
+</script>
+
+</body>

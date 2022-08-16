@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BoardAttach-Mapper">
+	<select id="selectAttachByBoardNo" resultType="boardAttach">
+		select
+		attachNo
+	   ,uploadPath
+	   ,fileName
+	   ,fileType
+	   ,regDate
+	   ,boardNo
+	   ,eno
+		from attach
+		where boardNo = #{boardNo}
+	</select>
+
+	<select id="selectAttachByAttachNo" resultType="boardAttach">
+		select
+		attachNo
+	   ,uploadPath
+	   ,fileName
+	   ,fileType
+	   ,regDate
+	   ,boardNo
+	   ,eno
+		from attach
+		where attachNo=#{attachNo}
+	</select>
+
+	<update id="insertAttach">
+		insert into
+		attach (attachNo, uploadPath, fileName, fileType, boardNo, eno)
+		values (boardattach_seq.nextval, #{uploadPath},#{fileName},#{fileType},#{boardNo},#{eno})
+	</update>
+
+	<update id="deleteAttach">
+		delete
+		from attach
+		where attachNo = #{attachNo}
+	</update>
+
+	<update id="deleteAllAttach">
+		delete
+		from attach
+		where boardNo = #{boardNo}
+	</update>
+</mapper>
+

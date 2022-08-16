@@ -1,0 +1,18 @@
+package kr.or.warehouse.service;
+
+import java.sql.SQLException;
+import java.util.Map;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.dto.ManualVO;
+
+public interface ManualService {
+
+	// 목록조회
+	Map<String,Object> getManualList(Criteria cri)throws SQLException;
+
+	// 상세보기
+	ManualVO getManual(String manualNo)throws SQLException;
+	ManualVO getManualForModify(String manualNo)throws SQLException;
+
+}

@@ -1,0 +1,668 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<head>
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/work/workMain.css">
+	<style>
+		.table th,.table td{
+			padding: 4px 0.75rem;
+		}
+
+		.card-body.p-0 .table tbody>tr>td:last-of-type{
+			padding-right: 0;
+		}
+		.card-body.p-0 .table tbody>tr>td:first-of-type{
+			padding-left: 0.75rem;
+		}
+		.card-header{
+			padding: 4px 1.25rem;
+		}
+		.card-body{
+			padding: 0.75rem 1.25rem;
+		}
+		.small-box{
+			margin: 0;
+		}
+		.table{
+			margin: 0;
+		}
+		.page-link {
+		    line-height: 1;
+		    color: #001f3f;
+		    background-color: #fff;
+		}
+		.page-item.active .page-link {
+		    z-index: 3;
+		    color: #fff;
+		    background-color: #001f3f;
+		    border-color: #001f3f;
+		}
+		.officeNav button{
+			width: 80px;
+			height: 40px;
+			margin: 0 5px;
+		}
+		.home_tab{
+		  	display: flex;
+		  	border-bottom: 1px solid #ccc;
+		   	font-size: 14px;
+		  	margin-bottom: 0;
+		}
+		.home_tab li{
+			padding: 5px 7px;
+			color: #858181;
+			position: relative;
+		    cursor: pointer;
+		}
+
+		.home_tab li.active{
+			color: #333;
+		}
+
+		.home_tab li.active:after{
+			content: "";
+		    position: absolute;
+		    bottom: -3px;
+		    left: 0;
+		    width: 100%;
+		    border-bottom: 2px solid #001f3f;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="row" style="margin: 10px 0;align-items: center">
+			<h3 class="title">업무</h3>
+
+		</div>
+<!-- 		<div class="row" style="padding:7.5px; justify-content: space-between;"> -->
+<!-- 			<div class="card card-outline card-navy" style="width: 55%"> -->
+<!-- 				<div class="card-header bg-light" style="font-weight: bold">미확인 내 업무 현황</div> -->
+<!-- 				<div class="card-body" style="display: flex; justify-content: space-between; align-items: center"> -->
+<!-- 					<div class="col-md-2"> -->
+<!-- 						<div class="small-box bg-danger"> -->
+<!-- 							<div class="inner"> -->
+<%-- 								<h3>${noneCheckCnt.get('0') }</h3> --%>
+<!-- 								<p style="font-size: 12px;">대기</p> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 					<div class="col-md-2"> -->
+<!-- 						<div class="small-box bg-info"> -->
+<!-- 							<div class="inner"> -->
+<%-- 								<h3>${noneCheckCnt.get('1') }</h3> --%>
+<!-- 								<p style="font-size: 12px;">진행</p> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 					<div class="col-md-2"> -->
+<!-- 						<div class="small-box bg-success"> -->
+<!-- 							<div class="inner"> -->
+<%-- 								<h3>${noneCheckCnt.get('2') }</h3> --%>
+<!-- 								<p style="font-size: 12px;">완료</p> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 					<div class="col-md-2"> -->
+<!-- 						<div class="small-box bg-primary"> -->
+<!-- 							<div class="inner"> -->
+<%-- 								<h3>${noneCheckCnt.get('3') }</h3> --%>
+<!-- 								<p style="font-size: 12px;">협업요청</p> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 					<div class="col-md-2"> -->
+<!-- 						<div class="small-box bg-warning"> -->
+<!-- 							<div class="inner"> -->
+<%-- 								<h3>${noneCheckCnt.get('4') }</h3> --%>
+<!-- 								<p style="font-size: 12px;">대리요청</p> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 					<div class="col-md-2"> -->
+<!-- 						<div class="small-box bg-secondary"> -->
+<!-- 							<div class="inner"> -->
+<%-- 								<h3>${noneCheckCnt.get('5') }</h3> --%>
+<!-- 								<p style="font-size: 12px;">전체</p> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 			<div class="card" style="width: 43%"> -->
+<!-- 				<canvas id="myChart" width="400" height="200"></canvas> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+		<div class="row" style="padding:7.5px; height:420px;">
+			<div class="card col-md-12 card-outline card-navy" style="padding: 0; height:100%">
+				<div class="card-header bg-light" style="font-weight: bold">
+					금주 마감 업무
+				</div>
+				<div class="card-body table-responsive p-0">
+					<ul class="home_tab" id="thisWeekEndWork">
+						<li class="myWork" onclick="getThisWeekEndMyWorkList(1)">내 업무</li>
+						<li class="toReq" onclick="getThisWeekEndToReqList(1)">요청한 업무</li>
+					</ul>
+					<div class="work-table">
+						<table class="table table-hover  text-nowrap projects" style="table-layout: fixed;">
+							<thead>
+							<tr>
+								<th style="width: 23%;">제목</th>
+								<th style="width: 20%">요청자</th>
+								<th style="width: 25%">담당자</th>
+								<th style="width: 10%">진척도</th>
+								<th style="width: 15%">기한
+									<span class="material-symbols-outlined" style="font-size: 14px;">
+									unfold_more_double
+									</span>
+								</th>
+								<th style="width: 7%">상태</th>
+							</tr>
+							</thead>
+							<tbody class="workList">
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="card-footer">
+					<ul class="pagination pagination-sm m-0" id="workList_pagination" style="justify-content: center">
+
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="row" style="padding:7.5px; justify-content: space-between; height: 300px;">
+			<div class="card card-outline card-navy" style="width: 49%; height: 100%">
+				<div class="card-header bg-light" style="font-weight: bold">
+					미승인 업무
+				</div>
+				<div class="card-body table-responsive p-0">
+					<table class="table table-hover text-nowrap projects" style="table-layout: fixed;">
+						<thead>
+							<tr>
+								<th style="width: 40%">제목</th>
+								<th style="width: 40%">요청자</th>
+								<th style="width: 20%">기한</th>
+							</tr>
+						</thead>
+						<tbody  class="notApproveMyWorkList">
+
+						</tbody>
+					</table>
+				</div>
+				<div class="card-footer">
+					<ul class="pagination pagination-sm m-0" id="notApproveMyWorkList_pagination" style="justify-content: center">
+
+					</ul>
+				</div>
+			</div>
+			<div class="card card-outline card-navy" style="width: 49%; height: 100%">
+				<div class="card-header bg-light" style="font-weight: bold">
+					대기중인 요청 업무
+				</div>
+				<div class="card-body table-responsive p-0">
+					<table class="table table-hover table-nowrap projects" style="table-layout: fixed;">
+						<thead>
+							<tr>
+								<th style="width: 40%">제목</th>
+								<th style="width: 40%">담당자</th>
+								<th style="width: 20%">기한</th>
+							</tr>
+						</thead>
+						<tbody class="waitToReqList">
+
+
+						</tbody>
+					</table>
+				</div>
+				<div class="card-footer">
+					<ul class="pagination pagination-sm m-0" id="waitToReqList_pagination" style="justify-content: center">
+
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="emp_card">
+			<div class="card-header" style="display: flex; align-items: center;">
+				<span class="name"></span>
+				<a class="mail" href="#">
+					<span class="material-symbols-outlined">
+					mail
+					</span>
+				</a>
+			</div>
+			<div class="card-body">
+				<span>부서</span>
+				<span class="dep">개발팀</span>
+				<br>
+				<span>연락처</span>
+				<span>010-1111-1111</span>
+			</div>
+		</div>
+	</div>
+	<script>
+
+	var workListPage = 1;
+	$(function(){
+		getThisWeekEndMyWorkList(1);
+		getNotApproveMyWorkList(1);
+		getWaitToReqWorkList(1);
+	});
+
+	function getThisWeekEndMyWorkList(page){
+		$('.home_tab li').removeClass("active");
+		$('.myWork').addClass("active")
+		workListPage = page;
+		$.ajax({
+			url : "<%=request.getContextPath()%>/work/getThisWeekEndMyWorkList.do?page=" + page,
+			type : 'get',
+			success : function(res){
+				if(res.thisWeekEndMyWorkList.length == 0){
+					var str = `
+						<td colspan="6" style="text-align:center;">
+							<span>금주 마감 업무가 존재하지 않습니다.</span>
+						</td>
+					`;
+					$('.workList').html(str)
+				}else{
+					printWorkList(res.thisWeekEndMyWorkList, $('.workList'), $('#workList-template'));
+				}
+				printPageMaker(res.pageMaker,$('#workList_pagination'), $('#myWorkList-pagination-template') )
+				$('.myWork').addClass("active");
+				$('.toReq').removeClass("active");
+			},
+			error : function(error){
+				alert("error : " + error.status)
+			}
+		});
+	}
+
+	function getThisWeekEndToReqList(page){
+		$('.home_tab li').removeClass("active");
+		$('.toReq').addClass("active")
+		$.ajax({
+			url : "<%=request.getContextPath()%>/work/getThisWeekEndToReqList.do?page=" + page,
+			type : 'get',
+			success : function(res){
+				if(res.thisWeekEndToReqList.length == 0){
+					var str = `
+						<td colspan="6" style="text-align:center;">
+							<span>금주 마감 업무가 존재하지 않습니다.</span>
+						</td>
+					`;
+					$('.workList').html(str)
+				}else{
+					printWorkList(res.thisWeekEndToReqList, $('.workList'), $('#workList-template'));
+					workListPage = page;
+				}
+				$('.toReq').addClass("active");
+				$('.myWork').removeClass("active");
+				printPageMaker(res.pageMaker,$('#workList_pagination'), $('#toReqList-pagination-template') )
+			},
+			error : function(error){
+				alert("error : " + error.status)
+			}
+		});
+	}
+
+	var notApproveListPage = 1;
+	function getNotApproveMyWorkList(page){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/work/getNotApproveMyWorkList.do?page=" + page,
+			type : 'get',
+			success : function(res){
+				if(res.notApproveMyWorkList.length == 0){
+					var str = `
+						<td colspan="4" style="text-align:center;">
+							<span>미승인 업무가 존재하지 않습니다.</span>
+						</td>
+					`;
+					$('.notApproveMyWorkList').html(str)
+				}else{
+					printWorkList(res.notApproveMyWorkList, $('.notApproveMyWorkList'), $('#notApproveMyWorkList-template'));
+					notApproveListPage = page;
+				}
+
+				printPageMaker(res.pageMaker,$('#notApproveMyWorkList_pagination'), $('#notApproveMyWork-pagination-template') )
+			},
+			error : function(error){
+				alert("error : " + error.status)
+			}
+		});
+	}
+	var waitToReqPage = 1;
+	function getWaitToReqWorkList(page){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/work/getWaitToReqWorkList.do?page=" + page,
+			type : 'get',
+			success : function(res){
+				if(res.waitToReqWorkList.length == 0){
+					var str = `
+						<tr>
+							<td colspan="3" rowspan="5" style="text-align:center;">
+								<span>대기중인 요청업무가 존재하지 않습니다.</span>
+							</td>
+						</tr>
+
+					`;
+					$('.waitToReqList').html(str)
+				}else{
+					printWorkList(res.waitToReqWorkList, $('.waitToReqList'), $('#waitToReqList-template'));
+					waitToReqPage = page;
+				}
+
+				printPageMaker(res.pageMaker,$('#waitToReqList_pagination'), $('#waitToReq-pagination-template') )
+			},
+			error : function(error){
+				alert("error : " + error.status)
+			}
+		});
+	}
+
+	function printWorkList(list, target, templateObject){
+		var template=Handlebars.compile(templateObject.html());
+		var html = template(list);
+		target.html(html);
+	}
+
+	function printPageMaker(pageMaker, target, templateObject){
+		var pageNumArray = new Array(pageMaker.endPage-pageMaker.startPage+1);
+		for(var i=0;i<pageMaker.endPage-pageMaker.startPage+1;i++){
+			pageNumArray[i]=pageMaker.startPage+i;
+		}
+		pageMaker.pageNum=pageNumArray;
+		if(pageMaker.prev){
+			pageMaker.prevPage = pageMaker.startPage - 1;
+		}
+		if(pageMaker.next){
+			pageMaker.nextPage = pageMaker.endPage + 1;
+		}
+
+		var template=Handlebars.compile(templateObject.html());
+		var html = template(pageMaker);
+		target.html(html);
+	}
+
+	Handlebars.registerHelper({
+		"readCheckColor" : function(wcheck){
+			if(wcheck == 1){
+				return 'gray';
+			}
+		},
+		"readCheckFontWeight" : function(wcheck){
+			if(wcheck == 0){
+				return 'bold';
+			}
+		},
+		"workOverDay" : function(wstatus, overDay){
+			var str = '<span class="badge bg-danger">D+' + overDay + '</span>';
+
+			if(wstatus == '대기' && overDay >= 3){
+				return new Handlebars.SafeString(str);
+			}
+		},
+		"workDday" : function(wstatus, dDay){
+			var str = '<span class="badge bg-danger">임박</span>'
+
+			if(dDay <= 3 && dDay != 0 && wstatus != '완료'){
+				return new Handlebars.SafeString(str);
+			}
+		},
+		"dateFormat" : function(wend){
+			var d = new Date(wend),
+	        month = '' + (d.getMonth() + 1),
+	        day = '' + d.getDate(),
+	        year = d.getFullYear();
+
+	    if (month.length < 2)
+	        month = '0' + month;
+	    if (day.length < 2)
+	        day = '0' + day;
+
+	    return [year, month, day].join('-');
+		},
+		"workStatus" : function(wstatus){
+			var str = wstatus == '대기' ? "bg-secondary" : wstatus == '진행' ? "bg-info" : wstatus == '완료' ? "bg-success" : wstatus == '협업요청' ? "bg-primary"
+					: "bg-warning";
+
+			return new Handlebars.SafeString(str);
+
+		},
+		"signActive_thisWeek":function(pageNum){
+			if(pageNum == workListPage) return 'active';
+		},
+		"signActive_notApprove":function(pageNum){
+			if(pageNum == notApproveListPage) return 'active';
+		},
+		"signActive_waitToReq":function(pageNum){
+			if(pageNum == waitToReqPage) return 'active';
+		}
+	})
+
+	function detail_go(wstatus,wcode){
+		if(wstatus == "대기" || wstatus == "이의신청"){
+			OpenWindow('waitDetail.do?wcode=' + wcode, '업무상세', '1000', '800');
+		}else{
+			goDetail('<%= request.getContextPath()%>/work/workDetailGo.do?wcode=' + wcode, '${menu.mcode}');
+		}
+	}
+	</script>
+
+	<script type="text/x-handlebars-template"  id="workList-template">
+		{{#each .}}
+			<tr style="color:{{readCheckColor wcheck}}; font-size:14px; cursor:pointer" onclick="detail_go('{{wstatus}}', '{{wcode}}')">
+				<td>
+					<span style="font-weight:{{readCheckFontWeight wcheck}}
+						text-overflow:ellipsis; overflow:hidden; width:80%; display:inline-block; white-space:nowrap">{{wtitle }}</span>
+					{{workOverDay wstatus overDay}}
+				</td>
+				<td>
+					<div style="align-items: center; display: flex;">
+						<div>
+							<img class="table-avatar emp_profile" src="{{requesterPhoto}}">
+						</div>
+						<div>
+							<span style="font-size:12px; font-weight:bold">{{requester }}</span>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div style="align-items: center; display: flex;">
+								<div>
+									<img class="table-avatar emp_profile" src="{{managerPhoto}}">
+								</div>
+								<div>
+									<span style="font-size:12px; font-weight:bold">{{manager}}</span>
+
+								</div>
+								<div style="font-size: 12px; ">
+									<span style="font-size: 8px; margin-left: 5px">외 {{managerCnt}}명</span>
+								</div>
+					</div>
+				</td>
+				<td class="project_progress">
+					<div class="progress progress-sm">
+						<div class="progress-bar bg-green" role="progressbar" aria-valuenow="{{wprogress}}" aria-valuemin="0"
+						aria-valuemax="100" style="width: {{wprogress}}%"></div>
+					</div>
+					<small>{{wprogress}}% 완료</small>
+				</td>
+				<td>
+					{{dateFormat wend}}
+					{{workDday wstatus dDay}}
+				</td>
+				<td>
+					<span class="badge {{workStatus wstatus}}">
+						{{wstatus}}
+					</span>
+				</td>
+			</tr>
+		{{/each}}
+	</script>
+
+	<script type="text/x-handlebars-template"  id="notApproveMyWorkList-template">
+		{{#each .}}
+			<tr style="color:{{readCheckColor wcheck}}; font-size:12px; cursor:pointer" onclick="detail_go('{{wstatus}}', '{{wcode}}')">
+				<td style="width:30%; vertical-align:center">
+					<span style="font-weight:{{readCheckFontWeight wcheck}};
+						text-overflow:ellipsis; overflow:hidden; width:80%; display:inline-block; white-space:nowrap">
+						{{wtitle }}
+					</span>
+						{{workOverDay wstatus overDay}}
+				</td>
+				<td style=
+					text-overflow:ellipsis; overflow:hidden; width:30%; white-space:nowrap">
+					{{requester }}
+				</td>
+				<td style=
+					text-overflow:ellipsis; overflow:hidden; width:20%; white-space:nowrap">
+					{{dateFormat wend}}
+				</td>
+			</tr>
+		{{/each}}
+	</script>
+
+	<script type="text/x-handlebars-template"  id="waitToReqList-template">
+		{{#each .}}
+			<tr style="color:{{readCheckColor wcheck}}; font-size:12px; cursor:pointer" onclick="detail_go('{{wstatus}}', '{{wcode}}')">
+				<td style="width:40%; vertical-align:center">
+					<span style="font-weight:{{readCheckFontWeight wcheck}};
+						text-overflow:ellipsis; overflow:hidden; width:80%; display:inline-block; white-space:nowrap">
+						{{wtitle }}
+					</span>
+						{{workOverDay wstatus overDay}}
+				</td>
+				<td>
+					<div style="align-items: center; display: flex;">
+								<div>
+									<span style="font-size:12px;">{{manager}}</span>
+
+								</div>
+								<div style="font-size: 12px; ">
+									<span style="font-size: 8px; margin-left: 5px">외 {{managerCnt}}명</span>
+								</div>
+					</div>
+				</td>
+				<td>
+					{{dateFormat wend}}
+					{{workDday wstatus dDay}}
+				</td>
+			</tr>
+		{{/each}}
+	</script>
+
+	<script type="text/x-handlebars-template"  id="myWorkList-pagination-template">
+		<li class="page-item">
+			<a class="page-link" href="javascript:getThisWeekEndMyWorkList(1)">
+				<i class="fas fa-angle-double-left"></i>
+			</a>
+		</li>
+		<li class="page-item">
+			<a class="page-link" href="{{#if prev}}javascript:getThisWeekEndMyWorkList({{prevPage}}){{/if}}">
+				<i class="fas fa-angle-left"></i>
+			</a>
+		</li>
+		{{#each pageNum}}
+		<li class="page-item {{signActive_thisWeek this}}">
+			<a class="page-link" href="javascript:getThisWeekEndMyWorkList({{this}})">{{this}}</a>
+		</li>
+		{{/each}}
+		<li class="page-item ">
+			<a class="page-link" href="{{#if next}}javascript:getThisWeekEndMyWorkList({{nextPage}}){{/if}}">
+				<i class="fas fa-angle-right"></i>
+			</a>
+		</li>
+		<li class="page-item ">
+			<a class="page-link" href="javascript:getThisWeekEndMyWorkList({{realEndPage}})">
+				<i class="fas fa-angle-double-right"></i>
+			</a>
+		</li>
+	</script>
+	<script type="text/x-handlebars-template"  id="toReqList-pagination-template">
+		<li class="page-item">
+			<a class="page-link" href="javascript:getThisWeekEndToReqList(1)">
+				<i class="fas fa-angle-double-left"></i>
+			</a>
+		</li>
+		<li class="page-item">
+			<a class="page-link" href="{{#if prev}}javascript:getThisWeekEndToReqList({{prevPage}}){{/if}}">
+				<i class="fas fa-angle-left"></i>
+			</a>
+		</li>
+		{{#each pageNum}}
+		<li class="page-item {{signActive_thisWeek this}}">
+			<a class="page-link" href="javascript:getThisWeekEndToReqList({{this}})">{{this}}</a>
+		</li>
+		{{/each}}
+		<li class="page-item">
+			<a class="page-link" href="{{#if next}}javascript:getThisWeekEndToReqList({nextPage}}){{/if}}">
+				<i class="fas fa-angle-right"></i>
+			</a>
+		</li>
+		<li class="page-item">
+			<a class="page-link" href="javascript:getThisWeekEndToReqList({realEndPage}})">
+				<i class="fas fa-angle-double-right"></i>
+			</a>
+		</li>
+	</script>
+	<script type="text/x-handlebars-template"  id="notApproveMyWork-pagination-template">
+		<li class="page-item">
+			<a class="page-link" href="javascript:getNotApproveMyWorkList(1)">
+				<i class="fas fa-angle-double-left"></i>
+			</a>
+		</li>
+		<li class="page-item">
+			<a class="page-link" href="{{#if prev}}javascript:getNotApproveMyWorkList({{prevPage}}){{/if}}">
+				<i class="fas fa-angle-left"></i>
+			</a>
+		</li>
+		{{#each pageNum}}
+		<li class="page-item {{signActive_notApprove this}}">
+			<a class="page-link" href="javascript:getNotApproveMyWorkList({{this}})">{{this}}</a>
+		</li>
+		{{/each}}
+		<li class="page-item">
+			<a class="page-link" href="{{#if next}}javascript:getNotApproveMyWorkList({{nextPage}}){{/if}}">
+				<i class="fas fa-angle-right"></i>
+			</a>
+		</li>
+		<li class="page-item">
+			<a class="page-link" href="javascript:getNotApproveMyWorkList({{realEndPage}})">
+				<i class="fas fa-angle-double-right"></i>
+			</a>
+		</li>
+	</script>
+	<script type="text/x-handlebars-template"  id="waitToReq-pagination-template">
+		<li class="page-item">
+			<a class="page-link" href="javascript:getWaitToReqWorkList(1)">
+				<i class="fas fa-angle-double-left"></i>
+			</a>
+		</li>
+		<li class="page-item">
+			<a class="page-link" href="{{#if prev}}javascript:getWaitToReqWorkList({{prevPage}}){{/if}}">
+				<i class="fas fa-angle-left"></i>
+			</a>
+		</li>
+		{{#each pageNum}}
+		<li class="page-item {{signActive_waitToReq this}}">
+			<a class="page-link" href="javascript:getWaitToReqWorkList({{this}})">{{this}}</a>
+		</li>
+		{{/each}}
+		<li class="page-item">
+			<a class="page-link" href="{{#if next}}javascript:getWaitToReqWorkList({{nextPage}}){{/if}}">
+				<i class="fas fa-angle-right"></i>
+			</a>
+		</li>
+		<li class="page-item">
+			<a class="page-link" href="javascript:getWaitToReqWorkList({{realEndPage}})">
+				<i class="fas fa-angle-double-right"></i>
+			</a>
+		</li>
+	</script>
+	<script>
+	$(document).on('click', 'body > aside > div > ul > li:nth-child(2) > a', function(){
+		$(this).attr("href", "#");
+		OpenWindow('<%=request.getContextPath()%>/work/workRegistForm.do', '새 업무', '1000', '800');
+	});
+	</script>
+</body>

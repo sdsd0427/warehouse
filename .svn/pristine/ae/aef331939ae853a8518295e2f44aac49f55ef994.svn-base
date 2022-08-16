@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Contact-Mapper">
+	<sql id="search">
+		<if test="searchType == 'n'.toString()">
+			and name like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'p'.toString()">
+			and phone like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'e'.toString()">
+			and email like '%'||#{keyword}||'%'
+		</if>
+	</sql>
+
+	<select id="selectSearchContactList" resultType="employee">
+
+		SELECT
+		b.name ,
+		b.email,
+		b.phone,
+		b.call,
+		b.condition,
+		c.ppsname,
+		a.dname,
+		b.condition
+		FROM department a, employee b,  postposition c
+		where a.dno = b.dno
+		and b.PPSCODE = c.PPSCODE
+		and b.name is not null
+		<include refid="search" />
+		order by b.name
+	</select>
+
+
+
+
+
+
+	<select id="getCompanyTree" resultType="department">
+		WITH
+		 CTE (dno, dname, updno) AS
+		(
+			SELECT t1.dno, t1.dname, t1.updno
+			FROM department t1
+			WHERE t1.parent_id = '#'
+
+			UNION ALL
+
+			SELECT t2.dno, t2.dname, t2.updno
+			FROM department t1,department t2
+			INNER JOIN CTE ON t2.updno = CTE.id
+
+		)
+
+		SELECT CTE.dno, CTE.dname, CTE.updno FROM CTE
+		ORDER BY CTE.dno;
+	</select>
+
+
+
+
+
+
+
+
+	<!-- 팀 클릭 시 정보 가져옴  -->
+	<select id="selectTeamContactList" resultType="employee">
+
+		SELECT
+		b.name ,
+		b.email,
+		b.phone,
+		b.call,
+		b.condition,
+		c.ppsname,
+		a.dname,
+		b.condition
+		FROM department a, employee b, postposition c
+		where a.dno = b.dno
+		and b.PPSCODE = c.PPSCODE
+		and b.name is not null
+		and a.dname = #{dname}
+	</select>
+
+
+
+
+	<select id="selectSearchContactListCount" resultType="int">
+		select
+		count(*)
+		from
+		employee
+		where name is not null
+		<include refid="search" />
+		order by name
+	</select>
+
+
+</mapper>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Work-Mapper">
+
+	<select id="selectMyWorkList" resultType="work">
+		SELECT
+		    a.wcode
+		   ,a.wtitle
+		   ,a.wdate
+		   ,a.wend
+		   ,a.wopen
+		   ,a.walarm
+		   ,a.eno
+		   ,a.wprogress
+		   ,a.wstatus
+		   ,a.classcode
+		FROM
+		    work a, workmanager b
+		WHERE a.wcode = b.wcode
+		  AND b.eno = #{eno}
+	</select>
+
+	<select id="selectWorkManagerList">
+		SELECT
+		    a.wmstep
+		   ,a.wcode
+		   ,a.eno
+		   ,a.isafter
+		   ,a.answer
+		   ,b.dno
+		   ,b.birth
+		   ,b.email
+		   ,b.name
+		   ,b.photo
+		   ,b.ppscode
+		   ,b.job
+		   ,b.phone
+		   ,b.call
+		   ,b.hiredate
+		   ,b.enabled
+		   ,b.mbti
+		   ,b.address
+		   ,b.retiredate
+		   ,b.retirereason
+		   ,b.pwd
+		   ,b.ipaddress
+		   ,b.signtype
+		   ,b.signpath
+		   ,b.condition
+		   ,b.year
+		FROM
+		    workmanager a, employee b
+		WHERE a.eno = b.eno
+		  AND a.wcode = #{wcode}
+	</select>
+</mapper>
+

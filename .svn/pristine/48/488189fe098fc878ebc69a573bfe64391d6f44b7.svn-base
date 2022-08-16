@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ApprovalDocBox-Mapper">
+
+
+	<sql id="search">
+		<if test="searchType == 't'.toString()">
+			and a.title like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'w'.toString()">
+			and a.eno = (select distinct a.eno
+                         from SignDoc a, employee b
+                        where  a.eno = b.eno
+                         and b.name like '%'||#{keyword}||'%')
+		</if>
+		<if test="searchType == 'tw'.toString()">
+			and (
+			a.title like '%'||#{keyword}||'%'
+			or
+			a.eno = (select distinct a.eno
+                         from SignDoc a, employee b
+                        where  a.eno = b.eno
+                         and b.name like '%'||#{keyword}||'%')
+			)
+		</if>
+		<if test="searchType == 'h'.toString()">
+			AND a.signNo in (SELECT hashno
+                         FROM hashtag
+                         WHERE tagcontent like '%'||#{keyword}||'%'
+                                )
+		</if>
+	</sql>
+	
+	<!-- 전사문서함 양식 -->
+	<select id="selectSignForm" resultType="signForm">
+		SELECT
+		    sformno
+		   ,formclass
+		   ,formtext
+		FROM
+		    signform
+	</select>
+	
+	
+	<!-- 전사문서함 리스트 -->
+	<select id="selectSearchApprovalList" resultType="signDoc">
+		SELECT
+		    a.signno
+		   ,a.eno
+		   ,a.dno
+		   ,a.sformno
+		   ,a.classcode
+		   ,a.Ddate
+		   ,a.emergency
+		   ,a.title
+		   ,a.edate
+		   ,a.sopen
+		   ,a.signcontent
+		   ,a.tempsave
+		   ,a.state
+		   ,a.takeover
+		   ,c.name
+		   ,b.FORMTEXT
+		   ,c.photo
+           ,e.PPSNAME
+           ,d.VIEWCNT
+		FROM
+		    signdoc a, SIGNFORM b, EMPLOYEE c, APPROVAL d, POSTPOSITION e
+		where a.signno is not null
+		<include refid="search" />
+		and a.SFORMNO = b.SFORMNO
+		and a.eno = c.eno
+		and a.SIGNNO =d.SIGNNO
+		and c.PPSCODE = e.PPSCODE
+        and a.SFORMNO = #{sFormNo}
+	</select>
+	
+	<!-- 관심문서함 리스트 -->
+	<select id="selectFavDocList" resultType="signDoc">
+		SELECT
+			    a.signno
+			   ,a.eno
+			   ,a.dno
+			   ,a.sformno
+			   ,a.classcode
+			   ,a.ddate
+			   ,a.emergency
+			   ,a.title
+			   ,a.edate
+			   ,a.sopen
+			   ,a.signcontent
+			   ,a.tempsave
+			   ,a.state
+			   ,a.takeover
+			   ,c.VIEWCNT
+			   ,d.name
+			   ,e.FORMTEXT
+			FROM
+			    signdoc a, FAVDOC b, APPROVAL c ,employee d,signform e
+			where a.SIGNNO=c.SIGNNO
+			  and b.SIGNNO = c.SIGNNO
+			  and a.eno =d.eno
+			  and a.sformno = e.sformno
+			  and b.eno=#{eno}
+	</select>
+	
+	<!-- 관심문서함 리스트 페이지 -->
+	<select id="selectFavDocTotalCount" resultType='int'>
+		SELECT
+			   count(*)
+			FROM
+			    signdoc a, FAVDOC b, APPROVAL c 
+			where a.SIGNNO=c.SIGNNO
+			  and b.SIGNNO = c.SIGNNO
+			  and b.eno=#{eno}
+	</select>
+	
+	
+	<select id="favDocCheck" resultType="int">
+		SELECT
+			   count(*)
+		  FROM
+			    favdoc
+		 where SIGNNO = #{signNo}
+		  and eno = #{eno}
+	</select>
+	
+	
+	
+	
+	
+	
+	<!-- 전사문서함 페이지 -->
+	<select id="selectSearchApprovalListCount" resultType="int">
+		SELECT count(*)
+		FROM  
+			signdoc a, SIGNFORM b, EMPLOYEE c, APPROVAL d
+		where a.signno is not null
+		and a.SFORMNO = b.SFORMNO
+		and a.eno = c.eno
+		and a.SIGNNO =d.SIGNNO
+	    and a.SFORMNO = #{sFormNo}
+	<include refid="search" />
+	</select>
+	
+	
+	
+	<!-- 즐겨찾기 -->
+	<update id="insertFavDoc" parameterType="signDoc">
+		INSERT INTO favdoc (
+						    regdate
+						   ,signno
+						   ,eno
+						) VALUES (
+						    sysdate
+						   ,#{signNo}
+						   ,#{eno}
+						)
+	</update>
+	
+	<update id="deleteFavDoc" parameterType="signDoc">
+		DELETE FROM favdoc
+		WHERE
+		signNo =#{signNo}
+		AND eno = #{eno}
+	</update>
+	
+	
+	
+	<!-- 해시태그 -->
+	<select id="selectMyDocHashTagList" resultType="str">
+		select DISTINCT
+		     REGEXP_SUBSTR(a.tagcontent, '[^ ]+', 1, c.lv) as tagcontent
+		from hashtag a, (select a.signNo as signNo
+		                    from  signDoc a, approval b
+		                    where a.signNo = b.signNo
+		                    and a.eno = #{eno}) b,
+		                    (SELECT LEVEL AS lv
+								FROM dual
+							CONNECT BY LEVEL  <![CDATA[<=]]> 10)c
+		where a.hashno = b.signNo
+		AND REGEXP_SUBSTR(a.tagcontent, '[^ ]+', 1, c.lv) IS NOT NULL
+
+
+	</select>
+	
+	
+	<!-- 상태가 5, 공개가 1 -->
+	<select id="selectSignDocInfo" resultType="str">
+		select signNo
+		from signDoc
+		where state = 5
+		and sopen = 1
+	</select>
+	
+	<!-- 전사문서함 저장 -->
+	<update id="insertAprovalBox">
+		INSERT INTO approval (
+							    signno
+							   ,viewcnt
+							) VALUES (
+							    #{signNo}
+							   ,0
+							)
+	</update>
+	
+	
+
+	
+	<select id="selectSearchFAVDocList" resultType="SignDoc" parameterType="hashMap">
+		SELECT
+			    a.signno,
+			    a.eno,
+			    a.dno,
+			    a.sformno,
+			    a.classcode,
+			    a.ddate,
+			    a.emergency,
+			    a.title,
+			    a.edate,
+			    a.sopen,
+			    a.signcontent,
+			    a.tempsave,
+			    a.state,
+			    a.takeover,
+			    a.viewcnt
+			FROM
+			    signdoc a, FAVDOC b
+			 where a.signno = b.signno
+			 and b.eno = #{eno}
+			<include refid="search" />
+			order by b.regdate desc
+	</select>
+	
+	<select id="selectName" resultType="str">
+		SELECT
+			  b.name
+			FROM
+			    signdoc a, employee b
+			 where a.eno = b.eno
+			 and a.signno = #{signNo}
+    
+	</select>
+	
+	
+	
+	
+</mapper>

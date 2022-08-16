@@ -1,0 +1,258 @@
+package kr.or.warehouse.dto;
+
+import java.util.Date;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.springframework.format.annotation.DateTimeFormat;
+
+public class SubMentoringVO {
+	private String smno;
+	private Date regDate;
+	private String intro;
+	private int period;
+	private int mentee;
+	private int mento;
+	private int approve;
+
+	private int eno;
+	private String name;
+	private String ppsName;
+	private String condition;
+	private int count;
+	private String photo;
+	private String job;
+	private String mbti;
+	private Date startDate;
+	private Date endDate;
+	private String dname;
+	private String dDay;
+	private String mtno;
+	private int readCheck;
+	private int score;
+	private String mbti2;
+	//work------------------
+	private String wtitle;
+	private Date wend;
+	private String wstatus;
+	private String wcode;
+	private Date wdate;
+	private int workCnt;
+	public int getWorkCnt() {
+		return workCnt;
+	}
+	public void setWorkCnt(int workCnt) {
+		this.workCnt = workCnt;
+	}
+
+	//doc-------------------
+	private Date ddate;
+	private String title;
+	private int state;
+	private String formclass;
+	private String signNo;
+
+	public String getSignNo() {
+		return signNo;
+	}
+	public void setSignNo(String signNo) {
+		this.signNo = signNo;
+	}
+	public int getEno() {
+		return eno;
+	}
+	public void setEno(int eno) {
+		this.eno = eno;
+	}
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
+	public String getMbti2() {
+		return mbti2;
+	}
+	public void setMbti2(String mbti2) {
+		this.mbti2 = mbti2;
+	}
+	public int getReadCheck() {
+		return readCheck;
+	}
+	public void setReadCheck(int readCheck) {
+		this.readCheck = readCheck;
+	}
+	public Date getWdate() {
+		return wdate;
+	}
+	public void setWdate(Date wdate) {
+		this.wdate = wdate;
+	}
+	public String getMbti() {
+		return mbti;
+	}
+	public void setMbti(String mbti) {
+		this.mbti = mbti;
+	}
+	public String getMtno() {
+		return mtno;
+	}
+	public void setMtno(String mtno) {
+		this.mtno = mtno;
+	}
+	public Date getDdate() {
+		return ddate;
+	}
+	public void setDdate(Date ddate) {
+		this.ddate = ddate;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
+	}
+	public String getFormclass() {
+		return formclass;
+	}
+	public void setFormclass(String formclass) {
+		this.formclass = formclass;
+	}
+	public String getWcode() {
+		return wcode;
+	}
+	public void setWcode(String wcode) {
+		this.wcode = wcode;
+	}
+	public String getWtitle() {
+		return wtitle;
+	}
+	public void setWtitle(String wtitle) {
+		this.wtitle = wtitle;
+	}
+	public Date getWend() {
+		return wend;
+	}
+	public void setWend(Date wend) {
+		this.wend = wend;
+	}
+	public String getWstatus() {
+		return wstatus;
+	}
+	public void setWstatus(String wstatus) {
+		this.wstatus = wstatus;
+	}
+	public String getdDay() {
+		return dDay;
+	}
+	public void setdDay(String dDay) {
+		this.dDay = dDay;
+	}
+	public String getDname() {
+		return dname;
+	}
+	public void setDname(String dname) {
+		this.dname = dname;
+	}
+	public Date getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+	public Date getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+	public String getJob() {
+		return job;
+	}
+	public void setJob(String job) {
+		this.job = job;
+	}
+	public String getPhoto() {
+		return photo;
+	}
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
+	public String getCondition() {
+		return condition;
+	}
+	public void setCondition(String condition) {
+		this.condition = condition;
+	}
+	public String getPpsName() {
+		return ppsName;
+	}
+	public void setPpsName(String ppsName) {
+		this.ppsName = ppsName;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getSmno() {
+		return smno;
+	}
+	public void setSmno(String smno) {
+		this.smno = smno;
+	}
+	public Date getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
+	}
+	public String getIntro() {
+		return intro;
+	}
+	public void setIntro(String intro) {
+		this.intro = intro;
+	}
+	public int getPeriod() {
+		return period;
+	}
+	public void setPeriod(int period) {
+		this.period = period;
+	}
+	public int getApprove() {
+		return approve;
+	}
+	public void setApprove(int approve) {
+		this.approve = approve;
+	}
+	public int getMentee() {
+		return mentee;
+	}
+	public void setMentee(int mentee) {
+		this.mentee = mentee;
+	}
+	public int getMento() {
+		return mento;
+	}
+	public void setMento(int mento) {
+		this.mento = mento;
+	}
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+}

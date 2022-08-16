@@ -1,0 +1,185 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+ 
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+
+
+
+<style>
+ul li {list-style-type: none; float: left;}
+
+div#chart {
+    border: 1px solid;
+    height: 30px;
+    width: 190px;
+    margin-left: 18px;
+    margin-top: 10px
+}
+
+div#Rectangle {
+    height: 400px;
+    width: 230px;
+    border: 2px solid;
+}
+span#RecName{
+	margin-left: 70px;
+}
+div#in {
+    margin-top: 3px;
+}
+
+.word {
+    margin: 7px;
+}
+
+bottom{
+  
+}
+
+</style>
+
+<body>
+
+
+
+
+
+
+
+
+
+<div>
+	<div id=a> 주소록</div>
+	<div id=b><a><span>개인주소록 추가</span></a></div>
+	<div>
+		<ul class="upWord">
+			<li class="word">전체</li>
+			<li class="word">ㄱ</li>
+			<li class="word">ㄴ</li>
+			<li class="word">ㄷ</li>
+			<li class="word">ㄹ</li>
+			<li class="word">ㅁ</li>
+			<li class="word">ㅂ</li>
+			<li class="word">ㅅ</li>
+			<li class="word">ㅇ</li>
+			<li class="word">ㅈ</li>
+			<li class="word">ㅊ</li>
+			<li class="word">ㅋ</li>
+			<li class="word">ㅌ</li>
+			<li class="word">ㅍ</li>
+			<li class="word">ㅎ</li>
+			
+			<li>
+				<select class="form-control col-md-3" name="perPageNum" id="perPageNum"
+					  		onchange="list_go();">
+					  		<option value="10" ><span class="select2-selection__rendered" id="select2-vesq-container" role="textbox" aria-readonly="true" title="Title">정렬개수</span></option>
+					  		<option value="20" ${cri.perPageNum == 20 ? 'selected':''}>20개씩</option>
+					  		<option value="50" ${cri.perPageNum == 30 ? 'selected':''}>30개씩</option>
+					  		<option value="100" ${cri.perPageNum == 50 ? 'selected':''}>50개씩</option>
+					  		
+				</select>						
+				<select class="form-control col-md-4" name="searchType" id="searchType">
+							<option value="tcw"  ${cri.searchType eq 'tcw' ? 'selected':'' }>전 체</option>
+							<option value="t" ${cri.searchType eq 't' ? 'selected':'' }>이름</option>
+							<option value="w" ${cri.searchType eq 'w' ? 'selected':'' }>휴대폰</option>
+							<option value="c" ${cri.searchType eq 'c' ? 'selected':'' }>이메일</option>
+				</select>					
+				<input  class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="${param.keyword }"/>
+			
+			</li>
+		</ul>
+	</div>  <!-- ㄱ,ㄴ,ㄷ -->
+	
+	<br>
+	<br>
+<div id="bottom" >	
+	<div id="Rectangle" style="border:1px solid ; float:left; margin:10px;">
+		<div id="chart">
+			<div id="in"><span id="RecName">조직도</span></div>
+			
+			
+			
+
+			
+			
+			
+			
+			
+			 <ul>
+				<li title="POJO그룹" rel="company" nodeid="10" id="company_10" class="jstree-last jstree-open">
+				<a title="POJO그룹" rel="company" nodeid="10" id="company_10" href="#" data-bypass="1" class="jstree-clicked">
+				POJO그룹</a>
+				<ul style=""><li title="영업본부" rel="org" nodeid="123" id="org_123" class="jstree-open">
+				<a title="영업본부" rel="org" nodeid="123" id="org_123" href="#" data-bypass="1" class="">
+				영업본부</a><ul style=""><li title="영업팀" rel="org" nodeid="130" id="org_130" class="jstree-leaf">
+				<a title="영업팀" rel="org" nodeid="130" id="org_130" href="#" data-bypass="1" class="">
+				영업팀</a></li><li title="마케팅팀" rel="org" nodeid="131" id="org_131" class="jstree-last jstree-leaf">
+				<a title="마케팅팀" rel="org" nodeid="131" id="org_131" href="#" data-bypass="1" class="">
+				마케팅팀</a></li></ul></li><li title="경영지원본부" rel="org" nodeid="124" id="org_124" class="jstree-open">
+				<a title="경영지원본부" rel="org" nodeid="124" id="org_124" href="#" data-bypass="1" class="jstree-clicked">
+				경영지원본부</a><ul><li title="재경팀" rel="org" nodeid="132" id="org_132" class="jstree-leaf">
+				<a title="재경팀" rel="org" nodeid="132" id="org_132" href="#" data-bypass="1" class="">
+				>재경팀</a></li><li title="총무팀" rel="org" nodeid="176" id="org_176" class="jstree-leaf">
+				<a title="총무팀" rel="org" nodeid="176" id="org_176" href="#" data-bypass="1" class="">
+				총무팀</a></li><li title="인사팀" rel="org" nodeid="177" id="org_177" class="jstree-last jstree-leaf">
+				<a title="인사팀" rel="org" nodeid="177" id="org_177" href="#" data-bypass="1" class="">
+				인사팀</a></li></ul></li><li title="개발본부" rel="org" nodeid="178" id="org_178" class="jstree-open">
+				<a title="개발본부" rel="org" nodeid="178" id="org_178" href="#" data-bypass="1" class="">
+				개발본부</a><ul><li title="개발팀" rel="org" nodeid="179" id="org_179" class="jstree-leaf">
+				<a title="개발팀" rel="org" nodeid="179" id="org_179" href="#" data-bypass="1">
+				개발팀</a></li><li title="플랫폼운영팀" rel="org" nodeid="180" id="org_180" class="jstree-leaf">
+							
+					</li>
+					</ul>
+					</li>
+					</ul>
+					</li>
+					</ul>
+		</div> <!-- chart -->
+	</div> <!-- Rectangle  -->
+	
+	<div id="bot" style="border:1px solid ; float:left; margin:10px;">
+		<table border="1px solid">
+			<thread>
+				<tr>
+					<th>이름</th>
+					<th>직위</th>
+					<th>휴대폰</th>
+					<th>이메일</th>
+					<th>부서</th>
+					<th>내선번호</th>
+				</tr>
+				<tbody>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					
+				</tbody>
+			</thread>
+		</table>
+	
+	</div>
+</div> <!-- <div id="bottom"> -->
+	
+	
+	
+	
+	
+</div><!-- 전체 -->
+
+
+
+
+</body>
+</html>

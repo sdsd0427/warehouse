@@ -1,0 +1,8 @@
+package kr.or.warehouse.service;
+
+import kr.or.warehouse.dto.CalendarVO;
+
+public interface CalendarService {
+
+	public void registCalendar(CalendarVO calendar) throws Exception;
+}

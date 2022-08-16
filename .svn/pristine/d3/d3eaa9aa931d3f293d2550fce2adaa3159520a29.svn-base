@@ -1,0 +1,593 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>주소록</title>
+
+<style>
+.page-link {
+    line-height: 1;
+    color: #17a2b8;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+
+	.upWord .word{
+	    list-style-type: none;
+	    float: left;
+	    margin: 5px;
+	}
+
+.btn_submenu {
+    display: inline-block;
+}
+	
+	span#RecName{
+		margin-left: 120px;
+	}
+	
+	
+	pribut{
+	 border:1px solid;
+	 
+	}
+	div#chart {
+    padding-top: 10px;
+}
+/* 	div#b {
+	    width: 150px;
+	    height: 40px;
+	} */
+	
+	select#perPageNum ,select#searchType {
+	list-style-type: none;
+    width: 140px;
+    float: left;
+}
+
+input.form-control{
+list-style-type: none;
+    width: 180px;
+    float: left;
+}
+
+div#inName {
+ 	width: 290px;
+ 	height: 30px;
+    margin-left: 8px;
+     margin-top: 3px;
+     background-color: #ffc107;
+}
+
+div#botle {
+    margin-left: 500px;
+   
+}
+div#b {
+    border-radius: 5px;
+}
+.sename{
+color:black;"
+}
+div#bottom {
+    margin-left: 40px;
+    margin-top: -30PX;
+}
+ul.upWord {
+    margin-left: -30px;
+}
+div#bmi {
+    margin-right: 160px;
+    border-radius: 5px;
+    margin-left: 18px;
+    height: 45px; width:120px;
+}
+button.groupbtn.btn.btn-info.btn-lg {
+    height: 45px;
+    font-size: 1.1em;
+}
+div#allgroupadd {
+    margin-top: 30px;
+    margin-left: 20px;
+}
+ul.mt-3 {
+    margin-left: 20px;
+}
+.allAdd {
+    margin-left: 30px;
+    margin-top: 30px;
+}
+
+.allgroup.card {
+    margin-top: 30px;
+}
+.emailcur{
+cursor:pointer;
+}
+</style>
+
+<script>
+
+
+</script>
+
+
+
+</head>
+
+
+
+
+
+<body>
+<script>
+$('.modal-backdrop').remove();
+</script>
+
+
+
+<div class="wrapper">
+		<div class="row" style="height: 100%;margin-left: 0px">
+			<div class="col-2" style="border: 2px solid #47bfbf; height: inherit;">
+				<div id= "allgroupadd">
+							
+						
+						
+						<button type="button" class="groupbtn btn btn-info btn-lg" data-toggle="modal" data-target="#myModalAdd" data-backdrop="false">그룹추가</button>
+
+						  <!-- Modal -->
+						  <div class="modal fade" id="myModalAdd" role="dialog" style="display:none">
+						    <div class="modal-dialog modal-sm">
+						      <div class="modal-content">
+						        <div class="modal-header">
+						         
+						          <h4 class="modal-title">그룹추가</h4>
+						           <button type="button" class="close" data-dismiss="modal">&times;</button>
+						        </div>
+						        <div class="modal-body">
+						            <label>
+						            <span>새 그룹 </span>&nbsp;
+						            <input type="text">
+						            </label>
+						          
+						          
+						        </div>
+						        <div class="modal-footer">
+						          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+						          <button type="button" class="btn btn-info" data-dismiss="modal">저장</button>
+						        </div>
+						      </div>
+						    </div>
+						  </div>			
+							<!-- Modal 끝-->		
+						  			
+				</div>
+
+
+
+
+
+
+
+
+
+
+
+				<div class="allgroup card">
+					<div class="card-header">
+						<h3 class="card-title">그룹</h3>
+					</div>
+
+					<div class="card-body p-0">
+						<table class="table table-sm">
+							<!-- <thead>
+								<tr>
+									<th style="width: 10px">#</th>
+								</tr>
+							</thead> -->
+							<tbody>
+								<tr>
+									<td>1. <a href="#">그룹1</a></td>
+								</tr>
+								<tr>
+									<td>2. <a href="#">그룹2</a></td>
+								</tr>
+								
+								
+							</tbody>
+						</table>
+					</div>
+
+				</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			</div>
+			
+			
+			
+			
+			
+			<section class="content-header col-10 ">
+				
+				
+				
+				
+			<section class="content-header" style="padding-top: 0px;">
+					<div class="row md-2">
+						<div class="col-sm-12" style="margin-left: 40px;">
+							<h3>개인 주소록 </h3>
+						</div>
+					</div>
+				</section>
+			<!-- <div id="a" > <h2>주소록 > 전체주소록</h2></div> -->
+			<div id="bottom">
+			<div style="display: flex; justify-content: space-between; padding: 20px 0 ">	
+				<!-- <div id="b" class="bg-info" style="height: 40px; width:140px">
+					<a id="pribut" style="padding-left: 10px">
+						<span style="vertical-align: -7px">그룹지정</span>
+					</a>
+				</div> -->
+				
+				
+				
+				
+				<!-- Modal -->
+    <button type="button" class="groupbtn btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" data-backdrop="false">그룹지정</button>
+
+
+<!-- 
+			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" data-backdrop="false">
+			  그룹지정
+			</button> -->
+
+
+
+
+
+
+		  <!-- Modal -->
+		  <div class="modal fade" id="myModal" role="dialog">
+		    <div class="modal-dialog modal-sm">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		         
+		          <h4 class="modal-title">그룹지정</h4>
+		           <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        </div>
+		        <div class="modal-body">
+		            <label><input type="checkbox" name="color" value="blue" checked> 그룹1</label><br>
+		            <label><input type="checkbox" name="color" value="blue" checked> 그룹2</label>
+		          
+		          
+		        </div>
+		        <div class="modal-footer">
+		          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+		          <button type="button" class="btn btn-info" data-dismiss="modal">저장</button>
+		        </div>
+		      </div>
+		    </div>
+		  </div>			
+			<!-- Modal 끝-->		
+			
+	
+	
+				
+				
+				
+				
+				
+				<div id="bmi" class="bg-Danger" >
+					<a id="bmibut" style="padding-left: 20px">
+						<span style="vertical-align: -7px">연락처 삭제</span>
+					</a>
+				</div>
+				
+				<div id="c">
+					<ul class="upWord">
+						<li class="word"><a href="#" class="sename"><strong>전체</strong></a></li>
+						<li class="word"><a href="#" class="sename"><strong>ㄱ</strong></a></li>
+						<li class="word"><a href="#" class="sename"><strong>ㄴ</strong></a></li>
+						<li class="word"><a href="#" class="sename"><strong>ㄷ</strong></a></li>
+						<li class="word"><a href="#" class="sename"><strong>ㄹ</strong></a></li>
+						<li class="word"><a href="#" class="sename"><strong>ㅁ</strong></a></li>
+						<li class="word"><a href="#" class="sename"><strong>ㅂ</strong></a></li>
+						<li class="word"><a href="#" class="sename"><strong>ㅅ</strong></a></li>
+						<li class="word"><a href="#" class="sename"><strong>ㅇ</strong></a></li>
+						<li class="word"><a href="#" class="sename"><strong>ㅈ</strong></a></li>
+						<li class="word"><a href="#" class="sename"><strong>ㅊ</strong></a></li>
+						<li class="word"><a href="#" class="sename"><strong>ㅋ</strong></a></li>
+						<li class="word"><a href="#" class="sename"><strong>ㅌ</strong></a></li>
+						<li class="word"><a href="#" class="sename"><strong>ㅍ</strong></a></li>
+						<li class="word"><a href="#" class="sename"><strong>ㅎ</strong></a></li><!-- </li> -->
+						</ul>
+						<!-- <li class="word"> -->
+				</div>  <!-- ㄱ,ㄴ,ㄷ -->
+			</div>
+		<div class="row" style="justify-content: space-between;">	
+			
+			<div id="bot" class="col-lg-12">
+						<div class="card card-info card-outline">
+						
+							<div class="card-header with-border">
+								<div id="" class="card-tools">
+									<div class="input-group row">
+										<select class="form-control col-md-3">
+									<option value="">이름</option>
+									<option value="">휴대폰</option>
+									<option value="">이메일</option>
+								</select> <input class="form-control" type="text" name="keyword"
+									placeholder="검색어를 입력하세요" value=""> <span
+									class="input-group-append">
+									<button class="btn btn-info" type="button"
+										data-card-widget="search">
+										<i class="fa fa-fw fa-search"></i>
+									</button>
+								</span>
+									</div>
+								</div>
+							</div>
+		
+							<div class="card-body table-responsive p-0">
+								<table class="table table-hover text-nowrap">
+									<thead>
+										<tr>
+											<th>
+													<!-- <div class="icheck-primary"> -->
+													<input type="checkbox" value="" id="check1">
+													<label for="check1"></label>
+													<!-- </div> -->
+											</th>
+											    
+												<th>이름</th>
+												<th>직위</th>
+												<th>휴대폰</th>
+												<th>이메일</th>
+												<th>부서</th>
+												<th>내선번호</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+													
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">오지현</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td class="emailcur" onclick="OpenWindow('../mail/send.do','메일보내기',1000,800);"> qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+								
+								
+								<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+													
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">이름</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td class="emailcur" onclick="OpenWindow('../mail/send.do','메일보내기',1000,800);">qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+								<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+													
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">이름</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td  class="emailcur"onclick="OpenWindow('../mail/send.do','메일보내기',1000,800);">qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+								<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+													
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">이름</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td  class="emailcur"onclick="OpenWindow('../mail/send.do','메일보내기',1000,800);">qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+									
+									<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+													
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">이름</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td class="emailcur" onclick="OpenWindow('../mail/send.do','메일보내기',1000,800);">qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+									
+										
+									<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+													
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">이름</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td class="emailcur" onclick="OpenWindow('../mail/send.do','메일보내기',1000,800);">qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+									
+										
+									<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+													
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">이름</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td class="emailcur" onclick="OpenWindow('../mail/send.do','메일보내기',1000,800);">qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+									
+										
+									<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+													
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">이름</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td class="emailcur" onclick="OpenWindow('../mail/send.do','메일보내기',1000,800);">qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+									
+										
+									<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+													
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">이름</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td onclick="OpenWindow('../mail/send.do','메일보내기',1000,800);">qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+									
+										
+									<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+													
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">이름</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td onclick="OpenWindow('../mail/send.do','메일보내기',1000,800);">qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+											
+									</tbody>
+								</table>
+							</div>
+		
+							<div class="card-footer">
+								<ul class="pagination justify-content-center m-0">
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+									</li><li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+									</li>
+		
+										<li class="page-item active">
+											<a class="page-link" href="">1</a>
+										</li>
+		
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+									</li>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+									</li>
+								</ul>
+							</div>
+							
+						</div>
+									
+				
+			</div>
+	
+	
+</div> <!-- <div id="bottom"> -->
+	
+	
+	
+</div><!-- bottom  -->	
+	
+
+				
+				
+				
+				
+				
+				
+				
+				
+
+
+			</section>
+
+
+
+		</div>
+	</div>
+
+						
+
+
+</body>
+</html>

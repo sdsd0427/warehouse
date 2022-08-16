@@ -1,0 +1,220 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<head>
+	<style>
+		th{
+			vertical-align: middle !important;
+		}
+	</style>
+</head>
+<body>
+	<div class="row ml-2">
+		<div class="col-8" style="padding: 20px;">
+			<div class="row" style="justify-content: space-between;">			
+				<h2 class="title" >상세보기</h2>
+				<div class="row col-8">
+					<div class="col-4">
+						<button type="button" class="btn btn-block bg-info">승인</button>
+					</div>
+					<div class="col-4">
+						<button type="button" class="btn btn-block bg-danger">이의신청</button>
+					</div>
+					<div class="col-4">
+						<button type="button" class="btn btn-block bg-warning">부당신고</button>
+					</div>
+				</div>
+			</div>		
+			<table class="table projects" style="width: 100%; table-layout: fixed; font-size: 14px; margin-top: 20px; text-align: center; ">
+				<tr>
+					<th style="width: 30%;">
+						요청자
+					</th>
+					<td style="width: 60%">
+						<div style="align-items: center; display: flex; justify-content: center">
+							<div >
+								<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+							</div>
+							<div>
+								<p style="font-size: 16px; font-weight: bold">김형민 </p>
+								<div style="font-size: 12px;">
+									<p>부장</p>
+									<p>개발1팀</p>
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th style="width: 30%">제목</th>
+					<td style="word-break:break-all">
+						[기능]전자결재
+					</td>
+				</tr>
+				<tr>
+					<th style="width: 30%">상세내용</th>
+					<td style="width: 60%;word-break:break-all;">
+						조직도에서 결재선 추가 기능, 참조자 추가 기능, 회람기능, 임시저장기능, 추천 문서 검색 기능
+					</td>
+				</tr>
+				<tr>
+					<th style="width: 30%">담당자</th>
+					<td style="width: 60%">
+						<div style="align-items: center; display: flex; justify-content: center; position: relative;">
+							<div>
+								<span class="badge bg-success" style="position:absolute; top: 0; left: 15px">책임</span>
+								<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+							</div>
+							<div>
+								<p style="font-size: 16px; font-weight: bold">장문석 </p>
+								<div style="font-size: 12px;">
+									<p>팀장</p>
+									<p>개발1팀</p>
+								</div>
+							</div>
+							<div >
+								<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+							</div>
+							<div>
+								<p style="font-size: 16px; font-weight: bold">서난희 </p>
+								<div style="font-size: 12px;">
+									<p>사원</p>
+									<p>개발1팀</p>
+								</div>
+							</div>
+							<div >
+								<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+							</div>
+							<div>
+								<p style="font-size: 16px; font-weight: bold">오지현 </p>
+								<div style="font-size: 12px;">
+									<p>사원</p>
+									<p>개발1팀</p>
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th style="width: 30%">기한</th>
+					<td style="width: 60%;">2022-07-18</td>
+				</tr>
+				<tr>
+					<th style="width: 30%">해시태그</th>
+					<td style="width: 60%; word-break:break-all;">#개발1팀 #5년차 #2년차 #1년차 #전자결재 #그룹웨어</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-4" style="padding:20px; border-left: 1px solid gray">
+			<div>
+				<p style="font-weight: bold">관련 노하우</p>
+				<div style="display: flex;">				
+					<input class="form-control" type="search" placeholder="해시태그 검색">
+					<button type="submit" class="btn btn-default" style="height: 38px;">
+						<i class="fa fa-search"></i>
+					</button>				
+				</div>
+				<div style="overflow: scroll; height: 40vh">				
+					<table class="table table-hover" style="margin-top: 10px; font-size: 12px; text-align: center;">
+						<thead>
+							<tr>
+								<th style="width: 70%">제목</th>
+								<th style="width: 30%">조회수</th>
+							</tr>
+						</thead>
+						<tr>
+							<td style="width: 70%">웨어하우스 전자결재</td>
+							<td>
+								542
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 70%">가온소프트 전자결재</td>
+							<td>
+								209
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 70%">가람시스템 전자결재</td>
+							<td>
+								182
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 70%">다우오피스 전자결재</td>
+							<td>
+								87
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 70%">전자결재 알고리즘 개발</td>
+							<td>
+								66
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 70%">전자결재 알고리즘 개발</td>
+							<td>
+								66
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 70%">전자결재 알고리즘 개발</td>
+							<td>
+								66
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div>
+				<p style="font-weight: bold; margin-top: 20px;">관련 멘토 업무</p>
+				<div style="display: flex;">				
+					<input class="form-control" type="search" placeholder="해시태그 검색">
+					<button type="submit" class="btn btn-default" style="height: 38px;">
+						<i class="fa fa-search"></i>
+					</button>				
+				</div>
+				<div style="overflow: scroll; height: 40vh">				
+					<table class="table table-hover" style="margin-top: 10px; font-size: 12px; text-align: center;">
+						<thead>
+							<tr>
+								<th style="width: 70%">제목</th>
+								<th style="width: 30%">상태</th>
+							</tr>
+						</thead>
+						<tr>
+							<td style="width: 70%">웨어하우스 전자결재</td>
+							<td>
+								<span class="badge bg-info">진행</span>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 70%">가온소프트 전자결재</td>
+							<td>
+								<span class="badge bg-info">진행</span>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 70%">가람시스템 전자결재</td>
+							<td>
+								<span class="badge bg-success">완료</span>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 70%">다우오피스 전자결재</td>
+							<td>
+								<span class="badge bg-success">완료</span>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 70%">전자결재 알고리즘 개발</td>
+							<td>
+								<span class="badge bg-success">완료</span>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>

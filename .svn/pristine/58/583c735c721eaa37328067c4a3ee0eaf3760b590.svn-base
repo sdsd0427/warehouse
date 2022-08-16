@@ -1,0 +1,182 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<head>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/ehr.css">
+</head> 
+   
+<body>
+
+<div class="wrapper">
+	<h3 class="title">부서 인사정보&nbsp;&nbsp;&gt;&nbsp;&nbsp;인사관리팀</h3>
+	
+<!-- 	<span style="margin-left: 7px;">전체인원 22명</span> -->
+	
+	
+	<section class="content">
+			<div class="container-fluid">
+				<div class="row md-2 mt-5">
+					<div class="col-md-12">
+
+						<div class="card">
+							<div class="card-header with-border">
+								<span style="float: left;">전체인원 22명</span>
+								<div id="" class="card-tools" style="width: 450px;">
+									<div class="input-group row">
+										<select class="form-control col-md-3" name="searchNum"
+											id="searchNum">
+											<option value="">정렬개수</option>
+											<option value="">10개</option>
+											<option value="">20개</option>
+											<option value="">30개</option>
+										</select> 
+										<select class="form-control col-md-3" name="searchType"
+											id="searchType">
+											<option value="">이름</option>
+											<option value="">직위</option>
+										</select> 
+										<input class="form-control" type="text" name="keyword"
+											placeholder="검색어를 입력하세요." value="${param.keyword }" /> 
+										<span class="input-group-append">
+											<button class="btn btn-info" type="button"
+												onclick="list_go(1);" data-card-widget="search">
+												<i class="fa fa-fw fa-search"></i>
+											</button>
+										</span>
+									</div>
+								</div>
+							</div>
+							
+							<div class="card-body">
+								<table class="table table-hover text-center">
+									<tr style="font-size: 0.95em;">
+										<th style="width: 20%;">사번</th>
+										<th style="width: 15%;">이름</th>
+										<th style="width: 10%;">직위</th>
+										<th style="width: 25%;">이메일</th>
+										<th style="width: 20%;">내선번호</th>
+										<th style="width: 10%;">계정상태</th>
+									</tr>
+
+									<tr style='font-size: 0.85em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>093100056
+										</td>
+										<td>김형민
+										</td>
+										<td>부장
+										</td>
+										<td>nimicosara@naver.com
+										</td>
+										<td>5561
+										</td>
+										<td>정상
+										</td>
+									</tr>
+
+									<tr style='font-size: 0.85em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>143100056
+										</td>
+										<td>최민규
+										</td>
+										<td>과장
+										</td>
+										<td>sdsd0427@gmail.com
+										</td>
+										<td>5562
+										</td>
+										<td>정상
+										</td>
+									</tr>
+
+									<tr style='font-size: 0.85em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>183100056
+										</td>
+										<td>장문석
+										</td>
+										<td>부장
+										</td>
+										<td>aaaa@ddit.or.kr
+										</td>
+										<td>5563
+										</td>
+										<td>13년
+										</td>
+									</tr>
+
+									<tr style='font-size: 0.85em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>183100056
+										</td>
+										<td>서난희
+										</td>
+										<td>부장
+										</td>
+										<td>bbbb@ddit.or.kr
+										</td>
+										<td>5564
+										</td>
+										<td style="color: blue;">휴직
+										</td>
+									</tr>
+
+									<tr style='font-size: 0.85em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>203100056
+										</td>
+										<td>강정인
+										</td>
+										<td>주임
+										</td>
+										<td>cccc@ddit.or.kr
+										</td>
+										<td>5565
+										</td>
+										<td>정상
+										</td>
+									</tr>
+
+								</table>
+							</div>
+							
+							<div class="card-footer">
+								<ul class="pagination justify-content-center m-0">
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+									</li>
+
+										<li class="page-item active">
+											<a class="page-link" href="">1</a>
+										</li>
+										<li class="page-item">
+											<a class="page-link" href="">2</a>
+										</li>
+										<li class="page-item">
+											<a class="page-link" href="">3</a>
+										</li>
+										<li class="page-item">
+											<a class="page-link" href="">4</a>
+										</li>
+										<li class="page-item">
+											<a class="page-link" href="">5</a>
+										</li>
+
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+									</li>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+									</li>
+								</ul>
+							</div>
+							
+						</div>
+
+
+
+					</div>
+				</div>
+			</div>
+		</section>
+	
+</div>
+
+</body>	

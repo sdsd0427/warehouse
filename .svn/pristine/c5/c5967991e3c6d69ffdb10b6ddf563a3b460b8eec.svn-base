@@ -1,0 +1,58 @@
+package kr.or.warehouse.dto;
+
+public class ContactVO {
+
+	private String name;
+	private String email;
+	private String phone;
+	private String call;
+	private String condition;
+	private String ppsname;
+	private String depname;
+
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getCall() {
+		return call;
+	}
+	public void setCall(String call) {
+		this.call = call;
+	}
+	public String getCondition() {
+		return condition;
+	}
+	public void setCondition(String condition) {
+		this.condition = condition;
+	}
+	public String getPpsname() {
+		return ppsname;
+	}
+	public void setPpsname(String ppsname) {
+		this.ppsname = ppsname;
+	}
+	public String getDepname() {
+		return depname;
+	}
+	public void setDepname(String depname) {
+		this.depname = depname;
+	}
+
+
+
+}

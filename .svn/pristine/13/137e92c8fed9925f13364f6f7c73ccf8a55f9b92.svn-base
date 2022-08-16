@@ -1,0 +1,40 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<head>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/community.css" type="text/css">
+</head>
+
+<title></title>
+
+<body class="hold-transition skin-blue sidebar-collapse">
+	<div class="wrapper">
+		<div class="row" style="height: 100%;">
+			<div class="col-2" style="border:2px solid #47bfbf; height:inherit;">
+				<button class="btn btn-block btn-info mt-4 " type="button">관리</button>
+				<button class="btn btn-block btn-info mt-3 " type="button">초대하기</button>
+				<button class="btn btn-block btn-danger mt-3 " type="button">탈퇴하기</button>
+				
+				
+				<ul>
+					<li>가입인사</li>
+				</ul>
+			</div>
+		<section class="content-header col-10 ">
+			<div class="row md-2">
+				<div class="col-sm-12">
+					<h2>커뮤니티 > 자전거 동호회</h2>
+				</div>
+			</div>
+		</section>
+
+		<section class="content">
+<!-- 			<div class="row" style="height: 100%;"> -->
+<!-- 				<div class="col-2" style="border:2px solid black; height:inherit;"></div> -->
+				
+		</section>
+		
+		</div>
+	</div>
+
+</body>

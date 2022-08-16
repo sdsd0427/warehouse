@@ -1,0 +1,58 @@
+package kr.or.warehouse.service;
+
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.command.PageMaker;
+import kr.or.warehouse.dao.ContactDAO;
+import kr.or.warehouse.dto.EmployeeVO;
+
+@Service
+public class ContactServiceImpl implements ContactService{
+
+	@Autowired
+	private ContactDAO contactDAO;
+
+	@Override
+	public Map<String, Object> getContactList(Criteria cri) throws SQLException {
+
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		List<EmployeeVO> myconList = contactDAO.selectSearchContactList(cri);
+
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(myconList.size());
+
+		dataMap.put("myconList", myconList);
+		dataMap.put("pageMaker", pageMaker);
+
+		return dataMap;
+
+	}
+
+
+	@Override
+	public Map<String, Object> getTeamContactList(Criteria cri, String dname) throws SQLException {
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		List<EmployeeVO> myconList = contactDAO.selectTeamContactList(cri,dname);
+
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(myconList.size());
+
+		dataMap.put("myconList", myconList);
+		dataMap.put("pageMaker", pageMaker);
+
+		return dataMap;
+	}
+
+
+
+
+}

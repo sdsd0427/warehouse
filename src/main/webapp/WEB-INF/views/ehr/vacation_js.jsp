@@ -1,0 +1,136 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<script>
+	//
+	function vacationUsageHistory(){
+		var data = {
+				'eno' : ${loginUser.eno},
+				'vyear' : $('#inputState').val()
+		}
+
+		$.ajax({
+			url : '<%=request.getContextPath()%>/ehr/vacationUsageHistory.do',
+			data : data,
+			type : 'post',
+			success: function(res){
+				if(res.length > 0){
+					printWorkData(res, $('#usageHistory'), $('#vacationUsageHistory-template'));
+				}else{
+					var str = `
+						<tr>
+							<td colspan="5" style="text-align:center">
+								연차 사용내역이 없습니다.
+							</td>
+						</tr>
+					`;
+
+					$('#usageHistory').html(str);
+				}
+
+			},
+			error:function(error){
+				alert("error : " + error.status)
+			}
+		});
+	}
+
+	
+	function vacationProduceHistory(){
+		var data = {
+				'eno' : ${loginUser.eno},
+				'vyear' : $('#inputState').val()
+		}
+
+		$.ajax({
+			url : '<%=request.getContextPath()%>/ehr/vacationProduceHistory.do',
+			data : data,
+			type : 'post',
+			success: function(res){
+				if(res.length > 0){
+					printWorkData(res, $('#produceHistory'), $('#vacationProduceHistory-template'));
+				}else{
+					var str = `
+						<tr>
+							<td colspan="4" style="text-align:center">
+								연차 사용내역이 없습니다.
+							</td>
+						</tr>
+					`;
+
+					$('#produceHistory').html(str);
+				}
+
+			},
+			error:function(error){
+				alert("error : " + error.status)
+			}
+		});
+	}
+	
+	function printWorkData(dataList, target, templateObject){
+		var template = Handlebars.compile(templateObject.html());
+		var html = template(dataList);
+		target.html(html);
+	}
+
+</script>
+
+<script type="text/x-handlebars-template"  id="vacationUsageHistory-template">
+{{#each .}}
+	<tr>
+		<td>{{formatDate vacStart}} ~ {{formatDate vacEnd}}</td>
+		<td>{{vacDay}}</td>
+		<td>{{vacContent}}</td>
+		<td>{{remDay}}</td>
+	</tr>
+{{/each}}
+</script>
+
+<script type="text/x-handlebars-template"  id="vacationProduceHistory-template">
+{{#each .}}
+	<tr>
+		<td>{{formatDate regDate}}</td>
+		<td>{{formatDate endDate}}</td>
+		<td>{{proDay}}</td>
+		<td>{{proContent}}</td>
+	</tr>
+{{/each}}
+</script>
+
+
+<script>
+	Handlebars.registerHelper({
+		"formatDate" : function(regDate){
+			var dateObj = new Date(regDate);
+			var year = dateObj.getFullYear();
+			var month = ('0' + (dateObj.getMonth() + 1)).slice(-2); 
+			var date = ('0' + dateObj.getDate()).slice(-2);
+			
+			return year + "-" + month + "-" + date;
+		}
+	});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

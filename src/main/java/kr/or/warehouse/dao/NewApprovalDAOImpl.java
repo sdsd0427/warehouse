@@ -1,0 +1,460 @@
+package kr.or.warehouse.dao;
+
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.poi.ss.usermodel.Row;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.dto.AllSignVO;
+import kr.or.warehouse.dto.AttachVO;
+import kr.or.warehouse.dto.EmployeeVO;
+import kr.or.warehouse.dto.FieldVO;
+import kr.or.warehouse.dto.MySignLineVO;
+import kr.or.warehouse.dto.SignDocVO;
+import kr.or.warehouse.dto.SignFormVO;
+import kr.or.warehouse.dto.SignLineGrVO;
+import kr.or.warehouse.dto.SignLineVO;
+import kr.or.warehouse.dto.SignerVO;
+
+@Repository
+public class NewApprovalDAOImpl implements NewApprovalDAO {
+
+	@Autowired
+	private SqlSession session;
+
+	// 관련문서
+	@Override
+	public List<SignDocVO> selectRelatedDocList(Map<String, String> paramMap, RowBounds rowBounds) throws SQLException {
+		return session.selectList("NewApproval-Mapper.selectRelatedDocList", paramMap, rowBounds);
+	}
+
+	// 참조자 리스트
+	@Override
+	public List<EmployeeVO> selectRefLineList(Map<String, String> paramMap, RowBounds rowBounds) throws SQLException {
+		return session.selectList("NewApproval-Mapper.selectRefLineList", paramMap, rowBounds);
+	}
+
+	// 조직도 부서 찾기
+	@Override
+	public List<SignDocVO> selectDeptName(Criteria cri, int eno) throws SQLException {
+		return session.selectList("NewApproval-Mapper.selectDeptName", eno);
+	}
+
+	// 결재선 리스트
+	@Override
+	public List<SignLineVO> selectSignLineList(Map<String, Object> paramMap) throws SQLException {
+		return session.selectList("NewApproval-Mapper.selectSignLineList", paramMap);
+	}
+
+	// 로그인한 사원 정보
+	@Override
+	public List<EmployeeVO> selectSearchContactList(Map<String, Object> paramMap) throws SQLException {
+		return session.selectList("NewApproval-Mapper.selectSearchContactList", paramMap);
+	}
+
+	// 문서번호
+	@Override
+	public String selectSignDocNo() throws SQLException {
+		return session.selectOne("NewApproval-Mapper.selectSignDocNo");
+	}
+
+	// 결재선 번호 생성
+	@Override
+	public String selectSignLineNo() throws SQLException {
+		return session.selectOne("NewApproval-Mapper.selectSignLineNo");
+	}
+
+	// 결재자 저장
+	@Override
+	public void insertSigner(SignerVO signer) throws SQLException {
+		System.out.println("결재자 저장:" + signer);
+		session.insert("NewApproval-Mapper.insertSigner", signer);
+
+	}
+
+	// 결재선 순위
+//	@Override
+//	public String selectRankCode(int eno) throws SQLException {
+//		// System.out.println("결재선 순위:"+eno);
+//		return session.selectOne("NewApproval-Mapper.selectRankCode", eno);
+//	}
+
+	// 결재선 저장
+	@Override
+	public void insertSignLine(SignLineVO signLine) throws SQLException {
+		session.insert("NewApproval-Mapper.insertSignLine", signLine);
+	}
+
+	// 결재문서 저장
+	@Override
+	public void insertSignDoc(SignDocVO signDoc) throws SQLException {
+		session.insert("NewApproval-Mapper.insertSignDoc", signDoc);
+	}
+
+	// 결재그룹 코드
+	@Override
+	public String selectSignGroupNo() throws SQLException {
+		return session.selectOne("NewApproval-Mapper.selectSignGroupNo");
+	}
+
+	// 개인결재선 그룹이름 저장
+	@Override
+	public void insertSignLineGr(SignLineGrVO signLineGr) throws SQLException {
+		System.out.println("signLineGr다오:" + signLineGr);
+		session.insert("NewApproval-Mapper.insertSignLineGr", signLineGr);
+	}
+
+	// 개인결재선 그룹에 사원들 저장
+	@Override
+	public void insertMySignLine(MySignLineVO mysignLine) throws SQLException {
+		session.insert("NewApproval-Mapper.insertMySignLine", mysignLine);
+	}
+
+	// 개인결재선 그룹
+	@Override
+	public List<SignLineGrVO> selectSignLineGr(int eno) throws SQLException {
+		return session.selectList("NewApproval-Mapper.selectSignLineGr", eno);
+	}
+
+	// 개인결재선 그룹에 속한 사원 리스트
+	@Override
+	public List<MySignLineVO> selectMySignMemberList(String signGroupNo) throws SQLException {
+		return session.selectList("NewApproval-Mapper.selectMySignMemberList", signGroupNo);
+	}
+
+	// 그룹삭제
+	@Override
+	public void deleteSignGr(String signGroupNo) throws SQLException {
+		session.delete("NewApproval-Mapper.deleteSignGr", signGroupNo);
+	}
+
+	// 첨부파일
+
+	@Override
+	public String selectSignAttachNo() throws SQLException {
+		return session.selectOne("NewApproval-Mapper.selectSignAttachNo");
+
+	}
+
+	@Override
+	public List<AttachVO> selectSignAttachBySianNo(String refNo) throws SQLException {
+		return session.selectList("NewApproval-Mapper.selectSignAttachBySianNo", refNo);
+	}
+
+	@Override
+	public AttachVO selectSignAttachBySianAttachNo(String attachNo) throws SQLException {
+		return session.selectOne("NewApproval-Mapper.selectSignAttachBySianAttachNo", attachNo);
+	}
+
+	@Override
+	public void insertSignAttach(AttachVO attach) throws SQLException {
+		session.update("NewApproval-Mapper.insertSignAttach", attach);
+
+	}
+
+	@Override
+	public void insertApprovalHashTag(SignDocVO signDoc) throws SQLException {
+		session.update("NewApproval-Mapper.insertApprovalHashTag", signDoc);
+	}
+
+	@Override
+	public void insertsignRef(SignDocVO signDoc) throws SQLException {
+		session.update("NewApproval-Mapper.insertsignRef", signDoc);
+	}
+
+	@Override
+	public void insertSignViewer(SignDocVO signDoc) throws SQLException {
+		session.update("NewApproval-Mapper.insertSignViewer", signDoc);
+	}
+
+
+
+	@Override
+	public List<FieldVO> selectFieldSetting(int eno) throws SQLException {
+		return session.selectList("NewApproval-Mapper.selectFieldSetting", eno);
+	}
+
+	@Override
+	public void insertFieldSetting(FieldVO field) throws SQLException {
+		session.selectList("NewApproval-Mapper.insertFieldSetting", field);
+	}
+
+	@Override
+	public void deleteField(int eno) throws SQLException {
+		session.delete("NewApproval-Mapper.deleteField", eno);
+	}
+
+	@Override
+	public int signReadCheck(String signNo, int eno) throws SQLException {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("signNo", signNo);
+		param.put("eno", eno);
+
+		return session.selectOne("NewApproval-Mapper.signReader", param);
+	}
+
+	@Override
+	public SignFormVO selectSignForm(String sFormNo) throws SQLException {
+		return session.selectOne("NewApproval-Mapper.selectSignForm", sFormNo);
+	}
+
+	@Override
+	public List<AllSignVO> selectApproveList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException {
+		return session.selectList("NewApproval-Mapper.selectApproveList", paramMap, rowBounds);
+	}
+
+	@Override
+	public List<AllSignVO> selectReadCheckApproveList(int eno) throws SQLException {
+		return session.selectList("NewApproval-Mapper.selectReadCheckApproveList", eno);
+	}
+
+	@Override
+	public void insertSignReader(AllSignVO allSign) throws SQLException {
+		session.update("NewApproval-Mapper.insertSignReader", allSign);
+	}
+
+	@Override
+	public void updateSignerScehck(AllSignVO allSign) throws SQLException {
+		session.update("NewApproval-Mapper.updateSignerScehck", allSign);
+	}
+
+	@Override
+	public int selectApproveListCount(Map<String, Object> paramMap) throws SQLException {
+		return session.selectOne("NewApproval-Mapper.selectApproveListCount", paramMap);
+	}
+
+	@Override
+	public List<AllSignVO> selectDraftList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException {
+		return session.selectList("NewApproval-Mapper.selectDraftList", paramMap, rowBounds);
+	}
+
+	@Override
+	public List<AllSignVO> selectReadCheckDraftList(int eno) throws SQLException {
+		return session.selectList("NewApproval-Mapper.selectReadCheckDraftList", eno);
+	}
+
+	@Override
+	public void updateSingDocScehck(AllSignVO allSign) throws SQLException {
+		session.update("NewApproval-Mapper.updateSingDocScehck", allSign);
+	}
+
+	@Override
+	public int selectDraftListCount(Map<String, Object> paramMap) throws SQLException {
+		return session.selectOne("NewApproval-Mapper.selectDraftListCount", paramMap);
+	}
+
+	@Override
+	public List<AllSignVO> selectTempList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException {
+		return session.selectList("NewApproval-Mapper.selectTempList", paramMap, rowBounds);
+	}
+
+	@Override
+	public int selectTempListCount(Map<String, Object> paramMap) throws SQLException {
+		return session.selectOne("NewApproval-Mapper.selectTempListCount", paramMap);
+	}
+
+	@Override
+	public List<AllSignVO> selectViewerList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException {
+		return session.selectList("NewApproval-Mapper.selectViewerList", paramMap, rowBounds);
+	}
+
+	@Override
+	public List<AllSignVO> selectReadCheckViewerList(int eno) throws SQLException {
+		return session.selectList("NewApproval-Mapper.selectReadCheckViewerList", eno);
+	}
+
+	@Override
+	public void updateSignViewerScehck(AllSignVO allSign) throws SQLException {
+		session.update("NewApproval-Mapper.updateSignViewerScehck", allSign);
+	}
+
+	@Override
+	public int selectViewerListCount(Map<String, Object> paramMap) throws SQLException {
+		return session.selectOne("NewApproval-Mapper.selectViewerListCount", paramMap);
+	}
+
+	@Override
+	public List<AllSignVO> selectCirculateList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException {
+		return session.selectList("NewApproval-Mapper.selectCirculateList", paramMap, rowBounds);
+	}
+
+	@Override
+	public int selectCirculateListCount(Map<String, Object> paramMap) throws SQLException {
+		return session.selectOne("NewApproval-Mapper.selectCirculateListCount", paramMap);
+	}
+
+	@Override
+	public AllSignVO selectSignDocBySignNo(String signNo) throws SQLException {
+		return session.selectOne("NewApproval-Mapper.selectSignDocBySignNo", signNo);
+	}
+
+	@Override
+	public List<SignerVO> selectSignerList(String signNo) throws SQLException {
+		return session.selectList("NewApproval-Mapper.selectSignerList", signNo);
+	}
+
+
+	@Override
+	public List<SignerVO> selectSignRefList(String signNo) throws SQLException {
+		return session.selectList("NewApproval-Mapper.selectSignRefList", signNo);
+	}
+
+
+	@Override
+	public List<SignerVO> selectSignViewerList(String signNo) throws SQLException {
+		return session.selectList("NewApproval-Mapper.selectSignViewerList", signNo);
+	}
+
+	@Override
+	public void updateSignCheckOfSignRank(String signLineNo) throws SQLException {
+		session.update("NewApproval-Mapper.updateSignCheckOfSignRank", signLineNo);
+	}
+
+	@Override
+	public AttachVO selectSignAttachBySignAno(String attachNo) throws SQLException {
+		return session.selectOne("NewApproval-Mapper.selectSignAttachBySignAno", attachNo);
+	}
+
+	@Override
+	public void updateSignRank(SignerVO signer) throws SQLException {
+		session.update("NewApproval-Mapper.updateSignRank", signer);
+	}
+
+	@Override
+	public void updateNextSignCheck(SignerVO signer) throws SQLException {
+		session.update("NewApproval-Mapper.updateNextSignCheck", signer);
+	}
+
+	@Override
+	public void updateLastSignState(String signLineno) throws SQLException {
+		session.update("NewApproval-Mapper.updateLastSignState", signLineno);
+	}
+
+	@Override
+	public void updateStateOfSignDoc(SignerVO signer) throws SQLException {
+		session.update("NewApproval-Mapper.updateStateOfSignDoc", signer);
+	}
+
+	@Override
+	public String selectNameOfLastSigner(String signNo) throws SQLException {
+		return session.selectOne("NewApproval-Mapper.selectNameOfLastSigner", signNo);
+	}
+
+	@Override
+	public void updateSignStateByReject(SignerVO signer) throws SQLException {
+		session.update("NewApproval-Mapper.updateSignStateByReject", signer);
+	}
+
+	@Override
+	public void updateLowRankSignStateByReject(String signLineno) throws SQLException {
+		session.update("NewApproval-Mapper.updateLowRankSignStateByReject", signLineno);
+	}
+
+	@Override
+	public void updateSignStateByWait(SignerVO signer) throws SQLException {
+		session.update("NewApproval-Mapper.updateSignStateByWait", signer);
+	}
+
+	@Override
+	public String selectDrafter(String signNo) throws SQLException {
+		return session.selectOne("NewApproval-Mapper.selectDrafter", signNo);
+	}
+
+	@Override
+	public void deleteSignDoc(String signNo) throws SQLException {
+		session.update("NewApproval-Mapper.deleteSignDoc", signNo);
+	}
+
+	@Override
+	public void updateStateOfSignDocIng(SignerVO signer) throws SQLException {
+		session.update("NewApproval-Mapper.updateStateOfSignDocIng", signer);
+	}
+
+	@Override
+	public void deleteHashTag(String signNo) throws SQLException {
+		session.update("NewApproval-Mapper.deleteHashTag", signNo);
+	}
+
+	@Override
+	public void insertApproveSignDoc(String signNo) throws SQLException {
+		session.update("NewApproval-Mapper.insertApproveSignDoc", signNo);
+	}
+
+	@Override
+	public int selectReaderCount(AllSignVO allSign) throws SQLException {
+		return session.selectOne("NewApproval-Mapper.selectReaderCount", allSign);
+	}
+
+	//전사문서함 조회수
+	@Override
+	public void increaseDocViewCnt(String signNo) throws SQLException {
+		session.update("NewApproval-Mapper.increaseDocViewCnt", signNo);
+	}
+
+	@Override
+	public void updateClassCodeHashTag(AllSignVO allSign) throws SQLException {
+		session.update("NewApproval-Mapper.updateClassCodeHashTag", allSign);
+	}
+
+	@Override
+	public void updateClassCodeSignDoc(AllSignVO allSign) throws SQLException {
+		session.update("NewApproval-Mapper.updateClassCodeSignDoc", allSign);
+	}
+
+	@Override
+	public int selectRelatedDocListCount(Map<String, String> paramMap) throws SQLException {
+		return session.selectOne("NewApproval-Mapper.selectRelatedDocListCount",paramMap);
+	}
+
+	@Override
+	public List<AllSignVO> selectProceedingDraftList(Criteria cri, int eno) throws SQLException {
+		int offset = cri.getStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		return session.selectList("NewApproval-Mapper.selectProceedingDraftList", eno, rowBounds);
+	}
+
+	@Override
+	public int selectProceedingDraftTotalCount(int eno) throws SQLException {
+		return session.selectOne("NewApproval-Mapper.selectProceedingDraftTotalCount", eno);
+	}
+
+	@Override
+	public List<AllSignVO> selectRecentTempSaveDocList(Criteria cri, int eno) throws SQLException {
+		int offset = cri.getStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		return session.selectList("NewApproval-Mapper.selectRecentTempSaveDocList", eno, rowBounds);
+	}
+
+	@Override
+	public int selectRecentTempSaveDocTotalCount(int eno) throws SQLException {
+		return session.selectOne("NewApproval-Mapper.selectRecentTempSaveDocTotalCount", eno);
+	}
+
+	@Override
+	public List<AllSignVO> selectSignMyTurnDocList(Criteria cri, int eno) throws SQLException {
+		int offset = cri.getStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		return session.selectList("NewApproval-Mapper.selectSignMyTurnDocList", eno, rowBounds);
+	}
+
+	@Override
+	public int selectSignMyTurnDocTotalCount(int eno) throws SQLException {
+		return session.selectOne("NewApproval-Mapper.selectSignMyTurnDocTotalCount", eno);
+	}
+
+
+
+}

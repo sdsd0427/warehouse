@@ -1,0 +1,36 @@
+package kr.or.warehouse.controller.view;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/calendar")
+public class CalendarController {
+
+//	@Autowired
+//	private CalendarService calendarService;
+	
+	@RequestMapping("/main")
+	public void main() throws Exception {
+	}
+
+//	@RequestMapping(value = "/list", method = RequestMethod.GET)
+//	public ModelAndView getCalendarList(ModelAndView mv, HttpServletRequest request) {
+//		String viewpage = "calendar/main";
+//		
+////		List<CalendarVO> calendar = null;
+////		
+////		try {
+////			calendar = calendarService.getCalendar();
+////			request.setAttribute("calendarList", calendar);
+////		} catch (Exception e) {
+////			e.printStackTrace();
+////		}
+////		
+////		mv.setViewName(viewpage);
+//		
+//		return mv;
+//	}
+	
+	
+}

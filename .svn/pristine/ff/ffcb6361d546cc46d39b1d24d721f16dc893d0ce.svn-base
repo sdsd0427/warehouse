@@ -1,0 +1,121 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<head>
+	<style>
+		th{
+			vertical-align: middle !important;
+		}
+	</style>
+</head>
+<body>
+	<div class="row ml-2" style="margin: 0">
+		<div class="col-8" style="padding: 20px;">
+			<div class="row" style="justify-content: space-between;">
+				<h2 class="title" >새 업무</h2>
+				<div class="col-4">
+						<button type="button" class="btn btn-block bg-info">등록</button>
+				</div>
+			</div>
+			<table class="table projects" style="width: 100%; table-layout: fixed; font-size: 14px; margin-top: 20px; text-align: center; ">
+				<tr>
+					<th style="width: 30%;">
+						요청자
+					</th>
+					<td style="width: 60%">
+						<div style="align-items: center; display: flex; justify-content: center">
+							<div >
+								<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+							</div>
+							<div>
+								<p style="font-size: 16px; font-weight: bold">김형민 </p>
+								<div style="font-size: 12px;">
+									<p>부장</p>
+									<p>개발1팀</p>
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th style="width: 20%">제목</th>
+					<td style="word-break:break-all">
+						<input type="text" class="form-control">
+					</td>
+				</tr>
+				<tr>
+					<th style="width: 20%">담당자</th>
+					<td>
+						<div class="manager-list" style="align-items: center; display: flex; justify-content: center; position: relative;">
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th style="width: 20%">기한</th>
+					<td>
+						<input type="date" class="form-control" value="2022-07-08">
+					</td>
+				</tr>
+				<tr>
+					<th style="width: 20%">해시태그</th>
+					<td style=" word-break:break-all;">
+						<input type="text" class="form-control">
+					</td>
+				</tr>
+				<tr>
+					<th>첨부파일</th>
+					<td>
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" id="customFile">
+							<label class="custom-file-label" for="customFile" style="color: gray">
+								첨부파일을 등록해주세요.
+							</label>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<div>
+				<textarea class="textarea" name="content" id="content" rows="20"
+							cols="90" placeholder="1000자 내외로 작성하세요." ></textarea>
+			</div>
+
+		</div>
+		<div class="col-4" style="padding:20px; border-left: 1px solid gray">
+			<div>
+				<p style="font-weight: bold; padding-bottom: 10px">담당자 추가</p>
+				<%@ include file="./organization.jsp" %>
+			</div>
+			<div>
+				<p style="font-weight: bold; margin-top: 20px;">관련 업무 검색</p>
+				<div style="display: flex;">
+					<input class="form-control" type="search" placeholder="해시태그 검색">
+					<button type="submit" class="btn btn-default" style="height: 38px;">
+						<i class="fa fa-search"></i>
+					</button>
+				</div>
+				<div style="overflow: scroll; height: 40vh">
+					<table class="table table-hover" style="margin-top: 10px; font-size: 12px; text-align: center;">
+						<thead>
+							<tr>
+								<th style="width: 70%">제목</th>
+								<th style="width: 30%">상태</th>
+							</tr>
+						</thead>
+						<tr>
+							<td colspan="2">검색결과가 없습니다.</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+	window.onload = function(){
+		summernote_go($('textarea[name="content"]'), '<%=request.getContextPath()%>');
+	}
+
+	function removeManager(){
+		var removeItem = $(this).closest('.emp_select_card');
+		$('.emp_select_card').remove();
+	}
+	</script>
+</body>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Department-Mapper">
+<!--
+	<select id="selectDepartMentList" resultType="department">
+		SELECT
+		    dno
+		   ,dname
+		   ,manager
+		   ,updno
+		   ,createdate
+		   ,enabled
+		FROM
+		    department
+	</select>
+-->
+
+
+
+	<select id="selectDepartMentList" resultType="department">
+		SELECT
+		    dno
+		   ,dname
+		   ,manager
+		   ,updno
+		   ,createdate
+		   ,enabled
+		FROM
+		    department
+		 ORDER BY dno
+	</select>
+
+	<select id="selectDepartmentByDno" parameterType="int" resultType="department">
+		SELECT
+			 dno
+			,dname
+			,manager
+			,updno
+			,createdate
+			,enabled
+		FROM
+			department
+		WHERE
+			dno=#{dno}
+	</select>
+
+	<select id="selectEmployeeListByDno" resultType="employee">
+		SELECT
+		    a.eno
+		   ,b.dname
+		   ,a.birth
+		   ,a.email
+		   ,a.name
+		   ,a.photo
+		   ,c.ppsname
+		   ,a.job
+		   ,a.phone
+		   ,a.call
+		   ,a.hiredate
+		   ,a.enabled
+		   ,a.mbti
+		   ,a.address
+		   ,a.retiredate
+		   ,a.retirereason
+		   ,a.pwd
+		   ,a.ipaddress
+		   ,a.signtype
+		   ,a.signpath
+		   ,a.condition
+		   ,a.year
+		FROM
+		    employee a, department b, postposition c
+		WHERE a.dno = b.dno
+		  AND a.ppscode = c.ppscode
+		  AND a.dno = #{dno}
+	</select>
+</mapper>

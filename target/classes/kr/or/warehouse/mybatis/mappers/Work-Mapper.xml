@@ -1,0 +1,1610 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Work-Mapper">
+
+	<sql id="myWorkSearch">
+		<if test="searchType == 't'.toString()">
+			and a.wtitle like '%'||#{keyword}||'%'
+		</if>
+
+		<if test="searchType == 'm'.toString()">
+			AND a.wcode in (SELECT b.wcode
+                         FROM workmanager b, employee c
+                         WHERE b.eno = c.eno
+                           AND c.name = #{keyword}
+                                )
+		</if>
+
+		<if test="searchType == 'r'.toString()">
+			AND a.wcode in (SELECT b.wcode
+                         FROM work b, employee c
+                         WHERE b.eno = c.eno
+                           AND c.name = #{keyword}
+                                )
+		</if>
+
+		<if test="searchType == 'h'.toString()">
+			AND a.wcode in (SELECT hashno
+                         FROM hashtag
+                         WHERE tagcontent like '%'||#{keyword}||'%'
+                                )
+		</if>
+	</sql>
+
+	<sql id="toReqSearch">
+		<if test="searchType == 't'.toString()">
+			and wtitle like '%'||#{keyword}||'%'
+		</if>
+
+		<if test="searchType == 'm'.toString()">
+			AND wcode in (SELECT b.wcode
+                         FROM workmanager b, employee c
+                         WHERE b.eno = c.eno
+                           AND c.name = #{keyword}
+                                )
+		</if>
+
+		<if test="searchType == 'h'.toString()">
+			AND wcode in (SELECT hashno
+                         FROM hashtag
+                         WHERE tagcontent like '%'||#{keyword}||'%'
+                                )
+		</if>
+	</sql>
+	<select id="selectMyWorkAllStatusList" resultType="work">
+		SELECT
+			    a.wcode
+			    ,a.wtitle
+			    ,a.wdate
+			    ,a.wend
+			    ,a.wopen
+			    ,a.walarm
+			    ,a.wstatus
+			    ,a.wprogress
+			    ,a.classcode
+			    ,a.wcontent
+			    ,a.manager
+			    ,a.managerphoto
+			    ,b.eno as requestereno
+			    ,listagg(b.name||'('||c.dname||') '||d.ppsname, ',') WITHIN GROUP(ORDER BY rownum) as requester
+			    ,b.photo as requesterphoto
+			FROM (SELECT
+						     b.wcode as wcode
+						    ,b.wtitle as wtitle
+						    ,b.wdate as wdate
+						    ,b.wend as wend
+						    ,b.wopen as wopen
+						    ,b.walarm as walarm
+						    ,b.wprogress as wprogress
+						    ,b.wstatus as wstatus
+						    ,b.classcode as classcode
+						    ,b.wcontent as wcontent
+						    ,b.requester as requester
+						    ,b.wupdatedate as wupdatedate
+						    ,listagg(c.name||'('||d.dname||') '||e.ppsname, ',') WITHIN GROUP(ORDER BY a.wmstep desc) as manager
+						    ,listagg(c.photo, ',') WITHIN GROUP(ORDER BY a.wmstep desc) as managerphoto
+						FROM workmanager a, (SELECT
+						                        a.wcode as wcode
+						                       ,a.wtitle as wtitle
+						                       ,a.wdate as wdate
+						                       ,a.wend as wend
+						                       ,a.wopen as wopen
+						                       ,a.walarm as walarm
+						                       ,a.eno as requester
+						                       ,a.wprogress as wprogress
+						                       ,a.wstatus as wstatus
+						                       ,a.classcode as classcode
+						                       ,a.wcontent as wcontent
+						                       ,a.wupdatedate as wupdatedate
+						                       FROM work a, workmanager b
+						                        WHERE a.wcode = b.wcode
+						                         AND b.eno = #{eno}
+						                         AND a.wstatus != '신고'
+						                         AND a.wopen = 1)b, employee c, department d, POSTPOSITION e
+						WHERE a.wcode = b.wcode
+						AND a.eno = c.eno
+						AND c.dno = d.dno
+						AND c.ppscode = e.ppscode
+						GROUP BY b.wcode,b.wtitle,b.wdate,b.wend ,b.wopen,b.walarm,b.requester,b.wprogress,b.wstatus,b.classcode
+						    ,b.wcontent, b.wupdatedate) a, employee b, department c, postposition d
+			WHERE a.requester = b.eno
+			AND b.dno = c.dno
+			AND b.ppscode = d.ppscode
+			<include refid="myWorkSearch"/>
+			group by a.wcode, a.wtitle, a.wdate, a.wend, a.wopen,
+			a.walarm, a.wstatus, a.classcode, a.wcontent, a.manager,a.wprogress,
+			a.managerphoto, b.eno, b.photo,a.wupdatedate
+			ORDER BY a.wupdatedate desc
+
+	</select>
+
+	<select id="selectToReqAllStatusList" resultType="work">
+
+			SELECT
+			    a.wcode
+			    ,a.wtitle
+			    ,a.wdate
+			    ,a.wend
+			    ,a.wopen
+			    ,a.walarm
+			    ,a.wstatus
+			    ,a.wprogress
+			    ,a.classcode
+			    ,a.wcontent
+			    ,a.manager
+			    ,a.managerphoto
+			    ,b.eno as requestereno
+			    ,listagg(b.name||'('||c.dname||') '||d.ppsname, ',') WITHIN GROUP(ORDER BY rownum) as requester
+			    ,b.photo as requesterphoto
+			FROM (SELECT
+						     b.wcode as wcode
+						    ,b.wtitle as wtitle
+						    ,b.wdate as wdate
+						    ,b.wend as wend
+						    ,b.wopen as wopen
+						    ,b.walarm as walarm
+						    ,b.wprogress as wprogress
+						    ,b.wstatus as wstatus
+						    ,b.classcode as classcode
+						    ,b.wcontent as wcontent
+						    ,b.requester as requester
+						    ,b.wupdatedate as wupdatedate
+						    ,listagg(c.name||'('||d.dname||') '||e.ppsname, ',') WITHIN GROUP(ORDER BY a.wmstep desc) as manager
+						    ,listagg(c.photo, ',') WITHIN GROUP(ORDER BY a.wmstep desc) as managerphoto
+						FROM workmanager a, (SELECT
+						                        wcode
+						                       ,wtitle
+						                       ,wdate
+						                       ,wend
+						                       ,wopen
+						                       ,walarm
+						                       ,eno as requester
+						                       ,wprogress
+						                       ,wstatus
+						                       ,classcode
+						                       ,wcontent
+						                       ,wupdatedate
+						                       FROM work
+						                        WHERE eno = #{eno}
+						                        AND wstatus != '신고'
+						                        AND wopen = 1)b, employee c, department d, POSTPOSITION e
+						WHERE a.wcode = b.wcode
+						AND a.eno = c.eno
+						AND c.dno = d.dno
+						AND c.ppscode = e.ppscode
+						GROUP BY b.wcode,b.wtitle,b.wdate,b.wend ,b.wopen,b.walarm,b.requester,b.wprogress,b.wstatus,b.classcode
+						    ,b.wcontent,b.wupdatedate) a, employee b, department c, postposition d
+			WHERE a.requester = b.eno
+			AND b.dno = c.dno
+			AND b.ppscode = d.ppscode
+			<include refid="toReqSearch"/>
+			group by a.wcode, a.wtitle, a.wdate, a.wend, a.wopen,
+			a.walarm, a.wstatus, a.classcode, a.wcontent, a.manager,a.wprogress,
+			a.managerphoto, b.eno, b.photo,a.wupdatedate
+			ORDER BY a.wupdatedate desc
+	</select>
+
+	<select id="selectDepWorkAllStatusList" resultType="work">
+		SELECT
+			    a.wcode
+			    ,a.wtitle
+			    ,a.wdate
+			    ,a.wend
+			    ,a.wopen
+			    ,a.walarm
+			    ,a.wstatus
+			    ,a.wprogress
+			    ,a.classcode
+			    ,a.wcontent
+			    ,a.manager
+			    ,a.managerphoto
+			    ,b.eno as requestereno
+			    ,listagg(b.name||'('||c.dname||') '||d.ppsname, ',') WITHIN GROUP(ORDER BY rownum) as requester
+			    ,b.photo as requesterphoto
+			FROM (SELECT
+						     b.wcode as wcode
+						    ,b.wtitle as wtitle
+						    ,b.wdate as wdate
+						    ,b.wend as wend
+						    ,b.wopen as wopen
+						    ,b.walarm as walarm
+						    ,b.wprogress as wprogress
+						    ,b.wstatus as wstatus
+						    ,b.classcode as classcode
+						    ,b.wcontent as wcontent
+						    ,b.requester as requester
+						    ,b.wupdatedate wupdatedate
+						    ,listagg(c.name||'('||d.dname||') '||e.ppsname, ',') WITHIN GROUP(ORDER BY a.wmstep desc) as manager
+						    ,listagg(c.photo, ',') WITHIN GROUP(ORDER BY a.wmstep desc) as managerphoto
+						FROM workmanager a, (SELECT
+						                        a.wcode
+						                       ,a.wtitle
+						                       ,a.wdate
+						                       ,a.wend
+						                       ,a.wopen
+						                       ,a.walarm
+						                       ,a.eno as requester
+						                       ,a.wprogress
+						                       ,a.wstatus
+						                       ,a.classcode
+						                       ,a.wcontent
+						                       ,a.wupdatedate
+						                       FROM work a, employee b
+						                        WHERE a.eno = b.eno
+						                        AND b.dno = #{dno}
+						                        AND a.wstatus != '신고'
+						                        AND a.wopen = 1)b, employee c, department d, POSTPOSITION e
+						WHERE a.wcode = b.wcode
+						AND a.eno = c.eno
+						AND c.dno = d.dno
+						AND c.ppscode = e.ppscode
+						GROUP BY b.wcode,b.wtitle,b.wdate,b.wend ,b.wopen,b.walarm,b.requester,b.wprogress,b.wstatus,b.classcode
+						    ,b.wcontent,b.wupdatedate) a, employee b, department c, postposition d
+			WHERE a.requester = b.eno
+			AND b.dno = c.dno
+			AND b.ppscode = d.ppscode
+			<include refid="myWorkSearch"/>
+			group by a.wcode, a.wtitle, a.wdate, a.wend, a.wopen,
+			a.walarm, a.wstatus, a.classcode, a.wcontent, a.manager,a.wprogress,
+			a.managerphoto, b.eno, b.photo,a.wupdatedate
+			ORDER BY a.wupdatedate desc
+	</select>
+
+	<select id="selectMyWorkList" resultType="work">
+			SELECT
+			    a.wcode
+			    ,a.wtitle
+			    ,a.wdate
+			    ,a.wend
+			    ,a.wopen
+			    ,a.walarm
+			    ,a.wstatus
+			    ,a.wprogress
+			    ,a.classcode
+			    ,a.wcontent
+			    ,a.manager
+			    ,a.managerphoto
+			    ,b.eno as requestereno
+			    ,listagg(b.name||'('||c.dname||') '||d.ppsname, ',') WITHIN GROUP(ORDER BY rownum) as requester
+			    ,b.photo as requesterphoto
+			FROM (SELECT
+						     b.wcode as wcode
+						    ,b.wtitle as wtitle
+						    ,b.wdate as wdate
+						    ,b.wend as wend
+						    ,b.wopen as wopen
+						    ,b.walarm as walarm
+						    ,b.wprogress as wprogress
+						    ,b.wstatus as wstatus
+						    ,b.classcode as classcode
+						    ,b.wcontent as wcontent
+						    ,b.requester as requester
+						    ,b.wupdatedate as wupdatedate
+						    ,listagg(c.name||'('||d.dname||') '||e.ppsname, ',') WITHIN GROUP(ORDER BY a.wmstep desc) as manager
+						    ,listagg(c.photo, ',') WITHIN GROUP(ORDER BY a.wmstep desc) as managerphoto
+						FROM workmanager a, (SELECT
+						                        a.wcode as wcode
+						                       ,a.wtitle as wtitle
+						                       ,a.wdate as wdate
+						                       ,a.wend as wend
+						                       ,a.wopen as wopen
+						                       ,a.walarm as walarm
+						                       ,a.eno as requester
+						                       ,a.wprogress as wprogress
+						                       ,a.wstatus as wstatus
+						                       ,a.classcode as classcode
+						                       ,a.wcontent as wcontent
+						                       ,a.wupdatedate as wupdatedate
+						                       FROM work a, workmanager b
+						                        WHERE a.wcode = b.wcode
+						                         AND b.eno = #{eno}
+						                         AND a.wstatus = #{wstatus}
+						                         AND a.wstatus != '신고'
+						                         AND a.wopen = 1)b, employee c, department d, POSTPOSITION e
+						WHERE a.wcode = b.wcode
+						AND a.eno = c.eno
+						AND c.dno = d.dno
+						AND c.ppscode = e.ppscode
+						GROUP BY b.wcode,b.wtitle,b.wdate,b.wend ,b.wopen,b.walarm,b.requester,b.wprogress,b.wstatus,b.classcode
+						    ,b.wcontent,b.wupdatedate
+						ORDER BY b.wend) a, employee b, department c, postposition d
+			WHERE a.requester = b.eno
+			AND b.dno = c.dno
+			AND b.ppscode = d.ppscode
+			<include refid="myWorkSearch"/>
+			group by a.wcode, a.wtitle, a.wdate, a.wend, a.wopen,
+			a.walarm, a.wstatus, a.classcode, a.wcontent, a.manager,a.wprogress,
+			a.managerphoto, b.eno, b.photo,a.wupdatedate
+			ORDER BY a.wupdatedate desc
+
+	</select>
+
+	<select id="selectToReqList" resultType="work">
+		SELECT
+			    a.wcode
+			    ,a.wtitle
+			    ,a.wdate
+			    ,a.wend
+			    ,a.wopen
+			    ,a.walarm
+			    ,a.wstatus
+			    ,a.wprogress
+			    ,a.classcode
+			    ,a.wcontent
+			    ,a.manager
+			    ,a.managerphoto
+			    ,b.eno as requestereno
+			    ,listagg(b.name||'('||c.dname||') '||d.ppsname, ',') WITHIN GROUP(ORDER BY rownum) as requester
+			    ,b.photo as requesterphoto
+			FROM (SELECT
+						     b.wcode as wcode
+						    ,b.wtitle as wtitle
+						    ,b.wdate as wdate
+						    ,b.wend as wend
+						    ,b.wopen as wopen
+						    ,b.walarm as walarm
+						    ,b.wprogress as wprogress
+						    ,b.wstatus as wstatus
+						    ,b.classcode as classcode
+						    ,b.wcontent as wcontent
+						    ,b.requester as requester
+						    ,b.wupdatedate as wupdatedate
+						    ,listagg(c.name||'('||d.dname||') '||e.ppsname, ',') WITHIN GROUP(ORDER BY a.wmstep desc) as manager
+						    ,listagg(c.photo, ',') WITHIN GROUP(ORDER BY a.wmstep desc) as managerphoto
+						FROM workmanager a, (SELECT
+						                        wcode
+						                       ,wtitle
+						                       ,wdate
+						                       ,wend
+						                       ,wopen
+						                       ,walarm
+						                       ,eno as requester
+						                       ,wprogress
+						                       ,wstatus
+						                       ,classcode
+						                       ,wcontent
+						                       ,wupdatedate
+						                       FROM work
+						                        WHERE eno = #{eno}
+						                        AND wstatus = #{wstatus}
+						                        AND wstatus != '신고'
+						                        AND wopen = 1)b, employee c, department d, POSTPOSITION e
+						WHERE a.wcode = b.wcode
+						AND a.eno = c.eno
+						AND c.dno = d.dno
+						AND c.ppscode = e.ppscode
+						GROUP BY b.wcode,b.wtitle,b.wdate,b.wend ,b.wopen,b.walarm,b.requester,b.wprogress,b.wstatus,b.classcode
+						    ,b.wcontent,b.wupdatedate
+						ORDER BY b.wend) a, employee b, department c, postposition d
+			WHERE a.requester = b.eno
+			AND b.dno = c.dno
+			AND b.ppscode = d.ppscode
+			<include refid="toReqSearch"/>
+			group by a.wcode, a.wtitle, a.wdate, a.wend, a.wopen,
+			a.walarm, a.wstatus, a.classcode, a.wcontent, a.manager,a.wprogress,
+			a.managerphoto, b.eno, b.photo,a.wupdatedate
+			ORDER BY a.wupdatedate desc
+	</select>
+
+	<select id="selectDepWorkList" resultType="work">
+		SELECT
+			    a.wcode
+			    ,a.wtitle
+			    ,a.wdate
+			    ,a.wend
+			    ,a.wopen
+			    ,a.walarm
+			    ,a.wstatus
+			    ,a.wprogress
+			    ,a.classcode
+			    ,a.wcontent
+			    ,a.manager
+			    ,a.managerphoto
+			    ,b.eno as requestereno
+			    ,listagg(b.name||'('||c.dname||') '||d.ppsname, ',') WITHIN GROUP(ORDER BY rownum) as requester
+			    ,b.photo as requesterphoto
+			FROM (SELECT
+						     b.wcode as wcode
+						    ,b.wtitle as wtitle
+						    ,b.wdate as wdate
+						    ,b.wend as wend
+						    ,b.wopen as wopen
+						    ,b.walarm as walarm
+						    ,b.wprogress as wprogress
+						    ,b.wstatus as wstatus
+						    ,b.classcode as classcode
+						    ,b.wcontent as wcontent
+						    ,b.requester as requester
+						    ,b.wupdatedate as wupdatedate
+						    ,listagg(c.name||'('||d.dname||') '||e.ppsname, ',') WITHIN GROUP(ORDER BY a.wmstep desc) as manager
+						    ,listagg(c.photo, ',') WITHIN GROUP(ORDER BY a.wmstep desc) as managerphoto
+						FROM workmanager a, (SELECT
+						                        a.wcode
+						                       ,a.wtitle
+						                       ,a.wdate
+						                       ,a.wend
+						                       ,a.wopen
+						                       ,a.walarm
+						                       ,a.eno as requester
+						                       ,a.wprogress
+						                       ,a.wstatus
+						                       ,a.classcode
+						                       ,a.wcontent
+						                       ,a.wupdatedate
+						                       FROM work a, employee b
+						                        WHERE a.eno = b.eno
+						                        AND b.dno = #{dno}
+						                        AND a.wstatus = #{wstatus}
+						                        AND a.wstatus != '신고'
+						                        AND a.wopen = 1)b, employee c, department d, POSTPOSITION e
+						WHERE a.wcode = b.wcode
+						AND a.eno = c.eno
+						AND c.dno = d.dno
+						AND c.ppscode = e.ppscode
+						GROUP BY b.wcode,b.wtitle,b.wdate,b.wend ,b.wopen,b.walarm,b.requester,b.wprogress,b.wstatus,b.classcode
+						    ,b.wcontent,b.wupdatedate
+						ORDER BY b.wend) a, employee b, department c, postposition d
+			WHERE a.requester = b.eno
+			AND b.dno = c.dno
+			AND b.ppscode = d.ppscode
+			<include refid="myWorkSearch"/>
+			group by a.wcode, a.wtitle, a.wdate, a.wend, a.wopen,
+			a.walarm, a.wstatus, a.classcode, a.wcontent, a.manager,a.wprogress,
+			a.managerphoto, b.eno, b.photo,a.wupdatedate
+			ORDER BY a.wupdatedate desc
+	</select>
+
+	<select id="selectMyWorkTotalCount" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			work a, workmanager b
+		WHERE a.wcode = b.wcode
+		  AND b.eno = #{eno}
+		  AND a.wstatus != '신고'
+		  AND a.wopen = 1
+		  <if test="wstatus != '전체'">
+			  AND a.wstatus = #{wstatus}
+		  </if>
+		  <include refid="myWorkSearch"/>
+	</select>
+
+	<select id="selectToReqTotalCount" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			work
+		WHERE eno = #{eno}
+		AND wstatus != '신고'
+		AND wopen = 1
+		  <if test="wstatus != '전체'">
+			  AND wstatus = #{wstatus}
+		  </if>
+		  <include refid="toReqSearch"/>
+	</select>
+
+	<select id="selectDepWorkTotalCount" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			work a, employee b
+		WHERE a.eno = b.eno
+		  AND b.dno = #{dno}
+		  AND a.wstatus != '신고'
+		  AND a.wopen = 1
+		  <if test="wstatus != '전체'">
+			  AND a.wstatus = #{wstatus}
+		  </if>
+		  <include refid="myWorkSearch"/>
+	</select>
+
+	<select id="selectWorkManagerList" resultType="workmanager">
+		SELECT
+		    a.wmstep
+		   ,a.wcode
+		   ,a.eno
+		   ,a.isafter
+		   ,a.answer
+		   ,a.wcheck
+		   ,c.dname
+		   ,b.birth
+		   ,b.email
+		   ,b.name
+		   ,b.photo
+		   ,d.ppsname
+		   ,b.job
+		   ,b.phone
+		   ,b.call
+		   ,b.hiredate
+		   ,b.enabled
+		   ,b.mbti
+		   ,b.address
+		   ,b.retiredate
+		   ,b.retirereason
+		   ,b.pwd
+		   ,b.ipaddress
+		   ,b.signtype
+		   ,b.signpath
+		   ,b.condition
+		   ,b.year
+		FROM
+		    workmanager a, employee b, department c, postposition d
+		WHERE a.eno = b.eno
+		  AND b.ppscode = d.ppscode
+		  AND b.dno = c.dno
+		  AND a.wcode = #{wcode}
+		order by a.wmstep desc
+	</select>
+
+	<select id="selectWorkRequestBy" resultType="employee">
+		SELECT
+		    b.eno
+		   ,c.dname
+		   ,b.birth
+		   ,b.email
+		   ,b.name
+		   ,b.photo
+		   ,d.ppsname
+		   ,b.job
+		   ,b.phone
+		   ,b.call
+		   ,b.hiredate
+		   ,b.enabled
+		   ,b.mbti
+		   ,b.address
+		   ,b.retiredate
+		   ,b.retirereason
+		   ,b.pwd
+		   ,b.ipaddress
+		   ,b.signtype
+		   ,b.signpath
+		   ,b.condition
+		   ,b.year
+		FROM
+		    work a, employee b, department c, postposition d
+		WHERE a.eno = b.eno
+		  AND b.dno = c.dno
+		  AND b.ppscode = d.ppscode
+		  AND a.wcode = #{wcode}
+	</select>
+
+	<select id="selectEnoByKeyword" resultType="int">
+		SELECT
+			eno
+		FROM
+			employee
+		WHERE name = #{keyword}
+	</select>
+
+	<select id="workReadCheck" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			workreader
+		WHERE wcode = #{wcode}
+		  AND eno = #{eno}
+	</select>
+
+	<update id="deleteWorkReader">
+		DELETE FROM
+			workreader
+		WHERE wcode = #{wcode}
+	</update>
+
+	<update id="insertWorkReader">
+		INSERT INTO workreader (
+		    wcode
+		   ,eno
+		) VALUES (
+		    #{wcode}
+		   ,#{eno}
+		)
+	</update>
+
+	<select id="selectHashTagByWcode" resultType="str">
+		SELECT
+			a.tagcontent
+		FROM
+			hashtag a, work b
+		WHERE a.classcode = b.classcode
+		  AND b.wcode = #{wcode}
+		  AND a.hashno = #{wcode}
+	</select>
+
+	<select id="selectWorkByWcode" resultType="work">
+		SELECT
+		    wcode
+		   ,wtitle
+		   ,wcontent
+		   ,wdate
+		   ,wend
+		   ,wopen
+		   ,walarm
+		   ,eno
+		   ,wprogress
+		   ,wstatus
+		   ,classcode
+		FROM
+		    work
+		WHERE wcode = #{wcode}
+	</select>
+
+	<update id="updateMyWork" parameterType="work">
+		UPDATE
+			work
+		SET
+			wprogress=#{wprogress}
+		WHERE
+			wcode = #{wcode}
+	</update>
+
+	<update id="updateToReq" parameterType="work">
+		UPDATE
+			work
+		SET
+			wcontent = #{wcontent},
+			wprogress = #{wprogress},
+			wend = #{wend}
+		WHERE
+			wcode = #{wcode}
+	</update>
+
+	<update id="updateWorkHashTag" parameterType="work">
+		UPDATE
+			hashtag
+		SET
+			tagcontent=#{hashTag}
+		WHERE
+			hashno=#{wcode}
+	</update>
+
+	<update id="updateHashTagClassCode" parameterType="str">
+		UPDATE
+			hashtag
+		SET
+			classcode = #{classcode}
+		WHERE
+			hashno = #{wcode}
+	</update>
+
+	<select id="selectEmpByNodeId" resultType="employee">
+		SELECT
+		    a.eno
+		   ,b.dname
+		   ,a.birth
+		   ,a.email
+		   ,a.name
+		   ,a.photo
+		   ,c.ppsname
+		   ,a.job
+		   ,a.phone
+		   ,a.call
+		   ,a.hiredate
+		   ,a.enabled
+		   ,a.mbti
+		   ,a.address
+		   ,a.retiredate
+		   ,a.retirereason
+		   ,a.pwd
+		   ,a.ipaddress
+		   ,a.signtype
+		   ,a.signpath
+		   ,a.condition
+		   ,a.year
+		   ,a.dno
+		FROM
+		    employee a, department b, postposition c
+		WHERE a.dno = b.dno
+		  AND a.ppscode = c.ppscode
+		  AND a.eno = #{eno}
+
+	</select>
+
+	<update id="deleteWorkManager">
+		DELETE FROM workmanager
+		WHERE wcode = #{wcode}
+		  AND eno = #{eno}
+
+	</update>
+
+	<update id="insertNewWorkManager" parameterType="workmanager">
+
+		INSERT INTO workmanager (
+		    wmstep
+		   ,wcode
+		   ,eno
+		   ,isafter
+		   ,answer
+		   ,wcheck
+		) VALUES (
+			#{wmstep},
+			#{wcode},
+			#{eno},
+			#{isafter},
+			#{answer},
+			#{wcheck}
+		)
+	</update>
+
+	<update id="updateWorkManaswerAnswer">
+		UPDATE
+			workmanager
+		SET
+			answer = #{answer}
+		WHERE wcode = #{wcode}
+		  AND eno = #{eno}
+	</update>
+
+	<update id="insertObjection">
+	    INSERT INTO objection (
+		    wcode
+		   ,eno
+		   ,content
+		   ,regdate
+		   ,result
+		   ,type
+		   ,rescontent
+		   ,resdate
+		   ,objno
+		) VALUES (
+		    #{wcode}
+		   ,#{eno}
+		   ,#{content}
+		   ,sysdate
+		   ,0
+		   ,#{type}
+		   ,#{resContent}
+		   ,#{resDate}
+		   ,obj_seq.nextval
+		)
+	</update>
+
+	<select id="selectObjection" resultType="objection">
+		SELECT
+		 	wcode
+		   ,eno
+		   ,content
+		   ,regdate
+		   ,result
+		   ,type
+		   ,rescontent
+		   ,resdate
+		   ,objno
+		FROM
+		    objection
+		WHERE wcode = #{wcode}
+		and eno = #{eno}
+		and result = #{result}
+	</select>
+
+	<update id="updateObjectionApprove">
+		UPDATE
+			objection
+		SET
+			result = 1,
+			resdate = sysdate
+		WHERE wcode = #{wcode}
+		  AND eno = #{eno}
+		  AND result = 0
+
+	</update>
+
+	<update id="insertCooperReq" parameterType="cooper">
+		INSERT INTO cooperreq (
+			creqno
+		   ,wcode
+		   ,eno
+		   ,content
+		   ,regdate
+		   ,result
+		   ,resdate
+		) VALUES (
+			cooperreq_seq.nextval
+		   ,#{wcode}
+		   ,#{eno}
+		   ,#{content}
+		   ,sysdate
+		   ,#{result}
+		   ,#{resDate}
+		)
+	</update>
+
+
+	<update id="updateWorkWstatus" parameterType="str">
+		UPDATE
+			work
+		SET wstatus = #{wstatus},
+			classcode = #{classcode},
+			wupdatedate = sysdate
+		WHERE
+			wcode = #{wcode}
+	</update>
+
+	<select id="selectCooperReq" resultType="cooper">
+		SELECT
+			creqno
+		   ,wcode
+		   ,eno
+		   ,content
+		   ,regdate
+		   ,result
+		   ,resdate
+		FROM
+		    cooperreq
+		WHERE creqno = (select max(creqno)
+                            from cooperreq
+                        where wcode = #{wcode})
+	</select>
+
+	<select id="selectCooperRequesterByEno" resultType="employee">
+		SELECT
+		    a.eno
+		   ,b.dname
+		   ,a.birth
+		   ,a.email
+		   ,a.name
+		   ,a.photo
+		   ,c.ppsname
+		   ,a.job
+		   ,a.phone
+		   ,a.call
+		   ,a.hiredate
+		   ,a.enabled
+		   ,a.mbti
+		   ,a.address
+		   ,a.retiredate
+		   ,a.retirereason
+		   ,a.pwd
+		   ,a.ipaddress
+		   ,a.signtype
+		   ,a.signpath
+		   ,a.condition
+		   ,a.year
+		FROM
+		    employee a, department b, postposition c
+		WHERE a.dno = b.dno
+		  AND a.ppscode = c.ppscode
+		  AND a.eno = #{eno}
+	</select>
+
+	<update id="updateCooperReqApprove" parameterType="str">
+		UPDATE
+			cooperreq
+		SET
+			result = 1,
+			resdate = sysdate
+		WHERE wcode = #{wcode}
+		  AND result = 0
+	</update>
+
+	<update id="insertProxyReq" parameterType="proxy">
+		INSERT INTO proxyreq (
+			proxyno
+		    ,wcode
+		   ,eno
+		   ,content
+		   ,regdate
+		   ,result
+		   ,resdate
+		) VALUES (
+			proxy_seq.nextval
+		   ,#{wcode}
+		   ,#{eno}
+		   ,#{content}
+		   ,sysdate
+		   ,0
+		   ,#{resDate}
+		)
+	</update>
+
+	<select id="selectProxyReq" resultType="proxy">
+		SELECT
+			proxyno
+		   ,wcode
+		   ,eno
+		   ,content
+		   ,regdate
+		   ,result
+		   ,resdate
+		FROM
+		    proxyreq
+		WHERE proxyno = (select max(proxyno)
+                            from proxyreq
+                        where wcode = #{wcode}
+                         )
+	</select>
+
+	<update id="updateProxyReqApprove" parameterType="str">
+		UPDATE
+			proxyreq
+		SET
+			result = 1,
+			resdate = sysdate
+		WHERE wcode = #{wcode}
+		  AND result = 0
+	</update>
+
+	<update id="updateCooperReqRefuse">
+		UPDATE
+			cooperreq
+		SET
+			rescontent = #{content},
+			result = 2,
+			resdate = sysdate
+		WHERE wcode = #{wcode}
+		  AND result = 0
+	</update>
+
+	<update id="updateProxyReqRefuse">
+		UPDATE
+			proxyreq
+		SET
+			rescontent = #{content},
+			result = 2,
+			resdate = sysdate
+		WHERE wcode = #{wcode}
+		  AND result = 0
+	</update>
+
+	<update id="updateObjectionRefuse">
+		UPDATE
+			objection
+		SET
+			rescontent = #{content},
+			result = 2,
+			resdate = sysdate
+		WHERE wcode = #{wcode}
+		  AND eno = #{eno}
+		  AND result = 0
+	</update>
+
+	<select id="selectThisWeekEndMyWorkList" resultType="work">
+
+			SELECT
+			    a.wcode
+			    ,a.wtitle
+			    ,a.wdate
+			    ,a.wend
+			    ,a.wopen
+			    ,a.walarm
+			    ,a.wstatus
+			    ,a.wprogress
+			    ,a.classcode
+			    ,a.wcontent
+			    ,a.manager
+			    ,a.managerphoto
+			    ,b.eno as requestereno
+			    ,listagg(b.name||'('||c.dname||') '||d.ppsname, ',') WITHIN GROUP(ORDER BY rownum) as requester
+			    ,b.photo as requesterphoto
+			FROM (SELECT
+						     b.wcode as wcode
+						    ,b.wtitle as wtitle
+						    ,b.wdate as wdate
+						    ,b.wend as wend
+						    ,b.wopen as wopen
+						    ,b.walarm as walarm
+						    ,b.wprogress as wprogress
+						    ,b.wstatus as wstatus
+						    ,b.classcode as classcode
+						    ,b.wcontent as wcontent
+						    ,b.requester as requester
+						    ,listagg(c.name||'('||d.dname||') '||e.ppsname, ',') WITHIN GROUP(ORDER BY a.wmstep desc) as manager
+						    ,listagg(c.photo, ',') WITHIN GROUP(ORDER BY a.wmstep desc) as managerphoto
+						FROM workmanager a, (SELECT
+						                        a.wcode as wcode
+						                       ,a.wtitle as wtitle
+						                       ,a.wdate as wdate
+						                       ,a.wend as wend
+						                       ,a.wopen as wopen
+						                       ,a.walarm as walarm
+						                       ,a.eno as requester
+						                       ,a.wprogress as wprogress
+						                       ,a.wstatus as wstatus
+						                       ,a.classcode as classcode
+						                       ,a.wcontent as wcontent
+						                       FROM work a, workmanager b
+						                        WHERE a.wcode = b.wcode
+						                         AND b.eno = #{eno}
+						                         AND a.wstatus != '완료'
+						                         AND a.wstatus != '신고'
+						                         AND a.wopen = 1
+                                                 AND a.wend <![CDATA[>=]]> TO_CHAR(TRUNC(sysdate,'iw'), 'yyyy-MM-dd')
+                                                 AND a.wend <![CDATA[<=]]> to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6, 'yyyy-mm-dd'    ))b,
+                                                  employee c, department d, POSTPOSITION e
+						WHERE a.wcode = b.wcode
+						AND a.eno = c.eno
+						AND c.dno = d.dno
+						AND c.ppscode = e.ppscode
+						GROUP BY b.wcode,b.wtitle,b.wdate,b.wend ,b.wopen,b.walarm,b.requester,b.wprogress,b.wstatus,b.classcode
+						    ,b.wcontent) a, employee b, department c, postposition d
+			WHERE a.requester = b.eno
+			AND b.dno = c.dno
+			AND b.ppscode = d.ppscode
+			group by a.wcode, a.wtitle, a.wdate, a.wend, a.wopen,
+			a.walarm, a.wstatus, a.classcode, a.wcontent, a.manager,a.wprogress,
+			a.managerphoto, b.eno, b.photo
+			ORDER BY a.wend
+	</select>
+
+	<select id="selectThisWeekEndMyWorkTotalCount" resultType="int">
+		         SELECT
+                    count(*)
+                 FROM work a, workmanager b
+                 WHERE a.wcode = b.wcode
+                     AND b.eno = #{eno}
+                     AND a.wstatus != '완료'
+                     AND a.wstatus != '신고'
+                     AND a.wopen = 1
+                     AND a.wend <![CDATA[>=]]> TO_CHAR(TRUNC(sysdate,'iw'), 'yyyy-MM-dd')
+                     AND a.wend <![CDATA[<=]]> to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6, 'yyyy-mm-dd'    )
+	</select>
+
+	<select id="selectThisWeekEndToReqList" resultType="work">
+		SELECT
+			    a.wcode
+			    ,a.wtitle
+			    ,a.wdate
+			    ,a.wend
+			    ,a.wopen
+			    ,a.walarm
+			    ,a.wstatus
+			    ,a.wprogress
+			    ,a.classcode
+			    ,a.wcontent
+			    ,a.manager
+			    ,a.managerphoto
+			    ,b.eno as requestereno
+			    ,listagg(b.name||'('||c.dname||') '||d.ppsname, ',') WITHIN GROUP(ORDER BY rownum) as requester
+			    ,b.photo as requesterphoto
+			FROM (SELECT
+						     b.wcode as wcode
+						    ,b.wtitle as wtitle
+						    ,b.wdate as wdate
+						    ,b.wend as wend
+						    ,b.wopen as wopen
+						    ,b.walarm as walarm
+						    ,b.wprogress as wprogress
+						    ,b.wstatus as wstatus
+						    ,b.classcode as classcode
+						    ,b.wcontent as wcontent
+						    ,b.requester as requester
+						    ,listagg(c.name||'('||d.dname||') '||e.ppsname, ',') WITHIN GROUP(ORDER BY a.wmstep desc) as manager
+						    ,listagg(c.photo, ',') WITHIN GROUP(ORDER BY a.wmstep desc) as managerphoto
+						FROM workmanager a, (SELECT
+						                        wcode
+						                       ,wtitle
+						                       ,wdate
+						                       ,wend
+						                       ,wopen
+						                       ,walarm
+						                       ,eno as requester
+						                       ,wprogress
+						                       ,wstatus
+						                       ,classcode
+						                       ,wcontent
+						                       FROM work
+						                        WHERE eno = #{eno}
+						                        AND wstatus != '완료'
+						                        AND wstatus != '신고'
+						                        AND wopen = 1
+						                        AND wend <![CDATA[>=]]> TO_CHAR(TRUNC(sysdate,'iw'), 'yyyy-MM-dd')
+                     							AND wend <![CDATA[<=]]> to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6, 'yyyy-mm-dd'    ))b,
+                     							 employee c, department d, POSTPOSITION e
+						WHERE a.wcode = b.wcode
+						AND a.eno = c.eno
+						AND c.dno = d.dno
+						AND c.ppscode = e.ppscode
+						GROUP BY b.wcode,b.wtitle,b.wdate,b.wend ,b.wopen,b.walarm,b.requester,b.wprogress,b.wstatus,b.classcode
+						    ,b.wcontent
+						ORDER BY b.wend) a, employee b, department c, postposition d
+			WHERE a.requester = b.eno
+			AND b.dno = c.dno
+			AND b.ppscode = d.ppscode
+			group by a.wcode, a.wtitle, a.wdate, a.wend, a.wopen,
+			a.walarm, a.wstatus, a.classcode, a.wcontent, a.manager,a.wprogress,
+			a.managerphoto, b.eno, b.photo
+	</select>
+
+	<select id="selectThisWeekEndToReqTotalCount" resultType="int">
+		         SELECT
+                    count(*)
+                 FROM work
+                 WHERE eno = #{eno}
+                 AND wstatus != '신고'
+                     AND wstatus != '완료'
+                     AND wopen = 1
+                     AND wend <![CDATA[>=]]> TO_CHAR(TRUNC(sysdate,'iw'), 'yyyy-MM-dd')
+                     AND wend <![CDATA[<=]]> to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6, 'yyyy-mm-dd'    )
+	</select>
+
+	<select id="selectNotApproveMyWorkList" resultType="work">
+		SELECT
+			    a.wcode
+			    ,a.wtitle
+			    ,a.wdate
+			    ,a.wend
+			    ,a.wopen
+			    ,a.walarm
+			    ,a.wstatus
+			    ,a.wprogress
+			    ,a.classcode
+			    ,a.wcontent
+			    ,a.manager
+			    ,a.managerphoto
+			    ,b.eno as requestereno
+			    ,listagg(b.name||'('||c.dname||') '||d.ppsname, ',') WITHIN GROUP(ORDER BY rownum) as requester
+			    ,b.photo as requesterphoto
+			FROM (SELECT
+						     b.wcode as wcode
+						    ,b.wtitle as wtitle
+						    ,b.wdate as wdate
+						    ,b.wend as wend
+						    ,b.wopen as wopen
+						    ,b.walarm as walarm
+						    ,b.wprogress as wprogress
+						    ,b.wstatus as wstatus
+						    ,b.classcode as classcode
+						    ,b.wcontent as wcontent
+						    ,b.requester as requester
+						    ,listagg(c.name||'('||d.dname||') '||e.ppsname, ',') WITHIN GROUP(ORDER BY a.wmstep desc) as manager
+						    ,listagg(c.photo, ',') WITHIN GROUP(ORDER BY a.wmstep desc) as managerphoto
+						FROM workmanager a, (SELECT
+						                        a.wcode as wcode
+						                       ,a.wtitle as wtitle
+						                       ,a.wdate as wdate
+						                       ,a.wend as wend
+						                       ,a.wopen as wopen
+						                       ,a.walarm as walarm
+						                       ,a.eno as requester
+						                       ,a.wprogress as wprogress
+						                       ,a.wstatus as wstatus
+						                       ,a.classcode as classcode
+						                       ,a.wcontent as wcontent
+						                       FROM work a, workmanager b
+						                        WHERE a.wcode = b.wcode
+						                         AND b.eno = #{eno}
+						                         AND b.answer = '대기'
+						                         AND a.wopen = 1
+						                         AND a.wstatus != '신고')b, employee c, department d, POSTPOSITION e
+						WHERE a.wcode = b.wcode
+						AND a.eno = c.eno
+						AND c.dno = d.dno
+						AND c.ppscode = e.ppscode
+						GROUP BY b.wcode,b.wtitle,b.wdate,b.wend ,b.wopen,b.walarm,b.requester,b.wprogress,b.wstatus,b.classcode
+						    ,b.wcontent
+						ORDER BY b.wend) a, employee b, department c, postposition d
+			WHERE a.requester = b.eno
+			AND b.dno = c.dno
+			AND b.ppscode = d.ppscode
+			group by a.wcode, a.wtitle, a.wdate, a.wend, a.wopen,
+			a.walarm, a.wstatus, a.classcode, a.wcontent, a.manager,a.wprogress,
+			a.managerphoto, b.eno, b.photo
+	</select>
+
+	<select id="selectNotApproveMyWorkTotalCount" resultType="int">
+			SELECT
+                count(*)
+                FROM work a, workmanager b
+                 WHERE a.wcode = b.wcode
+                  AND b.eno = #{eno}
+                  AND b.answer = '대기'
+                  AND a.wstatus != '신고'
+                  AND a.wopen = 1
+	</select>
+
+	<select id="selectWaitToReqWorkList" resultType="work">
+		SELECT
+			    a.wcode
+			    ,a.wtitle
+			    ,a.wdate
+			    ,a.wend
+			    ,a.wopen
+			    ,a.walarm
+			    ,a.wstatus
+			    ,a.wprogress
+			    ,a.classcode
+			    ,a.wcontent
+			    ,a.manager
+			    ,a.managerphoto
+			    ,b.eno as requestereno
+			    ,listagg(b.name||'('||c.dname||') '||d.ppsname, ',') WITHIN GROUP(ORDER BY rownum) as requester
+			    ,b.photo as requesterphoto
+			FROM (SELECT
+						     b.wcode as wcode
+						    ,b.wtitle as wtitle
+						    ,b.wdate as wdate
+						    ,b.wend as wend
+						    ,b.wopen as wopen
+						    ,b.walarm as walarm
+						    ,b.wprogress as wprogress
+						    ,b.wstatus as wstatus
+						    ,b.classcode as classcode
+						    ,b.wcontent as wcontent
+						    ,b.requester as requester
+						    ,listagg(c.name||'('||d.dname||') '||e.ppsname, ',') WITHIN GROUP(ORDER BY a.wmstep desc) as manager
+						    ,listagg(c.photo, ',') WITHIN GROUP(ORDER BY a.wmstep desc) as managerphoto
+						FROM workmanager a, (SELECT
+						                        wcode
+						                       ,wtitle
+						                       ,wdate
+						                       ,wend
+						                       ,wopen
+						                       ,walarm
+						                       ,eno as requester
+						                       ,wprogress
+						                       ,wstatus
+						                       ,classcode
+						                       ,wcontent
+						                       FROM work
+						                        WHERE eno = #{eno}
+						                        AND wstatus = '대기'
+						                        AND wopen = 1
+						                        AND wstatus != '신고')b, employee c, department d, POSTPOSITION e
+						WHERE a.wcode = b.wcode
+						AND a.eno = c.eno
+						AND c.dno = d.dno
+						AND c.ppscode = e.ppscode
+						GROUP BY b.wcode,b.wtitle,b.wdate,b.wend ,b.wopen,b.walarm,b.requester,b.wprogress,b.wstatus,b.classcode
+						    ,b.wcontent) a, employee b, department c, postposition d
+			WHERE a.requester = b.eno
+			AND b.dno = c.dno
+			AND b.ppscode = d.ppscode
+			group by a.wcode, a.wtitle, a.wdate, a.wend, a.wopen,
+			a.walarm, a.wstatus, a.classcode, a.wcontent, a.manager,a.wprogress,
+			a.managerphoto, b.eno, b.photo
+			ORDER BY a.wend
+	</select>
+
+	<select id="selectWaitToReqWorkTotalCount" resultType="int">
+			SELECT
+               	count(*)
+                FROM work
+                 WHERE eno = #{eno}
+                 AND wstatus = '대기'
+                 AND wstatus != '신고'
+                 AND wopen = 1
+	</select>
+
+	<update id="insertWork">
+		INSERT INTO
+			work
+			( wcode
+			, wtitle
+			, wdate
+			, wend
+			, wopen
+			, walarm
+			, eno
+			, wprogress
+			, wstatus
+			, classcode
+			, wcontent)
+		VALUES
+			( #{wcode}
+			, #{wtitle}
+			, sysdate
+			, #{wend}
+			, #{wopen}
+			, 1
+			, #{eno}
+			, 0
+			, '대기'
+			, 'B101'
+			, #{wcontent} )
+	</update>
+
+	<select id="selectWcodeByDno" resultType="str">
+		SELECT
+			wcode
+		FROM
+			work
+		WHERE
+			wcode like 'W'||#{dno}||'%'
+		ORDER BY
+			wcode DESC
+	</select>
+
+	<update id="insertWorkManager">
+		INSERT INTO workmanager (
+		    wmstep
+		   ,wcode
+		   ,eno
+		) VALUES (
+			#{wmstep},
+			#{wcode},
+			#{eno}
+		)
+	</update>
+
+	<update id="insertWorkHashTag" parameterType="work">
+		INSERT INTO hashtag(
+			 tagcontent
+			,classcode
+			,hashno
+		) VALUES (
+			#{hashTag},
+			'B101',
+			#{wcode}
+		)
+	</update>
+
+	<update id="updateWorkManagerWmStep" parameterType="workmanager">
+		UPDATE workmanager
+		SET
+			wmstep = #{wmstep}
+		WHERE wcode = #{wcode}
+		AND eno = #{eno}
+	</update>
+
+	<update id="insertWorkReport" parameterType="workReport">
+		INSERT INTO workreport (
+		        wrepno
+			   ,wcode
+			   ,eno
+			   ,content
+			   ,regdate
+			   ,result
+			   ,type
+			   ,rescontent
+			   ,resdate
+			) VALUES (
+			    wrep_seq.nextval
+			   ,#{wcode}
+			   ,#{eno}
+			   ,#{content}
+			   ,sysdate
+			   ,0
+			   ,#{type}
+			   ,#{resContent}
+			   ,#{resDate}
+			)
+	</update>
+
+	<select id="selectRelationMentoWork" resultType="work">
+		select distinct g.wcode, g.wtitle, g.wdate, g.wend, g.wopen, g.eno, g.wprogress, g.wstatus, g.classcode, f.tagcontent
+		  from hashtag f, work g,
+		       (select  distinct regexp_substr(a.hashtag, '[^ ]+', 1, level) as tagcontent
+                    from (select
+                            d.tagcontent as hashtag
+                            from work a,(select mento as mentoEno
+                                            from submentoring
+                                            where mentee = #{eno}
+                                            and approve = 1)b, workmanager c, hashtag d, employee e, department f, postposition g
+                            where a.wcode = c.wcode
+                            and b.mentoEno = e.eno
+                            and e.dno = f.dno
+                            and e.ppscode = g.ppscode
+                            and c.eno = b.mentoEno
+                            and a.wcode = d.hashno
+                            AND a.wopen = 1
+                            group by a.wcode, a.wtitle, d.tagcontent, a.wstatus)a
+                        where not a.hashtag like '%'||'년차'||'%'
+                        <![CDATA[connect by level <= length(regexp_replace(a.hashtag, '[^ ]+','')) + 1]]>
+
+				intersect
+
+				select distinct d.tagcontent
+				  from(select regexp_substr(c.tagcontent, '[^ ]+', 1, level) as tagcontent
+		                 from (select b.tagcontent
+		                         from work a, hashtag b
+				        where a.wcode = b.hashno
+						  and a.wcode = #{wcode}
+                         ) c
+
+					  <![CDATA[connect by level <= length(regexp_replace(c.tagcontent, '[^ ]+','')) + 1) d]]>
+
+				 where not d.tagcontent like '%'||'년차'||'%'
+                 ) e, workmanager h, (select mento as mentoEno
+                                            from submentoring
+                                            where mentee = #{eno}
+                                            and approve = 1)i
+		 where f.hashno = g.wcode
+           and g.wcode = h.wcode
+           and h.eno = i.mentoEno
+           and g.wstatus != '신고'
+		   and f.tagcontent like '%'||e.tagcontent||'%'
+		   <if test="keyword != ''.toString()">
+			 and f.tagcontent like '%'||#{keyword}||'%'
+		  </if>
+
+	</select>
+
+	<select id="selectRelationMentoWorkCount" resultType="int">
+	    select count(*)
+		 from (select distinct g.wcode, g.wtitle, g.wdate, g.wend, g.wopen, g.eno, g.wprogress, g.wstatus, g.classcode, f.tagcontent
+		  from hashtag f, work g,
+		       (select  distinct regexp_substr(a.hashtag, '[^ ]+', 1, level) as tagcontent
+                    from (select
+                            d.tagcontent as hashtag
+                            from work a,(select mento as mentoEno
+                                            from submentoring
+                                            where mentee = #{eno}
+                                            and approve = 1)b, workmanager c, hashtag d, employee e, department f, postposition g
+                            where a.wcode = c.wcode
+                            and b.mentoEno = e.eno
+                            and e.dno = f.dno
+                            and e.ppscode = g.ppscode
+                            and c.eno = b.mentoEno
+                            and a.wcode = d.hashno
+                            AND a.wopen = 1
+                            group by a.wcode, a.wtitle, d.tagcontent, a.wstatus)a
+                        where not a.hashtag like '%'||'년차'||'%'
+                        <![CDATA[connect by level <= length(regexp_replace(a.hashtag, '[^ ]+','')) + 1]]>
+
+				intersect
+
+				select distinct d.tagcontent
+				  from(select regexp_substr(c.tagcontent, '[^ ]+', 1, level) as tagcontent
+		                 from (select b.tagcontent
+		                         from work a, hashtag b
+				        where a.wcode = b.hashno
+						  and a.wcode = #{wcode}
+                         ) c
+
+					  <![CDATA[connect by level <= length(regexp_replace(c.tagcontent, '[^ ]+','')) + 1) d]]>
+
+				 where not d.tagcontent like '%'||'년차'||'%'
+                 ) e, workmanager h, (select mento as mentoEno
+                                            from submentoring
+                                            where mentee = #{eno}
+                                            and approve = 1)i
+		 where f.hashno = g.wcode
+           and g.wcode = h.wcode
+           and h.eno = i.mentoEno
+           and g.wstatus != '신고'
+		   and f.tagcontent like '%'||e.tagcontent||'%'
+		   <if test="keyword != ''.toString()">
+			 and f.tagcontent like '%'||#{keyword}||'%'
+		  </if>)
+	</select>
+
+	<select id="selectWorkReportList" resultType="workReport">
+		select
+		    a.wrepno,
+		    a.content,
+		    a.regdate,
+		    a.result,
+		    a.type,
+		    a.rescontent,
+		    a.resdate,
+		    a.reporter,
+		    a.reporterPhoto,
+		    listagg(c.name||'('||e.dname||') '||d.ppsname) within group(order by rownum) as reported,
+		    c.photo as reportedPhoto
+		from (SELECT
+		            a.wcode as wcode
+		           ,a.wrepno as wrepno
+		           ,a.content as content
+		           ,a.regdate as regdate
+		           ,a.result as result
+		           ,a.type as type
+		           ,a.rescontent as rescontent
+		           ,a.resdate as resdate
+		           ,listagg(c.name||'('||e.dname||') '||d.ppsname) within group(order by rownum) as reporter
+		           ,c.photo as reporterPhoto
+		        FROM
+		            workreport a, work b, employee c, postposition d, department e
+		        WHERE a.wcode = b.wcode
+		        and a.eno = c.eno
+		        and c.ppscode = d.ppscode
+		        and c.dno = e.dno
+		        group by  a.wcode
+		           ,a.wrepno
+		           ,a.content
+		           ,a.regdate
+		           ,a.result
+		           ,a.type
+		           ,a.rescontent
+		           ,a.resdate
+		           ,c.photo)a, work b, employee c, postposition d, department e
+		WHERE a.wcode = b.wcode
+		and b.eno = c.eno
+		and c.ppscode = d.ppscode
+		and c.dno = e.dno
+		and a.result = #{result}
+		group by   a.wrepno,
+		    a.content,
+		    a.regdate,
+		    a.result,
+		    a.type,
+		    a.rescontent,
+		    a.resdate,
+		    a.reporter,
+		    a.reporterPhoto,
+		    c.photo
+	</select>
+
+	<select id="selectWorkReportListTotalCount" resultType="int">
+		SELECT
+          count(*)
+        FROM
+            workreport
+        WHERE result = #{result}
+	</select>
+
+	<select id="selectWorkReportByWrepNo" resultType="workReport">
+		select
+		    a.wcode,
+		    a.eno,
+		    a.wrepno,
+		    a.content,
+		    a.regdate,
+		    a.result,
+		    a.type,
+		    a.rescontent,
+		    a.resdate,
+		    a.reporter,
+		    a.reporterPhoto,
+		    listagg(c.name||'('||e.dname||') '||d.ppsname) within group(order by rownum) as reported,
+		    c.photo as reportedPhoto
+		from (SELECT
+		            a.wcode as wcode
+		           ,a.eno as eno
+		           ,a.wrepno as wrepno
+		           ,a.content as content
+		           ,a.regdate as regdate
+		           ,a.result as result
+		           ,a.type as type
+		           ,a.rescontent as rescontent
+		           ,a.resdate as resdate
+		           ,listagg(c.name||'('||e.dname||') '||d.ppsname) within group(order by rownum) as reporter
+		           ,c.photo as reporterPhoto
+		        FROM
+		            workreport a, work b, employee c, postposition d, department e
+		        WHERE a.wcode = b.wcode
+		        and a.eno = c.eno
+		        and c.ppscode = d.ppscode
+		        and c.dno = e.dno
+		        group by  a.wcode
+		           ,a.wrepno
+		           ,a.content
+		           ,a.regdate
+		           ,a.result
+		           ,a.type
+		           ,a.rescontent
+		           ,a.resdate
+		           ,c.photo
+		           ,a.eno)a, work b, employee c, postposition d, department e
+		WHERE a.wcode = b.wcode
+		and b.eno = c.eno
+		and c.ppscode = d.ppscode
+		and c.dno = e.dno
+		and a.wrepno = #{wrepno}
+		group by   a.wrepno,
+		    a.content,
+		    a.regdate,
+		    a.result,
+		    a.type,
+		    a.rescontent,
+		    a.resdate,
+		    a.reporter,
+		    a.reporterPhoto,
+		    c.photo,
+		    a.wcode,
+		    a.eno
+	</select>
+
+	<update id="approveWorkReport">
+		UPDATE workreport
+	    SET
+	        result = 1,
+	        resdate = sysdate
+		WHERE
+		    wrepno = #{wrepno}
+	</update>
+
+	<select id="selectHashTagListByWcode" resultType="str">
+		select regexp_substr(c.tagcontent, '[^ ]+', 1, level) as tagcontent
+		                 from (select b.tagcontent
+		                         from work a, hashtag b
+				        where a.wcode = b.hashno
+						  and a.wcode = #{wcode}
+						  and a.wstatus !='완료') c
+
+					 <![CDATA[ connect by level <= length(regexp_replace(c.tagcontent, '[^ ]+','')) + 1]]>
+	</select>
+</mapper>
+

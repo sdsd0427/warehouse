@@ -1,0 +1,56 @@
+@charset "UTF-8";
+
+*{
+	margin: 0;
+	padding: 0;
+}
+
+a{
+	text-decoration: none;
+}
+
+ul{
+	list-style: none;
+}
+
+p{
+	margin: 0;
+}
+
+.emp_profile{
+	width: 40px;
+	height: 40px;
+}
+
+.emp_name{
+	font-size: 16px;
+}
+
+.emp_info{
+	font-size: 12px;
+}
+
+.emp_card{
+	display:none;
+	width: 300px;
+ 	height: 150px;
+ 	position: absolute;
+ 	left:0;
+ 	top:0;
+ 	background:white;
+ 	border: 1px solid black;
+ 	border-radius: 10px;
+}
+.page-link {
+    line-height: 1;
+    color: #001f3f;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #001f3f;
+    border-color: #001f3f;
+}
+

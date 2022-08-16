@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Calendar-Mapper">
+	<resultMap type="calendar" id="calendarMap">
+		<result property="start" column="sdate" />
+		<result property="end" column="edate" />
+	</resultMap>
+
+	<sql id="catecode">
+		<if test="catecode1 == '1'.toString()">
+			and ccode in (select ccode
+                            from calendar
+                           where eno = #{eno}
+                             and catecode = 1
+                             and title like '%'||#{keyword}||'%')
+              <if test="catecode2 == '2'.toString()">
+              	 or ccode in (select ccode
+                          		from calendar a, employee b ,(select a.dno
+	                                                            from employee a, department b
+	                                                           where a.dno = b.dno
+	                                                             and a.eno = #{eno}) c
+	                           where a.eno = b.eno
+	                             and b.dno = c.dno
+	                             and a.catecode = 2
+	                             and title like '%'||#{keyword}||'%')
+              </if>
+              <if test="catecode3 == '3'.toString()">
+              	or catecode = 3
+              	and title like '%'||#{keyword}||'%'
+              </if>
+		</if>
+		<if test="catecode2 == '2'.toString()">
+			 and ccode in (select ccode
+                          	 from calendar a, employee b ,(select a.dno
+                                                             from employee a, department b
+                                                            where a.dno = b.dno
+                                                              and a.eno = #{eno}) c
+                            where a.eno = b.eno
+                              and b.dno = c.dno
+                              and a.catecode = 2
+                              and title like '%'||#{keyword}||'%')
+        	<if test="catecode3 == '3'.toString()">
+        		or catecode = 3
+        		and title like '%'||#{keyword}||'%'
+        	</if>
+		</if>
+		<if test="catecode3 == '3'.toString()">
+			and catecode = 3
+			and title like '%'||#{keyword}||'%'
+		</if>
+		<if test="catecode1 == '4'.toString() and catecode2 == '4'.toString() and catecode3 == '4'.toString()">
+			and catecode = 4
+		</if>
+		
+		
+	</sql>
+
+	<select id="selectSearchCalendarList" resultMap="calendarMap">
+        select
+			ccode
+			,catecode
+			,title
+			,content
+			,space
+			,important
+			,TO_char(sdate, 'YYYY-MM-DD"T"HH24:MI:SS') sdate
+			,TO_char(edate, 'YYYY-MM-DD"T"HH24:MI:SS') edate
+			,eno
+			,allday
+			,color
+			,catedetail
+		from calendar
+		where ccode is not null
+		<include refid="catecode" />
+	</select>
+
+
+	<select id="selectCalendarByCcode" resultMap="calendarMap">
+		SELECT
+		ccode
+		,catecode
+		,title
+		,content
+		,space
+		,important
+		,TO_char(sdate, 'YYYY-MM-DD"T"HH24:MI:SS') sdate
+		,TO_char(edate, 'YYYY-MM-DD"T"HH24:MI:SS') edate
+		,eno
+		,allday
+		,color
+		,catedetail
+		FROM
+		calendar
+		WHERE ccode = #{ccode}
+<!-- 		<include refid="search" /> -->
+<!-- 		<include refid="category" /> -->
+	</select>
+
+	<select id="selectCalRefByCcode" resultType="calref">
+		SELECT
+		ccode
+		,eno
+		FROM
+		calref
+		WHERE ccode = #{ccode}
+	</select>
+
+	<select id="selectCalAlarmByCcode" resultType="calalarm">
+		SELECT
+		ccode
+		,calarmtime
+		,calarmmethod
+		FROM
+		calalam
+		WHERE ccode = #{ccode}
+	</select>
+
+	<update id="insertCalendar" parameterType="calendar">
+		insert into calendar (
+		ccode
+		,catecode
+		,title
+		,content
+		,space
+		,important
+		,sdate
+		,edate
+		,eno
+		,allday
+		,color
+		,catedetail
+		)
+		values
+		(#{ccode},#{catecode},#{title},#{content},#{space},#{important},#{sdate},#{edate},#{eno},#{allday},#{color},#{catedetail})
+	</update>
+
+	<update id="insertCalRef" parameterType="calref">
+		insert into calref
+		values (#{ccode},#{eno})
+	</update>
+
+	<update id="insertCalAlarm" parameterType="calalarm">
+		insert into calalam
+		values (#{ccode},#{calarmtime},#{calarmmethod})
+	</update>
+
+	<update id="updateCalAlarm" parameterType="calalarm">
+		update calalam
+		set
+		calarmtime = #{calarmtime},
+		calarmmethod = #{calarmmethod}
+		where
+		ccode = #{ccode}
+	</update>
+
+
+	<update id="updateCalendar" parameterType="calendar">
+		update calendar
+		set title=#{title}, content=#{content}, space=#{space},
+		important=#{important}, sdate=#{sdate}, edate=#{edate}
+		where
+		ccode=#{ccode}
+	</update>
+
+	<update id="deleteCalendar" parameterType="str">
+		delete
+		from calendar
+		where ccode=#{ccode}
+	</update>
+
+	<update id="deleteCalRef" parameterType="str">
+		delete
+		from calref
+		where ccode=#{ccode}
+	</update>
+
+	<select id="selectEnoByCcode" resultType="employee">
+		SELECT
+		    a.eno
+		   ,dname
+		   ,a.dno
+		   ,birth
+		   ,email
+		   ,name
+		   ,photo
+		   ,a.ppscode
+		   ,job
+		   ,phone
+		   ,call
+		   ,hiredate
+		   ,a.enabled
+		   ,mbti
+		   ,address
+		   ,retiredate
+		   ,retirereason
+		   ,pwd
+		   ,ipaddress
+		   ,signtype
+		   ,signpath
+		   ,condition
+		   ,year
+		   ,ppsname
+		FROM
+		    employee a, calref b, department c, postposition d
+		where a.eno = b.eno
+		  and a.dno = c.dno
+		  and a.ppscode = d.ppscode
+		  and b.ccode = #{ccode}
+
+	</select>
+
+
+
+	<select id="selectCcode" resultType="str">
+		select 'CA' ||
+		trim(nvl(max(to_char(to_number(substr(ccode,3))+1,'000000')),'000001'))
+		as ccode
+		from calendar
+
+		union
+
+		select nvl(null,'CA000001') as ccode
+		from
+		dual
+		where not exists (select ccode
+		from calendar)
+	</select>
+
+	<select id="selectCalendarSeqNext" resultType="int">
+		select
+		calendar_seq.nextval as ccode from dual
+	</select>
+	
+	<select id="selectEnoSameMyDno" resultType="int">
+		select a.eno
+		  from employee a, (select a.dno 
+		                      from department a, employee b 
+		                     where a.dno = b.dno 
+		                       and b.eno = #{eno}) b
+		 where a.dno = b.dno
+	</select>
+	
+	<select id="selectAllEmployee" resultType="int">
+		select eno
+	  	  from employee
+	</select>
+
+</mapper>
+

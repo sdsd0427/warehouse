@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<settings>
+		<!-- 자동으로 카멜케이스 규칙으로 변환 -->
+    	<setting name="mapUnderscoreToCamelCase" value="true"/>
+    	<!-- 파라미터에 null값이 있을 경우 에러 처리 -->
+    	<setting name="jdbcTypeForNull" value="VARCHAR" />
+	</settings>
+
+	<typeAliases>
+		<typeAlias type="java.lang.String" alias="str" />
+		<typeAlias type="java.lang.Integer" alias="int" />
+
+		<typeAlias type="kr.or.warehouse.dto.MenuVO" alias="menu"/>
+		<typeAlias type="kr.or.warehouse.dto.BoardVO" alias="board"/>
+		<typeAlias type="kr.or.warehouse.dto.ManualVO" alias="manual"/>
+		<typeAlias type="kr.or.warehouse.dto.HrVO" alias="hr"/>
+		<typeAlias type="kr.or.warehouse.dto.HrTypeVO" alias="hrtype"/>
+		<typeAlias type="kr.or.warehouse.dto.CalendarVO" alias="calendar"/>
+		<typeAlias type="kr.or.warehouse.dto.WorkVO" alias="work"/>
+		<typeAlias type="kr.or.warehouse.dto.MailVO" alias="mail"/>
+		<typeAlias type="kr.or.warehouse.dto.EmployeeVO" alias="employee"/>
+		<typeAlias type="kr.or.warehouse.dto.WorkManagerVO" alias="workmanager"/>
+		<typeAlias type="kr.or.warehouse.dto.DepartmentVO" alias="department"/>
+		<typeAlias type="kr.or.warehouse.dto.CalRefVO" alias="calref"/>
+		<typeAlias type="kr.or.warehouse.dto.CalAlarmVO" alias="calalarm"/>
+		<typeAlias type="kr.or.warehouse.dto.AttachVO" alias="attach"/>
+		<typeAlias type="kr.or.warehouse.dto.ContactgrVO" alias="contactgr"/>
+		<typeAlias type="kr.or.warehouse.dto.ReplyVO" alias="reply"/>
+		<typeAlias type="kr.or.warehouse.dto.MycontactVO" alias="mycontact"/>
+		<typeAlias type="kr.or.warehouse.dto.PostPositionVO" alias="postposition"/>
+		<typeAlias type="kr.or.warehouse.dto.PdsVO" alias="pds"/>
+		<typeAlias type="kr.or.warehouse.dto.WorkReplyVO" alias="workreply"/>
+		<typeAlias type="kr.or.warehouse.dto.MtoVO" alias="mto"/>
+		<typeAlias type="kr.or.warehouse.dto.CooperReqVO" alias="cooper"/>
+		<typeAlias type="kr.or.warehouse.dto.MentoringVO" alias="mentoring"/>
+		<typeAlias type="kr.or.warehouse.dto.SubMentoringVO" alias="submentoring"/>
+		<typeAlias type="kr.or.warehouse.dto.TempMailVO" alias="tempMail"/>
+		<typeAlias type="kr.or.warehouse.dto.SignDocVO" alias="signDoc"/>
+		<typeAlias type="kr.or.warehouse.dto.SignFormVO" alias="signForm"/>
+		<typeAlias type="kr.or.warehouse.dto.PopularHashtagVO" alias="popularHashtag"/>
+		<typeAlias type="kr.or.warehouse.dto.ObjectionVO" alias="objection"/>
+		<typeAlias type="kr.or.warehouse.dto.PopularEmpVO" alias="popularEmp"/>
+		<typeAlias type="kr.or.warehouse.dto.ProxyReqVO" alias="proxy"/>
+		<typeAlias type="kr.or.warehouse.dto.SignLineVO" alias="signline"/>
+		<typeAlias type="kr.or.warehouse.dto.ReportVO" alias="report"/>
+		<typeAlias type="kr.or.warehouse.dto.CommunityVO" alias="community"/>
+		<typeAlias type="kr.or.warehouse.dto.SignalVO" alias="signal"/>
+		<typeAlias type="kr.or.warehouse.dto.CommonVO" alias="common"/>
+		<typeAlias type="kr.or.warehouse.dto.SignerVO" alias="signer"/>
+		<typeAlias type="kr.or.warehouse.dto.ProceedingVO" alias="proceeding"/>
+		<typeAlias type="kr.or.warehouse.dto.CommuBoardVO" alias="commuBoard"/>
+		<typeAlias type="kr.or.warehouse.dto.CommupostVO" alias="commupost"/>
+		<typeAlias type="kr.or.warehouse.dto.VacLogVO" alias="vacLog"/>
+		<typeAlias type="kr.or.warehouse.dto.VacationVO" alias="vacation"/>
+		<typeAlias type="kr.or.warehouse.dto.SignLineGrVO" alias="signLineGr"/>
+		<typeAlias type="kr.or.warehouse.dto.MySignLineVO" alias="mySignLine"/>
+		<typeAlias type="kr.or.warehouse.dto.TodoVO" alias="todo"/>
+		<typeAlias type="kr.or.warehouse.dto.SignAttachVO" alias="signAttach"/>
+		<typeAlias type="kr.or.warehouse.dto.VacProduceVO" alias="vacProduce"/>
+		<typeAlias type="kr.or.warehouse.dto.FieldVO" alias="field"/>
+		<typeAlias type="kr.or.warehouse.dto.WorkReportVO" alias="workReport"/>
+		<typeAlias type="kr.or.warehouse.dto.JoinCommuVO" alias="joinCommu"/>
+		<typeAlias type="kr.or.warehouse.dto.AllSignVO" alias="allSign"/>
+		<typeAlias type="kr.or.warehouse.dto.SubCommuVO" alias="subCommu"/>
+		<typeAlias type="kr.or.warehouse.dto.QnaVO" alias="qna"/>
+		<typeAlias type="kr.or.warehouse.dto.QnaReplyVO" alias="qnaReply"/>
+
+	</typeAliases>
+
+</configuration>
+
+
+
+
+
+
+

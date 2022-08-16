@@ -1,0 +1,29 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<script>
+swal({
+    title : "날짜 설정실패",
+    text : "종료일은 시작일 이후여야합니다.",
+    type : "warning"
+ });
+</script>
+
+<script>
+//알림 클릭 시 script를 사용해야 하는 경우(alert 또는 모달)
+var ref = document.referrer; //유입된 페이지의 url 값
+function testConfirm(){
+	var test = confirm("커뮤니티 가입을 승인하시겠습니까?");
+	
+	if(test){
+		//로직
+		alert("가입을 승인했습니다.");
+		
+	}
+	parent.location.href = ref;//유입된 페이지로 다시 이동
+}
+</script>
+
+<script>
+testConfirm();
+</script>

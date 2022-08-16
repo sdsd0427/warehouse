@@ -1,0 +1,337 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true" %>
+   
+<head>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/resources/js/jquery.datetimepicker.full.min.js"></script>
+
+<style>
+
+label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+input[type=text], .textarea{
+	border: 1px solid darkgray;
+	border-radius: 3px;
+}
+
+.datetimepicker{
+	width: 130px;
+}
+
+input[type=text]{
+	height: 38px;
+}
+
+.nemo{
+	margin-bottom: 4px;
+    margin-top: 10px;
+    margin-left: 128px;
+    display: flex;
+}
+
+.rBtn{
+	margin-left: 10px;
+}
+.div1, .div2{
+	width: 130px;
+	
+}
+
+.close3:after 
+{
+	content: "\00d7"; 
+	font-size:40pt;
+	line-height:25px;
+}
+
+img{
+	width: 35px;
+}
+</style>
+</head>
+
+<title>일정 수정</title>
+
+<body>
+<div class="wrapper" style="padding: 0px 5px;">
+	 <!-- Main content -->
+	<section class="content-header">
+	  	<div class="container-fluid">
+	  		<div class="row md-2">
+	  			<div class="col-sm-6">
+	  				<h3>일정수정</h3>  				
+	  			</div>
+	  		</div>
+	  	</div>
+	</section>
+	 
+  <!-- Main content -->
+    <section class="content container-fluid">
+		<div class="row justify-content-center">
+			<div class="col-md-12">
+				<div class="card card-outline card-info">
+					<div class="card-header">
+						<h3 class="card-title p-1">일정수정</h3>
+						<div class ="card-tools">
+							<button type="button" class="btn btn-info" id="modifyBtn" onclick="modify_go();">수 정</button>
+							<button type="button" class="btn btn-danger" id="removeBtn" onclick="remove_go();">삭제</button>
+							<button type="button" class="btn btn-secondary " id="cancelBtn" onclick="CloseWindow();">취 소</button>
+						</div>
+					</div><!--end card-header  -->
+					<div class="card-body pad">
+						<form role="form" method="post" action="regist.do" name="registForm">
+							<div class="form-group row">
+								<label for="title" class="col-2">제목</label>
+								<input type="text" id="title" name="title" class="form-control col-10" placeholder="일정 제목을 입력하세요.">
+							</div>							
+							<div class="form-group row">
+								<label for="" class="col-2">기간</label>
+								<div class="col-10" style="float: right; padding-left: 0px; margin-left: -9px;">
+<!-- 									<i class="fas fa-calendar"></i> -->
+									<div class="col-7" style="float: left;">
+										<input class="datetimepicker" type="text" name="sdate"  id="sdate" value=" 2022-07-01 13:45">
+										&nbsp;&nbsp;~&nbsp;&nbsp;
+										<input class="datetimepicker" type="text" name="edate"  id="edate" value=" 2022-07-01 13:45">
+									</div>
+									<div class="col-5" style="float:right;">
+										<div style="margin-left: -40px; margin-top: 8px;">
+											<input class="form-check-input" type="checkbox">
+												<span>하루종일</span>
+										</div>
+									</div>
+								</div>
+							</div>							
+							<div class="form-group row">
+								<label for="catecode" class="col-2">내 일정</label> 
+								<select class="col-2" name="catecode" id="catecode" style="height: 38px;" onclick="addSelect();">
+                       				<option value="0" >선택없음</option>
+                       				<option value="1" >개인일정</option>
+                       				<option value="2" >부서일정</option>
+                       				<option value="3" >회사일정</option>
+                    			</select>
+                    			<select name="catedetail" id="catedetail" style="height: 38px; width: 125px; display: none; margin-left: 10px;">
+                    				<option value="1" >재택근무</option>
+                    				<option value="1" >세미나</option>
+                    				<option value="1" >특강</option>
+                    			</select>
+							</div>
+							<div class="form-group row" data-toggle="modal" data-target="#modal-default">
+								<label for="" class="col-2">참조자</label> 
+								<button type="button" class="btn bg-gradient-info col-2" onclick="referSelect();" style="height: 38px;">참조자 선택</button><br>
+								<div class="manager-list col-12" style="align-items: center; display: flex; position: relative;">
+									<div class="col-2"></div>
+								</div>
+								
+								
+							</div>
+							<div class="form-group row">
+								<label for="space" class="col-2">장 소</label>
+								<input type="text" id="space" name="space" class="col-10">
+							</div>
+							<div class="form-group row">
+								<label for="content" class="col-2">내 용</label>
+								<textarea class="textarea col-10" name="content" id="content" cols="80" rows="5" placeholder="일정 상세 내용을 작성하세요."></textarea>
+							</div>
+							<div class="form-group row">
+								<label for="" class="col-2">알 림</label>
+								<div class="col-10">
+									<select class="" name="alarmtime" id="alarmtime" style="margin-left: -8px; height: 38px; width: 84px !important;">
+	                       				<option value="" >1시간전</option>
+	                       				<option value="" >1일전</option>
+	                       				<option value="" >2일전</option>
+	                       				<option value="" >1주일전</option>
+	                    			</select>&nbsp;&nbsp;
+									<select class="" name="alarmmethod" id="alarmmethod" style="height: 38px; width: 90px !important;">
+	                       				<option value="" >푸시알림</option>
+	                       				<option value="" >메일알림</option>
+	                       				<option value="" >문자알림</option>
+	                    			</select>
+									<button id="btnAlarm" type="button" class="btn btn-info" style="margin-top: -5px; margin-left: 6px;" onclick="addAlarm();">추가</button>
+                    			</div>
+								<div class="addAl">
+                    			</div>
+							</div>
+							<div class="form-group row">
+								<label for="important" class="col-2">중요도</label>
+								<select name="important" id="important" style="height: 38px; width: 84px;">
+                       				<option value="1" >높음</option>
+                       				<option value="2" selected>보통</option>
+                       				<option value="3" >낮음</option>
+                    			</select>
+							</div>
+						</form>
+					</div><!--end card-body  -->
+					<div class="card-footer" style="display:none">
+					
+					</div><!--end card-footer  -->
+				</div><!-- end card -->				
+			</div><!-- end col-md-12 -->
+		</div><!-- end row -->
+    </section>
+    <!-- /.content -->
+    
+    
+    <div class="modal fade show" id="modal-default"
+			style="display: none;" aria-modal="true" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content" style="width: 500px;">
+					<div class="modal-header">
+						<h4 class="modal-title">참조자 선택</h4>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<%@ include file="./organization.jsp" %>
+					</div>
+					<div class="modal-footer " style="float: right;">
+						<button type="button" class="btn btn-info">확인</button>
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">취소</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Modal 끝 -->
+    
+<script>
+// window.onload=function(){
+<%-- 	summernote_go($('#content'),'<%=request.getContextPath()%>');  --%>
+// }
+
+// 일정 수정 
+function regist_go(){
+	var form = document.registForm;
+	console.log(form);
+	console.log($("form[role='form']"));
+	if($("input[name='title']").val()==""){
+		alert("제목은 필수입니다.");
+		$("input[name='title']").focus();
+		return;
+	}
+	form.submit();
+}
+
+// 팝업창 닫기
+function CloseWindow(){
+	window.opener.location.reload(true);		
+	window.close();
+}
+
+
+// datetimepicker 사용
+$('.datetimepicker').datetimepicker();
+
+
+// 일정 알림 추가
+function addAlarm(){
+	var time = $('#alarmtime option:selected').text();
+	var method = $('#alarmmethod option:selected').text();
+	
+// 	$('.add').append('<div class="nemo"><div class="div1">' + time +'&nbsp;&nbsp;'+ method + '</div><div class="div2"><button type="button" class="btn btn-secondary rBtn">X</button></div></div>');
+	$('.addAl').append('<div class="nemo"><div class="div1">' + time +'&nbsp;&nbsp;'+ method + '</div><div class="close close3 rBtn"></div></div>');
+}
+
+
+// 일정 알림 삭제
+$(document).on('click', '.rBtn', function(){
+	var removeItem = $(this).closest('.nemo');
+	removeItem.remove();
+})
+
+// 개인일정 옵션 
+function addSelect(){
+	var cate = $('#catecode option:selected').text();
+	
+	if(cate == "개인일정"){
+		$("#catedetail").show();
+// 		$('#catedetail').append('<option value="1" >재택근무</option><option value="1" >세미나</option><option value="1" >특강</option>');
+	}else{
+		$("#catedetail").hide();
+	}
+
+}
+
+
+// function addSelect(){
+// 	var cate = $('#catecode option:selected').text();
+// 	console.log(cate);
+	
+// 	if(cate == "개인일정"){
+// 		$(".catedetail").css('display','flex');
+// 	} else{
+// 		$(".catedetail").hide();
+// 	}
+	
+// }
+
+</script>
+
+<script type="text/x-handlebars-template"  id="workList-template">
+{{#each .}}
+<table>
+	<tr style="{{readCheck wcheck}}">
+		<td>{{wtitle}}
+			{{overDayCheck wstatus overDay}}
+			{{dDayCheck dDay}}
+		</td>
+		<td>
+			<div style="align-items: center; display: flex;">
+				<div >
+					<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png" style="35px;">
+				</div>
+				<div>
+					<p style="font-size: 16px; font-weight: bold">{{requestBy.name}} </p>
+					<div style="font-size: 12px;">
+						<p>{{requestBy.ppsname }}</p>
+						<p>{{requestBy.dname }}</p>
+					</div>
+				</div>
+			</div>
+		</td>
+		<td>
+			<div style="align-items: center; display: flex;">
+				{{#each workManagerList}}
+					{{wmStepCheck this}}
+				{{/each}}
+				<div style="font-size: 12px">
+					<span>외 {{managerCnt}}명</span>
+				</div>
+			</div>
+		</td>
+		<td class="project_progress">
+			<div class="progress progress-sm">
+				<div class="progress-bar bg-green" role="progressbar" aria-valuenow="{{wprogress}}" aria-valuemin="0"
+				aria-valuemax="100" style="width: {{wprogress}}%"></div>
+			</div>
+			<small>{{wprogress}}% 완료</small>
+		</td>
+		<td>
+			{{formatDate wend}}
+		</td>
+		<td>
+			<span class="badge bg-secondary">{{wstatus }}</span>
+		</td>
+	</tr>
+</table>
+{{/each}}
+
+
+</script>
+
+<script>
+function removeManager(){
+	var removeItem = $(this).closest('.manager-list');
+	$('.emp_select_card').remove();
+}
+</script>
+
+</div>
+</body>
+
+

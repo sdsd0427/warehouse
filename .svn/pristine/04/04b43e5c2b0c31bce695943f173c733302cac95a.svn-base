@@ -1,0 +1,250 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<head>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+	<style>
+		th{
+			vertical-align: middle !important;
+		}
+		.card-footer{
+			padding: 0.75rem, 0.5rem;
+		}
+	</style>
+</head>
+<body>
+	<div class="row ml-2" style="margin: 0">
+		<div class="col-12" style="padding: 20px 0 ;">
+			<div class="row" style="justify-content: space-between;">
+				<h2 class="title" >신고내용</h2>
+				<div class="row col-2" style="padding-right: 20px;">
+					<div class="col-12">
+						<button type="button" class="btn btn-block btn-outline-dark" onclick="location.href='approveWorkReport.do?wrepno=${workReport.wrepNo}'">승인</button>
+					</div>
+				</div>
+			</div>
+			<table class="table projects" style="width: 100%; table-layout: fixed; font-size: 14px; margin-top: 50px; ">
+				<tr>
+					<th style="width: 30%;">
+						신고자
+					</th>
+					<td style="width: 60%">
+						<div style="align-items: center; display: flex;">
+							<div>
+								<img class="table-avatar emp_profile" src="${workReport.reporterPhoto }">
+							</div>
+							<div>
+								<span style="font-size:12px; font-weight:bold">${workReport.reporter }</span>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th style="width: 30%">피신고자</th>
+					<td style="width: 60%">
+						<div style="align-items: center; display: flex;">
+							<div>
+								<img class="table-avatar emp_profile" src="${workReport.reportedPhoto }">
+							</div>
+							<div>
+								<span style="font-size:12px; font-weight:bold">${workReport.reported }</span>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th style="width: 30%">신고유형</th>
+					<td style="width: 60%;">
+						${workReport.type }
+					</td>
+				</tr>
+				<tr>
+					<th style="width: 30%">신고내용</th>
+					<td style="width: 60%;word-break:break-all;">
+						${workReport.content }
+					</td>
+
+				</tr>
+				<tr>
+					<th style="width: 30%">신고날짜</th>
+					<td style="width: 60%;">
+						<fmt:formatDate value="${workReport.regDate }" pattern="yyyy-MM-dd"/>
+					</td>
+				</tr>
+				<c:if test="${workReport.result eq 1 }">
+					<tr>
+						<th style="width: 30%">처리날짜</th>
+						<td style="width: 60%;">
+							<fmt:formatDate value="${workReport.resDate }" pattern="yyyy-MM-dd"/>
+						</td>
+					</tr>
+				</c:if>
+			</table>
+		</div>
+	</div>
+	<div class="modal" id="modal-report">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form action="#" method="post">
+					<div class="modal-header">
+						<h4 class="modal-title">부당신고</h4>
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<table class="table projects">
+							<tr>
+								<th>신고자</th>
+								<td>
+									<div style="align-items: center; display: flex; justify-content: center">
+										<div style="padding: 5px;">
+											<img class="table-avatar emp_profile" src="${loginUser.photo }">
+										</div>
+										<div>
+											<p style="font-size: 16px; font-weight: bold">${loginUser.name} </p>
+											<div style="font-size: 12px;">
+												<p>${loginUser.ppsname }</p>
+												<p>${loginUser.dname }</p>
+											</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th>신고유형</th>
+								<td>
+									<select class="form-control" name="type" id="reportType">
+										<option>직책남용</option>
+										<option>부당업무</option>
+										<option>근태불량</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th>신고내용</th>
+								<td>
+									<textarea class="form-control" rows="5" cols="5" name="content" id="reportContent"></textarea>
+								</td>
+							</tr>
+							<tr>
+								<th>피신고자</th>
+								<td>
+									<div style="align-items: center; display: flex; justify-content: center">
+										<div style="padding: 5px;">
+											<img class="table-avatar emp_profile" src="${work.requestBy.photo }">
+										</div>
+										<div>
+											<p style="font-size: 16px; font-weight: bold">${work.requestBy.name} </p>
+											<div style="font-size: 12px;">
+												<p>${work.requestBy.ppsname }</p>
+												<p>${work.requestBy.dname }</p>
+											</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="modal-footer justify-content-between">
+						<button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-outline-dark" onclick="goWorkReport('${work.wcode}')">신고</button>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+	<div class="modal" id="modal-objectionGo">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form action="#" method="post">
+					<div class="modal-header">
+						<h4 class="modal-title">이의신청</h4>
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<table class="table">
+							<tr>
+								<th>이의유형</th>
+								<td>
+									<select class="form-control" name="objType">
+										<option>업무관련</option>
+										<option>일정관련</option>
+										<option>기타</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th>이의내용</th>
+								<td>
+									<textarea class="form-control" rows="5" cols="5" name="objContent"></textarea>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="modal-footer justify-content-between">
+						<button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-outline-dark" onclick="reqObjection()">신청</button>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+	<!-- 이의처리확인 -->
+	<div class="modal" id="modal-objection">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form action="#" method="post">
+					<div class="modal-header" style="border: none;">
+							<h4 class="modal-title">이의신청</h4>
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">&times;</span>
+							</button>
+					</div>
+					<div style="float: right; margin-right: 10px; margin-bottom: 10px" class="objection_btn">
+
+					</div>
+					<div class="modal-body" style="margin-top: 20px;">
+						<table class="table objection_table">
+
+
+						</table>
+					</div>
+					<div class="modal-footer justify-content-between">
+						<button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+	<!-- 요청 반려하기 -->
+	<div class="modal" id="modal-reqRefuse">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form action="#" method="post">
+					<div class="modal-header">
+						<h4 class="modal-title">반려내용작성</h4>
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<b>반려 내용</b>
+						<textarea class="form-control" rows="5" cols="5" id="refuseContent"></textarea>
+					</div>
+					<div class="modal-footer justify-content-between refuseBtn">
+
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+</body>

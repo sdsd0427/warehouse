@@ -1,0 +1,515 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<head>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css" integrity="sha512-0/rEDduZGrqo4riUlwqyuHDQzp2D1ZCgH/gFIfjMIL5az8so6ZiXyhf1Rg8i6xsjv+z/Ubc4tt1thLigEcu6Ug==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/pds.css">
+</head>
+<body>
+<div class="wrapper">
+	<h3 class="title">개인자료실&nbsp;&nbsp;>&nbsp;&nbsp;중요자료</h3>
+	<div class="card card-info card-outline">
+		<div class="card-header header-padding">
+			<button type="button" class="btn btn-sm checkbox-toggle">
+				<i class="fas fa-folder">&nbsp;새폴더</i>
+			</button>
+			<button type="button" class="btn btn-sm">
+				<i class="fas fa-cloud-download-alt">&nbsp;다운로드</i>
+			</button>
+			<button type="button" class="btn btn-sm">
+				<i class="fas fa-trash-alt">&nbsp;삭제</i>
+			</button>
+			<button type="button" class="btn btn-sm">
+				<i class="fas fa-copy">&nbsp;복사</i>
+			</button>
+			<button type="button" class="btn btn-sm">
+				<i class="fas fa-envelope">&nbsp;메일</i>
+			</button>
+
+			<div class="card-tools">
+				<div class="input-group input-group-sm">
+					<input type="text" class="form-control" placeholder="검색어를 입력하세요">
+					<div class="input-group-append">
+						<div class="btn btn-info">
+							<i class="fas fa-search"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- card-header  -->
+
+		<div class="card-body">
+			<div class="row">
+				<div class="col-8">
+					<div class="file-manager-container file-manager-col-view">
+				        <div class="file-manager-row-header">
+				            <div class="file-item-name pb-2">Filename</div>
+				            <div class="file-item-changed pb-2">Changed</div>
+				        </div>
+
+				        <div class="file-item">
+				            <div class="file-item-icon file-item-level-up fas fa-level-up-alt text-secondary"></div>
+				            <a href="javascript:void(0)" class="file-item-name">
+				                ..
+				            </a>
+				        </div>
+
+				        <div class="file-item">
+				            <div class="file-item-select-bg bg-primary"></div>
+				            <label class="file-item-checkbox custom-control custom-checkbox">
+				                <input type="checkbox" class="custom-control-input" />
+				                <span class="custom-control-label"></span>
+				            </label>
+<!-- 				            <div class="file-img-box file-item-icon"><i class="bx bxs-folder"></i></div> -->
+				            <div class="file-item-icon far fa-folder text-secondary"></div>
+				            <a href="javascript:void(0)" class="file-item-name">
+				                Images
+				            </a>
+				            <div class="file-item-changed">02/13/2018</div>
+				            <div class="file-item-actions btn-group">
+<!-- 				                <button type="button" class="btn btn-default btn-sm rounded-pill icon-btn borderless md-btn-flat hide-arrow dropdown-toggle" data-toggle="dropdown"><i class="ion ion-ios-more"></i></button> -->
+<!-- 				                <div class="dropdown-menu dropdown-menu-right"> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Rename</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Move</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Copy</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Remove</a> -->
+<!-- 				                </div> -->
+				            </div>
+				        </div>
+				        <div class="file-item">
+				            <div class="file-item-select-bg bg-primary"></div>
+				            <label class="file-item-checkbox custom-control custom-checkbox">
+				                <input type="checkbox" class="custom-control-input" />
+				                <span class="custom-control-label"></span>
+				            </label>
+<!-- 				            <div class="file-img-box file-item-icon"><i class="bx bxs-folder"></i></div> -->
+				            <div class="file-item-icon far fa-folder text-secondary"></div>
+				            <a href="javascript:void(0)" class="file-item-name">
+				                Utils
+				            </a>
+				            <div class="file-item-changed">02/13/2018</div>
+				            <div class="file-item-actions btn-group">
+<!-- 				                <button type="button" class="btn btn-default btn-sm rounded-pill icon-btn borderless md-btn-flat hide-arrow dropdown-toggle" data-toggle="dropdown"><i class="ion ion-ios-more"></i></button> -->
+<!-- 				                <div class="dropdown-menu dropdown-menu-right"> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Rename</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Move</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Copy</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Remove</a> -->
+<!-- 				                </div> -->
+				            </div>
+				        </div>
+
+
+				        <div class="file-item">
+				            <div class="file-item-select-bg bg-primary"></div>
+				            <label class="file-item-checkbox custom-control custom-checkbox">
+				                <input type="checkbox" class="custom-control-input" />
+				                <span class="custom-control-label"></span>
+				            </label>
+				            <div class="file-img-box file-item-icon">
+				            	<img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/zip.svg" alt="icon">
+				            </div>
+			<!-- 	            <div class="file-item-icon far fa-file-archive text-secondary"></div> -->
+				            <a href="javascript:void(0)" class="file-item-name">
+				                Archive.zip
+				            </a>
+				            <div class="file-item-changed">02/16/2018</div>
+				            <div class="file-item-actions btn-group">
+<!-- 				                <button type="button" class="btn btn-default btn-sm rounded-pill icon-btn borderless md-btn-flat hide-arrow dropdown-toggle" data-toggle="dropdown"><i class="ion ion-ios-more"></i></button> -->
+<!-- 				                <div class="dropdown-menu dropdown-menu-right"> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Rename</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Move</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Copy</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Remove</a> -->
+<!-- 				                </div> -->
+				            </div>
+				        </div>
+
+				        <div class="file-item">
+				            <div class="file-item-select-bg bg-primary"></div>
+				            <label class="file-item-checkbox custom-control custom-checkbox">
+				                <input type="checkbox" class="custom-control-input" />
+				                <span class="custom-control-label"></span>
+				            </label>
+				            <div class="file-img-box file-item-icon">
+				            	<img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/js.svg" alt="icon">
+				            </div>
+			<!-- 	            <div class="file-item-icon fab fa-js text-secondary"></div> -->
+				            <a href="javascript:void(0)" class="file-item-name">
+				                Build.js
+				            </a>
+				            <div class="file-item-changed">02/17/2018</div>
+				            <div class="file-item-actions btn-group">
+<!-- 				                <button type="button" class="btn btn-default btn-sm rounded-pill icon-btn borderless md-btn-flat hide-arrow dropdown-toggle" data-toggle="dropdown"><i class="ion ion-ios-more"></i></button> -->
+<!-- 				                <div class="dropdown-menu dropdown-menu-right"> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Rename</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Move</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Copy</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Remove</a> -->
+<!-- 				                </div> -->
+				            </div>
+				        </div>
+
+				        <div class="file-item">
+				            <div class="file-item-select-bg bg-primary"></div>
+				            <label class="file-item-checkbox custom-control custom-checkbox">
+				                <input type="checkbox" class="custom-control-input" />
+				                <span class="custom-control-label"></span>
+				            </label>
+				            <div class="file-img-box file-item-icon">
+				            	<img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/doc.svg" alt="icon">
+				            </div>
+			<!-- 	            <div class="file-item-icon far fa-file-word text-secondary"></div> -->
+				            <a href="javascript:void(0)" class="file-item-name">
+				                Checklist.doc
+				            </a>
+				            <div class="file-item-changed">02/18/2018</div>
+				            <div class="file-item-actions btn-group">
+<!-- 				                <button type="button" class="btn btn-default btn-sm rounded-pill icon-btn borderless md-btn-flat hide-arrow dropdown-toggle" data-toggle="dropdown"><i class="ion ion-ios-more"></i></button> -->
+<!-- 				                <div class="dropdown-menu dropdown-menu-right"> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Rename</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Move</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Copy</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Remove</a> -->
+<!-- 				                </div> -->
+				            </div>
+				        </div>
+
+				        <div class="file-item">
+				            <div class="file-item-select-bg bg-primary"></div>
+				            <label class="file-item-checkbox custom-control custom-checkbox">
+				                <input type="checkbox" class="custom-control-input" />
+				                <span class="custom-control-label"></span>
+				            </label>
+				            <div class="file-img-box file-item-icon">
+				            	<img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/html.svg" alt="icon">
+				            </div>
+			<!-- 	            <div class="file-item-icon fab fa-html5 text-secondary"></div> -->
+				            <a href="javascript:void(0)" class="file-item-name">
+				                Index.html
+				            </a>
+				            <div class="file-item-changed">02/19/2018</div>
+				            <div class="file-item-actions btn-group">
+<!-- 				                <button type="button" class="btn btn-default btn-sm rounded-pill icon-btn borderless md-btn-flat hide-arrow dropdown-toggle" data-toggle="dropdown"><i class="ion ion-ios-more"></i></button> -->
+<!-- 				                <div class="dropdown-menu dropdown-menu-right"> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Rename</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Move</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Copy</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Remove</a> -->
+<!-- 				                </div> -->
+				            </div>
+				        </div>
+
+				        <div class="file-item">
+				            <div class="file-item-select-bg bg-primary"></div>
+				            <label class="file-item-checkbox custom-control custom-checkbox">
+				                <input type="checkbox" class="custom-control-input" />
+				                <span class="custom-control-label"></span>
+				            </label>
+				            <div class="file-img-box file-item-icon">
+				            	<img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/jpg.svg" alt="icon">
+				            </div>
+			<!-- 	            <div class="file-item-img" style="background-image: url(https://bootdey.com/img/Content/avatar/avatar1.png);"></div> -->
+				            <a href="javascript:void(0)" class="file-item-name">
+				                Image-1.jpg
+				            </a>
+				            <div class="file-item-changed">02/20/2018</div>
+				            <div class="file-item-actions btn-group">
+<!-- 				                <button type="button" class="btn btn-default btn-sm rounded-pill icon-btn borderless md-btn-flat hide-arrow dropdown-toggle" data-toggle="dropdown"><i class="ion ion-ios-more"></i></button> -->
+<!-- 				                <div class="dropdown-menu dropdown-menu-right"> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Rename</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Move</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Copy</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Remove</a> -->
+<!-- 				                </div> -->
+				            </div>
+				        </div>
+
+				        <div class="file-item">
+				            <div class="file-item-select-bg bg-primary"></div>
+				            <label class="file-item-checkbox custom-control custom-checkbox">
+				                <input type="checkbox" class="custom-control-input" />
+				                <span class="custom-control-label"></span>
+				            </label>
+				            <div class="file-img-box file-item-icon">
+				            	<img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/png.svg" alt="icon">
+				            </div>
+			<!-- 	            <div class="file-item-img" style="background-image: url(https://bootdey.com/img/Content/avatar/avatar6.png);"></div> -->
+				            <a href="javascript:void(0)" class="file-item-name">
+				                Image-2.png
+				            </a>
+				            <div class="file-item-changed">02/21/2018</div>
+				            <div class="file-item-actions btn-group">
+<!-- 				                <button type="button" class="btn btn-default btn-sm rounded-pill icon-btn borderless md-btn-flat hide-arrow dropdown-toggle" data-toggle="dropdown"><i class="ion ion-ios-more"></i></button> -->
+<!-- 				                <div class="dropdown-menu dropdown-menu-right"> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Rename</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Move</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Copy</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Remove</a> -->
+<!-- 				                </div> -->
+				            </div>
+				        </div>
+
+				        <div class="file-item">
+				            <div class="file-item-select-bg bg-primary"></div>
+				            <label class="file-item-checkbox custom-control custom-checkbox">
+				                <input type="checkbox" class="custom-control-input" />
+				                <span class="custom-control-label"></span>
+				            </label>
+				            <div class="file-img-box file-item-icon">
+				            	<img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/gif.svg" alt="icon">
+				            </div>
+			<!-- 	            <div class="file-item-img" style="background-image: url(https://bootdey.com/img/Content/avatar/avatar4.png);"></div> -->
+				            <a href="javascript:void(0)" class="file-item-name">
+				                Image-3.gif
+				            </a>
+				            <div class="file-item-changed">02/22/2018</div>
+				            <div class="file-item-actions btn-group">
+<!-- 				                <button type="button" class="btn btn-default btn-sm rounded-pill icon-btn borderless md-btn-flat hide-arrow dropdown-toggle" data-toggle="dropdown"><i class="ion ion-ios-more"></i></button> -->
+<!-- 				                <div class="dropdown-menu dropdown-menu-right"> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Rename</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Move</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Copy</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Remove</a> -->
+<!-- 				                </div> -->
+				            </div>
+				        </div>
+
+				        <div class="file-item">
+				            <div class="file-item-select-bg bg-primary"></div>
+				            <label class="file-item-checkbox custom-control custom-checkbox">
+				                <input type="checkbox" class="custom-control-input" />
+				                <span class="custom-control-label"></span>
+				            </label>
+				            <div class="file-img-box file-item-icon">
+				            	<img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/js.svg" alt="icon">
+				            </div>
+			<!-- 	            <div class="file-item-icon fab fa-js text-secondary"></div> -->
+				            <a href="javascript:void(0)" class="file-item-name">
+				                Main.js
+				            </a>
+				            <div class="file-item-changed">02/23/2018</div>
+				            <div class="file-item-actions btn-group">
+<!-- 				                <button type="button" class="btn btn-default btn-sm rounded-pill icon-btn borderless md-btn-flat hide-arrow dropdown-toggle" data-toggle="dropdown"><i class="ion ion-ios-more"></i></button> -->
+<!-- 				                <div class="dropdown-menu dropdown-menu-right"> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Rename</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Move</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Copy</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Remove</a> -->
+<!-- 				                </div> -->
+				            </div>
+				        </div>
+
+
+				        <div class="file-item">
+				            <div class="file-item-select-bg bg-primary"></div>
+				            <label class="file-item-checkbox custom-control custom-checkbox">
+				                <input type="checkbox" class="custom-control-input" />
+				                <span class="custom-control-label"></span>
+				            </label>
+				            <div class="file-img-box file-item-icon">
+				            	<img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/pdf.svg" alt="icon">
+				            </div>
+			<!-- 	            <div class="file-item-icon far fa-file-pdf text-secondary"></div> -->
+				            <a href="javascript:void(0)" class="file-item-name">
+				                Presentation.pdf
+				            </a>
+				            <div class="file-item-changed">02/25/2018</div>
+				            <div class="file-item-actions btn-group">
+<!-- 				                <button type="button" class="btn btn-default btn-sm rounded-pill icon-btn borderless md-btn-flat hide-arrow dropdown-toggle" data-toggle="dropdown"><i class="ion ion-ios-more"></i></button> -->
+<!-- 				                <div class="dropdown-menu dropdown-menu-right"> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Rename</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Move</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Copy</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Remove</a> -->
+<!-- 				                </div> -->
+				            </div>
+				        </div>
+
+				        <div class="file-item">
+				            <div class="file-item-select-bg bg-primary"></div>
+				            <label class="file-item-checkbox custom-control custom-checkbox">
+				                <input type="checkbox" class="custom-control-input" />
+				                <span class="custom-control-label"></span>
+				            </label>
+				            <div class="file-img-box file-item-icon">
+				            	<img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/txt.svg" alt="icon">
+				            </div>
+			<!-- 	            <div class="file-item-icon far fa-file-alt text-secondary"></div> -->
+				            <a href="javascript:void(0)" class="file-item-name">
+				                README.txt
+				            </a>
+				            <div class="file-item-changed">02/26/2018</div>
+				            <div class="file-item-actions btn-group">
+<!-- 				                <button type="button" class="btn btn-default btn-sm rounded-pill icon-btn borderless md-btn-flat hide-arrow dropdown-toggle" data-toggle="dropdown"><i class="ion ion-ios-more"></i></button> -->
+<!-- 				                <div class="dropdown-menu dropdown-menu-right"> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Rename</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Move</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Copy</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Remove</a> -->
+<!-- 				                </div> -->
+				            </div>
+				        </div>
+
+				        <div class="file-item">
+				            <div class="file-item-select-bg bg-primary"></div>
+				            <label class="file-item-checkbox custom-control custom-checkbox">
+				                <input type="checkbox" class="custom-control-input" />
+				                <span class="custom-control-label"></span>
+				            </label>
+				            <div class="file-img-box file-item-icon">
+				            	<img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/css.svg" alt="icon">
+				            </div>
+			<!-- 	            <div class="file-item-icon fab fa-css3 text-secondary"></div> -->
+				            <a href="javascript:void(0)" class="file-item-name">
+				                Style.css
+				            </a>
+				            <div class="file-item-changed">02/27/2018</div>
+				            <div class="file-item-actions btn-group">
+<!-- 				                <button type="button" class="btn btn-default btn-sm rounded-pill icon-btn borderless md-btn-flat hide-arrow dropdown-toggle" data-toggle="dropdown"><i class="ion ion-ios-more"></i></button> -->
+<!-- 				                <div class="dropdown-menu dropdown-menu-right"> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Rename</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Move</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Copy</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Remove</a> -->
+<!-- 				                </div> -->
+				            </div>
+				        </div>
+
+				        <div class="file-item">
+				            <div class="file-item-select-bg bg-primary"></div>
+				            <label class="file-item-checkbox custom-control custom-checkbox">
+				                <input type="checkbox" class="custom-control-input" />
+				                <span class="custom-control-label"></span>
+				            </label>
+				            <div class="file-img-box file-item-icon">
+				            	<img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/mp3.svg" alt="icon">
+				            </div>
+			<!-- 	            <div class="file-item-icon far fa-file-audio text-secondary"></div> -->
+				            <a href="javascript:void(0)" class="file-item-name">
+				                Test.mp3
+				            </a>
+				            <div class="file-item-changed">02/28/2018</div>
+				            <div class="file-item-actions btn-group">
+<!-- 				                <button type="button" class="btn btn-default btn-sm rounded-pill icon-btn borderless md-btn-flat hide-arrow dropdown-toggle" data-toggle="dropdown"><i class="ion ion-ios-more"></i></button> -->
+<!-- 				                <div class="dropdown-menu dropdown-menu-right"> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Rename</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Move</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Copy</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Remove</a> -->
+<!-- 				                </div> -->
+				            </div>
+				        </div>
+
+				        <div class="file-item">
+				            <div class="file-item-select-bg bg-primary"></div>
+				            <label class="file-item-checkbox custom-control custom-checkbox">
+				                <input type="checkbox" class="custom-control-input" checked="checked" />
+				                <span class="custom-control-label"></span>
+				            </label>
+				            <div class="file-img-box file-item-icon">
+				            	<img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/avi.svg" alt="icon">
+				            </div>
+			<!-- 	            <div class="file-item-icon far fa-file-video text-secondary"></div> -->
+				            <a href="javascript:void(0)" class="file-item-name">
+				                Tutorial.avi
+				            </a>
+				            <div class="file-item-changed">03/01/2018</div>
+				            <div class="file-item-actions btn-group">
+<!-- 				                <button type="button" class="btn btn-default btn-sm rounded-pill icon-btn borderless md-btn-flat hide-arrow dropdown-toggle" data-toggle="dropdown"><i class="ion ion-ios-more"></i></button> -->
+<!-- 				                <div class="dropdown-menu dropdown-menu-right"> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Rename</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Move</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Copy</a> -->
+<!-- 				                    <a class="dropdown-item" href="javascript:void(0)">Remove</a> -->
+<!-- 				                </div> -->
+				            </div>
+				        </div>
+					</div>
+			        <div class="text-center mt-3">
+		                <button type="button" class="btn btn-outline-danger w-md waves-effect waves-light"><i class="mdi mdi-refresh"></i> Load More Files</button>
+		            </div>
+					<!-- file -->
+
+				</div>
+
+				<div class="col-4">
+						<div class="card card-widget">
+							<div class="card-header">
+								<span>Tutorial.avi</span>
+<!-- 									<div class="user-block"> -->
+<!-- 										<img class="img-circle" src="../dist/img/user1-128x128.jpg" -->
+<!-- 											alt="User Image"> <span class="username"><a -->
+<!-- 											href="#">Jonathan Burke Jr.</a></span> <span class="description">Shared -->
+<!-- 											publicly - 7:30 PM Today</span> -->
+<!-- 									</div> -->
+
+								<div class="card-tools">
+<!-- 									<button type="button" class="btn btn-tool" -->
+<!-- 										title="Mark as read"> -->
+<!-- 										<i class="far fa-circle"></i> -->
+<!-- 									</button> -->
+									<button type="button" class="btn btn-tool"
+										data-card-widget="collapse">
+										<i class="fas fa-minus"></i>
+									</button>
+									<button type="button" class="btn btn-tool"
+										data-card-widget="remove">
+										<i class="fas fa-times"></i>
+									</button>
+								</div>
+
+							</div>
+
+							<div class="card-body">
+								<p class="text-muted mb-2">상세정보</p>
+								<div class="attachment-block clearfix p-4">
+									<div class="file-img-box file-item-icon">
+						            	<img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/avi.svg" alt="icon">
+						            </div>
+								</div>
+									<table style="font-size: 0.95em;" class="table table-hover">
+										<tbody>
+											<tr>
+												<td style="width: 35%;">종류</td>
+												<td>폴더</td>
+											</tr>
+											<tr>
+												<td>위치</td>
+												<td>/중요자료/</td>
+											</tr>
+											<tr>
+												<td>크기</td>
+												<td>2.34MB</td>
+											</tr>
+											<tr>
+												<td>내용</td>
+												<td>폴더0, 파일74</td>
+											</tr>
+											<tr>
+												<td>등록일자</td>
+												<td>2022.06.07</td>
+											</tr>
+										</tbody>
+									</table>
+
+
+							</div>
+<!-- 							<div class="card-footer"> -->
+<!-- 							</div> -->
+
+						</div>
+					</div>
+			</div>
+		</div>
+		<!-- card-body  -->
+	</div>
+	<!-- card  -->
+</div>
+<!-- div-wrapper -->
+<script type="text/javascript">
+
+</script>
+</body>

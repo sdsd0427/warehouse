@@ -1,0 +1,247 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<head>
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/work/workMain.css">
+</head>
+<body>
+	<div class="wrapper">
+		<div style="display: flex; justify-content: space-between;">
+		
+			<h2 class="title">업무 > 내 업무</h2>
+			<div class="work-search" style="padding-top: 10px;">
+					<select class="form-control">
+						<option>제목</option>
+						<option>담당자</option>
+						<option>해시태그</option>
+					</select>
+					<input class="form-control" type="search">
+					<button type="submit" class="btn btn-default" style="height: 38px;">
+						<i class="fa fa-search"></i>
+					</button>
+			</div>	
+		</div>
+		<div class="row ml-4">
+			<div class="card col-md-12">
+				<div class="card-header p-0 pt-1 border-bottom-0">
+					<ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home"
+							aria-selected="true">전체</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home"
+							aria-selected="true">대기</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home"
+							aria-selected="true">진행</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home"
+							aria-selected="true">이의신청</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home"
+							aria-selected="true">협업요청</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home"
+							aria-selected="true">대리요청</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home"
+							aria-selected="true">완료</a>
+						</li>
+					</ul>
+				</div>
+				<table class="table table-hover text-nowrap projects">
+					<thead>
+						<tr>
+							<th style="width: 40%">제목</th>
+							<th style="width: 25%">요청자</th>
+							<th style="width: 25%">기한
+								<span class="material-symbols-outlined" style="font-size: 14px;">
+								unfold_more_double
+								</span>
+							</th>
+							<th style="width: 10%">상태</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>테스트 요청받은 업무
+								<span class="material-symbols-outlined">
+								notification_important
+								</span>
+							</td>
+							<td><img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png" data-name="최민규 팀장"></td>
+							<td>2022-07-04</td>
+							<td>
+								<span class="badge bg-secondary">대기</span>
+							</td>
+						</tr>
+						<tr>
+							<td>테스트 요청받은 업무</td>
+							<td><img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png" data-name="최민규 팀장"></td>
+							<td>2022-07-04</td>
+							<td>
+								<span class="badge bg-secondary">대기</span>
+							</td>
+						</tr>
+						<tr>
+							<td>테스트 요청받은 업무
+								<span class="material-symbols-outlined">
+								mark_email_read
+								</span>
+							</td>
+							<td><img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png" data-name="최민규 팀장"></td>
+							<td>2022-07-04</td>
+							<td>
+								<span class="badge bg-secondary">대기</span>
+							</td>
+						</tr>
+						<tr>
+							<td>테스트 요청받은 업무
+								<span class="material-symbols-outlined">
+								mark_email_read
+								</span>
+							</td>
+							<td><img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png" data-name="최민규 팀장"></td>
+							<td>2022-07-04</td>
+							<td>
+								<span class="badge bg-secondary">대기</span>
+							</td>
+						</tr>
+						<tr>
+							<td>테스트 요청받은 업무</td>
+							<td><img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png" data-name="최민규 팀장"></td>
+							<td>2022-07-04</td>
+							<td>
+								<span class="badge bg-secondary">대기</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="card-footer">
+					<ul class="pagination justify-content-center m-0">
+						<li class="page-item">
+							<a class="page-link" href><i class="fas fa-angle-double-left"></i></a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href><i class="fas fa-angle-left"></i></a>
+						</li>
+						<li class="page-item active">
+							<a class="page-link" href>1</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href>2</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href><i class="fas fa-angle-double-right"></i></a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href><i class="fas fa-angle-right"></i></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="row ml-4" style="justify-content: space-between;">
+			<div class="card" style="width: 48%">
+				<canvas id="myChart"  height="300"></canvas>
+			</div>
+			<div class="card" style="width: 48%">
+				<canvas id="myChart2"  height="300"></canvas>
+			</div>
+		</div> 
+		<div class="emp_card">
+			<div class="card-header" style="display: flex; align-items: center;">
+				<span class="name"></span>
+				<a class="mail" href="#">
+					<span class="material-symbols-outlined">
+					mail
+					</span>
+				</a>
+			</div>
+			<div class="card-body">
+				<span>부서</span>
+				<span class="dep">개발팀</span>
+				<br>
+				<span>연락처</span>
+				<span>010-1111-1111</span>
+			</div>
+		</div>
+	</div>
+	<script>
+	const ctx = document.getElementById('myChart').getContext('2d');
+	const myChart = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels: ['최민규', '김형민', '강동주', '이병진', '이정규', '하재관'],
+	        datasets: [{
+	            label: '나에게 많이 요청한 사람',
+	            data: [8, 7, 5, 3, 3, 1],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            y: {
+	                beginAtZero: true
+	            }
+	        }
+	    }
+	});
+	const ctx2 = document.getElementById('myChart2').getContext('2d');
+	const myChart2 = new Chart(ctx2, {
+	    type: 'bar',
+	    data: {
+	        labels: ['서난희', '강정인', '이종민', '오지현', '김기웅', '강현수'],
+	        datasets: [{
+	            label: '나와 협업 많이 한 사람',
+	            data: [9, 7, 6, 6, 5, 3],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            y: {
+	                beginAtZero: true
+	            }
+	        }
+	    }
+	});
+	</script>
+</body>

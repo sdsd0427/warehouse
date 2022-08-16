@@ -1,0 +1,17 @@
+package kr.or.warehouse.service;
+
+import java.util.List;
+
+import kr.or.warehouse.dto.CalendarVO;
+
+public interface CalendarService {
+	
+	List<CalendarVO> getCalendarList() throws Exception ;
+	
+	void registCalendar(CalendarVO calendar) throws Exception;
+	
+
+//	void modify(CalendarVO calendar)throws SQLException;
+//
+//	void remove(int ccode)throws SQLException;
+}

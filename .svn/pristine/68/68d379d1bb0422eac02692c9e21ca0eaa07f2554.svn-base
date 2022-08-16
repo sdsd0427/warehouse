@@ -1,0 +1,159 @@
+package kr.or.warehouse.service;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.command.PageMaker;
+import kr.or.warehouse.dao.WorkDAO;
+import kr.or.warehouse.dto.EmployeeVO;
+import kr.or.warehouse.dto.WorkManagerVO;
+import kr.or.warehouse.dto.WorkVO;
+
+@Service
+public class WorkServiceImpl implements WorkService{
+
+	@Autowired
+	private WorkDAO workDAO;
+
+	private List<WorkVO> setWorkInfo(List<WorkVO> workList) throws SQLException{
+		for(WorkVO work : workList) {
+			//업무 담당자, 요청자 정보 가져오기
+			String wcode = work.getWcode();
+			List<WorkManagerVO> workManagerList = workDAO.selectWorkManagerList(wcode);
+			EmployeeVO requestBy = workDAO.selectWorkRequestBy(wcode);
+			work.setRequestBy(requestBy);
+			work.setWorkManagerList(workManagerList);
+			work.setManagerCnt(workManagerList.size());
+			setDday(work);
+
+			//요청대기일자, 마감임박표시
+			if(work.getWstatus().equals("대기")) {
+				// regDate + 3 < today
+				setOverDay(work);
+			}
+
+		}
+		return workList;
+	}
+
+	private void setDday(WorkVO work) {
+		Date endDate = work.getWend();
+		Date today = new Date();
+		if(endDate.after(today)) {
+			long endTime = endDate.getTime();
+			long todayTime = today.getTime();
+			long dTime = endTime - todayTime;
+			int dDay = (int)(dTime / (24 * 60 * 60 * 1000));
+			work.setdDay(dDay);
+		}
+	}
+
+	private void setOverDay(WorkVO work) {
+		Date today = new Date();
+		Date regDate = work.getWdate();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(regDate);
+		cal.add(Calendar.DATE, 3);
+		if(today.after(cal.getTime())) {
+			long todayTime = today.getTime();
+			long regTime = regDate.getTime();
+			long overTime = todayTime - regTime;
+			int overDay = (int)(overTime/(24 * 60 * 60 * 1000));
+			work.setOverDay(overDay);
+		}
+	}
+
+	private void setWorkCheck(List<WorkVO> workList, int eno){
+		for(WorkVO work : workList) {
+			List<WorkManagerVO> workManagerList = work.getWorkManagerList();
+			for(WorkManagerVO workManager : workManagerList) {
+				if(workManager.getEno() == eno && workManager.getWcheck() == 1) {
+					work.setWcheck(1);
+				}
+			}
+		}
+	}
+
+	private Map<String, Integer> setNoneCheckCnt(List<WorkVO> workList, int eno) {
+		Map<String, Integer> noneCheckMap = new HashMap<String, Integer>();
+		noneCheckMap.put("0", 0);
+		noneCheckMap.put("1", 0);
+		noneCheckMap.put("2", 0);
+		noneCheckMap.put("3", 0);
+		noneCheckMap.put("4", 0);
+		noneCheckMap.put("5", 0);
+
+		for(WorkVO work : workList) {
+			if(work.getWstatus().equals("대기")) {
+				addCnt(noneCheckMap, work, eno, "0");
+			}
+			if(work.getWstatus().equals("진행")) {
+				addCnt(noneCheckMap, work, eno, "1");
+			}
+			if(work.getWstatus().equals("완료")) {
+				addCnt(noneCheckMap, work, eno, "2");
+			}
+			if(work.getWstatus().equals("이의신청")) {
+				addCnt(noneCheckMap, work, eno, "3");
+			}
+			if(work.getWstatus().equals("협업요청")) {
+				addCnt(noneCheckMap, work, eno, "4");
+			}
+			if(work.getWstatus().equals("대리요청")) {
+				addCnt(noneCheckMap, work, eno, "5");
+			}
+		}
+
+		return noneCheckMap;
+	}
+
+	private void addCnt(Map<String, Integer>noneCheckMap, WorkVO work, int eno, String wstatus) {
+		List<WorkManagerVO> workManagerList = work.getWorkManagerList();
+		for(WorkManagerVO workManager : workManagerList) {
+			if(workManager.getEno() == eno && workManager.getWcheck() == 0) {
+				noneCheckMap.put(wstatus, noneCheckMap.get(wstatus) + 1);
+			}
+		}
+	}
+
+	@Override
+	public Map<String, Object> getMyWorkList(Criteria cri, String wstatus) throws SQLException {
+		int eno = 20310002;
+		cri.setPerPageNum(5);
+
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+
+		//workList
+		List<WorkVO> myWorkList = workDAO.selectMyWorkList(eno,wstatus,cri);
+		myWorkList = setWorkInfo(myWorkList);
+		setWorkCheck(myWorkList, eno);
+
+		//pageMaker
+		int totalCount = workDAO.selectMyWorkTotalCount(eno, wstatus);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(totalCount);
+
+		//nonCheckWorkList
+		List<WorkVO> selectMyWorkAllStatusList = workDAO.selectMyWorkAllStatusList(eno);
+		selectMyWorkAllStatusList = setWorkInfo(selectMyWorkAllStatusList);
+		Map<String, Integer> noneCheckCnt = setNoneCheckCnt(selectMyWorkAllStatusList,eno);
+
+		dataMap.put("noneCheckCnt", noneCheckCnt);
+		dataMap.put("myWorkList", myWorkList);
+		dataMap.put("pageMaker", pageMaker);
+
+		return dataMap;
+	}
+
+
+}

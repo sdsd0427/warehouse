@@ -1,0 +1,185 @@
+@charset "UTF-8";
+
+.navbar {
+	margin-bottom: 50px;
+	border-radius: 0;
+}
+
+/* Remove the jumbotron's default bottom margin */
+.jumbotron {
+	margin-bottom: 0;
+}
+
+/* Add a gray background color and some padding to the footer */
+#footer {
+	margin-top: 50px;
+	background-color: #f2f2f2;
+	padding: 25px;
+}
+
+#content {
+	margin-left: 50px;
+	margin-right: 50px;
+	overflow: hidden;
+}
+
+/*  */
+#title {
+	border-bottom: 2px solid #727377;
+}
+
+#rightMenu {
+	margin-top: 10px;
+}
+
+.profileImg {
+	height: 128px;
+	width: 96px;
+}
+
+#officerList>thead>tr>th, #officerList>tbody>tr>td {
+	text-align: center;
+}
+
+
+.page-link {
+    line-height: 1;
+    color: #001f3f;
+    background-color: #fff;
+}
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #001f3f;
+    border-color: #001f3f;
+}
+
+
+.upWord .word {
+	list-style-type: none;
+	float: left;
+	margin: 5px;
+}
+
+.btn_submenu {
+	display: inline-block;
+}
+
+span#RecName {
+	margin-left: 120px;
+}
+
+pribut {
+	border: 1px solid;
+}
+
+div#chart {
+	padding-top: 10px;
+}
+
+select#perPageNum, select#searchType {
+	list-style-type: none;
+	width: 140px;
+	float: left;
+}
+
+input.form-control {
+	list-style-type: none;
+	width: 180px;
+	float: left;
+}
+
+div#inName {
+	width: 290px;
+	height: 40px;
+	margin-left: 8px;
+	margin-top: 3px;
+	background-color: #ffc107;
+	padding-top: 8px;
+}
+
+div#botle {
+	margin-left: 500px;
+}
+
+div#b {
+	border-radius: 5px;
+}
+
+.sename {
+	color: black;
+	"
+}
+
+div#bottom {
+	margin-left: 40px;
+	margin-top: -30PX;
+}
+
+ul.upWord {
+	margin-left: -30px;
+}
+
+.emailcur {
+	cursor: pointer;
+}
+
+img.table-avatar {
+	width: 40px;
+	/* border: 1px solid #17a2b8; */
+	border-radius: 50px;
+	height: 40px
+}
+
+
+
+button {
+	background-color: #F9B514;
+	padding: 5px 10px;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.modal .bg {
+	width: 100%;
+	height: 100%;
+}
+
+.modalBox {
+	position: absolute;
+	/* background-color: #fff; */
+	padding: 15px;
+}
+
+.modalBox button {
+	/*  width: 80px; */
+	margin: 0 auto;
+}
+
+.hidden {
+	display: none;
+}
+
+a {
+	color: black;
+}
+
+.filename {
+	border: 1px dotted;
+	width: 500px;
+	margin-left: 30px;
+	text-align: center;
+	height: 40px;
+	padding-top: 7px;
+	display: flex;
+	padding-left: 80px;
+}
+
+.btn-info {
+	border: none !important;
+}
+
+.signBtn{
+	width: 90px !important;
+	margin-right: 5px !important;
+}

@@ -1,0 +1,105 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<head>
+
+
+<style>
+
+
+
+.user-block img {
+    float: left;
+    height: 50px;
+    width: 50px;
+}
+.username{
+	padding-left: 20px;
+	padding-top: 3px;
+}
+.post .user-block {
+    margin-bottom: 0px;
+}
+.post {
+    border-bottom: 0px solid #adb5bd; 
+}
+</style>
+
+	
+</head>
+
+
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row md-2">
+			<div class="col-sm-6">
+				<h3>멘토링 신청</h3>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="content container-fluid">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="card card-info">
+<div class="card-header">
+<h3 class="card-title">멘토 선택</h3>
+</div>
+
+
+<form class="form-horizontal">
+<div class="card-body">
+
+<%@ include file="../contact/organization.jsp" %> 
+	
+</div>
+
+
+
+</form>
+</div>
+
+		</div>
+	
+		
+				<div class="col-md-6">
+			<div class="card card-info">
+<div class="card-header">
+<h3 class="card-title">멘토 추천</h3>
+</div>
+
+
+<form class="form-horizontal">
+<div class="card-body">
+
+<div class="post">
+<div class="user-block">
+<img class="img-circle img-bordered-sm" src="../resources/images/indexPage/chopa.jpg" alt="user image">
+<span class="username">강동주 팀장&nbsp;&nbsp;CUTE</span>
+<span class="username">경영지원팀&nbsp;&nbsp;팀장/부장</span>
+<hr>
+</div>
+</div>
+<div class="post">
+<div class="user-block">
+<img class="img-circle img-bordered-sm" src="../resources/images/indexPage/chopa.jpg" alt="user image">
+<span class="username">강동주 팀장&nbsp;&nbsp;CUTE</span>
+<span class="username">경영지원팀&nbsp;&nbsp;팀장/부장</span>
+<hr>
+</div>
+</div>
+</div>
+
+
+
+</form>
+</div>
+
+		</div>
+		
+	</div>
+</section>
+
+
+

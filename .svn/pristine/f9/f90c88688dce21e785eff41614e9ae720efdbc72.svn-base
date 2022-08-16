@@ -1,0 +1,90 @@
+package kr.or.warehouse.controller;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+public class MingyuTest {
+
+	public static void main(String[] args) {
+		Calc calc = new Calc();
+
+		int thisWeek = calc.thisWeek;
+
+		System.out.println("주차 계산 : " + thisWeek);
+
+		//해당월의 주차 구하기
+		Calendar cal = Calendar.getInstance();
+		cal.setFirstDayOfWeek(Calendar.MONDAY);
+		int weekOfMonth = cal.get(Calendar.WEEK_OF_MONTH);
+		System.out.println(weekOfMonth);
+
+		//해당 주차의 날짜 구하기
+		Date today = new Date();
+		String[] daysOfWeek = Calc.getDaysOfWeek(today, "2022-07-20");
+
+		for(String day : daysOfWeek) {
+			System.out.println(day);
+		}
+	}
+
+}
+
+class Calc {
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
+	int thisWeek = getWeekOfYear("2022-07-01");
+//	int thisWeek = getWeekOfYear(sdf.format(new Date()));
+
+	//해당월의 주차 구하기
+	private int getWeekOfYear(String date) {
+		Calendar calendar = Calendar.getInstance();
+		String[] dates = date.split("-");
+		int year = Integer.parseInt(dates[0]);
+		int month = Integer.parseInt(dates[1]);
+		int day = Integer.parseInt(dates[2]);
+		calendar.set(year, month - 1, day);
+		return calendar.get(Calendar.WEEK_OF_MONTH);
+	}
+
+	//입력받은 날짜의 해당 주차 날짜 구하기
+	public static String[] getDaysOfWeek(Date date, String dateStr) {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		String[] arrYMD = new String[7];
+
+		try {
+//			Date date = df.parse(dateStr);
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+
+			int inYear = cal.get(cal.YEAR);
+		    int inMonth = cal.get(cal.MONTH);
+		    int inDay = cal.get(cal.DAY_OF_MONTH);
+
+		    int dayOfTheWeek = cal.get(cal.DAY_OF_WEEK); //요일나오게하기(숫자로)
+		    if(dayOfTheWeek != 1){   //해당요일이 일요일이 아닌경우
+		        dayOfTheWeek = dayOfTheWeek-2;
+		     }else{           //해당요일이 일요일인경우
+		        dayOfTheWeek = 7;
+		     }
+		    inDay = inDay-dayOfTheWeek;
+
+		    for(int i = 0; i < 7; i++){
+				cal.set(inYear, inMonth, inDay+i);
+				String y = Integer.toString(cal.get(cal.YEAR));
+				String m = Integer.toString(cal.get(cal.MONTH)+1);
+				String d = Integer.toString(cal.get(cal.DAY_OF_MONTH));
+				if(m.length() == 1) m = "0" + m;
+				if(d.length() == 1) d = "0" + d;
+
+			    arrYMD[i] = y +"-"+m +"-"+d;
+//			    arrYMD[i] = m +"-"+d;
+		    }
+		} catch (Exception e) {
+
+		}
+
+		return arrYMD;
+	}
+}

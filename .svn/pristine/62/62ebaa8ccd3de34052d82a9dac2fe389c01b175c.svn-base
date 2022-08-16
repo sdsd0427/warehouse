@@ -1,0 +1,377 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<head>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/indexPage.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/resources/js/jquery.datetimepicker.full.min.js"></script>
+	<style>
+		.table th,.table td{
+			padding: 4px 0.75rem;
+		}
+		.card-body.p-0 .table tbody>tr>td:last-of-type{
+			padding-right: 0;
+		}
+		.card-body.p-0 .table tbody>tr>td:first-of-type{
+			padding-left: 0.75rem;
+		}
+		table th{
+			vertical-align: center;
+		}
+
+		.card-header{
+			padding: 4px 1.25rem;
+		}
+		.card-body{
+			padding: 0.75rem 1.25rem;
+		}
+		.small-box{
+			margin: 0;
+		}
+		.table{
+			margin: 0;
+		}
+		.page-link {
+		    line-height: 1;
+		    color: #0c4b8d;
+		    background-color: #fff;
+		    padding: 0.3rem 0.5rem;
+		}
+		.page-item.active .page-link {
+		    z-index: 3;
+		    color: #fff;
+		    background-color: #0c4b8d;
+		    border-color: #0c4b8d;
+		}
+		a.nav-link{
+			color: white;
+		}
+		.todo-list>li{
+			background: white;
+			padding: 5px;
+		}
+		.home_tab{
+		  	display: flex;
+		  	border-bottom: 1px solid #ccc;
+		   	font-size: 14px;
+		  	margin-bottom: 0;
+		}
+		.home_tab li{
+			padding: 5px 7px;
+			color: #858181;
+			position: relative;
+		    cursor: pointer;
+		}
+
+		.home_tab li.active{
+			color: #333;
+		}
+
+		.home_tab li.active:after{
+			content: "";
+		    position: absolute;
+		    bottom: -3px;
+		    left: 0;
+		    width: 100%;
+		    border-bottom: 2px solid #001f3f;
+		}
+
+		.selectObtion:hover{
+			background: navy;
+		}
+
+	</style>
+</head>
+<body>
+<c:set var="today" value="<%=new java.util.Date() %>"/>
+	<div style="overflow-x:hidden; overflow-y:auto; padding: 0 10px;">
+		<section id="top">
+			<div class="card card-outline card-navy" style=" justify-content: center; align-items:center;  width: 20%; height: 250px;">
+				<div class="card-header" style="display: flex;">
+					<div style="width: 50px; height: 50px;">
+						<img class="img img-circle" src="${loginUser.photo }" style="width: 60px; height: 60px;"/>
+					</div>
+					<div style="width: 100px; display: flex; flex-direction: column; justify-content: center; padding-left: 30px;">
+						<p style="font-size: 16px; font-weight: bold">${loginUser.name } </p>
+						<div style="font-size: 12px;">
+							<p>${loginUser.ppsname }</p>
+							<p>${loginUser.dname }</p>
+						</div>
+					</div>
+				</div>
+				<div class="card-body" style="padding: 0">
+					<div>
+						<p class="timeCheck">
+							<span>출근시간</span>
+							<span class="onTime">미등록</span>
+						</p>
+						<p class="timeCheck">
+							<span>퇴근시간</span>
+							<span class="offTime">미등록</span>
+						</p>
+					</div>
+					<div class="row" style="margin-top: 10px; width: 210px;">
+						<div class="col-12 goToWork" style="display: block;">
+							<button type="button" class="btn btn-outline-dark btn-block" onclick="goToWork()">출근</button>
+						</div>
+						<div class="col-12 leaveWork" style="display: none;">
+							<button type="button" class="btn btn-outline-dark btn-block" onclick="leaveWork()">퇴근</button>
+						</div>
+					</div>
+					<div class="row" style="margin: 10px 0; padding: 0;">
+						<div class="btn-group" style="width: 100%;">
+							<select onchange="changeCondition()" class="form-control" name="condition" id="condition" style="text-align: center; border:1px solid #001f3f ;color: #001f3f">
+						  		<option value="업무중" class="selectObtion" style="background: none;" ${employee.condition eq '업무' ? 'selected':'' }>업무중</option>
+						  		<option value="업무종료" class="selectObtion" style="background: none;" ${employee.condition eq '업무종료' ? 'selected':'' }>업무종료</option>
+						  		<option value="외근" class="selectObtion" style="background: none;" ${employee.condition eq '외근' ? 'selected':'' }>외근</option>
+						  		<option value="출장" class="selectObtion" style="background: none;" ${employee.condition eq '출장' ? 'selected':'' }>출장</option>
+						  		<option value="휴가" class="selectObtion" style="background: none;" ${employee.condition eq '휴가' ? 'selected':'' }>휴가</option>
+						  		<option value="회의중" class="selectObtion" style="background: none;" ${employee.condition eq '회의중' ? 'selected':'' }>회의중</option>
+						  		<option value="자리비움" class="selectObtion" style="background: none;" ${employee.condition eq '자리비움' ? 'selected':'' }>자리비움</option>
+						  		<option value="외근 후 퇴근" class="selectObtion" style="background: none;" ${employee.condition eq '외근 후 퇴근' ? 'selected':'' }>외근 후 퇴근</option>
+						  	</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="todo" class="card card-outline card-navy">
+				<div class="card-header bg-light" style="display: flex; justify-content: space-between;">
+					<b>To do List</b>
+				</div>
+				<div id="todo_main" style="padding: 5px;">
+					<ul class="todo-list ui-sortable">
+						<c:forEach items="${todoList }" var="todo">
+							<li style="border: none;">
+								<div class="card" style="border-left: 5px solid #001f3f; border-radius: 2px;">
+									<div class="card-header bg-light">
+										<h5 class="card-title" style="width: 250px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">${todo.todoTitle }</h5>
+										<div class="card-tools">
+											<input type="checkbox" class="form-check-input" name="todoCheck" ${todo.todoCheck eq 1 ? 'checked' : '' }>
+											<button type="button" class="btn btn-tool" onclick="todoDetail('${todo.todoNo}')">
+												<i class="fas fa-pen"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</li>
+						</c:forEach>
+						<c:if test="${todoList.size() < 4 }">
+							<li style="text-align: center; cursor: pointer; border:none;" onclick="openTodoModal()">
+								<span>오늘 할 일을 등록하세요.<i class="fas fa-plus"></i></span>
+							</li>
+						</c:if>
+					</ul>
+				</div>
+			</div>
+			<div id="recentNotice" class="card card-outline card-navy">
+				<div class="row">
+					<div class="col-12">
+						<div class="card-header bg-light">
+			               	<b>통합 게시판</b>
+		              	</div>
+						<div class="card-body table-responsive p-0">
+							<ul class="home_tab" id="board">
+								<li class="notice" onclick="getNoticeList(1)">공지사항</li>
+								<li class="event" onclick="getEventList(1)">경조사게시판</li>
+							</ul>
+			                <table class="table table-hover text-nowrap">
+			                  <thead>
+			                    <tr style="font-size: 14px;">
+			                      <th style="width: 10%">번호</th>
+			                      <th style="width: 60%">제목</th>
+			                      <th style="width: 15%">작성자</th>
+			                      <th style="width: 15%">등록일</th>
+			                    </tr>
+			                  </thead>
+			                  <tbody class="boardList">
+
+			                  </tbody>
+			                </table>
+		              	</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="row" style="margin: 0;  height: 250px;">
+			<div class="card card-outline card-navy" style="margin-top: 10px; padding: 0; width: 35%; height: 100%">
+				<div class="card-header bg-light">
+					<b>요청받은 업무</b>
+				</div>
+				<div class="card-body table-responsive p-0">
+					<ul class="home_tab" id="myWorkTab">
+						<li class="wait" onclick="getMyWorkList('wait')">대기업무</li>
+						<li class="cooper" onclick="getMyWorkList('cooper')">협업요청 업무</li>
+						<li class="proxy" onclick="getMyWorkList('proxy')">대리요청 업무</li>
+					</ul>
+					<table class="table text-nowrap table-hover projects" style="table-layout: fixed;">
+						<thead>
+							<tr style="font-size: 14px;">
+								<th style="width: 35%">제목</th>
+								<th style="width: 45%">요청자</th>
+								<th style="width: 20%">기한</th>
+							</tr>
+						</thead>
+						<tbody class="myWorkList">
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="card card-outline card-navy" style="margin-top: 10px; margin-left:18px; padding: 0;width: 35%">
+				<div class="card-header bg-light">
+					<b>요청한 업무</b>
+				</div>
+				<div class="card-body table-responsive p-0">
+					<ul class="home_tab" id="toReqTab">
+						<li class="objection" onclick="getToReqWork('objection')">이의신청</li>
+						<li class="cooperReq" onclick="getToReqWork('cooperReq')">협업요청</li>
+						<li class="proxyReq" onclick="getToReqWork('proxyReq')">대리요청</li>
+					</ul>
+					<table class="table table-hover projects" style="table-layout: fixed;">
+						<thead>
+							<tr style="font-size: 14px;">
+								<th style="width: 35%">제목</th>
+								<th style="width: 45%">담당자</th>
+								<th style="width: 20%">기한</th>
+							</tr>
+						</thead>
+						<tbody class="toReqWorkList">
+
+						</tbody>
+
+					</table>
+				</div>
+			</div>
+			<div class="card card-outline card-navy" style="margin-top: 10px; margin-left:19px; padding: 0;width: 27%">
+				<div class="card-header bg-light">
+					<b>전자결재</b>
+				</div>
+				<div class="card-body table-responsive p-0">
+					<ul class="home_tab" id="signdocTab">
+						<li class="hold active" onclick="getDraftList('2')">보류문서</li>
+						<li class="refuse" onclick="getDraftList('4')">반려문서</li>
+						<li class="new" onclick="getApproveList('1')">새 결재문서</li>
+					</ul>
+					<table class="table table-hover projects">
+						<thead>
+							<tr style="font-size: 14px;">
+								<th style="width: 30%">결재양식</th>
+								<th style="width: 70%">제목</th>
+							</tr>
+						</thead>
+						<tbody class="signDocList">
+
+						</tbody>
+
+					</table>
+				</div>
+			</div>
+		</section>
+		<div  style="margin: 20px 0; display: flex; height: 250px;">
+			<section class="row" style="width: 49%; margin: 0;" >
+				<div class="card col-12 card-outline card-navy" style="padding: 0; ">
+					<div class="card-header bg-light"><b>멘토 활동</b></div>
+					<div class="card-body table-responsive p-0">
+						<ul class="home_tab" id="mentoTab">
+							<li class="mentoWork" onclick="getMentoWorkList()">업무</li>
+							<li class="mentoDoc" onclick="getMentoringDocList('mento')">전자결재</li>
+						</ul>
+						<table class="table table-hover projects" style="table-layout: fixed;">
+							<thead>
+								<tr style="font-size: 14px;">
+									<th style="width: 20%">멘토</th>
+									<th style="width: 28%">제목</th>
+									<th style="width: 40%">해시태그</th>
+									<th style="width: 12%">상태</th>
+								</tr>
+							</thead>
+							<tbody class="mento">
+
+							</tbody>
+
+						</table>
+					</div>
+				</div>
+			</section>
+			<section class="row" style="width: 49%; margin: 0; margin-left: 20px;" >
+				<div class="card col-12 card-outline card-navy" style="padding: 0; ">
+					<div class="card-header bg-light"><b>멘티 활동</b></div>
+					<div class="card-body table-responsive p-0">
+						<ul class="home_tab" id="menteeTab">
+							<li class="menteeWork" onclick="getMenteeWorkList()">업무</li>
+							<li class="menteeDoc" onclick="getMentoringDocList('mentee')">전자결재</li>
+						</ul>
+						<table class="table table-hover projects" style="table-layout: fixed;">
+							<thead>
+								<tr style="font-size: 14px;">
+									<th style="width: 20%">멘티</th>
+									<th style="width: 28%">제목</th>
+									<th style="width: 40%">해시태그</th>
+									<th style="width: 12%">상태</th>
+								</tr>
+							</thead>
+							<tbody class="mentee">
+
+							</tbody>
+
+						</table>
+					</div>
+				</div>
+			</section>
+		</div>
+		<div style="display: none;">
+			<p class="text-muted text-left" id="today" style="margin-bottom: 1px;"><fmt:formatDate value="${today }" pattern="yyyy-MM-dd(E)"/></p>
+			<p class="text-left js-time" style="font-size: 2.5em;"><b style="padding: 0px;">12:20:42</b></p>
+		</div>
+	</div>
+
+	<div class="modal" id="modal_todo">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form method="post" id="todoForm">
+					<input type="hidden" name="todoNo" value="0">
+					<div class="modal-header bg-success" style="border: none;">
+						<b class="todo_modalTitle">To do 등록</b>
+					</div>
+					<div class="modal-body" style="padding:1rem">
+							<table class="table">
+								<tr>
+									<th style="vertical-align: center;">일정</th>
+									<td colspan="3">
+										<input type="text" class="form-control"  name="todoTitle" placeholder="일정 제목">
+									</td>
+								</tr>
+								<tr>
+									<th>내용</th>
+									<td colspan="3">
+										<textarea rows="5" cols="5" class="form-control" name="todoContent" placeholder="내용"></textarea>
+									</td>
+								</tr>
+								<tr>
+									<th style="vertical-align: center; width: 15%" >시간</th>
+									<td style="width: 45%">
+										<input type="text" class="datetimepicker" autocomplete="off" name="todoTime">
+									</td>
+									<th style="vertical-align: center; width: 30%">알림여부</th>
+									<td style="width: 10%;">
+										<input type="checkbox" class="form-check-input" name="todoSignal">
+									</td>
+								</tr>
+							</table>
+					</div>
+					<div class="modal-footer" id="todo_footer">
+						<button type="button" class="btn btn-outline-success" onclick="todoSubmit()">등록</button>
+						<button type="button" class="btn btn-default" onclick="closeTodoModal()">취소</button>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+	<%@ include file="./home_js.jsp" %>
+	<c:if test="${from eq 'todo' }">
+		<script>
+			alert("등록되었습니다.");
+		</script>
+	</c:if>
+</body>

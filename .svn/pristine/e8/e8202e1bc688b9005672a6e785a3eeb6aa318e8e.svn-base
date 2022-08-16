@@ -1,0 +1,352 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<head>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/community.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
+	<style type="text/css">
+		.table{
+			margin: 0;
+		}
+	.table td,.card-footer{
+		padding: 6px 0.75rem;
+	}
+	.card-header, .table th{
+		padding: 8px 0.75rem;
+	}
+	.card-success.card-outline{
+ 		border-top: 3px solid #1e6e0c;
+ 	}
+ 	
+ 	.card-success:not(.card-outline)>.card-header{
+ 		background-color: #1e6e0c;
+ 	}
+	</style>
+</head>
+
+<title></title>
+
+<body class="hold-transition skin-blue sidebar-collapse">
+	<div class="wrapper">
+		<section class="content-header ">
+			<div class="row md-2">
+				<div>
+					<h3>커뮤니티 개설</h3>
+				</div>
+				<div style="display: inline; margin-left: 10px; margin-top: 10px;">
+					<span  class="text-muted"  style="padding-right: 535px;">커뮤니티 > 커뮤니티 개설</span>
+				</div>
+			</div>
+		</section>
+
+		<section class="content card card-outline card-success">
+			<div class="container-fluid">
+				<div class="row card-header">
+					<div class="col-lg-12">
+						개설 신청
+						<button class="btn btn-outline-primary" style="float: right;" type="button" onclick="regist_go();">신청</button>
+					</div>
+				</div>
+
+				<div class="card-body">
+					<form  action="commuRegist.do" name="commuRegist" method="post" enctype="multipart/form-data" class="form-horizontal">
+						<div class="row ">
+
+							<div class="col-12 row">
+								<strong class="col-2">대표 이미지</strong>
+								<div class="input-group input-group-sm col-10"style="padding-left:4px; padding-right:0px;">
+									<div class="custom-file">
+										<input type="file" class="custom-file-input" id="inputFileName" value="" name="imageFile"
+										  onchange="changePicture_go()">
+											<label class="custom-file-label" for="inputFileName" ></label>
+									</div>
+									<input id="oldFile" type="hidden" name="oldPicture" value="${loginUser.photo }" />
+								</div>
+							</div>
+
+							<input type="hidden" name="eno" value="${loginUser.eno }">
+							<label class="col-2 mt-3">커뮤니티 명</label>
+							<input class="form-control col-10 mt-3" type="text" id="" name="cname" class="form-control" placeholder="커뮤니티 명을 쓰세요.">
+
+							<label class="col-2 mt-3">회원 추가</label>
+							<button type="button" class="btn btn-xs btn-block btn-secondary col-1 mt-3" data-toggle="modal" data-target="#myModal" style="height: 100%;">주소록</button>
+							<div class="col-9 mt-3" id="joinCommuList"></div>
+
+							<label class="col-2 mt-3">소개글</label>
+							<textarea class="form-control col-10 mt-3" name="intro" rows="5" cols="" placeholder="소개글을 작성하세요."></textarea>
+
+							<label class="col-2 mt-3">공개 여부</label>
+							<div class="form-check col-1 mt-3">
+								<input class="form-check-input" type="radio" id="open" name="open" checked value="0">
+								<label for="open" class="form-check-label">공개</label>
+							</div>
+							<div class="form-check col-9 mt-3">
+								<input class="form-check-input" type="radio" id="notOpen" name="open" value="1">
+								<label for="notOpen" class="form-check-label">비공개</label>
+							</div>
+							<div class="col-2"></div>
+							<div class="col-10">
+								<small><strong>*비공개로 설정 할 경우 전체 커뮤니티 목록에 보이지 않습니다.</strong></small><br/>
+								<small><strong>*비공개로 설정 할 경우 초대로만 가입이 가능합니다.</strong></small>
+							</div>
+						</div>
+					</form>
+
+						<div class="row mt-3">
+
+							<div class="col-12">
+								<div class="card">
+							<div class="card-header with-border">
+								<span >최근 개설된 커뮤니티</span>
+							</div>
+							<div class="card-body">
+								<table class="table table-hover text-nowrap" style="text-align:center;">
+									<tr style="font-size: 0.95em;">
+										<th style="width: 70%;">커뮤니티</th>
+										<th style="width: 10%;">회장</th>
+										<th style="width: 10%;">회원 수</th>
+										<th style="width: 10%;">개설일</th>
+									</tr>
+								<c:forEach items="${openCommunityList }" var="commu">
+									<tr style='font-size: 0.85em;'>
+										<td onclick="OpenWindow('detail.do?cmno=${commu.cmno}&eno=${loginUser.eno}','상세보기',800,600);">${commu.cname }</td>
+										<td >${commu.name }</td>
+										<td>${commu.joinCnt }</td>
+										<td><fmt:formatDate value="${commu.regDate }" pattern="yyyy-MM-dd"/></td>
+									</tr>
+								</c:forEach>
+								</table>
+							</div>
+						</div>
+							</div>
+
+						</div>
+				</div>
+
+			</div>
+		</section>
+
+
+	</div>
+
+
+	<div class="modal fade" id="myModal" role="dialog" style="display:none; border-radius: 0.2rem;">
+		<div class="modal-dialog modal-mg" style="width: 350px">
+			<div class="modal-content">
+
+				<div class="modal-header" style=" color: white; background: #1e6e0c;">
+					<h4 class="modal-title">회원 선택</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true" style="color: white;">×</span>
+					</button>
+				</div>
+
+				<div class="modal-body">
+					<div class="card card-success">
+
+						<form class="form-horizontal">
+							<div class="tab-pane fade active show" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab" style="margin: 20px">
+								<span class="material-symbols-outlined">
+									corporate_fare
+								</span>
+							  	<span >PoJo기업</span>
+								<div id="organization" ></div>
+							</div>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+<script type="text/javascript">
+$(function(){
+	$('.openDeco-sideBar').css('background','#1e6e0c');
+
+// 	$('label[for="inputFileName2"]').text('${loginUser.photo}');
+
+
+})
+
+
+function changePicture_go(){
+ 		//alert("file change");
+
+ 		var picture = $('input#inputFileName')[0];
+
+ 		var fileFormat = picture.value.substr(picture.value.lastIndexOf(".")+1).toUpperCase();
+
+ 		//이미지 확장자 jpg 확인
+		if(!(fileFormat=="JPG" || fileFormat=="JPEG" || fileFormat=="PNG")){
+			Swal.fire({
+			      icon: 'warning',
+			      title: '이미지는 jpg,png 형식만 가능합니다.',
+			      confirmButtonColor: '#3085d6',
+			    });
+
+			return;
+		}
+
+		//이미지 파일 용량 체크
+		if(picture.files[0].size>1024*1024*1){
+			Swal.fire({
+			      icon: 'warning',
+			      title: '사진 용량은 1MB 이하만 가능합니다.',
+			      confirmButtonColor: '#3085d6',
+			    });
+			return;
+		};
+
+		$('label[for="inputFileName"]').text(picture.files[0].name)
+
+
+
+ 	 }
+
+
+function regist_go(){
+
+	if(!$('input[name="imageFile"]').val()){
+		Swal.fire({
+		      icon: 'warning',
+		      title: '사진을 선택하세요.',
+		      confirmButtonColor: '#3085d6',
+		}).then(function(){
+		    $('input[name="imageFile"]').click();
+		});
+	    return;
+     }
+
+
+	if($("input[name='cname']").val()==""){ // form.title.value
+		Swal.fire({
+		      icon: 'warning',
+		      title: '커뮤니티 명은 필수입니다.',
+		      confirmButtonColor: '#3085d6',
+		}).then(function(){
+			$("input[name='cname']").focus();
+		});
+		return;
+	}
+
+	if($("input[name='intro']").val()==""){ // form.title.value
+		Swal.fire({
+		      icon: 'warning',
+		      title: '소개글 은 필수입니다.',
+		      confirmButtonColor: '#3085d6',
+		}).then(function(){
+			$("input[name='intro']").focus();
+		});
+		return;
+	}
+
+
+
+	$("form[name='commuRegist']").submit()
+}
+
+</script>
+
+<script>
+// 조직도
+$('#organization').jstree({
+	core : {
+		data :${organizationNode}
+	},
+	types : {
+		'default' : {'icon': 'jstree-folder'}
+	},
+	 plugins: ['wholerow', 'types']
+});
+
+
+$('#organization').on("changed.jstree", function (e, data) {
+    if(data.node.id.length > 3){
+    	console.log(data.node.id);
+    	$.ajax({
+    		url : "<%=request.getContextPath()%>/work/getEmpByNodeId.do?eno=" + data.node.id,
+    		type:'get',
+    		success:function(res){
+    			if(data.node.id == ${loginUser.eno}){
+
+    				Swal.fire({
+				      icon: 'warning',
+				      title: '본인은 추가할 수 없습니다.',
+				      confirmButtonColor: '#3085d6',
+				    });
+    				return false;
+    			}
+//     			console.log("aa",res.eno);
+    			var temp = $('.emp_select_card');
+//     			console.log("temp",temp);
+    			for (var test of temp){
+//     				console.log(test);
+    				var result = $(test).attr('data-eno');
+//     				console.log(result);
+	    			if(result == res.eno){
+	    				Swal.fire({
+	  				      icon: 'warning',
+	  				      title: '이미 등록된 사원는 추가할 수 없습니다.',
+	  				      confirmButtonColor: '#3085d6',
+	  				    });
+	    				return false;
+	    			}
+    			}
+    			addEmp(res, $('div[id="joinCommuList"]'), $('#addEmp-template'));
+
+    		},
+    		error:function(error){
+    			Swal.fire({
+				      icon: 'error',
+				      title: error,
+				      confirmButtonColor: '#3085d6',
+				    });
+    		}
+    	});
+    }
+});
+
+function addEmp(data, target, templateObject){
+	var template=Handlebars.compile(templateObject.html());
+	var html = template(data);
+	target.append(html);
+}
+</script>
+
+	<script type="text/x-handlebars-template"  id="addEmp-template">
+		<div class="emp_select_card" data-eno="{{eno}}" style="align-items: center; display: inline-block; justify-content: center;">
+			<div style="position: relative;">
+				<div style="display: flex; align-items: center">
+					<div style="display: flex; align-items: center">
+						<p style="font-size: 16px; font-weight: bold">{{name}} </p>
+					</div>
+					<input type="hidden" name="enoList" value="{{eno}}">
+					<span class="removeBtn material-symbols-outlined" onclick="removeManager('{{eno}}')" style="cursor:pointer;">
+					disabled_by_default
+					</span>
+				</div>
+				<div style="font-size: 12px;">
+					<p>{{dname}}</p>
+				</div>
+			</div>
+		</div>
+	</script>
+<script>
+function removeManager(eno){
+	var removeItem = $('div[data-eno="' + eno + '"]');
+	removeItem.remove();
+	removeWorkManager.push(eno);
+	console.log(removeWorkManager);
+}
+</script>
+</body>

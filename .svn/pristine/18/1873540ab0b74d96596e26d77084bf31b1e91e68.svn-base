@@ -1,0 +1,14 @@
+package kr.or.warehouse.service;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.dto.WorkVO;
+
+public interface WorkService {
+
+	public Map<String, Object> getMyWorkList(Criteria cri, int statusNo) throws SQLException;
+	public Map<String, Integer> getNoneCheckCnt() throws SQLException;
+}

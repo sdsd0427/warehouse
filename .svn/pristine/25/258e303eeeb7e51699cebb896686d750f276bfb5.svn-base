@@ -1,0 +1,24 @@
+package kr.or.warehouse.service;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.or.warehouse.dao.DepartMentDAO;
+import kr.or.warehouse.dto.DepartmentVO;
+
+@Service
+public class DepartMentServiceImpl implements DepartMentService{
+
+	@Autowired
+	private DepartMentDAO dao;
+
+	@Override
+	public List<DepartmentVO> getDepartMentList() throws SQLException {
+		return dao.selectDepartMentList();
+	}
+
+
+}

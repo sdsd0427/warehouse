@@ -1,0 +1,20 @@
+package kr.or.warehouse.service;
+
+import java.sql.SQLException;
+import java.util.Map;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.dto.BoardVO;
+
+public interface BoardService {
+	Map<String,Object> getBoardList(Criteria cri, String temp)throws SQLException;
+
+	BoardVO getBoard(int boardNo)throws SQLException;
+	//BoardVO getBoardForModify(int boardNo)throws SQLException;
+
+	void regist(BoardVO board)throws SQLException;
+
+	void modify(BoardVO board)throws SQLException;
+
+	void remove(int boardNo)throws SQLException;
+}

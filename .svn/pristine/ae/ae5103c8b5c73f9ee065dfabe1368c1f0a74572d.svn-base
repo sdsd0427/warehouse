@@ -1,0 +1,23 @@
+package kr.or.warehouse.service;
+
+import java.util.List;
+import java.util.Map;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.dto.CalendarVO;
+
+public interface CalendarService {
+	
+	List<CalendarVO> getCalendarList(Criteria cri) throws Exception ;
+	
+	
+//	Map<String,Object> getCalendarList(Criteria cri)throws SQLException;
+
+//	public void registCalendar(CalendarVO calendar) throws Exception;
+//	
+//	void regist(CalendarVO calendar)throws SQLException;
+//
+//	void modify(CalendarVO calendar)throws SQLException;
+//
+//	void remove(int ccode)throws SQLException;
+}

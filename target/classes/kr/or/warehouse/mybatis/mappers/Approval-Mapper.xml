@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Approval-Mapper">
+
+	<select id="selectRequiredDocumentList" resultType="signDoc">
+		select distinct g.signno ,g.eno ,g.dno ,g.sformno ,g.classcode ,g.ddate ,g.emergency ,g.title ,g.edate ,g.sopen ,g.signcontent ,g.tempsave ,g.state ,g.takeover ,h.viewcnt
+		  from hashtag f, signdoc g, approval h,
+		       (select distinct b.tagcontent
+		          from(select regexp_substr(a.langlist, '[^ ]+', 1, level) as tagcontent
+		                 from (select tagcontent as langlist
+		                         from hashtag
+							    where classcode = 'C102') a
+							<![CDATA[
+			   		  connect by level <= length(regexp_replace(a.langlist, '[^ ]+','')) + 1) b
+			   		  ]]>
+				 where not b.tagcontent like '%'||'년차'||'%' 
+				 
+				intersect
+				
+				select distinct d.tagcontent
+				  from(select regexp_substr(c.tagcontent, '[^ ]+', 1, level) as tagcontent
+		                 from (select b.tagcontent
+		                         from signdoc a, hashtag b
+				        where a.signno = b.hashno
+						  and a.signno = #{signNo}
+						  and a.state = 4) c
+						  <![CDATA[
+					  connect by level <= length(regexp_replace(c.tagcontent, '[^ ]+','')) + 1) d
+					  ]]>
+				 where not d.tagcontent like '%'||'년차'||'%') e
+		 where f.hashno = g.signno
+		   and g.signno = h.signno
+		   and f.tagcontent like '%'||e.tagcontent||'%'
+	</select>
+	
+	<select id="selectRequiredDocumentListCount" resultType="int">
+		select count(*)
+		  from (select distinct g.signno ,g.eno ,g.dno ,g.sformno ,g.classcode ,g.ddate ,g.emergency ,g.title ,g.edate ,g.sopen ,g.signcontent ,g.tempsave ,g.state ,g.takeover ,h.viewcnt
+				  from hashtag f, signdoc g, approval h,
+				       (select distinct b.tagcontent
+				          from(select regexp_substr(a.langlist, '[^ ]+', 1, level) as tagcontent
+				                 from (select tagcontent as langlist
+				                         from hashtag
+									    where classcode = 'C102') a
+									    <![CDATA[
+					   		  connect by level <= length(regexp_replace(a.langlist, '[^ ]+','')) + 1) b
+					   		   ]]>
+						 where not b.tagcontent like '%'||'년차'||'%' 
+						 
+						intersect
+						
+						select distinct d.tagcontent
+						  from(select regexp_substr(c.tagcontent, '[^ ]+', 1, level) as tagcontent
+				                 from (select b.tagcontent
+				                         from signdoc a, hashtag b
+						        where a.signno = b.hashno
+								  and a.signno = #{signNo}
+								  and a.state = 4) c
+								  <![CDATA[
+							  connect by level <= length(regexp_replace(c.tagcontent, '[^ ]+','')) + 1) d
+							  ]]>
+						 where not d.tagcontent like '%'||'년차'||'%') e
+				 where f.hashno = g.signno
+				   and g.signno = h.signno
+				   and f.tagcontent like '%'||e.tagcontent||'%')
+	</select>
+	
+	<select id="selectName" resultType="str">
+		select b.name
+		  from signdoc a, employee b
+		 where a.eno = b.eno
+		   and a.signno = #{signNo}
+	</select>
+	
+	<select id="selectSignForm" resultType="signForm">
+		select
+		    sformno
+		   ,formclass
+		   ,formtext
+		from signform
+		where sformno = #{sFormNo}
+	</select>
+	
+	
+	<select id="selectPopularApprovalList" resultType="signDoc">
+		 select a.signno
+	       ,a.eno
+	       ,a.dno
+	       ,a.sformno
+	       ,a.classcode
+	       ,a.ddate
+	       ,a.emergency
+	       ,a.title
+	       ,a.edate
+	       ,a.sopen
+	       ,a.signcontent
+	       ,a.tempsave
+	       ,a.state
+	       ,a.takeover
+	       ,b.viewCnt
+	      from signdoc a, approval b
+	    where a.signno = b.signno
+	      and a.eno = #{eno}
+	
+	</select>
+	
+	<select id="selectMyReturnSignDocList" resultType="signDoc">
+		SELECT
+		    signno
+		   ,eno
+		   ,dno
+		   ,sformno
+		   ,classcode
+		   ,ddate
+		   ,emergency
+		   ,title
+		   ,edate
+		   ,sopen
+		   ,signcontent
+		   ,tempsave
+		   ,state
+		   ,takeover
+		FROM
+		    signdoc
+		where eno = #{eno}
+		  and state= '4'
+	</select>
+
+</mapper>
+

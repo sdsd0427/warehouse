@@ -1,0 +1,98 @@
+package kr.or.warehouse.dto;
+
+import java.util.Date;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+public class CalendarVO {
+
+	private String ccode;
+	private int catecode;
+	private String title;
+	private String content;
+	private String space;
+	private int important;
+	private Date sdate;
+	private Date edate;
+	private int eno;
+
+	public String getCcode() {
+		return ccode;
+	}
+
+	public void setCcode(String ccode) {
+		this.ccode = ccode;
+	}
+
+	public int getCatecode() {
+		return catecode;
+	}
+
+	public void setCatecode(int catecode) {
+		this.catecode = catecode;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getSpace() {
+		return space;
+	}
+
+	public void setSpace(String space) {
+		this.space = space;
+	}
+
+	public int getImportant() {
+		return important;
+	}
+
+	public void setImportant(int important) {
+		this.important = important;
+	}
+
+	public Date getSdate() {
+		return sdate;
+	}
+
+	public void setSdate(Date sdate) {
+		this.sdate = sdate;
+	}
+
+	public Date getEdate() {
+		return edate;
+	}
+
+	public void setEdate(Date edate) {
+		this.edate = edate;
+	}
+
+	public int getEno() {
+		return eno;
+	}
+
+	public void setEno(int eno) {
+		this.eno = eno;
+	}
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
+	
+}

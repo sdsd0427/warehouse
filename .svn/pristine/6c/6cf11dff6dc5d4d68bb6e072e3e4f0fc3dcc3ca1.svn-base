@@ -1,0 +1,130 @@
+package kr.or.warehouse.controller.view;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+@RequestMapping("/approval")
+public class ApprovalController {
+
+
+	@RequestMapping("/main")
+	public String main() throws Exception{
+		String url = "approval/main";
+
+		return url;
+	}
+
+	@RequestMapping(value = "/registGo", method = RequestMethod.GET)
+	public String regist() throws Exception{
+		String url = "approval/regist";
+
+		return url;
+	}
+
+	@RequestMapping("/approveList") // 결재문서함
+	public String approveList() throws Exception{
+		String url = "approval/approveList";
+
+		return url;
+	}
+
+	@RequestMapping("/viewerList") // 참조문서함
+	public String viewerList() throws Exception{
+		String url = "approval/viewerList";
+
+		return url;
+	}
+
+	@RequestMapping("/draftList") // 기안문서함
+	public String draftList() throws Exception{
+		String url = "approval/draftList";
+
+		return url;
+	}
+
+	@RequestMapping("/tempList") // 임시저장함
+	public String tempList() throws Exception{
+		String url = "approval/tempList";
+
+		return url;
+	}
+
+	@RequestMapping("/circulateList") // 회람함
+	public String circulateList() throws Exception{
+		String url = "approval/circulateList";
+
+		return url;
+	}
+
+	@RequestMapping("/viewerListDetail") // 참조문서함 상세
+	public String viewerListDetail() throws Exception{
+		String url = "approval/viewerListDetail";
+
+		return url;
+	}
+
+	@RequestMapping("/draftListDetailProceeding") // 기안문서함 상세 진행중
+	public String draftListDetail() throws Exception{
+		String url = "approval/draftListDetailProceeding";
+
+		return url;
+	}
+
+	@RequestMapping("/draftListDetailComplete") // 기안문서함 상세 완료
+	public String draftListDetailComplete() throws Exception{
+		String url = "approval/draftListDetailComplete";
+
+		return url;
+	}
+
+	@RequestMapping("/draftListDetailCompanion") // 기안문서함 상세 반려
+	public String draftListDetailCompanion() throws Exception{
+		String url = "approval/draftListDetailCompanion";
+
+		return url;
+	}
+
+	@RequestMapping("/tempListDetail") // 임시저장함 상세
+	public String tempListDetail() throws Exception{
+		String url = "approval/tempListDetail";
+
+		return url;
+	}
+
+	@RequestMapping("/approveListDetailWait") // 결재문서함 상세 대기
+	public String approveListDetailWait() throws Exception{
+		String url = "approval/approveListDetailWait";
+
+		return url;
+	}
+
+	@RequestMapping("/approveListDetailProceeding") // 결재문서함 상세 진행중
+	public String approveListDetailProceeding() throws Exception{
+		String url = "approval/approveListDetailProceeding";
+
+		return url;
+	}
+
+	@RequestMapping("/approveListDetailComplete") // 결재문서함 상세 완료
+	public String approveListDetailComplete() throws Exception{
+		String url = "approval/approveListDetailComplete";
+
+		return url;
+	}
+
+	@RequestMapping("/approveListDetailCompanion") // 결재문서함 상세 반려
+	public String approveListDetailCompanion() throws Exception{
+		String url = "approval/approveListDetailCompanion";
+
+		return url;
+	}
+
+	@RequestMapping("/circulateListDetail") // 회람함 상세
+	public String circulateListDetail() throws Exception{
+		String url = "approval/circulateListDetail";
+
+		return url;
+	}
+}

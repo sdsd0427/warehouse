@@ -1,0 +1,79 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<head>
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/bootstrap/plugins/summernote/summernote-bs4.min.css">
+</head>
+
+<body>
+
+<div class="wrapper">
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row md-2">
+				<div class="col-sm-6">
+					<h3>자유게시판</h3>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="content container-fluid">
+		<div class="card card-info card-outline">
+			<div class="card-header">
+				<h3 class="card-title">글 수정</h3>
+				<div class="col-lg-12">
+					<button class="btn btn-secondary float-right" style="margin-left:20px;" type="button" onclick="javascript:history.back();">취소</button>
+					<button class="btn btn-info float-right" type="button" onclick="modify_go()">수정</button>
+				</div>
+			</div>
+
+			<div class="card-body">
+				<form role="form" method="post" action="freeModify.do" name="modifyForm">
+				<input type="hidden" name="boardNo" value="${board.boardNo }" />
+					<div class="form-group row">
+						<label class="col-2">제목</label>
+						<input class="form-control col-10" type="text" class="form-control" id="boardTitle" name="boardTitle" value="${board.boardTitle }">
+					</div>
+					<div class="form-group row">
+						<label class="col-2">작성자</label>
+						<input class="form-control col-10" type="text" class="form-control" id="name" name="name" value="${board.name }" readonly>
+					</div>
+					<div class="form-group row">
+						<label class="col-2" for="content">내용</label>
+						<textarea class="form-control" name="boardContent" id="boardContent" rows="5" cols=""
+							placeholder="" >${board.boardContent }</textarea>
+					</div>
+					<div class="card card-light card-outline">
+						<div class="card-header">
+						<h5 class="card-title"><i class="fas fa-paperclip"></i>&nbsp;&nbsp;첨부파일</h5>
+						&nbsp;&nbsp;&nbsp;<button class="btn btn-xs btn-info"
+										onclick="addFile_go();"	type="button" id="addFileBtn">Add File</button>
+						</div>
+						<div class="card-footer fileInput"></div>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</section>
+
+</div>
+
+<script>
+$(function(){
+	   summernote_go($('#boardContent'),'<%=request.getContextPath()%>');
+})
+
+function modify_go(){
+	var form = $('form[name="modifyForm"]');
+	if($("input[name='boardTitle']").val()==""){
+		alert("제목은 필수입니다.");
+		$("input[name='boardTitle']").focus();
+		return;
+	}
+	$("form[role='form']").submit()
+}
+</script>
+
+</body>

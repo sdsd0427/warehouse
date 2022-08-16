@@ -1,0 +1,117 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+    
+<%-- <%@ include file="/WEB-INF/include/header.jsp" %>   --%>  
+    
+	<div class="hold-transition login-page">
+		<img alt="" src="../resources/images/업무.jpg" style="width:70%;height:70%;position:relative;">
+	   <div class="login-box" style="position:absolute;">
+		<div class="card" style="background:rgba(32, 201, 151, 0.5)">
+		  <div class="login-logo">
+		  	<img alt="" src="../resources/images/KakaoTalk_20220630_155133510.png" style="width:380px;height:220px;">
+			<a href="#"><b>WAREHOUSE</b></a>
+		  </div>
+		 <div class="card-body login-card-body" style="background:rgba(32, 201, 151, 0.1)">
+			<form action="login.do"	method="post">
+				<input type="hidden" name="retUrl" value="${retUrl }" />
+				<div class="form-group has-feedback">
+					<input type="text" class="form-control" name="eno" placeholder="사번" value="">
+					<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+				</div>
+				<div class="form-group has-feedback">
+					<input type="password" class="form-control" name="pwd" placeholder="비밀번호"  value="">
+					<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+				</div>
+				<div class="social-auth-links text-center mb-3">
+					<button type="submit" class="btn btn-block btn-outline-dark">로그인</button>
+				</div>
+			</form>
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="checkbox icheck">
+						<label><input type="checkbox" name="remember" value="check"> 사번저장</label>
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<a href="#" style="color:white;text-decoration:underline" data-toggle="modal" data-target="#modal-idefault">사번 찾기</a><br> 
+				</div>
+				<div class="col-sm-5">
+					<a href="#" style="color:white;text-decoration:underline" data-toggle="modal" data-target="#modal-pdefault">비밀번호 찾기</a><br> 
+				</div>
+			</div>
+		</div>
+	  </div>
+	  	
+	</div>
+  </div> 
+  
+<div class="modal fade show" id="modal-idefault" style="display: none;" aria-modal="true" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">사번 찾기</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="form-group row">
+					<div class="input-group input-group-md">
+						<input type="text" class="form-control" placeholder="이름입력">
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="input-group input-group-md">
+						<input type="text" class="form-control" placeholder="이메일입력">
+						<span class="input-group-append">
+						<button type="button" class="btn btn-info btn-sm btn-append">인증</button>
+						</span>
+					</div>
+				</div>
+				<p></p>
+			</div>
+			<div class="modal-footer justify-content-between">
+				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+				<button type="button" class="btn btn-primary">확인</button>
+			</div>
+		</div>
+	</div>
+</div>   
+<div class="modal fade show" id="modal-pdefault" style="display: none;" aria-modal="true" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">비밀번호 찾기</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="form-group row">
+					<div class="input-group input-group-md">
+						<input type="text" class="form-control" placeholder="사번입력">
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="input-group input-group-md">
+						<input type="text" class="form-control" placeholder="휴대폰번호입력">
+						<span class="input-group-append">
+						<button type="button" class="btn btn-info btn-flat">인증</button>
+						</span>
+					</div>
+				</div>
+				<p></p>
+			</div>
+			<div class="modal-footer justify-content-between">
+				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+				<button type="button" class="btn btn-primary">확인</button>
+			</div>
+		</div>
+	</div>
+</div>   
+
+<%-- <%@ include file="/WEB-INF/include/footer.jsp" %> --%>  
+  
+  
+  

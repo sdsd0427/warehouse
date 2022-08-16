@@ -1,0 +1,422 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<head>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/community.css">
+</head>
+
+<title>커뮤니티 관리</title>
+
+<body>
+
+	<!-- Content Wrapper. Contains page content -->
+	<div class="wrapper">
+
+
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row md-2">
+					<div class="col-sm-6">
+						<h3>커뮤니티 관리</h3>
+					</div>
+
+				</div>
+			</div>
+		</section>
+
+
+		<!-- Main content -->
+		<section class="content container-fluid">
+			<div class="row">
+				<div class="col-12">
+					<div class="card card-info card-tabs">
+						<div class="card-header p-0 pt-1 row">
+							<div class="col-11">
+								<ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+									<li class="nav-item"><a class="nav-link active"
+										id="custom-tabs-one-a-tab" data-toggle="pill"
+										href="#custom-tabs-one-a" role="tab"
+										aria-controls="custom-tabs-one-a" aria-selected="true">정보</a>
+									</li>
+									<li class="nav-item"><a class="nav-link"
+										id="custom-tabs-one-b-tab" data-toggle="pill"
+										href="#custom-tabs-one-b" role="tab"
+										aria-controls="custom-tabs-one-b" aria-selected="false">게시판</a>
+									</li>
+									<li class="nav-item"><a class="nav-link "
+										id="custom-tabs-one-c-tab" data-toggle="pill"
+										href="#custom-tabs-one-c" role="tab"
+										aria-controls="custom-tabs-one-c" aria-selected="false">회원</a>
+									</li>
+									<li class="nav-item"><a class="nav-link "
+										id="custom-tabs-one-d-tab" data-toggle="pill"
+										href="#custom-tabs-one-d" role="tab"
+										aria-controls="custom-tabs-one-d" aria-selected="false">가입</a>
+									</li>
+									<li class="nav-item"><a class="nav-link "
+										id="custom-tabs-one-f-tab" data-toggle="pill"
+										href="#custom-tabs-one-f" role="tab"
+										aria-controls="custom-tabs-one-f" aria-selected="false">폐쇄</a>
+									</li>
+								</ul>
+							</div>
+							<div class="col-1">
+								<button type="button" id="listBtn"
+									class="btn btn-sm btn-secondary mt-1" style="float: right;"
+									onclick="CloseWindow();">닫기</button>
+							</div>
+
+
+						</div>
+						<div class="card-body">
+							<div class="tab-content" id="custom-tabs-one-tabContent">
+								<div class="tab-pane fade active show" id="custom-tabs-one-a"
+									role="tabpanel" aria-labelledby="custom-tabs-one-a-tab">
+
+									<div class="row m-auto">
+										<div class="col-12">
+											<span style="font-size: 1.2em;">정보</span>
+											<button class="btn btn-info mb-2" style="float: right;"
+												onclick="">저장</button>
+										</div>
+									</div>
+
+									<div class="row m-auto">
+										<label class="col-2">커뮤니티 명</label> <input
+											class="form-control col-10" type="text" id="" name=''
+											class="form-control" value="자전거 동호회"> <label
+											class="col-2 mt-3">소개글</label>
+										<textarea class="form-control col-10 mt-3" rows="5" cols="">자전거 동호회입니다. 모임은 매주 금요일 저녁입니다. 같이 자전거 타면서 몸 건강해지고 다른 사람도 알아가고 싶은 분들 많이 가입신청 해주세요~
+												</textarea>
+
+										<label class="col-2 mt-3">공개 여부</label>
+										<div class="custom-control custom-radio col-1 mt-3">
+											<input class="custom-control-input" type="radio" id="open"
+												name="open" checked> <label for="open"
+												class="custom-control-label ">공개</label>
+										</div>
+										<div class="custom-control custom-radio col-9 mt-3">
+											<input class="custom-control-input" type="radio" id="notOpen"
+												name="open"> <label for="notOpen"
+												class="custom-control-label">비공개</label>
+										</div>
+										<div class="col-2"></div>
+										<div class="col-10">
+											<small><strong>*비공개로 설정 할 경우 전체 커뮤니티 목록에 보이지
+													않습니다.</strong></small><br /> <small><strong>*비공개로 설정 할 경우
+													초대로만 가입이 가능합니다.</strong></small>
+										</div>
+									</div>
+
+
+								</div>
+
+								<div class="tab-pane fade" id="custom-tabs-one-b"
+									role="tabpanel" aria-labelledby="custom-tabs-one-b-tab">
+
+									<div class="row m-auto">
+										<div class="col-12">
+											<span style="font-size: 1.2em;">게시판</span>
+											<button type="button" class="btn btn-info mb-2" style="float: right;" data-toggle="modal"data-target="#modal-board">추가</button>
+										</div>
+									</div>
+
+									<table class="table table-hover text-nowrap"
+										style="padding: 10px;">
+										<tbody>
+											<tr>
+												<td>가입인사</td>
+												<td>
+													<button type="button" class="btn btn-xs btn-info" style="float: right;" data-toggle="modal"data-target="#modal-set">설정</button>
+												</td>
+											</tr>
+											<tr>
+												<td>자유게시판</td>
+												<td>
+													<button class="btn btn-xs btn-info" style="float: right;"
+														onclick="">설정</button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+
+								</div>
+
+								<div class="tab-pane fade" id="custom-tabs-one-c"
+									role="tabpanel" aria-labelledby="custom-tabs-one-c-tab">
+									
+									<div class="row m-auto">
+										<div class="col-12">
+											<span style="font-size: 1.2em;">회원</span>
+											<button type="button" class="btn btn-info mb-2" style="float: right;">저장</button>
+											<button type="button" class="btn btn-danger mb-2" style="float: right;" >탈퇴</button>
+										</div>
+									</div>
+
+									<table class="table table-hover text-nowrap"
+										style="padding: 10px; text-align:center;">
+										<tbody>
+											<tr>
+												<th style="width:10%"><input class="form-check-input" type="checkbox"></th>
+												<th style="width:10%">이름</th>
+												<th style="width:20%">부서</th>
+												<th style="width:20%">내선번호</th>
+												<th style="width:20%">가입일</th>
+												<th style="width:20%">권한</th>
+											</tr>
+											<tr>
+												<td><input class="form-check-input" type="checkbox"></td>
+												<td>홍길동</td>
+												<td>개발</td>
+												<td>4782</td>
+												<td>2022-06-25</td>
+												<td>
+													<select class="form-control" disabled>
+													<option>회장</option>
+													</select>
+												</td>
+											</tr>
+											<tr>
+												<td><input class="form-check-input" type="checkbox"></td>
+												<td>강감찬</td>
+												<td>인사</td>
+												<td>4785</td>
+												<td>2022-06-27</td>
+												<td>
+													<select class="form-control">
+														<option>부회장</option>
+														<option>일반</option>
+													</select>
+												</td>
+											</tr>
+											<tr>
+												<td><input class="form-check-input" type="checkbox"></td>
+												<td>강감찬</td>
+												<td>인사</td>
+												<td>4785</td>
+												<td>2022-06-27</td>
+												<td>
+													<select class="form-control">
+														<option>부회장</option>
+														<option selected="selected">일반</option>
+													</select>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								
+								
+								</div>
+
+								<div class="tab-pane fade" id="custom-tabs-one-d"
+									role="tabpanel" aria-labelledby="custom-tabs-one-d-tab">
+									
+									
+									<div class="row m-auto">
+										<div class="col-12">
+											<span style="font-size: 1.2em;">가입</span>
+										</div>
+									</div>
+
+									<table class="table table-hover text-nowrap"
+										style="padding: 10px; text-align:center;">
+										<tbody>
+											<tr>
+												<th style="width:20%">이름</th>
+												<th style="width:20%">부서</th>
+												<th style="width:20%">내선번호</th>
+												<th style="width:20%">신청일</th>
+												<th style="width:10%">승인</th>
+												<th style="width:10%">취소</th>
+											</tr>
+											<tr>
+												<td>이순신</td>
+												<td>영업</td>
+												<td>4785</td>
+												<td>2022-06-28</td>
+												<td>
+													<button type="button" class="btn btn-info mb-2">승인</button>
+													
+												</td>
+												<td>
+													<button type="button" class="btn btn-secondary mb-2">취소</button>
+												</td>
+											</tr>
+											<tr>
+												<td>강감찬</td>
+												<td>인사</td>
+												<td>5518</td>
+												<td>2022-06-27</td>
+												<td>
+													<button type="button" class="btn btn-info mb-2">승인</button>
+													
+												</td>
+												<td>
+													<button type="button" class="btn btn-secondary mb-2">취소</button>
+												</td>
+											</tr>
+											<tr>
+												<td>전우치</td>
+												<td>인사</td>
+												<td>4126</td>
+												<td>2022-06-27
+												</td>
+												<td>
+													<button type="button" class="btn btn-info mb-2">승인</button>
+												</td>
+												<td>
+													<button type="button" class="btn btn-secondary mb-2">취소</button>
+													
+												</td>
+											</tr>
+										</tbody>
+									</table>
+										
+								</div>
+
+								<div class="tab-pane fade" id="custom-tabs-one-f"
+									role="tabpanel" aria-labelledby="custom-tabs-one-f-tab">
+									
+									<div class="row m-auto">
+										<div class="col-12">
+											<span style="font-size: 1.2em;">폐쇄</span>
+											<button class="btn btn-info mb-2" style="float: right;"
+												onclick="">폐쇄하기</button>
+										</div>
+									</div>
+
+									<div class="row m-auto">
+										<span class="col-12 mt-3">※ 커뮤니티를 폐쇄하시면, 현재 커뮤니티 내에 있는 모든 자료들이 삭제됩니다.</span>
+										<span class="col-12" style="color:red;">자료가 삭제된 이후에는 복구가 불가능 합니다.</span>
+											
+										<div class="col-12 mt-3">
+										
+										<textarea rows="5" cols="125" placeholder="폐쇄 공지를 입력해주세요 작성한 내용은 커뮤니티 전 회원에게 이메일로 발송 됩니다."></textarea>
+										</div>
+									</div>
+									
+										
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+
+
+				</div>
+			</div>
+			<!-- end row  -->
+
+			<!--  modal-board -->
+			<div class="modal fade" id="modal-board">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">게시판 추가</h4>
+							<div>
+							<button type="button" class="btn btn-info" onclick="">추가</button>
+							</div>
+						</div>
+						<div class="modal-body">
+							<div class="row ">
+							<label class="col-2">게시판 명</label>
+							<input class="form-control col-10" type="text" id="" name='' class="form-control" placeholder="게시판 명을 쓰세요">
+							
+							<label class="col-2 mt-3">소개글</label>
+							<textarea class="form-control col-10 mt-3" rows="5" cols="" placeholder="소개글을 작성하세요"></textarea>
+							
+							<label class="col-2 mt-3">댓글 여부</label>
+							<div class="form-check col-1 mt-3">
+								<input class="form-check-input" type="radio" id="open" name="open" checked>
+								<label for="open" class="form-check-label">작성</label>
+							</div>
+							<div class="form-check col-9 mt-3">
+								<input class="form-check-input" type="radio" id="notOpen" name="open" >
+								<label for="notOpen" class="form-check-label">미작성</label>
+							</div>
+						</div>	
+						</div>
+						<div class="modal-footer justify-content-between">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">닫기</button>
+						</div>
+						
+					</div>
+
+				</div>
+			</div>
+			<!--  modal-board -->
+			
+			<!--  modal-set -->
+			<div class="modal fade" id="modal-set">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">게시판 설정</h4>
+							<div>
+							<button type="button" class="btn btn-info" onclick="">저장</button>
+							<button type="button" class="btn btn-danger" onclick="">삭제</button>
+							</div>
+						</div>
+						<div class="modal-body">
+							<div class="row ">
+							<label class="col-2">게시판 명</label>
+							<input class="form-control col-10" type="text" id="" name='' class="form-control" value="가입인사">
+							
+							<label class="col-2 mt-3">소개글</label>
+							<textarea class="form-control col-10 mt-3" rows="5" cols="" >가입 인사 게시판 입니다. 처음 가입하신 분들은 가입인사 게시판에 글 작성 부탁드려요~</textarea>
+							
+							<label class="col-2 mt-3">댓글 여부</label>
+							<div class="form-check col-1 mt-3">
+								<input class="form-check-input" type="radio" id="open" name="open" checked>
+								<label for="open" class="form-check-label">작성</label>
+							</div>
+							<div class="form-check col-9 mt-3">
+								<input class="form-check-input" type="radio" id="notOpen" name="open" >
+								<label for="notOpen" class="form-check-label">미작성</label>
+							</div>
+						</div>	
+						
+						</div>
+						<div class="modal-footer justify-content-between">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">닫기</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<!--  modal-set -->
+			
+		</section>
+		<!-- /.content -->
+
+
+
+	</div>
+	<!-- /.content-wrapper -->
+
+
+
+
+
+	<script>
+		
+	</script>
+
+</body>
+
+
+
+
+
+
+
+
+

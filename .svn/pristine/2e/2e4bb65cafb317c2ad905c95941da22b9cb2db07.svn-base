@@ -1,0 +1,58 @@
+package kr.or.warehouse.dto;
+
+import java.util.Date;
+
+public class BoardReplyVO {
+	private String replyNo;
+	private String content;
+	private Date regDate;
+	private Date updateDate;
+	private String boardNo;
+	private int eno;
+
+	private String picture;
+
+	public String getPicture() {
+		return picture;
+	}
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+	public String getReplyNo() {
+		return replyNo;
+	}
+	public void setReplyNo(String replyNo) {
+		this.replyNo = replyNo;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public Date getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
+	}
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+	public String getBoardNo() {
+		return boardNo;
+	}
+	public void setBoardNo(String boardNo) {
+		this.boardNo = boardNo;
+	}
+	public int getEno() {
+		return eno;
+	}
+	public void setEno(int eno) {
+		this.eno = eno;
+	}
+
+}

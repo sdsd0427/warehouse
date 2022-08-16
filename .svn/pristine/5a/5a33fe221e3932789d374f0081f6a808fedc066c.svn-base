@@ -1,0 +1,88 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<head>
+	<style>
+		th{
+			vertical-align: middle!important;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<div style="display: flex; justify-content: space-between; padding: 10px 20px">
+			<h3 class="title">보고서 상세보기</h3>
+			<c:if test="${loginUser.eno eq report.eno }">
+				<div class="row col-4">
+					<div class="col-6">
+						<button type="button" class="btn btn-block btn-outline-primary" onclick="location.href='reportModifyForm.do?repno=${report.repNo}'">수정</button>
+					</div>
+					<div class="col-6">
+						<button type="button" class="btn btn-block btn-outline-danger" onclick="location.href='reportDelete.do?repno=${report.repNo}'">삭제</button>
+					</div>
+				</div>
+			</c:if>
+		</div>
+		<div class="card" style="padding: 20px 40px 20px 20px; margin: 0 10px;">
+			<div class="card-body">
+				<table class="table projects">
+					<tr>
+						<th>보고자</th>
+						<td>
+							<div style="align-items: center; display: flex;">
+								<div>
+									<img class="table-avatar emp_profile" src="${report.writer.photo }">
+								</div>
+								<div>
+									<span style="font-size:12px; font-weight:bold">${report.writer.name } ${report.writer.ppsname }</span>
+									<div style="font-size:8px;">
+										<p>${report.writer.dname }</p>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>제목</th>
+						<td>
+							${report.title }
+						</td>
+					</tr>
+					<tr>
+						<th>첨부파일</th>
+						<td>
+							<div class="card card-light card-outline">
+								<div class="card-footer">
+									<c:if test="${!empty report.fileName }">
+										<i class="fas fa-paperclip"></i>
+										<span class ="info-box-number" style="cursor:pointer;" onclick="location.href='getReportFile.do?repno=${report.repNo}'">${report.fileName }</span>
+									</c:if>
+									<c:if test="${empty report.fileName }">
+										<span style="font-size: 14px">첨부파일이 존재하지 않습니다.</span>
+									</c:if>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td>
+							<div>
+								${report.content }
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	<c:if test="${from eq 'modify' }">
+		alert("수정되었습니다.");
+	</c:if>
+	<c:if test="${from eq 'delete' }">
+		alert("삭제되었습니다.");
+	</c:if>
+
+</body>

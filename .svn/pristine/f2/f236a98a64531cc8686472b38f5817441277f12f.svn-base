@@ -1,0 +1,12 @@
+package kr.or.warehouse.controller.view;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/signal")
+public class SignalController {
+
+	@RequestMapping("/main")
+	public void main() throws Exception{}
+}

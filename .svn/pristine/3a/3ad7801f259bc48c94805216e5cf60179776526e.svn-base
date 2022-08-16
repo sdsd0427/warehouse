@@ -1,0 +1,67 @@
+package kr.or.warehouse.dto;
+
+import java.util.Date;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+public class ManualAttachVO {
+
+	private String maNo;
+	private String uploadPath;
+	private String fileName;
+	private String fileType;
+	private String manualNo;
+	private int eNo;
+	private Date regDate;
+
+	public String getMaNo() {
+		return maNo;
+	}
+	public void setMaNo(String maNo) {
+		this.maNo = maNo;
+	}
+	public String getUploadPath() {
+		return uploadPath;
+	}
+	public void setUploadPath(String uploadPath) {
+		this.uploadPath = uploadPath;
+	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public String getFileType() {
+		return fileType;
+	}
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
+	public String getManualNo() {
+		return manualNo;
+	}
+	public void setManualNo(String manualNo) {
+		this.manualNo = manualNo;
+	}
+	public int geteNo() {
+		return eNo;
+	}
+	public void seteNo(int eNo) {
+		this.eNo = eNo;
+	}
+	public Date getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
+	}
+
+	@Override
+	public String toString() {
+	      return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
+
+}

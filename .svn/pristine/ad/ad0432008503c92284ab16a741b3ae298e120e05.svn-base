@@ -1,0 +1,128 @@
+package kr.or.warehouse.controller.view;
+
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.dto.BoardVO;
+import kr.or.warehouse.service.BoardService;
+
+@Controller
+@RequestMapping("/board")
+public class BoardController {
+	@Autowired
+	private BoardService boardService;
+
+	@RequestMapping("/notice/list")
+	public ModelAndView noticeList(Criteria cri, ModelAndView mnv)throws Exception {
+		System.out.println("controller");
+		String url="board/notice/list";
+		String temp = "n";
+
+		Map<String, Object> dataMap = boardService.getBoardList(cri, temp);
+		mnv.addObject("dataMap", dataMap);
+		mnv.setViewName(url);
+		return mnv;
+	}
+	@RequestMapping("/notice/registGo")
+	public String noticeregistform()throws Exception {
+		String url="board/notice/registForm";
+		return url;
+	}
+	@RequestMapping("/notice/modifyGo")
+	public String noticeModifyForm()throws Exception {
+		String url="board/notice/modifyForm";
+		return url;
+	}
+	@RequestMapping("/notice/detailGo")
+	public String noticeDetail()throws Exception {
+		String url="board/notice/detail";
+		return url;
+	}
+
+	@RequestMapping("/free/list")
+	public ModelAndView freeList(Criteria cri, ModelAndView mnv)throws Exception {
+		System.out.println("controller");
+		String url="board/free/list";
+		String temp = "f";
+
+		Map<String, Object> dataMap = boardService.getBoardList(cri, temp);
+		mnv.addObject("dataMap", dataMap);
+		mnv.setViewName(url);
+		return mnv;
+	}
+	@RequestMapping("/free/registGo")
+	public String freeRegistForm()throws Exception {
+		String url="board/free/registForm";
+		return url;
+	}
+	@RequestMapping(value="/free/regist",method=RequestMethod.POST,produces="text/plain; charset=utf-8")
+	public String freeRegist(BoardVO board, HttpServletRequest request, RedirectAttributes rttr)throws Exception {
+		System.out.println("regist");
+		String url="redirect:/board/free/list.do";
+		String name = board.getName();
+
+		System.out.println("title : "+board.getBoardTitle());
+		System.out.println("classCode : "+board.getClassCode());
+		//board.setEno(14310056);
+		board.setBoardTitle((String)request.getAttribute("XSSboardTitle"));
+		System.out.println("title : "+board.getBoardTitle());
+		boardService.regist(board);
+		rttr.addFlashAttribute("from", "regist");
+		return url;
+	}
+	@RequestMapping("/free/modifyGo")
+	public String freeModifyForm()throws Exception {
+		String url="board/free/modifyForm";
+		return url;
+	}
+	@RequestMapping("/free/detailGo")
+	public ModelAndView freeDetail(String boardNo, String from, ModelAndView mnv)throws Exception {
+		String url="board/free/detail";
+		System.out.println("asd");
+		BoardVO board = boardService.getBoard(boardNo);
+//		if(from!=null && from.equals("list")) {
+//			board = boardService.getBoard(boardNo);
+//			url="redirect:/board/free/detail.do?boardNo="+boardNo;
+//		}
+		mnv.addObject("board", board);
+		mnv.setViewName(url);
+		return mnv;
+	}
+
+	@RequestMapping("/event/list")
+	public ModelAndView eventList(Criteria cri, ModelAndView mnv)throws Exception {
+		System.out.println("controller");
+		String url="board/event/list";
+		String temp = "e";
+
+		Map<String, Object> dataMap = boardService.getBoardList(cri, temp);
+		mnv.addObject("dataMap", dataMap);
+		mnv.setViewName(url);
+		return mnv;
+	}
+	@RequestMapping("/event/registGo")
+	public String eventRegistForm()throws Exception {
+		String url="board/event/registForm";
+		return url;
+	}
+	@RequestMapping("/event/modifyGo")
+	public String eventModifyForm()throws Exception {
+		String url="board/event/modifyForm";
+		return url;
+	}
+	@RequestMapping("/event/detailGo")
+	public String eventDetail()throws Exception {
+		String url="board/event/detail";
+		return url;
+	}
+
+}

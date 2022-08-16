@@ -1,0 +1,15 @@
+package kr.or.warehouse.controller.view;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/ehr")
+public class EhrController {
+
+	@RequestMapping("/main")
+	public void main() {}
+	
+	@RequestMapping("/teamList")
+	public void teamList() {}
+}

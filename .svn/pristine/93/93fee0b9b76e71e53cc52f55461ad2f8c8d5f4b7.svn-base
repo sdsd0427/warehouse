@@ -1,0 +1,205 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+
+<script>
+	$(document).on('click', 'body > aside > div > ul > li:nth-child(2) > a', function(){
+		$(this).attr("href", "#");
+		OpenWindow('<%=request.getContextPath()%>/work/workRegistForm.do', '새 업무', '1000', '600');
+	});
+
+	$(function(){
+		setTimeout(() => {
+			closeLoading();
+		}, 1000);
+	});
+
+
+	function closeLoading(){
+		$('.preloader').css({
+			"height" : "0"
+		});
+
+		$('.animation__shake').css({
+			"display" : "none"
+		})
+	}
+
+	var status = 0;
+	function myWorkListGo(page,statusNo){
+		status = statusNo;
+		var data = {
+				'page' : page,
+				'perPageNum' : 5,
+				'searchType' : $('select[name="searchType"]').val(),
+				'keyword' : $('input[name="keyword"]').val(),
+				'statusNo' : statusNo
+		}
+
+
+		$.ajax({
+			url : '<%=request.getContextPath()%>/work/myWorkListAjax.do',
+			data : data,
+			type : 'post',
+			success: function(res){
+				if(res.myWorkList.length > 0){
+					printWorkData(res.myWorkList, $('.workList'), $('#workList-template'));
+
+					pageMakerData = {
+							pageMaker : res.pageMaker,
+							statusNo : statusNo
+					}
+					printPageMaker(pageMakerData ,$('.pagination'), $('#pageMaker-template'));
+				}
+			},
+			error:function(error){
+				alert("error : " + error.status)
+			}
+		});
+	}
+
+	function printWorkData(dataList, target, templateObject){
+		var template = Handlebars.compile(templateObject.html());
+		var html = template(dataList);
+		target.html(html);
+	}
+
+	function printPageMaker(data, target, templateObject){
+		var template = Handlebars.compile(templateObject.html());
+		var html = template(data);
+		target.html(html);
+	}
+
+</script>
+
+<script type="text/x-handlebars-template"  id="workList-template">
+{{#each .}}
+	<tr style="{{readCheck wcheck}}">
+		<td>{{wtitle}}
+			{{overDayCheck wstatus overDay}}
+			{{dDayCheck dDay}}
+		</td>
+		<td>
+			<div style="align-items: center; display: flex;">
+				<div >
+					<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+				</div>
+				<div>
+					<p style="font-size: 16px; font-weight: bold">{{requestBy.name}} </p>
+					<div style="font-size: 12px;">
+						<p>{{requestBy.ppsname }}</p>
+						<p>{{requestBy.dname }}</p>
+					</div>
+				</div>
+			</div>
+		</td>
+		<td>
+			<div style="align-items: center; display: flex;">
+				{{#each workManagerList}}
+					{{wmStepCheck this}}
+				{{/each}}
+				<div style="font-size: 12px">
+					<span>외 {{managerCnt}}명</span>
+				</div>
+			</div>
+		</td>
+		<td class="project_progress">
+			<div class="progress progress-sm">
+				<div class="progress-bar bg-green" role="progressbar" aria-valuenow="{{wprogress}}" aria-valuemin="0"
+				aria-valuemax="100" style="width: {{wprogress}}%"></div>
+			</div>
+			<small>{{wprogress}}% 완료</small>
+		</td>
+		<td>
+			{{formatDate wend}}
+		</td>
+		<td>
+			<span class="badge bg-secondary">{{wstatus }}</span>
+		</td>
+	</tr>
+{{/each}}
+</script>
+
+<script type="text/x-handlebars-template"  id="pageMaker-template">
+	<li class="page-item">
+		<a class="page-link" href="">
+			<i class="fas fa-angle-double-left"></i>
+		</a>
+	</li>
+	<li class="page-item">
+		<a class="page-link" href="">
+			<i class="fas fa-angle-left"></i>
+		</a>
+	</li>
+		{{printPage this}}
+	<li class="page-item">
+		<a class="page-link" href="">
+			<i class="fas fa-angle-right"></i>
+		</a>
+	</li>
+	<li class="page-item">
+		<a class="page-link" href="">
+			<i class="fas fa-angle-double-right"></i>
+		</a>
+	</li>
+</script>
+<script>
+	Handlebars.registerHelper({
+		"readCheck" : function(wcheck){
+			if(wcheck == 1){
+				 return "color:lightgray";
+			}
+
+			return "";
+		},
+		"overDayCheck" : function(wstatus, overDay){
+			if(wstatus == "대기" && overDay >= 3){
+				var str = '<span class="badge bg-danger">D+' + overDay + '</span>'
+				return new Handlebars.SafeString(str);
+			}
+		},
+		"dDayCheck" : function(dDay){
+			if(dDay <= 3){
+				var str = '<span class="badge bg-danger">임박</span>'
+				return new Handlebars.SafeString(str);
+			}
+		},
+		"wmStepCheck" : function(manager){
+			if(manager.wmstep == 1){
+				var str = '<div >';
+					str +='<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">';
+ 					str +='</div>';
+ 					str +='<div>';
+ 					str +='<p style="font-size: 16px; font-weight: bold">' + manager.name +  '</p>';
+					str +='<div style="font-size: 12px;">';
+					str +='<p>' + manager.ppsname + '</p>';
+					str +='<p>' + manager.dname + '</p>';
+					str +='</div>';
+					str +='</div>';
+
+				return new Handlebars.SafeString(str);
+			}
+		},
+		"formatDate" : function(wend){
+			var dateObj = new Date(wend);
+			var year = dateObj.getFullYear();
+			var month = dateObj.getMonth() + 1;
+			var date = dateObj.getDate();
+			return year + "-" + month + "-" + date;
+		},
+		"printPage" : function(pageMakerData){
+			var pageMaker = pageMakerData.pageMaker;
+			var statusNo = pageMakerData.statusNo;
+			var str = '';
+			for(i = pageMaker.startPage; i <= pageMaker.endPage; i++){
+				var active = i == pageMaker.cri.page ? 'active' : '';
+				str += '<li class="page-item ' + active + '">';
+				str += '<a class="page-link" href="javascript:myWorkListGo(' + i + ',' + statusNo + ')">';
+				str += i
+				str += '</a>';
+				str += '</li>';
+			}
+			return new Handlebars.SafeString(str);
+		}
+	});
+</script>

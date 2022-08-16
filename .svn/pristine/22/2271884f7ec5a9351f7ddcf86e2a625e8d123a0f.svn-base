@@ -1,0 +1,126 @@
+package kr.or.warehouse.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSessionException;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.dto.ContactgrVO;
+import kr.or.warehouse.dto.EmployeeVO;
+import kr.or.warehouse.dto.MycontactVO;
+
+public interface ContactDAO {
+
+	//전체주소록 리스트
+	List<EmployeeVO> selectSearchContactList(Map<String, String> paramMap, RowBounds rowBounds) throws SQLException;
+
+	//팀 정보 리스트
+	List<EmployeeVO> selectTeamContactList(Criteria cri, String dname) throws SQLException;
+
+	int selectSearchContactListCount(Map<String, String> paramMap) throws SQLException;
+
+	//개인주소록 그룹 리스트의 사원정보
+	List<EmployeeVO> selectGroupInfoList(Criteria cri, String cogroupcode) throws SQLException;
+
+
+	//Gr
+
+	// 그룹 등록
+	void insertGroup(ContactgrVO contactgr) throws SQLException;
+	int selectEno(String cogroupcode)throws SQLException;
+
+	// 그룹된 사원 정보 등록
+	void insertGrInfo(MycontactVO mycontact) throws SQLException;
+
+
+	// 그룹 기본키 생성
+	String selectContactGrNo() throws SQLException;
+
+	//그룹 리스트
+	List<ContactgrVO> selectGroupList(Map<String, Object> dataMap, RowBounds rowBounds) throws SQLException;
+
+	//개인주소록 전체리스트
+	List<ContactgrVO> selectPersonalList(Map<String, Object> paramMap, RowBounds rowBounds)throws SQLException;
+
+	//개인주소록 그룹 안 사원 삭제
+	void deleteGrEmployee(MycontactVO mycontact) throws SQLException;
+
+	//개인주소록 그룹 삭제
+	void deleteGr(String cogroupcode)throws SQLException;
+
+	//부서주소록
+	//List<EmployeeVO> selectDepartment(Map<String, String> paramMap, String dno) throws SQLException;
+	List<EmployeeVO> selectDepartment(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+
+	int selectDepartmentCount(Map<String, Object> paramMap) throws SQLException;
+
+	//그룹 count
+	String selectGroupCount(String cogroupcode) throws SQLException;
+
+	int selectPersonalListCount(Map<String, Object> paramMap) throws SQLException;
+
+	// 초성--------------------------------------------------------------------
+	
+	
+	//개인초성
+	List<EmployeeVO> PselectGirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> PselectNirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> PselectDirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> PselectRirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> PselectMirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> PselectBirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> PselectXirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> PselectOirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> PselectJirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> PselectCirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> PselectCairstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> PselectTirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> PselectPirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> PselectHirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	
+	
+	//부서 초성
+	List<EmployeeVO> DselectGirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> DselectNirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> DselectDirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> DselectRirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> DselectMirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> DselectBirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> DselectXirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> DselectOirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> DselectJirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> DselectCirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> DselectCairstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> DselectTirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> DselectPirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	List<EmployeeVO> DselectHirstList(Map<String, Object> paramMap, RowBounds rowBounds) throws SQLException;
+	
+	
+	//전체 초성
+	List<EmployeeVO> selectGirstList(Criteria cri) throws SQLException;
+	List<EmployeeVO> selectNirstList(Criteria cri) throws SQLException;
+	List<EmployeeVO> selectDirstList(Criteria cri) throws SQLException;
+	List<EmployeeVO> selectRirstList(Criteria cri) throws SQLException;
+	List<EmployeeVO> selectMirstList(Criteria cri) throws SQLException;
+	List<EmployeeVO> selectBirstList(Criteria cri) throws SQLException;
+	List<EmployeeVO> selectXirstList(Criteria cri) throws SQLException;
+	List<EmployeeVO> selectOirstList(Criteria cri) throws SQLException;
+	List<EmployeeVO> selectJirstList(Criteria cri) throws SQLException;
+	List<EmployeeVO> selectCirstList(Criteria cri) throws SQLException;
+	List<EmployeeVO> selectCairstList(Criteria cri) throws SQLException;
+	List<EmployeeVO> selectTirstList(Criteria cri) throws SQLException;
+	List<EmployeeVO> selectPirstList(Criteria cri) throws SQLException;
+	List<EmployeeVO> selectHirstList(Criteria cri) throws SQLException;
+
+
+
+
+
+
+
+
+
+}

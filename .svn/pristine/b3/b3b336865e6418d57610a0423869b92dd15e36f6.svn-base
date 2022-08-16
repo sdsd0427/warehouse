@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+.titleLine{
+	border-bottom: 1px solid gray;
+}
+
+.wrapper{
+	padding : 0px 50px;
+}
+
+.small-box{
+	margin-top: 10px !important;
+	
+}
+
+.bc{
+	padding: 10px 10px;	
+}

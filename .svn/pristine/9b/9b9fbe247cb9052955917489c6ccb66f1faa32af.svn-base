@@ -1,0 +1,86 @@
+package kr.or.warehouse.controller.view;
+
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.service.ManualService;
+
+@Controller
+@RequestMapping("/kw")
+public class KwController {
+
+	@Autowired
+	private ManualService service;
+
+	// kw dashboard start
+	@RequestMapping("/main")
+	public void main()throws Exception{}
+
+	@RequestMapping("/hashTagListForm")
+	public void hashTagListForm()throws Exception{}
+
+	@RequestMapping("/empWorkListForm")
+	public void empWorkListForm()throws Exception{}
+
+	@RequestMapping("/empDocumentListForm")
+	public void empDocumentListForm()throws Exception{}
+	// kw dashboard end
+
+	// manual start
+	@RequestMapping("/manual/list")
+	public ModelAndView manual(Criteria cri, ModelAndView mnv)throws Exception{
+		String url="/kw/manual";
+
+		Map<String,Object> dataMap = service.getManualList(cri);
+
+
+		mnv.addObject("dataMap",dataMap);
+		mnv.setViewName(url);
+
+		return mnv;
+
+	}
+
+	@RequestMapping("/manual/manualRegistForm")
+	public String manualRegistForm()throws Exception{
+		String url="/kw/manualRegistForm";
+		return url;
+	}
+
+	@RequestMapping("/manual/manualDetail")
+	public String manualDetail()throws Exception{
+		String url="/kw/manualDetail";
+		return url;
+	}
+
+	@RequestMapping("/manual/manualmodifyForm")
+	public String manualmodifyForm()throws Exception{
+		String url="/kw/manualmodifyForm";
+		return url;
+	}
+	// manual end
+
+	@RequestMapping("/knowHowList")
+	public String knowHowList() throws Exception{
+		String url = "kw/knowHowList";
+
+		return url;
+	}
+
+	@RequestMapping("/approvalList")
+	public String historyList() throws Exception{
+		String url = "/kw/approvalList";
+		return url;
+	}
+
+	@RequestMapping("/approvalDetailGo")
+	public String approvalDetailGo()throws Exception{
+		String url="/kw/approvalDetailGo";
+		return url;
+	}
+}

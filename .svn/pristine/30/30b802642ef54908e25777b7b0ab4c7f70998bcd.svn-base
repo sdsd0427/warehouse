@@ -1,0 +1,291 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+
+ <div>
+ 	<!-- Main content -->
+	<section class="top">
+		<div class="card">
+<!-- 			<div class="card-header with-border"> -->
+<!--     				<button type="button" class="btn btn-primary" onclick="OpenWindow('registForm.do','회원등록',800,800);" >회원등록</button> -->
+<!--    			</div> -->
+   			<div class="card-body" style="text-align:left;">
+				<div class="row">
+					<div class="col-sm-12">	
+						<p style="margin-bottom: 4px;"><b>기본근무</b>&nbsp;&nbsp;09:00-18:00</p>
+						<div class="info-box bg-gradient-info">
+							<span class="info-box-icon">
+<!-- 								<i class="far fa-bookmark"></i> -->
+								<img data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image" src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg">
+							</span>
+							<div class="info-box-content">
+								<div class="row">
+									<div class="col-md-2">
+										<span class="info-box-text"><b>최민규 팀장</b></span>
+										<span class="info-box-text" style="font-size: 0.8em;">인사관리팀</span>
+									</div>
+									<div class="col-md-2">
+										<span class="info-box-text">이번 주 누적</span>
+										<span class="info-box-number">23h 0m 0s</span>
+									</div>
+									<div class="col-md-2">
+										<span class="info-box-text">이번 주 초과</span>
+										<span class="info-box-number">23h 0m 0s</span>
+									</div>
+									<div class="col-md-2">
+										<span class="info-box-text">이번 주 잔여</span>
+										<span class="info-box-number">23h 0m 0s</span>
+									</div>
+									<div class="col-md-2">
+										<span class="info-box-text">이번 달 누적</span>
+										<span class="info-box-number">23h 0m 0s</span>
+									</div>
+									<div class="col-md-2">
+										<span class="info-box-text">이번 달 초과</span>
+										<span class="info-box-number">23h 0m 0s</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> <!-- row -->
+    		</div> <!-- card-body -->
+	     </div>
+   	</section>
+
+	<section class="month">
+	</section>
+
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-3">
+
+					<div class="card card-info card-outline">
+						<div class="card-body box-profile">
+							<p class="text-muted text-left" style="margin-bottom: 1px;">2022-07-04(월)</p>
+							<p class="text-left" style="font-size: 2.5em;"><b style="padding: 0px;">12:20:42</b></p>
+							<div class="progress">
+								<div class="progress-bar" style="width: 60%"></div>
+							</div>
+							<ul class="list-group list-group-unbordered mb-3">
+								<li class="list-group-item"><b>출근시간</b> 
+									<a class="float-right">08:47:13</a>
+								</li>
+								<li class="list-group-item"><b>퇴근시간</b> 
+									<a class="float-right">미등록</a>
+								</li>
+								<li class="list-group-item"><b>주간 누적근무시간</b> 
+									<a class="float-right">3h 22m 13s</a>
+								</li>
+							</ul>
+							<div class="row">
+								<div class="col-6">
+									<button type="button" class="btn btn-info btn-block">출근</button>
+								</div>
+								<div class="col-6">
+									<button type="button" class="btn btn-info btn-block">퇴근</button>
+								</div>
+							</div>
+							<div class="row" style="margin-top: 6px;">
+								<div class="col-12">
+<!-- 									<button type="button" class="btn btn-info btn-block">업무중</button> -->
+									<select class="form-control btn-info text-center" name="perPageNum" id="perPageNum">
+								  		<option value="" >업무중</option>
+								  		<option value="" style="background: none;">업무종료</option>
+								  		<option value="" >외근</option>
+								  		<option value="" >출장</option>
+								  		<option value="" >휴가</option>
+								  		<option value="" >회의중</option>
+								  		<option value="" >자리비움</option>
+								  		<option value="" >외근 후 퇴근</option>
+								  	</select>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="card card-info card-outline">
+						<div class="card-body box-profile">
+<!-- 							<h3 class="profile-username text-left">근무유형 : 기본근무</h3> -->
+							<p class="text-left" style="font-size: 1em;"><b style="padding: 0px;">내 근무유형 : 기본근무</b></p>
+							<p class="text-muted text-left">Software Engineer</p>
+							<ul class="list-group list-group-unbordered mb-3">
+								<li class="list-group-item"><b>출근시간</b> 
+									<a class="float-right">09:00:00</a>
+								</li>
+								<li class="list-group-item"><b>퇴근시간</b> 
+									<a class="float-right">18:00:00</a>
+								</li>
+								<li class="list-group-item"><b>주간 근무시간</b> 
+									<a class="float-right">40h 0m 0s</a>
+								</li>
+							</ul>
+							<a href="#" class="btn btn-info btn-block"><b>근무유형 변경</b></a>
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="col-md-9">
+					<div class="card collapsed-card">
+						<div class="card-header">
+							<h3 class="card-title text-muted"><b>1주차</b></h3>
+							<div class="card-tools">
+								<button type="button" class="btn btn-tool"
+									data-card-widget="collapse" title="Collapse">
+									<i class="fas fa-plus"></i>
+								</button>
+							</div>
+						</div>
+						<div class="card-body p-0" style="display: none;">
+						</div>
+					</div>
+					
+					<div class="card">
+						<div class="card-header">
+							<h3 class="card-title text-muted"><b>2주차</b></h3>
+							<div class="card-tools">
+								<button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+									<i class="fas fa-minus"></i>
+								</button>
+							</div>
+						</div>
+						<div class="card-body p-0" style="display : block;">
+							<table class="table table-striped projects">
+								<thead>
+									<tr>
+										<th style="width: 11%">일자</th>
+										<th style="width: 13%">업무시작</th>
+										<th style="width: 13%">업무종료</th>
+										<th style="width: 13%">총 근무시간</th>
+										<th style="width: 30%">근무시간 상세</th>
+										<th style="width: 20%">승인요청내역</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td style="color: red;">06 월</td>
+										<td>-</td>
+										<td>-</td>
+										<td>-</td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>07 화</td>
+										<td>08:52:13
+<!-- 										<a class="btn btn-info btn-sm" href="#">  -->
+<!-- 											<i class="fas fa-pencil-alt"> </i> -->
+<!-- 										</a> -->
+										</td>
+										<td>18:13:52</td>
+										<td>9h 21m 3s</td>
+										<td><small>기본 </small>8h 0m 9s&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;<small>연장</small> 8h 0m 9s</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>08 수</td>
+										<td>08:52:13</td>
+										<td>18:13:52</td>
+										<td>9h 21m 3s</td>
+										<td><small>기본 </small>8h 0m 9s&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;<small>연장</small> 8h 0m 9s</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>09 목</td>
+										<td>08:52:13</td>
+										<td style="color: #007bff;">18:13:52</td>
+										<td>9h 21m 3s</td>
+										<td><small>기본 </small>8h 0m 9s&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;<small>연장</small> 8h 0m 9s</td>
+										<td style="color: #007bff;"><small>변경신청 승인</small></td>
+									</tr>
+									<tr>
+										<td>10 금</td>
+										<td>08:52:13</td>
+										<td>18:13:52</td>
+										<td>9h 21m 3s</td>
+										<td><small>기본 </small>8h 0m 9s&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;<small>연장</small> 8h 0m 9s</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td style="color: #007bff;">11 토</td>
+										<td>-</td>
+										<td>-</td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr>
+										<td style="color: red;">12 일</td>
+										<td>-</td>
+										<td>-</td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+									
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+
+					<div class="card collapsed-card">
+						<div class="card-header">
+							<h3 class="card-title text-muted"><b>3주차</b></h3>
+							<div class="card-tools">
+								<button type="button" class="btn btn-tool"
+									data-card-widget="collapse" title="Collapse">
+									<i class="fas fa-plus"></i>
+								</button>
+							</div>
+						</div>
+						<div class="card-body p-0" style="display: none;"></div>
+					</div>
+					
+					<div class="card collapsed-card">
+						<div class="card-header">
+							<div class="card-tools">
+								<button type="button" class="btn btn-tool"
+									data-card-widget="collapse" title="Collapse">
+									<i class="fas fa-plus"></i>
+								</button>
+							</div>
+							<h3 class="card-title text-muted"><b>4주차</b></h3>
+						</div>
+						<div class="card-body p-0" style="display: none;"></div>
+					</div>
+					
+					<div class="card collapsed-card">
+						<div class="card-header">
+							<div class="card-tools">
+								<button type="button" class="btn btn-tool"
+									data-card-widget="collapse" title="Collapse">
+									<i class="fas fa-plus"></i>
+								</button>
+							</div>
+							<h3 class="card-title text-muted"><b>5주차</b></h3>
+						</div>
+						<div class="card-body p-0" style="display: none;"></div>
+					</div>
+					
+<!-- 					<div class="card"> -->
+<!-- 						<span class="text-muted">&nbsp; <small>정상</small> &nbsp; <small>지각</small> &nbsp; <small>수정</small> </span> -->
+<!-- 					</div> -->
+					<section id="marker">
+		                <ul style="display: flex;">
+		                    <li style="width: 50px;"><span><small>정상</small></span></li>
+		                    <li style="width: 50px; color: red;"><span><small>지각</small></span></li>
+		                    <li style="width: 50px; color: #007bff;"><span><small>수정</small></span></li>
+		                </ul>
+		            </section>
+				</div>
+
+			</div>
+
+		</div>
+	</section>
+</div>	

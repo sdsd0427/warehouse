@@ -1,0 +1,142 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<head>
+<style type="text/css">
+.page-link {
+    line-height: 1;
+    color: #17a2b8;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+</style>
+</head>
+
+<div class="wrapper" style="padding-left: 40px;">
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row md-2">
+				<div class="col-sm-6">
+					<h3>공지사항</h3>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	<section>
+		<div class="row col-md-2">
+			<button type="button" onclick="location.href='registGo.do'" class="btn btn-block bg-gradient-info">글 등록</button>
+		</div><br>
+		<div class="row">
+			<div class="col-12">
+				<div class="card card-info card-outline">
+				
+					<div class="card-header with-border">
+						<span style="float: left;">총 3건</span>
+						<div id="" class="card-tools" style="width: 550px;">
+							<div class="input-group row">
+								<select class="form-control col-md-3" name="searchType"
+									id="searchType">
+									<option value="10">정렬</option>
+									<option value="20">20</option>
+									<option value="50">50</option>
+									<option value="100">100</option>
+								</select> <select class="form-control col-md-3" name="searchType"
+									id="searchType">
+									<option value="">전체</option>
+									<option value="">제목</option>
+									<option value="">내용</option>
+									<option value="">작성자</option>
+								</select> <input class="form-control" type="text" name="keyword"
+									placeholder="검색어를 입력하세요." value=""> <span
+									class="input-group-append">
+									<button class="btn btn-info" type="button"
+										data-card-widget="search">
+										<i class="fa fa-fw fa-search"></i>
+									</button>
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="card-body table-responsive p-0">
+						<table class="table table-hover text-nowrap">
+							<thead>
+								<tr>
+									<th>번호</th>
+									<th>제목</th>
+									<th>작성자</th>
+									<th>작성일</th>
+									<th>첨부파일</th>
+									<th>조회수</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr onclick="location.href='detailGo.do'">
+									<td>183</td>
+									<td>John Doe</td>
+									<td>11-7-2014</td>
+									<td><span class="tag tag-success">Approved</span></td>
+									<td></td>
+									<td>0</td>
+								</tr>
+								<tr>
+									<td>219</td>
+									<td>Alexander Pierce</td>
+									<td>11-7-2014</td>
+									<td><span class="tag tag-warning">Pending</span></td>
+									<td></td>
+									<td>0</td>
+								</tr>
+								<tr>
+									<td>657</td>
+									<td>Bob Doe</td>
+									<td>11-7-2014</td>
+									<td><span class="tag tag-primary">Approved</span></td>
+									<td></td>
+									<td>0</td>
+								</tr>
+								<tr>
+									<td>175</td>
+									<td>Mike Doe</td>
+									<td>11-7-2014</td>
+									<td><span class="tag tag-danger">Denied</span></td>
+									<td></td>
+									<td>0</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="card-footer">
+						<ul class="pagination justify-content-center m-0">
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+							</li><li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+							</li>
+
+								<li class="page-item active">
+									<a class="page-link" href="">1</a>
+								</li>
+
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+							</li>
+						</ul>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</section>
+</div>	

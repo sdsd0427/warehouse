@@ -1,0 +1,60 @@
+package kr.or.warehouse.controller.view;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.dto.CalendarVO;
+import kr.or.warehouse.service.CalendarService;
+
+@Controller
+@RequestMapping("/calendar")
+public class CalendarController {
+
+	@Autowired
+	private CalendarService calendarService;
+	
+	@RequestMapping("/registForm")
+	public String registForm(CalendarVO calendar, HttpServletRequest request, RedirectAttributes rttr) throws Exception{
+		String url = "calendar/regist";
+		
+		
+		return url;
+	}
+	
+	@RequestMapping("/modifyForm")
+	public String modifyForm() throws Exception{
+		String url = "calendar/modify";
+		
+		return url;
+	}
+	
+	@RequestMapping("/search")
+	public void search() throws Exception {
+	}
+
+	
+	
+	@RequestMapping(value = "/main", method = RequestMethod.GET)
+	public ModelAndView getCalendarList(ModelAndView mv, Criteria cri) throws Exception {
+		String viewpage = "calendar/main";
+		
+//		List<CalendarVO> calendarList = calendarService.getCalendarList(cri);
+//		for(CalendarVO calendar : calendarList) {
+//			System.out.println(calendar);
+//		}
+//		
+//		mv.addObject(calendarList);		
+		mv.setViewName(viewpage);
+		
+		return mv;
+	}
+	
+	
+}

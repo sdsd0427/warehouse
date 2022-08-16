@@ -1,0 +1,74 @@
+package kr.or.warehouse.dto;
+
+import java.util.Date;
+
+public class ManualVO {
+
+	private String manualNo;
+	private String manualTitle;
+	private String manualContent;
+	private Date regDate;
+	private int viewCnt;
+	private Date updateDate;
+	private int cateNo;
+	private int eNo;
+
+	public String getManualNo() {
+		return manualNo;
+	}
+	public void setManualNo(String manualNo) {
+		this.manualNo = manualNo;
+	}
+	public String getManualTitle() {
+		return manualTitle;
+	}
+	public void setManualTitle(String manualTitle) {
+		this.manualTitle = manualTitle;
+	}
+	public String getManualContent() {
+		return manualContent;
+	}
+	public void setManualContent(String manualContent) {
+		this.manualContent = manualContent;
+	}
+	public Date getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
+	}
+	public int getViewCnt() {
+		return viewCnt;
+	}
+	public void setViewCnt(int viewCnt) {
+		this.viewCnt = viewCnt;
+	}
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+	public int getCateNo() {
+		return cateNo;
+	}
+	public void setCateNo(int cateNo) {
+		this.cateNo = cateNo;
+	}
+	public int geteNo() {
+		return eNo;
+	}
+	public void seteNo(int eNo) {
+		this.eNo = eNo;
+	}
+
+	@Override
+	public String toString() {
+		return "ManualVO [manualNo=" + manualNo + ", manualTitle=" + manualTitle + ", manualContent=" + manualContent
+				+ ", regDate=" + regDate + ", viewCnt=" + viewCnt + ", updateDate=" + updateDate + ", cateNo=" + cateNo
+				+ ", eNo=" + eNo + "]";
+	}
+
+
+
+}

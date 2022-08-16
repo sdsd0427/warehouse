@@ -1,0 +1,1164 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    
+    
+    
+ <script> 
+ 
+ 
+ 
+ /* 개인초성  */
+   //'ㅎ'클릭
+   
+
+function PseHiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/PgetHiList?eno='+${loginUser.eno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}   
+  
+ //'ㅍ'클릭
+function PsePiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/PgetPiList?eno='+${loginUser.eno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}   
+   //'ㅌ'클릭
+function PseTiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/PetTiList?eno='+${loginUser.eno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}   
+  //'ㅋ'클릭
+function PseCaiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/PgetCaiList?eno='+${loginUser.eno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}   
+  //'ㅊ'클릭
+function PseCiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/PgetCiList?eno='+${loginUser.eno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}   
+ //'ㅈ'클릭
+function PseJiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/PgetJiList?eno='+${loginUser.eno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}   
+//'ㅇ'클릭
+function PseOiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/PgetOiList?eno='+${loginUser.eno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}   
+ //'ㅅ'클릭
+function PseXiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/PgetXiList?eno='+${loginUser.eno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}   
+//'ㅂ'클릭
+function PseBiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/PgetBiList?eno='+${loginUser.eno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}   
+//'ㅁ'클릭
+function PseMiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/PgetMiList?eno='+${loginUser.eno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 			
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}   
+//'ㄹ'클릭
+function PseRiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/PgetRiList?eno='+${loginUser.eno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}  
+//'ㄷ'클릭
+function PseDiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/PgetDiList?eno='+${loginUser.eno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+} 
+ 
+//'ㄴ'클릭
+function PseNiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/PgetNiList?eno='+${loginUser.eno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}
+
+ 
+//'ㄱ' 클릭
+ function PseFirstName(){
+	 $.ajax({
+	 		url:'<%=request.getContextPath()%>/contact/PgetGiList?eno='+${loginUser.eno},
+	 		type:'get',
+	 		dataType : 'json',
+	 		success:function(response){
+	 			console.log("response",response);
+	 				
+	 		if(response.myconList.length > 0){
+				printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+			}else{
+				var str = `
+					<tr>
+						<td colspan="6" style="text-align:center">
+							등록된 문서가 없습니다.
+						</td>
+					</tr>
+				`;
+
+				$('#botallTable').html(str);
+			}
+	 		}
+	 	});
+ } 
+ 
+ 
+ 
+ 
+ /* 부서 초성*/
+   //'ㅎ'클릭
+function DseHiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/DgetHiList?dno='+${loginUser.dno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}   
+   //'ㅍ'클릭
+function DsePiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/DgetPiList?dno='+${loginUser.dno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}   
+   //'ㅌ'클릭
+function DseTiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/DgetTiList?dno='+${loginUser.dno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}   
+  //'ㅋ'클릭
+function DseCaiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/DgetCaiList?dno='+${loginUser.dno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}   
+  //'ㅊ'클릭
+function DseCiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/DgetCiList?dno='+${loginUser.dno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}   
+ //'ㅈ'클릭
+function DseJiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/DgetJiList?dno='+${loginUser.dno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}   
+//'ㅇ'클릭
+function DseOiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/DgetOiList?dno='+${loginUser.dno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}   
+ //'ㅅ'클릭
+function DseXiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/DgetXiList?dno='+${loginUser.dno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}   
+//'ㅂ'클릭
+function DseBiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/DgetBiList?dno='+${loginUser.dno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}   
+//'ㅁ'클릭
+function DseMiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/DgetMiList?dno='+${loginUser.dno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}   
+//'ㄹ'클릭
+function DseRiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/DgetRiList?dno='+${loginUser.dno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}  
+//'ㄷ'클릭
+function DseDiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/DgetDiList?dno='+${loginUser.dno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+} 
+ 
+//'ㄴ'클릭
+function DseNiName(){
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/DgetNiList?dno='+${loginUser.dno},
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+}
+
+ 
+ 	//'ㄱ' 클릭
+	 function DseFirstName(){
+	 	$.ajax({
+	 		url:'<%=request.getContextPath()%>/contact/DgetGiList?dno='+${loginUser.dno},
+	 		type:'get',
+	 		dataType : 'json',
+	 		success:function(response){
+	 			console.log("response",response);
+	 				
+	 		if(response.myconList.length > 0){
+				printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+			}else{
+				var str = `
+					<tr>
+						<td colspan="6" style="text-align:center">
+							등록된 문서가 없습니다.
+						</td>
+					</tr>
+				`;
+
+				$('#botallTable').html(str);
+			}
+	 		}
+	 	});
+	 }
+ 
+ 
+ /* 전체 부서록 초성  선택*/
+//'ㅎ' 클릭
+ function seHiName(){
+ 	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/getHiList',
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+ 			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+ 		}else{
+ 			var str = `
+ 				<tr>
+ 					<td colspan="6" style="text-align:center">
+ 						등록된 문서가 없습니다.
+ 					</td>
+ 				</tr>
+ 			`;
+
+ 			$('#botallTable').html(str);
+ 		}
+ 		}
+ 	});
+ }  
+//'ㅍ' 클릭
+ function sePiName(){
+ 	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/getPiList',
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+ 			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+ 		}else{
+ 			var str = `
+ 				<tr>
+ 					<td colspan="6" style="text-align:center">
+ 						등록된 문서가 없습니다.
+ 					</td>
+ 				</tr>
+ 			`;
+
+ 			$('#botallTable').html(str);
+ 		}
+ 		}
+ 	});
+ }  
+//'ㅌ' 클릭
+ function seTiName(){
+ 	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/getTiList',
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+ 			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+ 		}else{
+ 			var str = `
+ 				<tr>
+ 					<td colspan="6" style="text-align:center">
+ 						등록된 문서가 없습니다.
+ 					</td>
+ 				</tr>
+ 			`;
+
+ 			$('#botallTable').html(str);
+ 		}
+ 		}
+ 	});
+ }  
+//'ㅋ' 클릭
+ function seCaiName(){
+ 	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/getCaiList',
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+ 			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+ 		}else{
+ 			var str = `
+ 				<tr>
+ 					<td colspan="6" style="text-align:center">
+ 						등록된 문서가 없습니다.
+ 					</td>
+ 				</tr>
+ 			`;
+
+ 			$('#botallTable').html(str);
+ 		}
+ 		}
+ 	});
+ }  
+//'ㅊ' 클릭
+ function seCiName(){
+ 	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/getCiList',
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+ 			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+ 		}else{
+ 			var str = `
+ 				<tr>
+ 					<td colspan="6" style="text-align:center">
+ 						등록된 문서가 없습니다.
+ 					</td>
+ 				</tr>
+ 			`;
+
+ 			$('#botallTable').html(str);
+ 		}
+ 		}
+ 	});
+ } 
+//'ㅈ' 클릭
+ function seJiName(){
+ 	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/getJiList',
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+ 			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+ 		}else{
+ 			var str = `
+ 				<tr>
+ 					<td colspan="6" style="text-align:center">
+ 						등록된 문서가 없습니다.
+ 					</td>
+ 				</tr>
+ 			`;
+
+ 			$('#botallTable').html(str);
+ 		}
+ 		}
+ 	});
+ }  
+//'o' 클릭
+ function seOiName(){
+ 	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/getOiList',
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+ 			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+ 		}else{
+ 			var str = `
+ 				<tr>
+ 					<td colspan="6" style="text-align:center">
+ 						등록된 문서가 없습니다.
+ 					</td>
+ 				</tr>
+ 			`;
+
+ 			$('#botallTable').html(str);
+ 		}
+ 		}
+ 	});
+ }  
+ 
+//'ㅅ' 클릭
+function seXiName(){
+	$.ajax({
+		url:'<%=request.getContextPath()%>/contact/getXiList',
+		type:'get',
+		dataType : 'json',
+		success:function(response){
+			console.log("response",response);
+				
+		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+		}
+	});
+}   
+//'ㅂ' 클릭
+ function seBiName(){
+ 	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/getBiList',
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+ }  
+ 
+//'ㅁ' 클릭
+ function seMiName(){
+ 	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/getMiList',
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+ }  
+ 
+//'ㄹ' 클릭
+ function seRiName(){
+ 	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/getRiList',
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+ } 
+ 
+//'ㄷ' 클릭
+ function seDiName(){
+ 	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/getDiList',
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+ }
+ 
+ 
+//'ㄴ' 클릭
+ function seNiName(){
+ 	$.ajax({
+ 		url:'<%=request.getContextPath()%>/contact/getNiList',
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response",response);
+ 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						등록된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#botallTable').html(str);
+		}
+ 		}
+ 	});
+ }
+	//'ㄱ' 클릭
+	 function seFirstName(){
+	 	$.ajax({
+	 		url:'<%=request.getContextPath()%>/contact/getGiList',
+	 		type:'get',
+	 		dataType : 'json',
+	 		success:function(response){
+	 			console.log("response",response);
+	 				
+	 		if(response.myconList.length > 0){
+				printWorkData(response.myconList, $('#botallTable'), $('#wordList-template'));
+			}else{
+				var str = `
+					<tr>
+						<td colspan="6" style="text-align:center">
+							등록된 문서가 없습니다.
+						</td>
+					</tr>
+				`;
+
+				$('#botallTable').html(str);
+			}
+	 		}
+	 	});
+	 }
+
+		
+</script>	
+	
+<script>
+Handlebars.registerHelper('isFlag', function(arg1, arg2, options) {
+    return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+});
+
+</script>
+
+	
+<script type="text/x-handlebars-template"  id="wordList-template">
+
+		<table class="table table-hover text-nowrap">
+ 				<thead >                                                   
+ 					<tr>                                                  
+ 						<th >                                             
+ 							<input type="checkbox" value="" id="check1">  
+ 							<label for="check1"></label>                  
+ 						</th>                                             
+ 										<th >사진</th>
+										<th >이름</th>
+										<th >직위</th>
+										<th >휴대폰</th>
+										<th >이메일</th>
+										<th >부서</th>
+										<th >내선번호</th>
+										<th >메일</th>                   
+ 					</tr>                                                 
+ 				</thead>                                                  
+ 				<tbody id="tall">                                                                   
+{{#each .}}				                                                                              
+			<tr style="font-size: 0.85em;cursor:pointer;overflow-x: hidden;" >
+ 					<td>  
+ 						<div class="icheck-primary" style="margin-top: 10px;"> 
+ 							<input type="checkbox" class="empCheckbox" id="{{eno}}" name="eno" onclick="inputEmpList({{eno}})"> 
+ 							<label for="check1"></label> 
+ 						</div> 
+ 					</td> 
+ 		 	 		<td class="Photohover" onclick=OpenWindow("../contact/ContactHrDetail.do?eno={{eno}}","인사정보",800,500)><img class="table-avatar emp_profile" src="{{photo}}" style="border-radius: 50px;"></td>
+ 					<td onclick=OpenWindow("../contact/ContactHrDetail.do?eno={{eno}}","인사정보",800,500)><div style="margin-top: 10px;">{{name}}
+			{{#isFlag condition '업무중'}}
+ 		 	 	<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden"></span></span>
+ 		 	 {{/isFlag}}	
+
+			{{#isFlag condition '업무종료'}}	 
+ 		 	 	<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1" style="background-color: #e10a14!important;"><span class="visually-hidden"></span></span>
+ 		 	 {{/isFlag}}
+
+			{{#isFlag condition '자리비움'}}
+ 		 	 	<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1" style="background-color: #ffc107!important;"><span class="visually-hidden"></span></span>
+ 			{{/isFlag}}	
+				</div></td>
+ 					<td onclick=OpenWindow("../contact/ContactHrDetail.do?eno={{eno}}","인사정보",800,500)><div style="margin-top: 10px;">{{ppsname}}</div></td> 
+ 					<td onclick=OpenWindow("../contact/ContactHrDetail.do?eno={{eno}}","인사정보",800,500)><div style="margin-top: 10px;">{{phone}}</div></td>
+ 					<td onclick=OpenWindow("../contact/ContactHrDetail.do?eno={{eno}}","인사정보",800,500)><div style="margin-top: 10px;"><U>{{email}}</U></div></td>
+ 					<td onclick=OpenWindow("../contact/ContactHrDetail.do?eno={{eno}}","인사정보",800,500)><div style="margin-top: 10px;">{{dname}}</div></td>
+ 					<td onclick=OpenWindow("../contact/ContactHrDetail.do?eno={{eno}}","인사정보",800,500)><div style="margin-top: 10px;">{{call}}</div></td>
+					<td style="padding: 0.3rem;" onclick=OpenWindow("../mail/registForm.do","메일보내기",1000,800)><div style="margin-top: 13px;">
+						<i class="fas fa-envelope"></i></div></td>
+ 				</tr>
+{{/each}}
+		</tbody></table>		
+</script>	
+	
+<script>
+function printWorkData(dataList, target, templateObject){
+	var template = Handlebars.compile(templateObject.html());
+	var html = template(dataList);
+	target.html(html);
+}
+
+function printPageMaker(data, target, templateObject){
+	var template = Handlebars.compile(templateObject.html());
+	var html = template(data);
+	target.html(html);
+}
+</script>	
+		

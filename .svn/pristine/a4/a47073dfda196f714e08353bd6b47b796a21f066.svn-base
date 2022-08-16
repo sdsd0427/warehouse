@@ -1,0 +1,88 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<style>
+th{
+	fontsize: 1.5em;
+	fontweight: bold;
+}
+#in{
+	border: 2px solid darkgray;
+}
+#margin1{
+	margin: 30px;
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+	<h3>일정검색</h3><br>
+	<div id="margin1">
+		<h6>검색결과(총 2건)</h6>
+		<div class="form-group">
+			<input id="in" type="text" id="title" name='title' class="form-control" value="내 생일">
+		</div>
+		
+		<div class="card">
+		
+	<!-- 		<div class="card-header"> -->
+	<!-- 			<h3 class="card-title">Responsive Hover Table</h3> -->
+	<!-- 			<div class="card-tools"> -->
+	<!-- 				<div class="input-group input-group-sm" style="width: 150px;"> -->
+	<!-- 					<input type="text" name="table_search" class="form-control float-right" placeholder="Search"> -->
+	<!-- 					<div class="input-group-append"> -->
+	<!-- 						<button type="submit" class="btn btn-default"> -->
+	<!-- 							<i class="fas fa-search"></i> -->
+	<!-- 						</button> -->
+	<!-- 					</div> -->
+	<!-- 				</div> -->
+	<!-- 			</div> -->
+	<!-- 		</div> -->
+		
+			<div class="card-body table-responsive p-0">
+				<table class="table table-hover text-nowrap">
+					<thead>
+						<tr>
+							<th>날짜</th>
+							<th>기간</th>
+							<th>일정명</th>
+							<th>참석자</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>2022-12-18(일)</td>
+							<td>00:00 ~ 23:59</td>
+							<td><span style="background-color:#FFD400;">내 생일</span></td>
+							<td>강정인</td>
+						</tr>
+						<tr>
+							<td>2021-12-18(토)</td>
+							<td>00:00 ~ 23:59</td>
+							<td><span style="background-color:#FFD400;">내 생일</span></td>
+							<td>강정인</td>
+						</tr>
+						<tr>
+							<td>2020-12-18(금)</td>
+							<td>00:00 ~ 23:59</td>
+							<td><span style="background-color:#FFD400;">내 생일</span></td>
+							<td>강정인</td>
+						</tr>
+						<tr>
+							<td>2019-12-18(수)</td>
+							<td>00:00 ~ 23:59</td>
+							<td><span style="background-color:#FFD400;">내 생일</span></td>
+							<td>강정인</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

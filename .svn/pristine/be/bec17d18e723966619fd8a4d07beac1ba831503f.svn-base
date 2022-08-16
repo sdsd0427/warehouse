@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CommunityReply-Mapper">
+	<select id="selectReplyNo" resultType="str">
+		SELECT 'CR' ||
+		trim(nvl(max(to_char(to_number(substr(comrno,3))+1,'000000')),'000001'))
+		as comrno
+		from replycommu
+
+		union
+
+		select nvl(null,'CR000001') as comrno
+		from
+		dual
+		where not exists (select comrno
+		from replycommu)
+	</select>
+
+	<select id="selectReplyList" resultType="reply">
+		select
+		a.comrno as rno
+		,a.replyText
+		,a.regDate
+		,a.updateDate
+		,a.cpostno as refNo
+		,a.eno
+        ,b.name
+        ,b.photo
+		from replycommu a, employee b
+		where a.eno = b.eno
+          and cpostno=#{refNo}
+		order by comrno asc
+	</select>
+
+	<select id="countReply" resultType="int">
+		select count(comrno)
+		from
+		replycommu
+		where cpostno=#{refNo}
+	</select>
+
+
+	<update id="insertReply">
+		insert into replycommu(comrno,cpostno,replyText,eno)
+		values(#{rno},#{refNo},#{replyText},#{eno})
+	</update>
+
+	<update id="updateReply" parameterType="reply">
+		update replycommu
+		set
+		replyText=#{replyText}
+		where comrno=#{rno}
+	</update>
+
+	<update id="deleteReply" parameterType="str">
+		delete
+		from replycommu
+		where
+		comrno=#{rno}
+	</update>
+</mapper>
+

@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+
+.wrapper{
+	padding-left: 40px;
+}
+
+.title{
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+.list li{
+	font-size: 0.85em;
+}

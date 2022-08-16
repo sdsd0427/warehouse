@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Board-Mapper">
+	<sql id="search">
+		<if test="searchType == 't'.toString()">
+			and boardTitle like '%'||#{keyword}||'%'
+		</if>
+
+		<if test="searchType == 'c'.toString()">
+			and boardContent like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'tcw'.toString()">
+			and (
+			boardTitle like '%'||#{keyword}||'%'
+
+			or
+			boardContent like '%'||#{keyword}||'%'
+			)
+		</if>
+	</sql>
+
+	<select id="selectEno" resultType="int">
+		select eno
+		from
+		employee
+		where name = #{name}
+	</select>
+	<select id="selectName" resultType="String">
+		select b.name
+		from
+		board a, employee b
+		where a.eno = b.eno
+		and a.boardNo = #{boardNo}
+	</select>
+
+	<select id="selectSearchBoardList" resultType="board">
+		select
+		boardNo
+	   ,boardTitle
+	   ,boardContent
+	   ,regDate
+	   ,updateDate
+	   ,viewCnt
+	   ,b.name
+	   ,classCode
+		from
+		board a, employee b
+		where a.eno=b.eno
+		and boardNo is not null
+		<include refid="search" />
+		order by regDate desc
+	</select>
+
+	<select id="selectSearchBoardListCount" resultType="int">
+		select
+		count(*)
+		from
+		board
+		where boardNo is not null
+		<include refid="search" />
+		order by regDate desc
+	</select>
+
+	<select id="selectBoardByBoardNo" resultType="board">
+		select
+		boardNo
+	   ,boardTitle
+	   ,boardContent
+	   ,regDate
+	   ,updateDate
+	   ,viewCnt
+	   ,eno
+	   ,classCode
+		from board
+		where boardNo=#{boardNo}
+
+	</select>
+
+	<update id="insertBoard" parameterType="board">
+		insert
+		into
+		board(boardNo,boardTitle,boardContent,eno,classCode)
+		values
+		(#{boardNo},#{boardTitle},#{boardContent},#{eno},#{classCode})
+	</update>
+
+	<update id="updateBoard" parameterType="board">
+		update
+		board
+		set
+		boardTitle=#{boardTitle}, boardContent=#{boardContent}
+		where boardNo=#{boardNo}
+	</update>
+
+	<update id="deleteBoard" parameterType="int">
+		delete
+		from board
+		where boardNo=#{boardNo}
+	</update>
+
+	<update id="increaseViewCnt" parameterType="str">
+		update
+		board
+		set
+		viewCnt=viewCnt+1
+		where boardNo=#{boardNo}
+	</update>
+
+	<select id="selectNoticeNo" resultType="String">
+		select 'NA101' ||
+		trim(nvl(max(to_char(to_number(substr(boardNo,6))+1,'000')),'001'))
+		as boardNo
+		from board
+		where classCode='A101'
+
+		union
+
+		select nvl(null,'NA101001') as boardNo
+		from
+		dual
+		where not exists (select boardNo
+		from board where classCode='A101')
+	</select>
+	<select id="selectFreeNo" resultType="String">
+		select 'FA102' ||
+		trim(nvl(max(to_char(to_number(substr(boardNo,6))+1,'000')),'001'))
+		as boardNo
+		from board
+		where classCode='A102'
+
+		union
+
+		select nvl(null,'FA102001') as boardNo
+		from
+		dual
+		where not exists (select boardNo
+		from board where classCode='A102')
+	</select>
+	<select id="selectEventNo" resultType="String">
+		select 'EA103' ||
+		trim(nvl(max(to_char(to_number(substr(boardNo,6))+1,'000')),'001'))
+		as boardNo
+		from board
+		where classCode='A103'
+
+		union
+
+		select nvl(null,'EA103001') as boardNo
+		from
+		dual
+		where not exists (select boardNo
+		from board where classCode='A103')
+	</select>
+
+</mapper>
+

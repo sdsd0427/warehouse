@@ -1,0 +1,56 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+
+<div class="wrapper" style="padding-left: 40px;">
+	<section class="content-header ">
+		<div class="row md-2">
+			<div class="col-sm-12">
+				<h3>게시판 > 공지사항 > 글 등록</h3>
+			</div>
+		</div>
+	</section>
+
+	<section class="content card card-outline card-info">
+		<div class="container-fluid">
+			<div class="row card-header">
+				<div class="col-lg-12">
+					<label>개설 신청</label>
+					<button class="btn btn-secondary" style="float: right; margin-left:20px;" type="button" onclick="javascript:history.back();">취소</button>
+					<button class="btn btn-info" style="float: right;" type="button" onclick="">등록</button>
+				</div>
+			</div>
+			
+			<div class="card-body">
+					<div class="row ">
+						<label class="col-2">커뮤니티 명</label>
+						<input class="form-control col-10" type="text" id="" name='' class="form-control" placeholder="커뮤니티 명을 쓰세요">
+						
+						<label class="col-2 mt-3">소개글</label>
+						<textarea class="form-control col-10 mt-3" rows="5" cols="" placeholder="소개글을 작성하세요"></textarea>
+						
+						<label class="col-2 mt-3">공개 여부</label>
+						<div class="custom-control custom-radio col-1 mt-3">
+							<input class="custom-control-input" type="radio" id="open" name="open" checked>
+							<label for="open" class="custom-control-label">공개</label>
+						</div>
+						<div class="custom-control custom-radio col-9 mt-3">
+							<input class="custom-control-input" type="radio" id="notOpen" name="open" >
+							<label for="notOpen" class="custom-control-label">비공개</label>
+						</div>
+						<div class="col-2"></div>
+						<div class="col-10">
+							<small><strong>*비공개로 설정 할 경우 전체 커뮤니티 목록에 보이지 않습니다.</strong></small><br/>
+							<small><strong>*비공개로 설정 할 경우 초대로만 가입이 가능합니다.</strong></small>
+						</div>
+					</div>	
+					
+						
+			</div>
+			
+		</div>
+	</section>
+
+</div>
+
+

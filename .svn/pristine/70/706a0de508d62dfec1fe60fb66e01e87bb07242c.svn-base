@@ -1,0 +1,136 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<head>
+<style>
+td:nth-child(2n+1) {
+    background-color: #EEEEEE;
+    vertical-align: middle !important;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="wrapper">
+	<h3 class="title">내 인사정보</h3>
+
+	<div class="ml-4 row" style="margin-top: 20px;">
+		<span class="col-12" style="font-size: 1.1em;">인사정보</span>
+		<div>
+			<img class="col-2" src="/warehouse/resources/images/indexPage/chopa.jpg" style="float:left; height: 185px; margin-top: 8px; border: 3px solid darkgray;">
+			<table class="col-10 table table-bordered" style="margin-top: 8px; float:right;">
+				<tbody>
+					<tr>
+						<td>이름</td>
+						<td>홍길동</td>
+						<td>직위</td>
+						<td>사원</td>
+						<td>입사일</td>
+						<td>2022-01-01</td>
+						<td>퇴사일</td>
+						<td>-</td>
+					</tr>
+					<tr>
+						<td>사번</td>
+						<td>96550766</td>
+						<td>직책</td>
+						<td>팀원</td>
+						<td>생년월일</td>
+						<td>1997-12-18</td>
+						<td>퇴직사유</td>
+						<td>-</td>
+					</tr>
+					<tr>
+						<td>부서</td>
+						<td>인사과</td>
+						<td>휴대전화</td>
+						<td>010-9655-0766</td>
+						<td>성별</td>
+						<td>남자</td>
+						<td>MB</td>
+						<td>EN</td>
+					</tr>
+					<tr>
+						<td>이메일</td>
+						<td>hong123@warehouse.or.kr</td>
+						<td>내선번호</td>
+						<td>010-9655-0766</td>
+						<td>상태</td>
+						<td>재직</td>
+						<td>TI</td>
+						<td>TP</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	<div class="ml-4 row" style="margin-top: 50px;">
+		<span class="col-6" style="font-size: 1.1em;">예상 퇴직금 조회</span>
+		<button type="button" class="btn btn-info" style="margin-left: 65px;">계산하기</button>
+		<div class="col-8">
+			<table class="table table-bordered" style="margin-top: 8px;">
+				<tbody>
+					<tr>
+						<td class="col-3">입사일</td>
+						<td class="col-3"><input type="date" id="Date" style="width: 100%; height: 35px;"></td>
+						<td class="col-3">예상 퇴직일</td>
+						<td class="col-3"><input type="date" id="Date" style="width: 100%; height: 35px;"></td>
+					</tr>
+					<tr>
+						<td>예상 직위</td>
+						<td>
+							<select class="custom-select" style="width: 100%; height: 35px;">
+								<option>사원</option>
+								<option selected>대리</option>
+								<option>주임</option>
+								<option>과장</option>
+								<option>차장</option>
+							</select>
+						</td>
+						<td>예상 직급</td>
+						<td>
+							<select class="custom-select" style="width: 100%; height: 35px;">
+								<option selected>1호봉</option>
+								<option>2호봉</option>
+								<option>3호봉</option>
+								<option>4호봉</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>연간 상여금 총액</td>
+						<td><input type="text" value="원" style="text-align: right; height: 35px; border-radius: 4px; border: 1px solid #CCCCCC; width: 100%;"></td>
+						<td>연차 수당</td>
+						<td><input type="text" value="원 " style="text-align: right; height: 35px; border-radius: 4px; border: 1px solid #CCCCCC; width: 100%;"></td>
+					</tr>
+					<tr>
+						<td>재직일수</td>
+						<td><input type="text" value="일" style="text-align: right; background-color: #e9ecef; height: 35px; border-radius: 4px; border: 1px solid #CCCCCC; width: 100%;"></td>
+						<td>1일 평균임금</td>
+						<td><input type="text" value="원 " style="text-align: right; background-color: #e9ecef; height: 35px; border-radius: 4px; border: 1px solid #CCCCCC; width: 100%;"></td>
+					</tr>
+					<tr>
+						<td>예상퇴직금</td>
+						<td colspan="3"><input type="text" value="원 " style="text-align: right; background-color: #e9ecef; height: 35px; border-radius: 4px; border: 1px solid #CCCCCC; width: 100%;"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-4" style="border: 1px solid #DEE2E6; height: 300px; margin-top: 8px;">
+			<ul class="list-unstyled" style="font-size: 0.9em;">
+				<li style="font-size: 1.1em !important; font-weight: bold !important;">[퇴직금 선정 기준]</li><br>
+				<li>a. 퇴직일 기준 최종 3개월간의 임금</li>
+				<li>b. 퇴직일 기준 1년간 받은 상여금 * 3 / 12</li>
+				<li>c. 퇴직일 기준 1년간 받은 미사용 연차수당 * 3 / 12</li><br>
+				<li>1일 평균 임금</li>
+				<li>&nbsp;&nbsp;= a + b + c / 퇴직전 3개월간의 일수</li>
+				<li>퇴직금</li>
+				<li>&nbsp;&nbsp;= 1일 평균임금 * 30일 * (재직일수 / 365)</li>
+			</ul>
+		</div>
+	</div>
+	
+</div>
+</body>

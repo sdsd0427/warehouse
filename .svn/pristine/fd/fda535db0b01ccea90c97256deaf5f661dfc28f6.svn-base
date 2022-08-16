@@ -1,0 +1,32 @@
+package kr.or.warehouse.controller.view;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+
+@Controller
+@RequestMapping("/mentoring")
+public class MentoringController {
+	
+		@RequestMapping("/main")
+		public void main(){
+		}
+		
+		@RequestMapping("/registForm")
+		public String registForm()throws Exception{
+			String url="mentoring/apply";
+			return url;
+		}
+		
+		@RequestMapping("/mento")
+		public void mento(){
+		}
+		@RequestMapping("/mentoDetail")
+		public void mentoDetail(){
+		}
+		
+		@RequestMapping("/mentee")
+		public void mentee(){
+		}
+	}
+

@@ -1,0 +1,23 @@
+package kr.or.warehouse.controller.view;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import kr.or.warehouse.service.MenuService;
+
+@Controller
+@RequestMapping("/mentoring")
+public class MentoringController {
+
+
+		@Autowired
+		private MenuService menuService;
+		
+		@RequestMapping("/main")
+		public String main()throws Exception{
+			String url="mentoring/main";
+			return url;
+		}
+	}
+

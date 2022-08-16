@@ -1,0 +1,12 @@
+package kr.or.warehouse.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.dto.BoardVO;
+
+public interface ContactDAO {
+
+	List<BoardVO> selectSearchBoardList(Criteria cri) throws SQLException;
+}

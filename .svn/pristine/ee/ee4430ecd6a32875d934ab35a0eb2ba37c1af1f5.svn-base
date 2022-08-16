@@ -1,0 +1,107 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<head>
+<style>
+td:nth-child(2n+1) {
+    background-color: #EEEEEE;
+}
+
+    
+</style>
+
+</head>
+
+<body>
+
+<div class="wrapper">
+	<h3 class="title">내 인사정보</h3>
+
+	<div class="ml-4 row" style="margin-top: 20px;">
+		<span class="col-12" style="font-size: 1.1em;">인사정보</span>
+		<div>
+			<img class="col-2" src="/warehouse/resources/images/indexPage/chopa.jpg" style="vertical-align: -1px;">
+		<table class="col-10 table table-bordered" style="margin-top: 8px;">
+			<tbody>
+				<tr>
+					<td>이름</td>
+					<td>홍길동</td>
+					<td>직위</td>
+					<td>사원</td>
+					<td>입사일</td>
+					<td>2022-01-01</td>
+					<td>퇴사일</td>
+					<td>-</td>
+				</tr>
+				<tr>
+					<td>사번</td>
+					<td>96550766</td>
+					<td>직책</td>
+					<td>팀원</td>
+					<td>생년월일</td>
+					<td>1997-12-18</td>
+					<td>퇴직사유</td>
+					<td>-</td>
+				</tr>
+				<tr>
+					<td>부서</td>
+					<td>인사과</td>
+					<td>휴대전화</td>
+					<td>010-9655-0766</td>
+					<td>성별</td>
+					<td>남자</td>
+					<td>MB</td>
+					<td>EN</td>
+				</tr>
+				<tr>
+					<td>이메일</td>
+					<td>hong123@warehouse.or.kr</td>
+					<td>내선번호</td>
+					<td>010-9655-0766</td>
+					<td>상태</td>
+					<td>재직</td>
+					<td>TI</td>
+					<td>TP</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+	</div>
+	
+	<div class="ml-4 row" style="margin-top: 50px;">
+		<span class="col-10" style="font-size: 1.1em;">예상 퇴직금 조회</span>
+		<button type="button" class="btn btn-info col-2">계산하기</button>
+		<table class="col-10 table table-bordered" style="margin-top: 8px;">
+			<tbody>
+				<tr>
+					<td>입사일</td>
+					<td></td>
+					<td>예상 퇴직일</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>예상 직위</td>
+					<td></td>
+					<td>예상 직급</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>연간 상여금 총액</td>
+					<td></td>
+					<td>연차 수당</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>재직일수</td>
+					<td></td>
+					<td>1일 평균임금</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>재직일수</td>
+					<td colspan="3"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+</body>

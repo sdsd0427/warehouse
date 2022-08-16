@@ -1,0 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<body>
+	<div class="wrapper">
+		<h2 class="title">업무 > 내 업무</h2>
+		<div class="row" style="border-top: 1px solid gray">
+			<div class="col-8">
+				<h3 class="title">상세보기</h3>
+			</div>
+			<div class="col-4">
+				<h3 class="title">관련 노하우</h3>
+			</div>
+		</div>
+	</div>
+</body>

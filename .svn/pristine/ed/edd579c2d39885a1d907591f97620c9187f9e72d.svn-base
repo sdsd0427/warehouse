@@ -1,0 +1,490 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<style>
+.card-header.with-border {
+    background-color: #f5913d;
+    color: white;
+}
+.page-link {
+    line-height: 1;
+    color: #17a2b8;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+
+.bg-navy {
+    background-color: #17a2b8!important;
+}
+
+div#bottom {
+    margin-left: 40px;
+    margin-top: -30PX;
+}
+.row{
+margin-top: 10px;
+}
+
+div#b{
+height: 30px; 
+width:100px;
+    border-radius: 5px;
+}
+.table td, .table th {
+    vertical-align: inherit;
+}
+
+	
+li.list_item1,  li.list_item2{
+list-style-type: none;
+	    float: left;
+	    
+    width: 200px;
+    height: 30px;
+    background-color: #31b46e;
+    color: rgba(34,34,34,.8);
+    border-radius: 80px;
+    
+}
+
+.Toptitle1,.Toptitle2 {
+    list-style-type: none;
+    margin-left: 3px;
+    margin-bottom: 10px;
+    width: 100px;
+     margin-left: 45px;
+    vertical-align: -3px;
+} 
+li.list_item1 {
+    position: relative;
+    right: -30px;
+    background-color:#31b46e;
+} 
+li.list_item2 {
+   /*  background-color:#8f9091; */
+    background-color:rgb(82 104 126 / 80%);
+} 
+
+.mentoDescision {
+    padding-bottom: 15px;
+    margin-left: -50px;
+}
+.bg-navy {
+    border-radius: 5px;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div class="wrapper">
+	<section class="content-header">
+			<div class="row md-2">
+				<div class="col-sm-12" style="margin-top: 20px;margin-left: 50px;">
+					<h3>멘토링</h3>
+				</div>
+			</div>
+		</section>
+		
+		<br>
+<div id="bottom">
+	
+	<div class="row">
+	
+			<div class="col-12">
+				<div class="card">
+				
+					<div class="card-header with-border">
+					<strong>멘토 참여목록</strong>
+					</div>
+
+					<div class="card-body table-responsive p-0">
+						<table class="table table-hover text-nowrap">
+							<thead>
+								<tr>
+									<th >분류</th>
+										<th >제목</th>
+										<th >멘티</th>
+										<th >기간</th>
+										<th >참여인원</th>
+										<th >상태</th>
+										<th >클래스룸</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr style="font-size: 0.85em;">
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">1대1</td>
+										<td>결재보고서 작성방법</td>
+										<td>강정인</td>
+										<td>2022.06.30-2022.08.08</td>
+										<td>1 명</td>
+										<td>진행중</td>
+										<td>
+											<div id="b" class="bg-navy color-palette" ><a id="pribut" style="padding-left: 10px" ><span style="vertical-align: -7px;margin-left: 24px">이동</span></a></div>
+										</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">그룹</td>
+										<td>디자인 컨설팅</td>
+										<td>오지현 외 4명</td>
+										<td>2022.04.12-2022.12.12</td>
+										<td>5 명</td>
+										<td>진행중</td>
+										<td>
+											<div id="b" class="bg-navy color-palette" ><a id="pribut" style="padding-left: 10px" ><span style="vertical-align: -7px;margin-left: 24px">이동</span></a></div>
+										</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">1대1</td>
+										<td>해외진출마케팅</td>
+										<td>서난희</td>
+										<td>2022.06.30-2022.08.08</td>
+										<td>1 명</td>
+										<td>마감</td>
+										<td>
+											<div id="b" class="bg-navy color-palette" ><a id="pribut" style="padding-left: 10px" ><span style="vertical-align: -7px;margin-left: 24px">이동</span></a></div>
+										</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">1대1</td>
+										<td>해외진출마케팅</td>
+										<td>서난희</td>
+										<td>2022.06.30-2022.08.08</td>
+										<td>1 명</td>
+										<td>마감</td>
+										<td>
+											<div id="b" class="bg-navy color-palette" ><a id="pribut" style="padding-left: 10px" ><span style="vertical-align: -7px;margin-left: 24px">이동</span></a></div>
+										</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">그룹</td>
+										<td>해외진출마케팅</td>
+										<td>서난희 외  9명</td>
+										<td>2022.06.30-2022.08.08</td>
+										<td>10 명</td>
+										<td>마감</td>
+										<td>
+											<div id="b" class="bg-navy color-palette" ><a id="pribut" style="padding-left: 10px" ><span style="vertical-align: -7px;margin-left: 24px">이동</span></a></div>
+										</td>
+									</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="card-footer">
+						<ul class="pagination justify-content-center m-0">
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+							</li><li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+							</li>
+
+								<li class="page-item active">
+									<a class="page-link" href="">1</a>
+								</li>
+
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+							</li>
+						</ul>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		<hr>
+		
+		
+		<!-- 멘티 참여목록  -->
+		<div class="row">
+	
+			<div class="col-12">
+				<div class="card">
+				
+					<div class="card-header with-border">
+					<strong>멘티 참여목록</strong>
+					</div>
+
+					<div class="card-body table-responsive p-0">
+						<table class="table table-hover text-nowrap">
+							<thead>
+								<tr>
+									<th >분류</th>
+										<th >제목</th>
+										<th >멘토</th>
+										<th >기간</th>
+										<th >참여인원</th>
+										<th >상태</th>
+										<th >클래스룸</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr style="font-size: 0.85em;">
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">1대1</td>
+										<td>결재보고서 작성방법</td>
+										<td>강정인</td>
+										<td>2022.06.30-2022.08.08</td>
+										<td>1 명</td>
+										<td>진행중</td>
+										<td>
+											<div id="b" class="bg-navy color-palette" ><a id="pribut" style="padding-left: 10px" ><span style="vertical-align: -7px;margin-left: 24px">이동</span></a></div>
+										</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">그룹</td>
+										<td>디자인 컨설팅</td>
+										<td>오지현 외 4명</td>
+										<td>2022.04.12-2022.12.12</td>
+										<td>5 명</td>
+										<td>진행중</td>
+										<td>
+											<div id="b" class="bg-navy color-palette" ><a id="pribut" style="padding-left: 10px" ><span style="vertical-align: -7px;margin-left: 24px">이동</span></a></div>
+										</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">1대1</td>
+										<td>해외진출마케팅</td>
+										<td>서난희</td>
+										<td>2022.06.30-2022.08.08</td>
+										<td>1 명</td>
+										<td>마감</td>
+										<td>
+											<div id="b" class="bg-navy color-palette" ><a id="pribut" style="padding-left: 10px" ><span style="vertical-align: -7px;margin-left: 24px">이동</span></a></div>
+										</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">1대1</td>
+										<td>해외진출마케팅</td>
+										<td>서난희</td>
+										<td>2022.06.30-2022.08.08</td>
+										<td>1 명</td>
+										<td>마감</td>
+										<td>
+											<div id="b" class="bg-navy color-palette" ><a id="pribut" style="padding-left: 10px" ><span style="vertical-align: -7px;margin-left: 24px">이동</span></a></div>
+										</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">그룹</td>
+										<td>해외진출마케팅</td>
+										<td>서난희 외  9명</td>
+										<td>2022.06.30-2022.08.08</td>
+										<td>10 명</td>
+										<td>마감</td>
+										<td>
+											<div id="b" class="bg-navy color-palette" ><a id="pribut" style="padding-left: 10px" ><span style="vertical-align: -7px;margin-left: 24px">이동</span></a></div>
+										</td>
+									</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="card-footer">
+						<ul class="pagination justify-content-center m-0">
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+							</li><li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+							</li>
+
+								<li class="page-item active">
+									<a class="page-link" href="">1</a>
+								</li>
+
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+							</li>
+						</ul>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		<br>
+		
+		<!-- 1대1 또는 그룹 선택 -->
+		<hr>
+		
+		<div class="mentoDescision" style="margin-bottom: 20px;">
+					<ul class="price_list">
+					   <li class="list_item1">
+					     <a class="Toptitle1" href="#"><span class="rname" style="color: white;">1대1 클래스룸</span></a>
+					    </li>
+					    <li class="list_item2">
+					     <a class="Toptitle2" href="#"><span class="rname" style="color: white;">그룹 클래스룸</span></a>
+					    </li>
+					  </ul>  
+				</div>
+				
+		
+		<div class="row">
+	
+	
+	
+			<div class="col-12">
+				<div class="card">
+				
+
+					<div class="card-body table-responsive p-0">
+						<table class="table table-hover text-nowrap">
+							<thead>
+								<tr>
+									<th >번호</th>
+										<th >참여분류</th>
+										<th >제목</th>
+										<th >이름</th>
+										<th >기간</th>
+										<th >MBTI 궁합</th>
+										<th >신청</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr style="font-size: 0.85em;">
+													
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">1</td>
+										<td>멘토</td>
+										<td>결재보고서 작성방법</td>
+										<td>오지현</td>
+										<td>2022.06.30-2022.08.08</td>
+										<td>5 점</td>
+										<td>
+											<div id="b" class="bg-info" style="height: 30px; width:100px">
+													<a id="pribut" style="padding-left: 10px" >
+															<span style="vertical-align: -7px;margin-left: 25px;">신청</span>
+													</a>
+											</div>
+										
+										</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+													
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">2</td>
+										<td>멘티</td>
+										<td>그룹웨어 배우기</td>
+										<td>홍길동</td>
+										<td>2022.06.30-2022.08.08</td>
+										<td>3 점</td>
+										<td>
+											<div id="b" class="bg-info" style="height: 30px; width:100px">
+													<a id="pribut" style="padding-left: 10px" >
+															<span style="vertical-align: -7px;margin-left: 25px;">신청</span>
+													</a>
+											</div>
+										
+										</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+													
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">3</td>
+										<td>멘토</td>
+										<td>결재보고서 작성방법</td>
+										<td>박태정</td>
+										<td>2022.06.30-2022.08.08</td>
+										<td>3 점</td>
+										<td>
+											<div id="b" class="bg-info" style="height: 30px; width:100px">
+													<a id="pribut" style="padding-left: 10px" >
+															<span style="vertical-align: -7px;margin-left: 25px;">신청</span>
+													</a>
+											</div>
+										
+										</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+													
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">4</td>
+										<td>멘티</td>
+										<td>결재보고서 작성방법</td>
+										<td>성춘향</td>
+										<td>2022.06.30-2022.08.08</td>
+										<td>2 점</td>
+										<td>
+											<div id="b" class="bg-info" style="height: 30px; width:100px">
+													<a id="pribut" style="padding-left: 10px" >
+															<span style="vertical-align: -7px;margin-left: 25px;">신청</span>
+													</a>
+											</div>
+										
+										</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+													
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">5</td>
+										<td>멘토</td>
+										<td>결재보고서 작성방법</td>
+										<td>오지현</td>
+										<td>2022.06.30-2022.08.08</td>
+										<td>1 점</td>
+										<td>
+											<div id="b" class="bg-info" style="height: 30px; width:100px">
+													<a id="pribut" style="padding-left: 10px" >
+															<span style="vertical-align: -7px;margin-left: 25px;">신청</span>
+													</a>
+											</div>
+										
+										</td>
+									</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="card-footer">
+						<ul class="pagination justify-content-center m-0">
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+							</li><li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+							</li>
+
+								<li class="page-item active">
+									<a class="page-link" href="">1</a>
+								</li>
+
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+							</li>
+						</ul>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+				
+				
+				
+				
+		
+		
+	</div> <!-- <div id="bottom"> -->
+	
+</div><!-- 전체 -->
+
+</body>
+</html>

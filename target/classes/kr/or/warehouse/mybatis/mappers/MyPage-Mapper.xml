@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Mypage-Mapper">
+
+<!-- 로그인한 사원의 정보 -->
+	<select id="selectMyList" resultType="employee">
+
+		SELECT
+			    a.eno
+			   ,a.dno
+			   ,a.birth
+			   ,a.email
+			   ,a.name
+			   ,a.photo
+			   ,a.ppscode
+			   ,a.job
+			   ,a.phone
+			   ,a.call
+			   ,a.hiredate
+			   ,a.enabled
+			   ,a.mbti
+			   ,a.address
+			   ,a.retiredate
+			   ,a.retirereason
+			   ,a.pwd
+			   ,a.ipaddress
+			   ,a.signtype
+			   ,a.signpath
+			   ,a.condition
+			   ,a.year
+			   ,b.DNAME
+			   ,c.PPSNAME
+			   ,a.zipCode
+			   ,a.address2
+		FROM
+		    employee a, DEPARTMENT b, POSTPOSITION c
+		where a.dno = b.dno
+		and a.PPSCODE = c.PPSCODE
+		and eno=#{eno}
+	</select>
+
+  <!-- 정보 변경 -->
+  <update id="updateMyInfo" parameterType="employee">
+		UPDATE employee
+		    SET
+		       email = #{email},
+		       name =#{name},
+		       photo =#{photo},
+		       phone =#{phone},
+		       mbti =#{mbti},
+		       address =#{address} ,
+		       address2 =#{address2} ,
+		       zipCode =#{zipCode},
+		       <if test="signpath != null">
+		       signpath =#{signpath},
+		       </if>
+		       pwd =#{pwd} 
+		WHERE
+ 			   eno = #{eno}  
+   
+	</update>
+  
+  
+</mapper>

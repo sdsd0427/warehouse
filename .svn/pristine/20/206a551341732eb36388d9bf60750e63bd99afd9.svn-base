@@ -1,0 +1,22 @@
+package kr.or.warehouse.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import kr.or.warehouse.dto.HrVO;
+
+@Repository
+public class HrDAOImpl implements HrDAO {
+
+	@Autowired
+	private SqlSession session;
+
+	@Override
+	public List<HrVO> selectHrList(int eno) throws Exception {
+		return session.selectList("Hr-Mapper.selectHrList", eno);
+	}
+
+}

@@ -1,0 +1,443 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<head>
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/bootstrap/plugins/summernote/summernote-bs4.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<style>
+.btn_submenu{
+	margin-left: 15px;
+}
+a:hover {
+    color: #0056b3;
+    text-decoration: none;
+}
+a{
+	color: black;
+}
+.note-editor {
+    margin-left: 3px !important;
+}
+</style>
+</head>
+
+<body>
+<div class="wrapper">
+
+	<h3 style="padding: 15px 0.5rem;">메일 작성</h3><br><br> 
+
+	<section class="content" style="margin-top: -50px;">
+		<div class="container-fluid">
+			<div class="card card-info card-outline">
+				<div class ="card-tools" style="float: left; padding: 10px 0; border-bottom: 1px solid lightgray;">
+					<div class="aa" style="display: flex; font-size: 1.0em !important;">
+						<div class="btn_submenu">
+							<button type="button" class="btn btn-sm checkbox-toggle" style="font-size: 1.0em !important;" onclick="tempSave();">
+								<i class="fas fa-download">&nbsp;임시저장</i> 
+							</button>
+						</div>
+						<div class="btn_submenu">
+							<button type="button" class="btn btn-sm checkbox-toggle" style="font-size: 1.0em !important;" onclick="again();">
+								<i class="fas fa-sync-alt">&nbsp;다시쓰기</i> 
+							</button>
+						</div>
+						<div class="float-right" style="margin-left: 553px;">
+							<button type="button" class="btn btn-info" onclick="regist_go()" style="margin-right: 5px; width: 83px;">
+								<i class="far fa-paper-plane"></i>&nbsp;전송
+							</button>
+							<button type="button" class="btn btn-secondary" onclick="javascript:history.back();" style="width: 83px;">
+								<i class="fas fa-times"></i>&nbsp;취소
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="card-body pad">
+					<form  enctype="multipart/form-data" role="form"  method="post" name="registForm" id="registForm">
+					<input type="hidden" name="mFrom" value="${loginUser.eno }">
+						<div class="form-group row">
+							<div class="col-2">
+								<div class="row">
+									<div class="col-7" >받는사람</div>
+									<div class="form-check col-5">
+										<input type="checkbox" class="form-check-input" id="toMe" onchange="toMeMail();">
+										<label class="form-check-label" for="toMe" style="font-size:0.75em; margin-top: 3px;">나에게</label>
+									</div>
+								</div>
+							</div>
+							<div class="input-group input-group-sm col-md-10">
+								<span class="input-group-append">
+									<button type="button" class="btn btn-block btn-default" data-toggle="modal" data-target="#myModal" style="width: 70px; height: 31px; border-radius: 0.2rem;">주소록</button>
+								</span>
+								<div class="col-10" id="receiver" style="margin-left: 10px;">
+									<c:if test="${not empty employeeList }">
+										<c:forEach items="${employeeList }" var="employee">
+											<div class="emp_select_card" data-eno="${employee.eno }" style="align-items: center; display: inline-block; justify-content: center;">
+												<div style="position: relative;">
+													<div style="display: flex; align-items: center">
+														<div style="display: flex; align-items: center">
+															<p style="font-size: 16px; font-weight: bold">${employee.name } </p>
+														</div>
+														<input type="hidden" name="receiver" value="${employee.eno }">
+														<span class="removeBtn material-symbols-outlined" onclick="removeManager('${employee.eno }')" style="cursor:pointer;">
+														disabled_by_default
+														</span>
+													</div>
+													<div style="font-size: 12px;">
+														<p>${employee.dname }</p>
+													</div>
+												</div>
+											</div>
+										</c:forEach>
+									</c:if>
+								</div>
+							</div>
+						</div>
+<!-- 						<div class="form-group row"> -->
+<!-- 							<div class="col-md-2">참조</div> -->
+<!-- 							<div class="input-group input-group-sm col-md-10"> -->
+<!-- 								<input type="text" class="form-control"> -->
+<!-- 								<span class="input-group-append"> -->
+<!-- 									<button type="button" class="btn btn-block btn-default" data-toggle="modal" data-target="#myModal">주소록</button> -->
+<!-- 								</span> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+						<div class="form-group row">
+							<div class="col-md-2">
+								<div class="row">
+									<div class="col-7" >제목</div>
+									<div class="form-check col-5">
+										<input type="checkbox" class="form-check-input" id="emergency" name="emergency" value="${mail.emergency }" onchange="urgent();">
+										<label class="form-check-label" for="emergency" style="font-size:0.75em; margin-top: 3px;">긴급!</label>
+									</div>
+								</div>
+							</div>
+							<div class="input-group input-group-sm col-md-10">
+								<input type="text" class="form-control" id="title" name="title" value="${mail.title }">
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-md-2">내용</div>
+							<div class="card-body col-md-10" style="padding: 5px !important;">
+								<textarea class="form-control" name="content" id="content" rows="5" cols="" placeholder="내용을 작성하세요" >${mail.content }</textarea>
+							</div>
+						</div>
+						<div class="card card-light card-outline">
+							<div class="card-header">
+								<h5 class="card-title"><i class="fas fa-paperclip"></i>&nbsp;&nbsp;첨부파일</h5>&nbsp;&nbsp;&nbsp;
+								<button type="button" class="btn btn-xs btn-info" onclick="addFile_go();" id="addFileBtn">Add File</button>
+							</div>
+							<div class="card-footer fileInput">
+							
+								<div class="row">
+									<c:forEach items="${mail.attachList }" var="attach">
+										<div class="col-md-4 col-sm-4 col-xs-12"  style="cursor:pointer;" onclick="location.href='getFile.do?attachNo=${attach.attachNo}';">
+											<div class="info-box">
+											 	<span class="info-box-icon bg-info">
+													<i class="fa fa-copy"></i>
+												</span>
+												<div class="info-box-content">
+													<span class ="info-box-text">
+														<fmt:formatDate value="${attach.regDate }" pattern="yyyy-MM-dd" />
+													</span>
+													<span class ="info-box-number">${attach.fileName }</span>
+												</div>
+											</div>
+										 </div>
+									</c:forEach>
+								</div>
+							
+							</div>
+					    </div>
+				    </form>
+				</div>
+
+
+			</div>
+		</div>
+	</section>
+</div>
+
+
+
+
+
+	<div class="modal fade" id="myModal" role="dialog" style="display:none; border-radius: 0.2rem;">
+		<div class="modal-dialog modal-mg" style="width: 350px">
+			<div class="modal-content">
+			
+				<div class="modal-header" style="background: #17A2B8; color: white;">
+					<h4 class="modal-title">수신자 선택</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true" style="color: white;">×</span>
+					</button>
+				</div>
+			
+				<div class="modal-body">
+					<div class="card card-info">
+<!-- 						<div class="card-header"> -->
+<!-- 							<h3 class="card-title">조직도</h3> -->
+<!-- 						</div> -->
+
+						<form class="form-horizontal">
+							<div class="tab-pane fade active show" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab" style="margin: 20px">
+								<span class="material-symbols-outlined">
+									corporate_fare
+								</span>
+							  	<span >PoJo기업</span>
+								<div id="organization" ></div>
+							</div>
+						</form>
+						
+					</div>
+				</div>
+<!-- 				<div class="modal-footer"> -->
+<!-- 					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button> -->
+<!-- 					<button type="button" class="btn btn-info" data-dismiss="modal">완료</button> -->
+<!-- 				</div> -->
+			</div>
+		</div>
+	</div>
+	<!-- Modal 끝-->
+
+<!-- <form id="tempMail" enctype="multipart/form-data"> -->
+<!-- 	<input type="hidden" name="mForm" value=""> -->
+<!-- 	<input type="hidden" name="title" value=""> -->
+<!-- 	<input type="hidden" name="content" value=""> -->
+<!-- 	<input type="hidden" name="emergency" value=""> -->
+<!-- 	<input type="hidden" name="receiver" value=""> -->
+<!-- </form> -->
+
+<script>
+$(function(){
+	summernote_go($('#content'),'<%=request.getContextPath()%>');
+})
+</script>
+
+<script>
+// 첨부파일 추가
+var dataNum=0;
+function addFile_go(){
+	if($('input[name="uploadFile"]').length>=5){
+		alert("파일첨부는 5개까지만 가능합니다.");
+		return;
+	}
+
+	var div=$('<div>').addClass("inputRow").attr("data-no",dataNum);
+	var input=$('<input>').attr({"type":"file","name":"uploadFile"}).css("display","inline");
+	div.append(input).append("<button onclick='remove_go("+dataNum+");' style='border:0;outline:0;' class='badge bg-red' type='button'>X</button>");
+
+	$('.fileInput').append(div);
+	dataNum++;
+}
+
+// 첨부파일 삭제
+function remove_go(dataNum){
+	$('div[data-no="'+dataNum+'"]').remove();
+}
+
+// 메일 전송
+function regist_go(){
+	var files=$('input[name="uploadFile"]');
+	for(var file of files){
+		console.log(file.name+" : "+file.value);
+		if(file.value == ""){
+			alert("파일을 선택하세요.");
+			file.focus();
+			file.click();
+			return;
+		}
+	}
+	
+	var form = document.registForm;
+	form.action="mailRegist.do";
+	console.log("form",form);
+	if(form.title.value == ""){
+		alert("제목은 필수입니다.");
+		return;
+	}
+	
+	// 수신자 없이 메일 전송 못하게
+	var receiver = $('input[name="receiver"]').val();
+	if(typeof receiver == "undefined"){
+		alert("받는 사람을 선택하세요.");
+		return;
+	}
+	
+	alert("메일을 전송하였습니다");
+	form.submit();
+	window.close();
+}
+</script>
+
+<script>
+// 내게쓰기
+function toMeMail(){
+	var data={
+			'eno':'${loginUser.eno}',
+			'name':'${loginUser.name}',
+			'dname':'${loginUser.dname}'
+	}
+	
+	if($('#toMe').is(":checked") == true){
+		$('.emp_select_card').remove();
+		addEmp(data, $('div[id="receiver"]'), $('#addEmp-template'));
+	} else{
+		$('.emp_select_card').remove();
+	}
+}
+
+// 긴급 설정
+function urgent(){
+	if($('#emergency').is(":checked") == true){
+		$('#emergency').val(1);
+		
+	}else{
+		$('#emergency').val(0);
+	}
+}
+
+// 다시쓰기
+function again(){
+	var answer = confirm("다시 작성하시겠습니까?");
+	if(answer){
+// 		$('input[type="text"]').val('');
+// 		$('#content').val('');
+// 		$('.note-editable').text('');
+// 		console.log($('#content').val());
+		window.location.reload();
+	}
+}
+
+// 임시저장
+function tempSave(){
+	var answer = confirm("작성중이던 메일을 임시저장하시겠습니까?");
+	var receiver = $('input[name="receiver"]').val();
+	
+	if(answer){
+		
+		var emergency = 0;
+		if($('input[name="emergency"]:checked').length > 0){
+			emergency = $('input[name="emergency"]').val();
+		}
+		
+		var uploadFile = [];
+		$.each($('input[name="uploadFile"]'), function(i,v){
+			uploadFile.push(v.value);
+		})
+// 		if(uploadFile.length > 0){
+// 		}
+		
+		var form = $('#registForm');
+		
+		var formData = new FormData(form[0]);
+
+		console.log(formData);
+// 		var data = {
+// 				'mFrom' : ${loginUser.eno },
+// 				'title' : $('input[name="title"]').val(),
+// 				'content' : $('#content').val(),
+// 				'emergency' : emergency,
+// 				'uploadFile' : uploadFile,
+// 				'receiver' : receiver
+// 		}
+		
+		
+		$.ajax({
+			url : '<%=request.getContextPath()%>/mail/insertTemp.do',
+			data : formData,
+			type : 'post',
+			contentType : false,
+			processData :false,
+			success : function(res){
+				alert(res);
+				console.log(res);
+// 				window.location.reload();
+			},
+			error : function(error){
+				alert("error : " + error.status);
+			}
+		})
+	}
+}
+</script>
+
+<script>
+// 조직도
+$('#organization').jstree({
+	core : {
+		data :${organizationNode}
+	},
+	types : {
+		'default' : {'icon': 'jstree-folder'}
+	},
+	 plugins: ['wholerow', 'types']
+});
+
+
+$('#organization').on("changed.jstree", function (e, data) {
+    if(data.node.id.length > 3){
+    	console.log(data.node.id);
+    	$.ajax({
+    		url : "<%=request.getContextPath()%>/mail/getEmpByNodeId.do?eno=" + data.node.id,
+    		type:'get',
+    		success:function(res){
+//     			console.log("aa",res.eno);
+    			var temp = $('.emp_select_card');
+//     			console.log("temp",temp);
+    			for (var test of temp){
+//     				console.log(test);
+    				var result = $(test).attr('data-eno');
+//     				console.log(result);
+	    			if(result == res.eno){
+	    				alert("이미 등록된 담당자는 추가할 수 없습니다.");
+	    				return false;
+	    			}
+    			}
+    			addEmp(res, $('div[id="receiver"]'), $('#addEmp-template'));
+
+    		},
+    		error:function(error){
+    			alert(error);
+    		}
+    	});
+    }
+});
+
+function addEmp(data, target, templateObject){
+	var template=Handlebars.compile(templateObject.html());
+	var html = template(data);
+	target.append(html);
+}
+</script>
+
+	<script type="text/x-handlebars-template"  id="addEmp-template">
+		<div class="emp_select_card" data-eno="{{eno}}" style="align-items: center; display: inline-block; justify-content: center;">
+			<div style="position: relative;">
+				<div style="display: flex; align-items: center">
+					<div style="display: flex; align-items: center">
+						<p style="font-size: 16px; font-weight: bold">{{name}} </p>
+					</div>
+					<input type="hidden" name="receiver" value="{{eno}}">
+					<span class="removeBtn material-symbols-outlined" onclick="removeManager('{{eno}}')" style="cursor:pointer;">
+					disabled_by_default
+					</span>
+				</div>
+				<div style="font-size: 12px;">
+					<p>{{dname}}</p>
+				</div>
+			</div>
+		</div>
+	</script>
+<script>
+function removeManager(eno){
+	var removeItem = $('div[data-eno="' + eno + '"]');
+	removeItem.remove();
+	removeWorkManager.push(eno);
+	console.log(removeWorkManager);
+}
+</script>
+</body>

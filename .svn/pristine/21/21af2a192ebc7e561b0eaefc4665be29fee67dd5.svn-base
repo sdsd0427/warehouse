@@ -1,0 +1,176 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true" %>
+   
+<head>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/resources/js/jquery.datetimepicker.full.min.js"></script>
+
+<style>
+
+label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+input[type=text], .textarea{
+	border: 1px solid darkgray;
+	border-radius: 3px;
+}
+
+.datetimepicker{
+	width: 130px;
+}
+
+input[type=text]{
+	height: 38px;
+}
+</style>
+</head>
+
+<title>일정 등록</title>
+
+<body>
+<div class="wrapper" style="padding: 0px 5px;">
+	 <!-- Main content -->
+	<section class="content-header">
+	  	<div class="container-fluid">
+	  		<div class="row md-2">
+	  			<div class="col-sm-6">
+	  				<h3>일정등록</h3>  				
+	  			</div>
+	  		</div>
+	  	</div>
+	</section>
+	 
+  <!-- Main content -->
+    <section class="content container-fluid">
+		<div class="row justify-content-center">
+			<div class="col-md-12">
+				<div class="card card-outline card-info">
+					<div class="card-header">
+						<h3 class="card-title p-1">일정등록</h3>
+						<div class ="card-tools">
+							<button type="button" class="btn btn-info" id="modifyBtn" onclick="modify_go();">수 정</button>
+							<button type="button" class="btn btn-danger" id="removeBtn" onclick="remove_go();">삭제</button>
+							<button type="button" class="btn btn-secondary " id="cancelBtn" onclick="CloseWindow();">취 소</button>
+						</div>
+					</div><!--end card-h eader  -->
+					<div class="card-body pad">
+						<form role="form" method="post" action="regist.do" name="registForm">
+							<div class="form-group row">
+								<label for="title" class="col-2">제목</label>
+								<input type="text" id="title" name="title" class="form-control col-10" placeholder="일정 제목을 입력하세요.">
+							</div>							
+							<div class="form-group row">
+								<label for="" class="col-2">기간</label>
+								<div class="col-10" style="float: right; padding-left: 0px; margin-left: -9px;">
+<!-- 									<i class="fas fa-calendar"></i> -->
+									<div class="col-7" style="float: left;">
+										<input class="datetimepicker" type="text" name="sdate"  id="sdate" value=" 2022-07-01 13:45">
+										&nbsp;&nbsp;~&nbsp;&nbsp;
+										<input class="datetimepicker" type="text" name="edate"  id="edate" value=" 2022-07-01 13:45">
+									</div>
+									<div class="col-5" style="float:right;">
+										<div style="margin-left: -40px; margin-top: 8px;">
+											<input class="form-check-input" type="checkbox">
+												<span>하루종일</span>
+										</div>
+									</div>
+								</div>
+							</div>							
+							<div class="form-group row">
+								<label for="catecode" class="col-2">내 일정</label> 
+								<select class="col-4" name="catecode" id="catecode" style="height: 38px;">
+                       				<option value="1" selected>(기본)개인일정</option>
+                       				<option value="2" >부서일정</option>
+                       				<option value="3" >회사일정</option>
+                    			</select>
+							</div>
+							<div class="form-group row">
+								<label for="" class="col-2">참조자</label> 
+								<button type="button" class="btn bg-gradient-info">참조자 선택</button>
+							</div>
+							<div class="form-group row">
+								<label for="space" class="col-2">장 소</label>
+								<input type="text" id="space" name="space" class="col-10">
+							</div>
+							<div class="form-group row">
+								<label for="content" class="col-2">내 용</label>
+								<textarea class="textarea col-10" name="content" id="content" cols="80" rows="5" placeholder="일정 상세 내용을 작성하세요."></textarea>
+							</div>
+							<div class="form-group row">
+								<label for="" class="col-2">알 림</label>
+								<div class="col-10">
+									<select class="" name="" id="" style="margin-left: -8px; height: 38px; width: 84px !important;">
+	                       				<option value="" >1시간전</option>
+	                       				<option value="" selected>1일전</option>
+	                       				<option value="" >1주일전</option>
+	                    			</select>&nbsp;&nbsp;
+									<select class="" name="" id="" style="height: 38px; width: 90px !important;">
+	                       				<option value="" selected>푸시알림</option>
+	                       				<option value="" >메일알림</option>
+	                       				<option value="" >문자알림</option>
+	                    			</select>
+									<button type="button" class="btn btn-info" style="margin-top: -5px; margin-left: 6px;">추가</button>
+                    			</div>
+							</div>
+							<div class="form-group row">
+								<label for="important" class="col-2">중요도</label>
+								<select class="col-4" name="important" id="important" style="height: 38px;">
+                       				<option value="1" >높음</option>
+                       				<option value="2" selected>보통</option>
+                       				<option value="3" >낮음</option>
+                    			</select>
+							</div>
+						</form>
+					</div><!--end card-body  -->
+					<div class="card-footer" style="display:none">
+					
+					</div><!--end card-footer  -->
+				</div><!-- end card -->				
+			</div><!-- end col-md-12 -->
+		</div><!-- end row -->
+    </section>
+    <!-- /.content -->
+    
+    
+<script>
+// window.onload=function(){
+<%-- 	summernote_go($('#content'),'<%=request.getContextPath()%>');  --%>
+// }
+function regist_go(){
+	var form = document.registForm;
+	console.log(form);
+// 	console.log($("form[role='form']"));
+	if($("input[name='title']").val()==""){
+		alert("제목은 필수입니다.");
+		$("input[name='title']").focus();
+		return;
+	}
+	
+	form.submit();
+// 	$("form[role='form']").submit();
+}
+
+//팝업창 닫기
+function CloseWindow(){
+	window.opener.location.reload(true);		
+	window.close();
+}
+
+$('.datetimepicker').datetimepicker();
+
+</script>
+</div>
+</body>
+
+
+
+
+
+
+
+
+
+

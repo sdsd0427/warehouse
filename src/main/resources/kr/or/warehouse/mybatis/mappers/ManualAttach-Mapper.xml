@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ManualAttach-Mapper">
+	<select id="selectManualAttachByManualNo"
+		resultType="attach">
+		select
+		mano as attachNo
+		,uploadpath
+		,filename
+		,filetype
+		,manualno as refNo
+		,eno
+		,regdate
+		from
+		manualattach
+		where manualno = #{refNo}
+	</select>
+
+	<select id="selectManualAttachByMaNo" resultType="attach">
+		select
+		mano as attachNo
+		,uploadpath
+		,filename
+		,filetype
+		,manualno as refNo
+		,eno
+		,regdate
+		from
+		manualattach
+		where mano=#{attachNo}
+	</select>
+
+	<update id="insertManualAttach">
+		insert into manualattach (
+		mano
+		,uploadpath
+		,filename
+		,filetype
+		,manualno
+		,eno
+		) values (
+		#{attachNo}
+		,#{uploadPath}
+		,#{fileName}
+		,#{fileType}
+		,#{refNo}
+		,#{eno}
+		)
+	</update>
+
+	<update id="deleteManualAttach">
+		delete
+		from manualattach
+		where mano = #{attachNo}
+	</update>
+
+	<update id="deleteAllManualAttach">
+		delete
+		from attach
+		where manualno = #{attachNo}
+	</update>
+
+	<select id="selectMaNo" resultType="String">
+		SELECT 'MA' ||
+		trim(nvl(max(to_char(to_number(substr(mano,3))+1,'000000')),'000001'))
+		as attachNo
+		from manualattach
+
+		union
+
+		select nvl(null,'MA000001') as attachNo
+		from
+		dual
+		where not exists (select mano
+		from manualattach)
+	</select>
+</mapper>
+

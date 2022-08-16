@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Mail-Mapper">
+<!-- 	<sql id="search"> -->
+<!-- 		<if test="searchType == 't'.toString()"> -->
+<!-- 			and boardTitle like '%'||#{keyword}||'%' -->
+<!-- 		</if> -->
+
+<!-- 		<if test="searchType == 'c'.toString()"> -->
+<!-- 			and boardContent like '%'||#{keyword}||'%' -->
+<!-- 		</if> -->
+<!-- 		<if test="searchType == 'tcw'.toString()"> -->
+<!-- 			and ( -->
+<!-- 			boardTitle like '%'||#{keyword}||'%' -->
+
+<!-- 			or -->
+<!-- 			boardContent like '%'||#{keyword}||'%' -->
+<!-- 			) -->
+<!-- 		</if> -->
+<!-- 	</sql> -->
+
+<!-- 	<select id="selectSearchBoardList" resultType="mail"> -->
+<!-- 		select -->
+<!-- 		boardNo -->
+<!-- 	   ,boardTitle -->
+<!-- 	   ,boardContent -->
+<!-- 	   ,regDate -->
+<!-- 	   ,updateDate -->
+<!-- 	   ,viewCnt -->
+<!-- 	   ,eno -->
+<!-- 	   ,classCode -->
+<!-- 		from -->
+<!-- 		board -->
+<!-- 		where boardNo is not null -->
+<!-- 		<include refid="search" /> -->
+<!-- 		order by regDate desc -->
+<!-- 	</select> -->
+
+<!-- 	<select id="selectSearchBoardListCount" resultType="int"> -->
+<!-- 		select -->
+<!-- 		count(*) -->
+<!-- 		from -->
+<!-- 		board -->
+<!-- 		where boardNo is not null -->
+<!-- 		<include refid="search" /> -->
+<!-- 		order by regDate desc -->
+<!-- 	</select> -->
+
+<!-- 	<select id="selectBoardByBoardNo" resultType="mail"> -->
+<!-- 		select -->
+<!-- 		boardNo -->
+<!-- 	   ,boardTitle -->
+<!-- 	   ,boardContent -->
+<!-- 	   ,regDate -->
+<!-- 	   ,updateDate -->
+<!-- 	   ,viewCnt -->
+<!-- 	   ,eno -->
+<!-- 	   ,classCode -->
+<!-- 		from board -->
+<!-- 		where boardNo=#{boardNo} -->
+<!-- 	</select> -->
+
+<!-- 	<update id="insertBoard" parameterType="mail"> -->
+<!-- 		insert -->
+<!-- 		into -->
+<!-- 		board(boardNo,boardTitle,eno,boardContent) -->
+<!-- 		values -->
+<!-- 		(#{boardNo},#{boardTitle},#{eno},#{boardContent}) -->
+<!-- 	</update> -->
+
+<!-- 	<update id="updateBoard" parameterType="mail"> -->
+<!-- 		update -->
+<!-- 		board -->
+<!-- 		set -->
+<!-- 		boardTitle=#{boardTitle}, boardContent=#{boardContent}, updateDate=sysdate -->
+<!-- 		where boardNo=#{boardNo} -->
+<!-- 	</update> -->
+
+<!-- 	<update id="deleteBoard" parameterType="int"> -->
+<!-- 		delete -->
+<!-- 		from board -->
+<!-- 		where boardNo=#{boardNo} -->
+<!-- 	</update> -->
+
+<!-- 	<select id="selectBoardSeqNext" resultType="int"> -->
+<!-- 		select board_seq.nextval as boardNo from dual -->
+<!-- 	</select> -->
+
+</mapper>
+

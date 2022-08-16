@@ -1,0 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<script>
+	function goDetail(state){
+		if(state == 0){
+			OpenWindow('waitDetail.do', '업무 상세보기', 850, 600);
+		}
+		
+		if(state == 1){
+			window.parent.document.location.href = 'workDetailGo.do?mCode=${menu.upcode}';
+		}
+
+	}
+</script>

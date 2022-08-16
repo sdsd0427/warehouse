@@ -1,0 +1,288 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<head>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/ehr.css">
+</head> 
+   
+<body>
+
+<div class="wrapper">
+	<h3 class="title">전체 알림</h3>
+	
+	<section class="content">
+			<div class="container-fluid">
+				<div class="row md-2 mt-5">
+					<div class="col-md-12">
+
+						<div class="card">
+							<div class="card-header with-border">
+								<button type="button" class="btn">
+									<i class="fas fa-check">&nbsp;전체읽음</i>
+								</button>
+								<button type="button" class="btn">
+									<i class="fas fa-trash-alt">&nbsp;전체삭제</i>
+								</button>
+								<div id="" class="card-tools" style="width: 450px;">
+									<div class="input-group row">
+										<select class="form-control col-md-3" name="searchNum"
+											id="searchNum">
+											<option value="">정렬개수</option>
+											<option value="">10개</option>
+											<option value="">20개</option>
+											<option value="">30개</option>
+										</select> 
+										<select class="form-control col-md-3" name="searchType"
+											id="searchType">
+											<option value="">이름</option>
+											<option value="">직위</option>
+										</select> 
+										<input class="form-control" type="text" name="keyword"
+											placeholder="검색어를 입력하세요." value="${param.keyword }" /> 
+										<span class="input-group-append">
+											<button class="btn btn-info" type="button"
+												onclick="list_go(1);" data-card-widget="search">
+												<i class="fa fa-fw fa-search"></i>
+											</button>
+										</span>
+									</div>
+								</div>
+							</div>
+							
+							<div class="card-body">
+								<table class="table table-hover text-center">
+									<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td style="width: 5%;">
+											<span class="info-box-icon">
+												<img class="direct-chat-img" data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image" 
+												src="https://adminlte.io/themes/v3/dist/img/user1-128x128.jpg">
+											</span>	
+										</td>
+										<td class="text-left" style="width: 75%;">
+											<span><b>[결재 도착] '장문석 차장'이(가) 작성한 '테스트'이(가) 도착했습니다.</b></span>&nbsp;<span class="right badge badge-danger">New</span><br>
+											<span class="text-muted">06-27 15:00</span>&nbsp;&nbsp;<span>장문석 차장</span>											
+										</td>
+										<td style="width: 10%;">
+											<button type="button" class="btn btn-block btn-info btn-sm mt-2">읽음</button>
+										</td>
+										<td style="width: 10%;">
+											<button type="button" class="btn btn-block btn-danger btn-sm mt-2">삭제</button>
+										</td>
+									</tr>
+
+									<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td style="width: 5%;">
+											<span class="info-box-icon">
+												<img class="direct-chat-img" data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image" 
+												src="https://adminlte.io/themes/v3/dist/img/user7-128x128.jpg">
+											</span>	
+										</td>
+										<td class="text-left" style="width: 75%;">
+											<span><b>[참조자 등록] '서난희 차장'이(가) 작성한 '테스트'의 참조자로 등록되었습니다.</b></span>&nbsp;<span class="right badge badge-danger">New</span><br>
+											<span class="text-muted">06-27 14:00</span>&nbsp;&nbsp;<span>서난희 차장</span>											
+										</td>
+										<td style="width: 10%;">
+											<button type="button" class="btn btn-block btn-info btn-sm mt-2">읽음</button>
+										</td>
+										<td style="width: 10%;">
+											<button type="button" class="btn btn-block btn-danger btn-sm mt-2">삭제</button>
+										</td>
+									</tr>
+
+									<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td style="width: 5%;">
+											<span class="info-box-icon">
+												<img class="direct-chat-img" data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image" 
+													src="https://adminlte.io/themes/v3/dist/img/user5-128x128.jpg">
+											</span>	
+										</td>
+										<td class="text-left" style="width: 75%;">
+											<span><b>[결재 완료] '김형민 부장'이(가) '테스트2'을(를) 결재했습니다.</b></span>&nbsp;<span class="right badge badge-danger">New</span><br>
+											<span class="text-muted">06-27 13:00</span>&nbsp;&nbsp;<span>김형민 부장</span>											
+										</td>
+										<td style="width: 10%;">
+											<button type="button" class="btn btn-block btn-info btn-sm mt-2">읽음</button>
+										</td>
+										<td style="width: 10%;">
+											<button type="button" class="btn btn-block btn-danger btn-sm mt-2">삭제</button>
+										</td>
+									</tr>
+
+									<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td style="width: 5%;">
+											<span class="info-box-icon">
+												<img class="direct-chat-img" data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image" src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg">
+											</span>	
+										</td>
+										<td class="text-left" style="width: 75%;">
+											<span><b>[To do] 오늘 할 일'테스트'을(를) 확인해 주세요.</b></span>&nbsp;<span class="right badge badge-danger">New</span><br>
+											<span class="text-muted">06-27 11:00</span>&nbsp;&nbsp;<span>나</span>											
+										</td>
+										<td style="width: 10%;">
+											<button type="button" class="btn btn-block btn-info btn-sm mt-2">읽음</button>
+										</td>
+										<td style="width: 10%;">
+											<button type="button" class="btn btn-block btn-danger btn-sm mt-2">삭제</button>
+										</td>
+									</tr>
+
+									<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td style="width: 5%;">
+											<span class="info-box-icon">
+												<img class="direct-chat-img" data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image" src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg">
+											</span>	
+										</td>
+										<td class="text-left" style="width: 75%;">
+											<span><b>[일정] 예정된 일정인 '테스트'을(를) 확인해 주세요.</b></span><br>
+											<span class="text-muted">06-26 16:00</span>&nbsp;&nbsp;<span>나</span>											
+										</td>
+										<td style="width: 10%;">
+											<button type="button" class="btn btn-block btn-info btn-sm mt-2">읽음</button>
+										</td>
+										<td style="width: 10%;">
+											<button type="button" class="btn btn-block btn-danger btn-sm mt-2">삭제</button>
+										</td>
+									</tr>
+
+									<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td style="width: 5%;">
+											<span class="info-box-icon">
+												<img class="direct-chat-img" data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image" 
+													src="https://adminlte.io/themes/v3/dist/img/user5-128x128.jpg">
+											</span>	
+										</td>
+										<td class="text-left" style="width: 75%;">
+											<span><b>[업무 요청] '김형민 부장'이(가) 새로운 업무'테스트'을(를) 요청했습니다.</b></span><br>
+											<span class="text-muted">06-26 13:00</span>&nbsp;&nbsp;<span>김형민 부장</span>											
+										</td>
+										<td style="width: 10%;">
+											<button type="button" class="btn btn-block btn-info btn-sm mt-2">읽음</button>
+										</td>
+										<td style="width: 10%;">
+											<button type="button" class="btn btn-block btn-danger btn-sm mt-2">삭제</button>
+										</td>
+									</tr>
+
+									<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td style="width: 5%;">
+											<span class="info-box-icon">
+												<img class="direct-chat-img" data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image" 
+												src="https://adminlte.io/themes/v3/dist/img/user4-128x128.jpg">
+											</span>	
+										</td>
+										<td class="text-left text-muted" style="width: 75%;">
+											<span>[나를 언급] '강정인 주임'이(가) 이슈 '테스트'에서 나를 언급했습니다.</span><br>
+											<span class="text-muted">06-25 15:00</span>&nbsp;&nbsp;<span>강정인 주임</span>											
+										</td>
+										<td style="width: 10%;">
+<!-- 											<button type="button" class="btn btn-block btn-info btn-sm mt-2">읽음</button> -->
+										</td>
+										<td style="width: 10%;">
+											<button type="button" class="btn btn-block btn-danger btn-sm mt-2">삭제</button>
+										</td>
+									</tr>
+
+									<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td style="width: 5%;">
+											<span class="info-box-icon">
+												<img class="direct-chat-img" data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image" 
+												src="https://adminlte.io/themes/v3/dist/img/user7-128x128.jpg">
+											</span>	
+										</td>
+										<td class="text-left text-muted" style="width: 75%;">
+											<span>[커뮤니티 가입] '오지현 대리'이(가) 커뮤니티 '초급자바'에 가입을 신청했습니다.</span><br>
+											<span class="text-muted">06-24 15:00</span>&nbsp;&nbsp;<span>오지현 대리</span>											
+										</td>
+										<td style="width: 10%;">
+<!-- 											<button type="button" class="btn btn-block btn-info btn-sm mt-2">읽음</button> -->
+										</td>
+										<td style="width: 10%;">
+											<button type="button" class="btn btn-block btn-danger btn-sm mt-2">삭제</button>
+										</td>
+									</tr>
+
+									<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td style="width: 5%;">
+											<span class="info-box-icon">
+												<img class="direct-chat-img" data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image" 
+												src="https://adminlte.io/themes/v3/dist/img/user4-128x128.jpg">
+											</span>	
+										</td>
+										<td class="text-left text-muted" style="width: 75%;">
+											<span>[나를 언급] '강정인 주임'이(가) 자유게시판 '테스트'에서 나를 언급했습니다.</span><br>
+											<span class="text-muted">06-23 15:00</span>&nbsp;&nbsp;<span>강정인 주임</span>											
+										</td>
+										<td style="width: 10%;">
+<!-- 											<button type="button" class="btn btn-block btn-info btn-sm mt-2">읽음</button> -->
+										</td>
+										<td style="width: 10%;">
+											<button type="button" class="btn btn-block btn-danger btn-sm mt-2">삭제</button>
+										</td>
+									</tr>
+
+									<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td style="width: 5%;">
+											<span class="info-box-icon">
+												<img class="direct-chat-img" data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image" 
+												src="https://adminlte.io/themes/v3/dist/img/user4-128x128.jpg">
+											</span>	
+										</td>
+										<td class="text-left text-muted" style="width: 75%;">
+											<span>[나를 언급] '강정인 주임'이(가) 이슈 '테스트'에서 나를 언급했습니다.</span><br>
+											<span class="text-muted">06-22 15:00</span>&nbsp;&nbsp;<span>강정인 주임</span>											
+										</td>
+										<td style="width: 10%;">
+<!-- 											<button type="button" class="btn btn-block btn-info btn-sm mt-2">읽음</button> -->
+										</td>
+										<td style="width: 10%;">
+											<button type="button" class="btn btn-block btn-danger btn-sm mt-2">삭제</button>
+										</td>
+									</tr>
+
+								</table>
+							</div>
+							
+							<div class="card-footer">
+								<ul class="pagination justify-content-center m-0">
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+									</li>
+
+										<li class="page-item active">
+											<a class="page-link" href="">1</a>
+										</li>
+										<li class="page-item">
+											<a class="page-link" href="">2</a>
+										</li>
+										<li class="page-item">
+											<a class="page-link" href="">3</a>
+										</li>
+										<li class="page-item">
+											<a class="page-link" href="">4</a>
+										</li>
+										<li class="page-item">
+											<a class="page-link" href="">5</a>
+										</li>
+
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+									</li>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+									</li>
+								</ul>
+							</div>
+							
+						</div>
+
+
+
+					</div>
+				</div>
+			</div>
+		</section>
+	
+</div>
+
+</body>	

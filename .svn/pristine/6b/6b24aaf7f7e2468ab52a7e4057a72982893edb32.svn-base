@@ -1,0 +1,15 @@
+package kr.or.warehouse.controller.view;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class MainController {
+
+	@RequestMapping("/index")
+	public String main() throws Exception{
+		String url = "common/indexPage";
+		
+		return url;
+	}
+}

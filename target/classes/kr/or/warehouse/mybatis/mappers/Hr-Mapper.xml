@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Hr-Mapper">
+
+	<select id="selectHrList" resultType="hr">
+		SELECT
+		    hrcode
+		   ,eno
+		   ,state
+		   ,hrtime
+		   ,overtime
+		   ,ontime
+		   ,offtime
+		   ,hrdate
+		FROM
+		    hr
+	    WHERE
+	    	eno=#{eno}
+	</select>
+
+	<select id="selectHrType" resultType="hrtype">
+		SELECT
+		    hrtypecode
+		   ,hrtype
+		   ,ontime
+		   ,offtime
+		   ,eno
+		   ,startdate
+		   ,enddate
+		   ,hrday
+		   ,hrapprove
+		   ,weektime
+		FROM
+		    hrtype
+	    WHERE
+	    	eno=#{eno}
+	</select>
+
+	<select id="selectHrByDate" parameterType="hashmap" resultType="hr">
+		SELECT
+		    hrcode
+		   ,eno
+		   ,state
+		   ,hrtime
+		   ,overtime
+		   ,ontime
+		   ,offtime
+		   ,hrdate
+		   ,reqChange
+		FROM
+		    hr
+	    WHERE
+	    	eno=#{eno}
+    	AND
+    		hrdate=#{hrDate}
+	</select>
+
+	<select id="selectHrByEno" resultType="hr">
+		SELECT
+		    hrcode
+		   ,eno
+		   ,state
+		   ,hrtime
+		   ,overtime
+		   ,ontime
+		   ,offtime
+		   ,hrdate
+		   ,reqChange
+		FROM
+		    hr
+	    WHERE
+	    	eno=#{eno}
+    	AND
+    		hrdate=#{hrdate}
+	</select>
+
+	<update id="updateCondition" parameterType="employee">
+		UPDATE
+			employee
+		SET
+		   condition=#{condition}
+		WHERE
+			eno=#{eno}
+	</update>
+
+	<select id="selectPostPosition" resultType="postposition">
+		 SELECT
+		       ppscode
+		      ,ppsname
+		      ,ppspay
+		   FROM
+		       postposition
+	</select>
+
+	<select id="selectEmpForHrData" parameterType="str" resultType="employee">
+		SELECT
+			*
+		FROM
+			employee a, hrtype b
+		WHERE
+			a.eno = b.eno
+		AND
+			a.enabled = 1
+		AND
+			b.hrday like '%'||#{day}||'%'
+<!-- 		AND -->
+<!-- 			a.condition != '휴가' -->
+
+	</select>
+
+	<select id="selectPpsByPpscode">
+		SELECT
+	       ppscode
+	      ,ppsname
+	      ,ppspay
+	   FROM
+	       postposition
+       WHERE
+       	ppsCode=#{ppsCode}
+	</select>
+
+
+	<sql id="search">
+		<if test="searchType == 'n'.toString()">
+			and a.name like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'p'.toString()">
+			and a.ppscode = (select distinct a.ppscode
+                         from postposition b, employee a
+                        where  a.ppscode = b.ppscode
+                         and b.ppsname like '%'||#{keyword}||'%')
+		</if>
+		<if test="searchType == 'np'.toString()">
+			and (
+			a.name like '%'||#{keyword}||'%'
+			or
+			a.ppscode = (select distinct a.ppscode
+                         from postposition b, employee a
+                        where  a.ppscode = b.ppscode
+                         and b.ppsname like '%'||#{keyword}||'%')
+			)
+		</if>
+	</sql>
+
+	<sql id="condition">
+		<if test="condition == '업무중'.toString">
+			and a.condition = #{condition}
+		</if>
+		<if test="condition == '업무종료'.toString or condition == '휴직'.toString">
+			and a.condition in ('업무종료','휴직')
+		</if>
+		<if test="condition == '자리비움'.toString or condition == '회의중'.toString or condition == '외근 후 퇴근'.toString or condition == '외근'.toString or condition == '출장'.toString">
+			and a.condition in ('자리비움','회의중','외근 후 퇴근','외근','출장')
+		</if>
+	</sql>
+
+	<select id="selectTeamHrList" resultType="employee">
+		select
+			a.eno
+			, a.name
+			, b.ppsname
+			, a.job
+			, a.call
+			, a.hiredate
+			, a.condition
+			, a.photo
+			, c.dname
+			, a.enabled
+		from
+			employee a, postposition b, department c
+		where
+			a.eno is not null
+			<include refid="search"/>
+			<include refid="condition"/>
+		and
+			a.ppscode=b.ppscode
+		and
+			a.dno=c.dno
+		and
+			a.dno=#{dno}
+		order by b.ppscode desc, a.name
+	</select>
+
+	<select id="selectTeamHrListCount" resultType="int">
+		select
+			count(*)
+		from
+			employee a
+		where
+			a.eno is not null
+			<include refid="search"/>
+			<include refid="condition"/>
+		and
+			a.dno=#{dno}
+	</select>
+
+	<select id="selectTeamHrListAllCount" resultType="int">
+		select
+			count(*)
+		from
+			employee a
+		where
+			a.dno=#{dno}
+	</select>
+
+	<update id="updateHr" parameterType="employee">
+		update employee
+		set
+		ppscode=#{ppscode},job=#{job},call=#{call},enabled=#{enabled},retiredate=#{retiredate},dno=#{dno}
+		where eno=#{eno}
+	</update>
+
+	<select id="selectTeamVacList" resultType="employee">
+		SELECT
+		    a.eno
+		   ,b.dname
+		   ,a.birth
+		   ,a.email
+		   ,a.name
+		   ,a.photo
+		   ,c.ppsname
+		   ,a.job
+		   ,a.phone
+		   ,a.call
+		   ,a.hiredate
+		   ,a.enabled
+		   ,a.mbti
+		   ,a.address
+		   ,a.retiredate
+		   ,a.retirereason
+		   ,a.pwd
+		   ,a.ipaddress
+		   ,a.signtype
+		   ,a.signpath
+		   ,a.condition
+		   ,a.year
+		   ,a.dno
+		   ,d.totalvac
+		   ,d.usevac
+		   ,d.remainvac
+		   ,d.genervac
+		FROM
+		    employee a, department b, postposition c, vacation d
+		WHERE
+			a.dno = b.dno
+		AND
+			a.ppscode = c.ppscode
+		AND
+			a.eno = d.eno
+		AND
+			a.DNO = #{dno}
+		<include refid="search"/>
+		ORDER BY
+			a.PPSCODE desc, a.NAME
+	</select>
+
+
+	<!-- 수정 후 쿼리 -->
+
+	<!-- 사원 중요 정보  -->
+	<select id="selectEmp" parameterType="int" resultType="employee">
+		SELECT
+		    a.eno
+		   ,b.dname
+		   ,a.birth
+		   ,a.email
+		   ,a.name
+		   ,a.photo
+		   ,c.ppsname
+		   ,a.job
+		   ,a.phone
+		   ,a.call
+		   ,a.hiredate
+		   ,a.enabled
+		   ,a.mbti
+		   ,a.address
+		   ,a.retiredate
+		   ,a.retirereason
+		   ,a.pwd
+		   ,a.ipaddress
+		   ,a.signtype
+		   ,a.signpath
+		   ,a.condition
+		   ,a.year
+		   ,a.dno
+		FROM
+		    employee a, department b, postposition c
+		WHERE a.dno = b.dno
+		  AND a.ppscode = c.ppscode
+		  AND a.eno =#{eno}
+	</select>
+
+	<!-- 입력받은 날짜로 주의 시작일/종료일 구하고, 주간 근무시간 구하기 -->
+	<select id="selectWeekCalc" resultType="hashmap" parameterType="hr">
+		SELECT
+			 SUM(hrtime) AS hrTime
+			,SUM(stdtime) AS stdTime
+			,SUM(overtime) AS overTime
+			,b.weekStart
+			,b.weekEnd
+		FROM
+			hr a, (	SELECT
+							 TO_CHAR(TRUNC(TO_DATE(#{hrDate}), 'iw'), 'yyyy-mm-dd') AS weekStart
+							,TO_CHAR(TRUNC(TO_DATE(#{hrDate}), 'iw')+6, 'yyyy-mm-dd') AS weekEnd
+						FROM
+							dual) b
+		WHERE
+			eno = #{eno}
+		AND
+			<![CDATA[ HRDATE >= b.weekStart ]]>
+		AND
+			<![CDATA[ HRDATE <= b.weekEnd ]]>
+	</select>
+
+	<select id="selectWeekTardy" resultType="int" parameterType="hr">
+		SELECT
+			COUNT(a.state) AS tardy
+		FROM
+			HR a, (	SELECT
+							 TO_CHAR(TRUNC(TO_DATE(#{hrDate}), 'iw'), 'yyyy-mm-dd') AS weekStart
+							,TO_CHAR(TRUNC(TO_DATE(#{hrDate}), 'iw')+6, 'yyyy-mm-dd') AS weekEnd
+						FROM
+							dual) b
+		WHERE
+			eno = #{eno}
+		AND
+			a.state = 2
+		AND
+			<![CDATA[ HRDATE >= b.weekStart ]]>
+		AND
+			<![CDATA[ HRDATE <= b.weekEnd ]]>
+	</select>
+
+	<select id="selectWeekReqChange" resultType="int" parameterType="hr">
+		SELECT
+			COUNT(a.reqchange) AS reqChange
+		FROM
+			HR a, (	SELECT
+							 TO_CHAR(TRUNC(TO_DATE(#{hrDate}), 'iw'), 'yyyy-mm-dd') AS weekStart
+							,TO_CHAR(TRUNC(TO_DATE(#{hrDate}), 'iw')+6, 'yyyy-mm-dd') AS weekEnd
+						FROM
+							dual) b
+		WHERE
+			eno = #{eno}
+		AND
+			a.reqchange != 0
+		AND
+			<![CDATA[ HRDATE >= b.weekStart ]]>
+		AND
+			<![CDATA[ HRDATE <= b.weekEnd ]]>
+	</select>
+
+	<!-- 주간 테이블 구하기 -->
+	<select id="selectWeekTableByWeekStart" resultType="hr">
+		SELECT
+			*
+		FROM
+			(
+			SELECT
+				TO_CHAR(TO_DATE(#{weekStart}, 'YYYY-MM-DD') + (LEVEL-1), 'YYYY-MM-DD') AS weekDate
+			FROM
+				DUAL
+			CONNECT BY
+				<![CDATA[ LEVEL <= 7) a ]]>
+		LEFT OUTER JOIN
+		(
+			SELECT
+				  hrcode
+				, eno
+				, state
+				, hrTime
+				, overTime
+				, hrDate
+				, reqChange
+				, onTime
+				, offTime
+				, stdTime
+			FROM
+				HR
+			WHERE
+				eno = #{eno}) b
+		ON
+			a.weekDate = b.hrDate
+		ORDER BY
+			a.weekDate
+	</select>
+
+	<update id="insertHr" parameterType="hr">
+		INSERT INTO
+			HR(
+			  HRCODE
+			, ENO
+			, STATE
+			, HRTIME
+			, OVERTIME
+			, STDTIME
+			, ONTIME
+			, OFFTIME
+			, HRDATE
+			, REQCHANGE
+		)
+		VALUES(
+			  #{hrcode}
+			, #{eno}
+			, #{state}
+			, #{hrTime}
+			, #{overTime}
+			, #{stdTime}
+			, #{onTime}
+			, #{offTime}
+			, #{hrDate}
+			, #{reqChange}
+		)
+	</update>
+
+	<!-- insert를 위한 hrcode 추출 -->
+	<select id="selectHrcodeByHrDate" parameterType="str" resultType="str">
+		SELECT
+			hrcode
+		FROM
+			hr
+		WHERE
+			hrDate = #{hrDate}
+		ORDER BY hrcode DESC
+	</select>
+
+	<update id="updateHrType" parameterType="hrtype">
+<!-- 		INSERT INTO -->
+<!-- 			hrtype( -->
+<!-- 			  hrTypeCode -->
+<!-- 			, hrType -->
+<!-- 			, onTime -->
+<!-- 			, offTime -->
+<!-- 			, eno -->
+<!-- 			, startDate -->
+<!-- 			, endDate -->
+<!-- 			, hrDay -->
+<!-- 			, hrApprove -->
+<!-- 			, weekTime) -->
+<!-- 		VALUES( -->
+<!-- 			  #{hrTypeCode} -->
+<!-- 			, #{hrType} -->
+<!-- 			, #{onTime} -->
+<!-- 			, #{offTime} -->
+<!-- 			, #{eno} -->
+<!-- 			, #{startDate} -->
+<!-- 			, #{endDate} -->
+<!-- 			, #{hrDay} -->
+<!-- 			, #{hrApprove} -->
+<!-- 			, #{weekTime} -->
+<!-- 		) -->
+
+		UPDATE
+			HRTYPE
+		SET
+			  HRTYPE = #{hrType}
+			, ONTIME = #{onTime}
+			, OFFTIME = #{offTime}
+			, HRDAY = #{hrDay}
+			, weektime = #{weekTime}
+		WHERE
+			eno = #{eno}
+	</update>
+	<update id="updateIp" parameterType="hrtype">
+		UPDATE
+			EMPLOYEE
+		SET
+			  IPADDRESS = #{ipAddress}
+		WHERE
+			eno = #{eno}
+	</update>
+
+
+
+	<!-- 부서 근태관리 -->
+
+	<sql id="weekStart">
+		<if test="weekStart != ''">
+			and "weekStart" = #{"weekStart"}
+		</if>
+	</sql>
+
+	<select id="selectTeamEmpByDno" resultType="employee">
+		SELECT
+		    a.eno
+		   ,b.dname
+		   ,a.birth
+		   ,a.email
+		   ,a.name
+		   ,a.photo
+		   ,c.ppsname
+		   ,a.job
+		   ,a.phone
+		   ,a.call
+		   ,a.hiredate
+		   ,a.enabled
+		   ,a.mbti
+		   ,a.address
+		   ,a.retiredate
+		   ,a.retirereason
+		   ,a.pwd
+		   ,a.ipaddress
+		   ,a.signtype
+		   ,a.signpath
+		   ,a.condition
+		   ,a.year
+		   ,a.dno
+		FROM
+		    employee a, department b, postposition c
+		WHERE
+			a.dno = b.dno
+		AND
+			a.ppscode = c.ppscode
+		AND
+			a.DNO = #{dno}
+		<include refid="search"/>
+		ORDER BY
+			a.PPSCODE desc, a.NAME
+	</select>
+
+
+	<select id="selectTeamEmpCount" resultType="int">
+		SELECT
+		    count(*)
+		FROM
+		    employee a, department b, postposition c
+		WHERE
+			a.dno = b.dno
+		AND
+			a.ppscode = c.ppscode
+		AND
+			a.DNO = #{dno}
+		<include refid="search"/>
+		ORDER BY
+			a.PPSCODE, a.NAME
+	</select>
+
+	<select id="selectWeekStEd" parameterType="str" resultType="hashmap">
+		SELECT
+			 TO_CHAR(TRUNC(TO_DATE(#{weekStart}), 'iw'), 'yyyy-mm-dd') AS weekStart
+			,TO_CHAR(TRUNC(TO_DATE(#{weekStart}), 'iw')+6, 'yyyy-mm-dd') AS weekEnd
+		FROM
+			dual
+	</select>
+
+	<select id="selectWeekFullDate" parameterType="str" resultType="hashmap">
+		SELECT
+			  TO_CHAR(a.cur_date + 1, 'yyyy-mm-dd') AS d1
+			, TO_CHAR(a.cur_date + 2, 'yyyy-mm-dd') AS d2
+			, TO_CHAR(a.cur_date + 3, 'yyyy-mm-dd') AS d3
+			, TO_CHAR(a.cur_date + 4, 'yyyy-mm-dd') AS d4
+			, TO_CHAR(a.cur_date + 5, 'yyyy-mm-dd') AS d5
+			, TO_CHAR(a.cur_date + 6, 'yyyy-mm-dd') AS d6
+			, TO_CHAR(a.cur_date + 7, 'yyyy-mm-dd') AS d7
+		FROM
+			(
+			SELECT
+				TRUNC(TO_DATE(#{weekStart}), 'iw')
+				- (TO_NUMBER(TO_CHAR(TRUNC(TO_DATE(#{weekStart}), 'iw'), 'd'))-1) AS cur_date
+			FROM
+				dual
+		       ) a
+	</select>
+
+	<select id="selectAllCountByDno" resultType="int" parameterType="int">
+		SELECT
+		    count(*)
+		FROM
+		    employee
+	    WHERE
+	    	dno = #{dno}
+	</select>
+
+	<select id="selectHrTime" resultType="hr">
+		SELECT
+		    hrcode
+		   ,eno
+		   ,state
+		   ,hrtime
+		   ,overtime
+		   ,hrdate
+		   ,reqchange
+		   ,ontime
+		   ,offtime
+		   ,stdtime
+		   ,ontimestr
+		   ,offtimestr
+		FROM
+		    hr
+		WHERE
+		    hrcode = #{hrcode}
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

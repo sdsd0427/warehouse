@@ -1,0 +1,1265 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+
+<script>
+	$(document).on('click', 'body > aside > div > ul > li:nth-child(2) > a', function(){
+		$(this).attr("href", "#");
+		OpenWindow('<%=request.getContextPath()%>/work/workRegistForm.do', '새 업무', '1000', '800');
+	});
+
+	function list_go(url, page, statusNo){
+		var jobForm=$('#jobForm');
+		jobForm.find("[name='page']").val(page);
+		jobForm.find("[name='perPageNum']").val();
+		jobForm.find("[name='searchType']").val($('select[name="searchType"]').val());
+		jobForm.find("[name='keyword']").val($('input[name="keyword"]').val());
+		jobForm.find("[name='statusNo']").val(statusNo);
+		jobForm.find("[name='mCode']").val();
+
+
+
+		jobForm.attr({
+			action:url,
+			method:'get'
+		}).submit();
+	}
+
+	function detail_go(wstatus,wcode){
+		if(wstatus == "대기" || wstatus == "이의신청"){
+			OpenWindow('waitDetail.do?wcode=' + wcode, '업무상세', '1000', '800');
+			location.reload();
+		}else{
+			goDetail('<%= request.getContextPath()%>/work/workDetailGo.do?wcode=' + wcode, '${menu.mcode}');
+		}
+	}
+
+	function getReplyList(page){
+		$.ajax({
+			url : '<%=request.getContextPath()%>/work/replyList.do?wcode=${work.wcode}&page=' + page,
+			type : 'get',
+			success : function(res){
+				printList(res.replyList, $('#repliesDiv'), $('#replyList-template'));
+				var pageMakerMap = {
+					pageMaker : res.pageMaker
+				}
+				printPageMaker(pageMakerMap, $('#pagination'), $('#reply-pagination-template'))
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function replyRemove_go(wrno){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/work/deleteWorkReply.do?wrno=" + wrno,
+			type : 'get',
+			success : function(res){
+				alert("해당 글이 삭제되었습니다.");
+				location.reload();
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function getReportList(page){
+		$.ajax({
+			url : '<%=request.getContextPath()%>/work/getReportList.do?wcode=${work.wcode}&page=' + page,
+			type : 'get',
+			success : function(res){
+				console.log(res)
+				if(res.reportList.length == 0){
+					var str = `
+						<tr>
+							<td colspan="6" style="text-align: center">해당 업무의 보고서가 존재하지 않습니다.</td>
+						</tr>
+					`;
+
+					$('.reportList').html(str);
+				}else{
+					var pageMakerMap = {
+							pageMaker : res.pageMaker,
+							target : "javascript:getReportList"
+						}
+					printList(res.reportList, $('.reportList'), $('#reportList-template'));
+					printPageMaker(pageMakerMap, $('#reportPageNation'), $('#detail-pagination-template'));
+				}
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function getProceedList(page){
+		$.ajax({
+			url : '<%=request.getContextPath()%>/work/getProceedList.do?wcode=${work.wcode}&page=' + page,
+			type : 'get',
+			success : function(res){
+				if(res.proceedList.length == 0){
+					var str = `
+						<tr>
+							<td colspan="6" style="text-align: center">해당 업무의 회의록이 존재하지 않습니다.</td>
+						</tr>
+					`;
+
+					$('.proceedList').html(str);
+				}else{
+					printList(res.proceedList, $('.proceedList'), $('#proceedList-template'));
+					var pageMakerMap = {
+							pageMaker : res.pageMaker,
+							target : "javascript:getProceedList"
+						}
+					printPageMaker(pageMakerMap, $('#proceedPageNation'), $('#detail-pagination-template'));
+				}
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function getWorkQnaList(page){
+		$.ajax({
+			url : '<%=request.getContextPath()%>/work/getWorkQnaList.do?wcode=${work.wcode}&page=' + page,
+			type : 'get',
+			success : function(res){
+				if(res.workQnaList.length == 0){
+					var str = `
+						<tr>
+							<td colspan="6" style="text-align: center">해당 업무의 질의응답이 존재하지 않습니다.</td>
+						</tr>
+					`;
+
+					$('.qnaList').html(str);
+				}else{
+					printList(res.workQnaList, $('.qnaList'), $('#qnaList-template'));
+					var pageMakerMap = {
+						pageMaker : res.pageMaker,
+						target : "javascript:getWorkQnaList"
+					}
+
+					printPageMaker(pageMakerMap, $('#qnaPageNation'), $('#detail-pagination-template'));
+				}
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function printList(list, target, templateObject){
+		var template=Handlebars.compile(templateObject.html());
+		var html = template(list);
+		target.html(html);
+	}
+
+	function printPageMaker(pageMakerMap, target, templateObject){
+		var pageMaker = pageMakerMap.pageMaker;
+		var pageNumArray = new Array(pageMaker.endPage-pageMaker.startPage+1);
+		for(var i=0;i<pageMaker.endPage-pageMaker.startPage+1;i++){
+			pageNumArray[i]=pageMaker.startPage+i;
+		}
+		pageMaker.pageNum=pageNumArray;
+		pageMaker.prevPageNum=pageMaker.startPage-1;
+		pageMaker.nextPageNum=pageMaker.endPage+1;
+
+		var template=Handlebars.compile(templateObject.html());
+		var html = template(pageMakerMap);
+		target.html("").html(html);
+	}
+
+	function returnList(refer){
+		if(refer == 'M112000' || refer == 'M110000'){
+			goPage('<%=request.getContextPath()%>/work/main.do', '${menu.mcode}');
+		}
+
+
+		if(refer == 'M113000'){
+			var statusNo = '${work.wstatus}' == '대기' ? 0 : '${work.wstatus}' == '진행' ? 1 : '${work.wstatus}' == '완료' ? 2 : '${work.wstatus}' == '협업요청' ? 3 :
+				'${work.wstatus}' == '대리요청' ? 4 : 5;
+			goDetail('<%=request.getContextPath()%>/work/myWorkList.do?statusNo=' + statusNo, '${menu.mcode}');
+		}
+
+		if(refer == 'M114000'){
+			var statusNo = '${work.wstatus}' == '대기' ? 0 : '${work.wstatus}' == '진행' ? 1 : '${work.wstatus}' == '완료' ? 2 : '${work.wstatus}' == '협업요청' ? 3 :
+				'${work.wstatus}' == '대리요청' ? 4 : 5;
+			goDetail('<%=request.getContextPath()%>/work/toReqList.do?statusNo=' + statusNo, '${menu.mcode}');
+		}
+
+		if(refer == 'M115000'){
+			var statusNo = '${work.wstatus}' == '대기' ? 0 : '${work.wstatus}' == '진행' ? 1 : '${work.wstatus}' == '완료' ? 2 : '${work.wstatus}' == '협업요청' ? 3 :
+				'${work.wstatus}' == '대리요청' ? 4 : 5;
+			goDetail('<%=request.getContextPath()%>/work/depWorkList.do?statusNo=' + statusNo, '${menu.mcode}');
+		}
+	}
+
+	function replyRegist(wcode){
+		var content = $('input[name="replyContent"]').val();
+		console.log(wcode);
+		console.log(content);
+
+		$.ajax({
+			url : "<%= request.getContextPath()%>/work/replyRegist.do",
+			type : 'post',
+			data : {
+				"wcode" : wcode,
+				"wrContent" : content
+			},
+			success:function(res){
+				alert("댓글이 등록되었습니다.");
+				window.location.reload();
+			},
+			error:function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+
+		});
+	}
+
+	var hashTagInput = $('input[name="hashTag"]');
+	function myWorkModify(){
+		hashTagInput.removeAttr("disabled");
+		var progressInput = `
+			<select class="form-control" name="progress" id="progress">
+				<option value="0" ${work.wprogress eq '0' ? 'selected' : ''}>0%</option>
+				<option value="10" ${work.wprogress eq '10' ? 'selected' : ''}>10%</option>
+				<option value="20" ${work.wprogress eq '20' ? 'selected' : ''}>20%</option>
+				<option value="30" ${work.wprogress eq '30' ? 'selected' : ''}>30%</option>
+				<option value="40" ${work.wprogress eq '40' ? 'selected' : ''}>40%</option>
+				<option value="50" ${work.wprogress eq '50' ? 'selected' : ''}>50%</option>
+				<option value="60" ${work.wprogress eq '60' ? 'selected' : ''}>60%</option>
+				<option value="70" ${work.wprogress eq '70' ? 'selected' : ''}>70%</option>
+				<option value="80" ${work.wprogress eq '80' ? 'selected' : ''}>80%</option>
+				<option value="90" ${work.wprogress eq '90' ? 'selected' : ''}>90%</option>
+				<option value="100" ${work.wprogress eq '100' ? 'selected' : ''}>100%</option>
+			</select>
+		`;
+		$('.project_progress').html(progressInput);
+
+		$('.detail-menu').hide();
+		$('.detail-menu-modify').css({
+			"display":"flex"
+		});
+	}
+
+	function returnDetail(){
+		$('.detail-menu-modify').hide();
+		$('.detail-menu').css({
+			"display":"flex"
+		});
+
+		hashTagInput.attr("disabled","disabled");
+		var progressInput = `
+			<div class="progress progress-sm">
+			<div class="progress-bar bg-green" role="progressbar" aria-valuenow="${work.wprogress }" aria-valuemin="0"
+			aria-valuemax="100" style="width: ${work.wprogress}%"></div>
+			</div>
+			<small>${work.wprogress }% 완료</small>
+		`;
+
+		$('.project_progress').html(progressInput);
+	}
+
+	function myWorkModifyGo(wcode){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/work/myWorkModify.do",
+			type:'post',
+			data : {
+				"wcode" : wcode,
+				"hashTag" : $('input[name="hashTag"]').val(),
+				"wprogress" : $('select[name="progress"]').val(),
+				"wopen":'${work.wopen}'
+			},
+			success:function(res){
+				alert("내용이 수정되었습니다.");
+				location.reload();
+			},
+			error:function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+
+	var newWorkManager = new Array();
+	var removeWorkManager = new Array();
+	function toReqModify(){
+		if($('input[name="wtitle"]').val() == ""){
+			alert("제목은 필수입니다.");
+			$('input[name="wtitle"]').focus();
+			return;
+		}
+
+		var files=$('input[name="uploadFile"]');
+		for(var file of files){
+			console.log(file.name+" : "+file.value);
+			if(file.value==""){
+				alert("파일을 선택하세요.");
+				file.focus();
+				file.click();
+				return;
+			}
+		}
+
+		var data;
+		console.log('${cooperReq.result}');
+		if('${cooperReq.result}' != "" && '${cooperReq.result}' == 0){
+			if(newWorkManager.length == 0){
+				alert("담당자를 추가해주세요.");
+				return;
+			}
+
+			data = {
+				"wcode" : '${work.wcode}',
+				"wcontent" : $('textarea[name=wcontent]').val(),
+				"newWorkManagerList" : newWorkManager,
+				"wprogress" : $('select[name="wprogress"]').val(),
+				"hashTag" : $('input[name="hashTag"]').val(),
+				"wend" : $('input[name="wend"]').val()
+			}
+			cooperReqWorkModifyGo(data);
+		}
+
+		if('${objection.result}' != "" && '${objection.result}' == 0){
+			if(confirm('이대로 수정하시겠습니까?')){
+				data = {
+						"wcode" : '${work.wcode}',
+						"wcontent" : $('textarea[name=wcontent]').val(),
+						"wmstep" : $('input[name="wmstep"]:checked').val(),
+						"newWorkManagerList" : newWorkManager,
+						"removeWorkManagerList" : removeWorkManager,
+						"wprogress" : $('select[name="wprogress"]').val(),
+						"hashTag" : $('input[name="hashTag"]').val(),
+						"wend" : $('input[name="wend"]').val()
+					}
+
+				approveObjection(data,'${objection.eno}');
+			}
+		}
+
+		if('${proxyReq.result}' != "" && '${proxyReq.result}' == 0){
+
+			if(newWorkManager.length == 0){
+				alert("대리담당자를 추가해주세요.");
+				return;
+			}
+
+			data = {
+					"wcode" : '${work.wcode}',
+					"wcontent" : $('textarea[name=wcontent]').val(),
+					"newWorkManagerList" : newWorkManager,
+					"wprogress" : $('select[name="wprogress"]').val(),
+					"hashTag" : $('input[name="hashTag"]').val(),
+					"wend" : $('input[name="wend"]').val()
+				}
+
+			proxyReqWorkModifyGo(data);
+		}
+
+		if('${work.wstatus}' == '진행'){
+			data = {
+					"wcode" : '${work.wcode}',
+					"wcontent" : $('textarea[name=wcontent]').val(),
+					"wprogress" : $('select[name="wprogress"]').val(),
+					"hashTag" : $('input[name="hashTag"]').val(),
+					"wend" : $('input[name="wend"]').val()
+			}
+			toReqWorkModifyGo(data);
+		}
+
+	}
+
+	function toReqWorkModifyGo(data){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/work/toReqModify.do",
+			type :'post',
+			data : {
+				formData : JSON.stringify(data)
+			},
+			success : function(res){
+				alert("업무가 수정되었습니다.")
+				if(window.opener){
+					if('${work.wstatus}' == '대기'){
+						location.href = "waitDetail.do?wcode=${work.wcode}";
+					}else{
+						location.href = "workDetail.do?wcode=${work.wcode}";
+					}
+					window.opener.location.reload();
+				}else{
+					goDetail("<%=request.getContextPath()%>/work/workDetailGo.do?wcode=${work.wcode}", '${menu.mcode}')
+				}
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function cooperReqWorkModifyGo(data){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/work/cooperReqApprove.do",
+			type :'post',
+			data : {
+				formData : JSON.stringify(data)
+			},
+			success : function(res){
+				alert("업무가 수정되었습니다.")
+				if(window.opener){
+					if('${work.wstatus}' == '대기'){
+						location.href = "waitDetail.do?wcode=${work.wcode}";
+					}else{
+						location.href = "workDetail.do?wcode=${work.wcode}";
+					}
+					window.opener.location.reload();
+				}else{
+					goDetail("<%=request.getContextPath()%>/work/workDetailGo.do?wcode=${work.wcode}", '${menu.mcode}')
+				}
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function approveObjection(data,eno){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/work/objectionApprove.do",
+			type :'post',
+			data : {
+				formData : JSON.stringify(data),
+				eno : eno
+			},
+			success : function(res){
+				alert("업무가 수정되었습니다.")
+				if(window.opener){
+					if('${work.wstatus}' == '대기'){
+						location.href = "waitDetail.do?wcode=${work.wcode}";
+					}else{
+						location.href = "workDetail.do?wcode=${work.wcode}";
+					}
+					window.opener.location.reload();
+				}else{
+					goDetail("<%=request.getContextPath()%>/work/workDetailGo.do?wcode=${work.wcode}", '${menu.mcode}')
+				}
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function proxyReqWorkModifyGo(data){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/work/proxyReqApprove.do",
+			type :'post',
+			data : {
+				formData : JSON.stringify(data)
+			},
+			success : function(res){
+				alert("업무가 수정되었습니다.")
+				if(window.opener){
+					if('${work.wstatus}' == '대기'){
+						location.href = "waitDetail.do?wcode=${work.wcode}";
+					}else{
+						location.href = "workDetail.do?wcode=${work.wcode}";
+					}
+					window.opener.location.reload();
+				}else{
+					goDetail("<%=request.getContextPath()%>/work/workDetailGo.do?wcode=${work.wcode}", '${menu.mcode}')
+				}
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function cooperReqGo(wcode){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/work/myWorkCooperReq.do",
+			type:'post',
+			data : {
+				"wcode" : wcode,
+				"content" : $('#cooperContent').val()
+			},
+			success:function(res){
+				alert("요청이 완료되었습니다.");
+				if(window.opener){
+					if('${work.wstatus}' == '대기'){
+						location.href = "waitDetail.do?wcode=${work.wcode}";
+					}else{
+						location.href = "workDetail.do?wcode=${work.wcode}";
+					}
+					window.opener.location.reload();
+					opener.parent.sendSignal('${work.eno}', '${work.wtitle}', "B105", "work/toReqList.do", 'M114000');
+				}else{
+					goDetail("<%=request.getContextPath()%>/work/workDetailGo.do?wcode=${work.wcode}", '${menu.mcode}')
+					parent.sendSignal('${work.eno}', '${work.wtitle}', "B105", "work/toReqList.do", 'M114000');
+				}
+			},
+			error:function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function proxyReqGo(wcode){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/work/myWorkProxyReq.do",
+			type:'post',
+			data : {
+				"wcode" : wcode,
+				"content" : $('#proxyContent').val()
+			},
+			success:function(res){
+				alert("요청이 완료되었습니다.");
+				if(window.opener){
+					if('${work.wstatus}' == '대기'){
+						location.href = "waitDetail.do?wcode=${work.wcode}";
+					}else{
+						location.href = "workDetail.do?wcode=${work.wcode}";
+					}
+					window.opener.location.reload();
+					opener.parent.sendSignal('${work.eno}', '${work.wtitle}', "B106", "work/toReqList.do", 'M114000');
+				}else{
+					goDetail("<%=request.getContextPath()%>/work/workDetailGo.do?wcode=${work.wcode}", '${menu.mcode}')
+					parent.sendSignal('${work.eno}', '${work.wtitle}', "B106", "work/toReqList.do", 'M114000');
+				}
+			},
+			error:function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function removeManager(eno){
+		var removeItem = $('div[data-eno="' + eno + '"]');
+		removeItem.remove();
+		removeWorkManager.push(eno);
+		console.log(removeWorkManager);
+	}
+
+	function addWorkManager(data){
+		newWorkManager.push(data);
+	}
+	function workApprove(){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/work/workApprove.do?wcode=${work.wcode}",
+			type : 'get',
+			success : function(res){
+				alert("업무 승인처리 되었습니다.");
+
+				if(window.opener){
+					if('${work.wstatus}' == '대기'){
+						location.href = "waitDetail.do?wcode=${work.wcode}";
+					}else{
+						location.href = "workDetail.do?wcode=${work.wcode}";
+					}
+					window.opener.location.reload();
+				}else{
+					goDetail("<%=request.getContextPath()%>/work/workDetailGo.do?wcode=${work.wcode}", '${menu.mcode}');
+				}
+
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function reqObjection(){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/work/reqObjection.do",
+			type : 'post',
+			data : {
+				"wcode" : '${work.wcode}',
+				"type" : $('select[name="objType"]').val(),
+				"content" : $('textarea[name="objContent"]').val()
+			},
+			success : function(res){
+				alert("이의신청이 완료되었습니다.");
+
+				if(window.opener){
+					if('${work.wstatus}' == '대기'){
+						location.href = "waitDetail.do?wcode=${work.wcode}";
+					}else{
+						location.href = "workDetail.do?wcode=${work.wcode}";
+					}
+					window.opener.location.reload();
+					opener.parent.sendSignal('${work.eno}', '${work.wtitle}', "B104", "work/toReqList.do", 'M114000');
+				}else{
+					goDetail("<%=request.getContextPath()%>/work/workDetailGo.do?wcode=${work.wcode}", '${menu.mcode}')
+					parent.sendSignal('${work.eno}', '${work.wtitle}', "B104", "work/toReqList.do", 'M114000');
+				}
+
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function reqRefuse(eno){
+		if('${work.wstatus}' == '협업요청'){
+			reqRefuseGo("cooperReqRefuse.do")
+		}else if('${work.wstatus}' == '대리요청'){
+			reqRefuseGo("proxyReqRefuse.do")
+		}
+	}
+
+	function objectionRefuse(eno){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/work/objectionRefuse.do",
+			type : 'post',
+			data : {
+				"wcode" : "${work.wcode}",
+				"content" : $("#refuseContent").val(),
+				"eno" : eno
+			},
+			success : function(res){
+				alert("요청이 반려처리됐습니다.");
+				if(window.opener){
+					if('${work.wstatus}' == '대기'){
+						location.href = "waitDetail.do?wcode=${work.wcode}";
+					}else{
+						location.href = "workDetail.do?wcode=${work.wcode}";
+					}
+					window.opener.location.reload();
+				}else{
+					goDetail("<%=request.getContextPath()%>/work/workDetailGo.do?wcode=${work.wcode}", '${menu.mcode}')
+				}
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function reqRefuseGo(url, eno){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/work/" + url,
+			type : 'post',
+			data : {
+				"wcode" : "${work.wcode}",
+				"content" : $("#refuseContent").val()
+			},
+			success : function(res){
+				alert("요청이 반려처리됐습니다.");
+				if(window.opener){
+					if('${work.wstatus}' == '대기'){
+						location.href = "waitDetail.do?wcode=${work.wcode}";
+					}else{
+						location.href = "workDetail.do?wcode=${work.wcode}";
+					}
+					window.opener.location.reload();
+				}else{
+					goDetail("<%=request.getContextPath()%>/work/workDetailGo.do?wcode=${work.wcode}", '${menu.mcode}')
+				}
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function getObjection(wcode, eno){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/work/getObjection.do",
+			type : 'get',
+			data : {
+				wcode : wcode,
+				eno : eno,
+				result : 0
+			},
+			success : function(res){
+				console.log(res);
+				if('${work.eno}' == '${loginUser.eno}'){
+					data = {
+						wcode : '${work.wcode}',
+						objection : res
+					}
+					if('${work.wstatus}' == '대기'){
+						printObjData(data, $('.objection_btn'), $('#waitObjectionBtn-template'));
+					}else{
+						printObjData(data, $('.objection_btn'), $('#workObjectionBtn-template'));
+					}
+
+				}
+				printObjData(res, $('.objection_table'), $('#objection-template'));
+				printObjData(res, $('.refuseBtn'), $('#objectionFooter-template'))
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function getRefusedObjection(wcode, eno){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/work/getObjection.do",
+			type : 'get',
+			data : {
+				wcode : wcode,
+				eno : eno,
+				result : 2
+			},
+			success : function(res){
+				console.log(res);
+				printObjData(res, $('.objection_table'), $('#objectionRefuse-template'));
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function goWorkReport(wcode){
+		var data = {
+				wcode : wcode,
+				eno : '${loginUser.eno}',
+				content : $('#reportContent').val(),
+				type : $('#reportType').val(),
+			}
+
+		$.ajax({
+			url : "<%=request.getContextPath()%>/work/goWorkReport.do",
+			type : 'post',
+			data : data,
+			success : function(res){
+				alert("신고가 접수되었습니다.");
+				if(window.opener){
+					window.close();
+					window.opener.location.reload();
+				}else{
+					goPage('<%=request.getContextPath()%>/work/myWorkList.do', '${menu.mcode}');
+				}
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		})
+	}
+
+	function getRelationKnowhow(page){
+
+		var data;
+		if(!$('input[name="rnKeyword"]').val()){
+			data = {
+				wcode : '${work.wcode}',
+				page : page
+			}
+			url = "<%=request.getContextPath()%>/work/getRelationKnowhow.do";
+		}else{
+			data = {
+				page : page,
+				searchType : 'h',
+				keyword: $('input[name="rnKeyword"]').val()
+			}
+			url = "<%=request.getContextPath()%>/kw/knowhow/getAllKnowHowList.do";
+		}
+
+
+		$.ajax({
+			url : url,
+			type : 'post',
+			data : data,
+			success : function(res){
+				if(res.knowhowList.length == 0){
+					var str = `
+						<tr>
+							<td colspan="2">
+								관련 노하우가 존재하지 않습니다.
+							</td>
+						</tr>
+					`;
+
+					$('.relationKnowhow').html(str);
+				}else{
+					printList(res.knowhowList, $('.relationKnowhow'), $('#relation-template'));
+				}
+				relationKnowhowPage = page;
+
+				printRelationPageMaker(res.pageMaker, $('#relationKnowhowPagination'), $('#relationKnowhow-paination-template'));
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+
+		});
+	}
+
+	function getRelationMentoWorkList(page){
+
+		var data;
+		if(!$('input[name="rmKeyword"]').val()){
+
+			data = {
+				wcode : '${work.wcode}',
+				page : page
+			}
+		}else{
+			data = {
+				wcode : '${work.wcode}',
+				page : page,
+				keyword : $('input[name="rmKeyword"]').val()
+			}
+		}
+
+		$.ajax({
+			url : "<%=request.getContextPath()%>/work/getRelationMentoWorkList.do",
+			type : 'post',
+			data : data,
+			success : function(res){
+				console.log(res)
+				if(res.relationMentoWork.length == 0){
+					var str = `
+						<tr>
+							<td colspan="2">
+								관련 멘토업무가 존재하지 않습니다.
+							</td>
+						</tr>
+					`;
+
+					$('.relationMentoWork').html(str);
+				}else{
+					printList(res.relationMentoWork, $('.relationMentoWork'), $('#relationMentoWork-template'));
+				}
+				relationMentoWorkPage = page;
+
+				printRelationPageMaker(res.pageMaker, $('#relationMentoWorkPagination'), $('#relationMentoWork-paination-template'));
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+
+		});
+	}
+
+	function printObjData(data, target, templateObject){
+		var template=Handlebars.compile(templateObject.html());
+		var html = template(data);
+		target.html(html);
+	}
+
+	function printRelationPageMaker(pageMaker, target, templateObject){
+		var pageNumArray = new Array(pageMaker.endPage-pageMaker.startPage+1);
+		for(var i=0;i<pageMaker.endPage-pageMaker.startPage+1;i++){
+			pageNumArray[i]=pageMaker.startPage+i;
+		}
+		pageMaker.pageNum=pageNumArray;
+		pageMaker.prevPageNum=pageMaker.startPage-1;
+		pageMaker.nextPageNum=pageMaker.endPage+1;
+
+		var template=Handlebars.compile(templateObject.html());
+		var html = template(pageMaker);
+		target.html("").html(html);
+	}
+
+</script>
+
+<script type="text/x-handlebars-template"  id="replyList-template">
+{{#each .}}
+<div class="replyLi" >
+	<div class="user-block">
+		<img src="{{writer.photo}}" class="img-circle img-bordered-sm"/>
+    </div>
+	<div class="timeline-item" >
+  		<span class="time">
+    		<i class="fa fa-clock"></i>{{dateFormat wrRegdate}}
+	 		<a class="btn btn-info btn-xs {{wrno}}-a" id="modifyReplyBtn" data-rno={{wrno}}
+				onclick="replyModifyModal_go('{{wrno}}');"
+				style="display:{{VisibleByLoginCheck writer.name}};"
+				style="display:visible;"
+	    		data-replyer={{writer.name}} data-toggle="modal" data-target="#modal-reply">수정</a>
+			<a class="btn btn-danger btn-xs {{wrno}}-a" id="modifyReplyBtn" data-rno={{wrno}}
+				href="javascript:replyRemove_go('{{wrno}}');"
+				style="display:{{VisibleByLoginCheck writer.name}};"
+				style="display:visible;"
+	    		data-replyer={{writer.name}}>삭제</a>
+  		</span>
+
+  		<h3 class="timeline-header" style="font-size:16px;"><strong style="display:none;">{{wrno}}</strong>{{writer.name}}
+			<span style="font-size:12px">{{writer.dname}}</span>
+		</h3>
+  		<div class="timeline-body" id="{{wrno}}-replytext" style="padding:0 40px;">{{wrContent}} </div>
+	</div>
+</div>
+
+{{/each}}
+</script>
+
+<script type="text/x-handlebars-template"  id="reply-pagination-template" >
+<li class="paginate_button page-item">
+	<a href="1" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">
+		<i class='fas fa-angle-double-left'></i>
+	</a>
+</li>
+<li class="paginate_button page-item">
+	<a href="{{#if prev}}{{prevPageNum}}{{/if}}" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">
+		<i class='fas fa-angle-left'></i>
+	</a>
+</li>
+{{#each pageNum}}
+<li class="paginate_button page-item {{signActiveRp this}} ">
+	<a href="javascript:getPage('<%=request.getContextPath()%>/replies/${board.boardNo}/{{this}}',{{this}});" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">
+		{{this}}
+	</a>
+</li>
+{{/each}}
+
+<li class="paginate_button page-item ">
+	<a href="{{#if next}}{{nextPageNum}}{{/if}}" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">
+		<i class='fas fa-angle-right'></i>
+	</a>
+</li>
+<li class="paginate_button page-item">
+	<a href="{{realEndPage}}" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">
+		<i class='fas fa-angle-double-right'></i>
+	</a>
+</li>
+</script>
+
+<script type="text/x-handlebars-template"  id="detail-pagination-template" >
+<li class="paginate_button page-item">
+	<a href="{{target}}(1)" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">
+		<i class='fas fa-angle-double-left'></i>
+	</a>
+</li>
+<li class="paginate_button page-item">
+	<a href="{{#if prev}}{{target}}({{pageMaker.prevPageNum}}){{/if}}" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">
+		<i class='fas fa-angle-left'></i>
+	</a>
+</li>
+{{printPage this}}
+<li class="paginate_button page-item ">
+	<a href="{{#if next}}{{target}}({{pageMaker.nextPageNum}}){{/if}}" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">
+		<i class='fas fa-angle-right'></i>
+	</a>
+</li>
+<li class="paginate_button page-item">
+	<a href="{{target}}({{pageMaker.realEndPage}})" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">
+		<i class='fas fa-angle-double-right'></i>
+	</a>
+</li>
+</script>
+
+<script type="text/x-handlebars-template"  id="reportList-template" >
+{{#each .}}
+<tr onclick="OpenWindow('<%= request.getContextPath()%>/work/getReportDetail.do?repno={{repNo}}', '보고서 상세보기', '800', '600')" style="cursor:pointer">
+	<td>{{title}}</td>
+	<td>
+		<div style="align-items: center; display: flex;">
+			<div>
+				<img class="table-avatar emp_profile" src="{{writer.photo }}">
+			</div>
+			<div>
+				<span style="font-size:12px; font-weight:bold">{{writer.name }} {{writer.ppsname }}</span>
+				<div style="font-size:8px;">
+					<p>{{writer.dname }}</p>
+				</div>
+			</div>
+		</div>
+	</td>
+	<td>{{dateFormat regDate}}</td>
+	<td>
+		{{fileCheck fileName}}
+	</td>
+</tr>
+{{/each}}
+</script>
+
+<script type="text/x-handlebars-template"  id="proceedList-template" >
+{{#each .}}
+<tr onclick="OpenWindow('<%= request.getContextPath()%>/work/getProceedDetail.do?prono={{proNo}}', '회의록 상세보기', '800', '600')" style="cursor:pointer">
+	<td>{{title}}</td>
+	<td>
+		<div style="align-items: center; display: flex;">
+			<div>
+				<img class="table-avatar emp_profile" src="{{writer.photo }}">
+			</div>
+			<div>
+				<span style="font-size:12px; font-weight:bold">{{writer.name }} {{writer.ppsname }}</span>
+				<div style="font-size:8px;">
+					<p>{{writer.dname }}</p>
+				</div>
+			</div>
+		</div>
+	</td>
+	<td>{{dateFormat regDate}}</td>
+	<td>
+		{{fileCheck fileName}}
+	</td>
+</tr>
+{{/each}}
+</script>
+
+<script type="text/x-handlebars-template"  id="qnaList-template" >
+{{#each .}}
+<tr onclick="OpenWindow('<%= request.getContextPath()%>/work/getQnaDetail.do?qnaNo={{qnaNo}}', '질문 상세보기', '800', '600')" style="cursor:pointer">
+	<td style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{title}}</td>
+	<td>
+		<div style="align-items: center; display: flex;">
+			<div>
+				<img class="table-avatar emp_profile" src="{{writer.photo }}">
+			</div>
+			<div>
+				<span style="font-size:12px; font-weight:bold">{{writer.name }} {{writer.ppsname }}</span>
+				<div style="font-size:8px;">
+					<p>{{writer.dname }}</p>
+				</div>
+			</div>
+		</div>
+	</td>
+	<td>{{dateFormat regDate}}</td>
+</tr>
+{{/each}}
+</script>
+
+<script type="text/x-handlebars-template"  id="objection-template" >
+<tr>
+	<th>이의유형</th>
+	<td>
+		{{type}}
+	</td>
+</tr>
+<tr>
+	<th>이의내용</th>
+	<td>
+		{{content}}
+	</td>
+</tr>
+</script>
+<script type="text/x-handlebars-template"  id="objectionRefuse-template" >
+<tr>
+	<th>이의유형</th>
+	<td>
+		{{type}}
+	</td>
+</tr>
+<tr>
+	<th>이의내용</th>
+	<td>
+		{{content}}
+	</td>
+</tr>
+<tr>
+	<th>처리날짜</th>
+	<td>{{dateFormat resDate}}</td>
+</tr>
+<tr>
+	<th>처리내용</th>
+	<td>{{resContent}}</td>
+</tr>
+</script>
+
+<script type="text/x-handlebars-template"  id="addEmp-template">
+	<div class="emp_select_card col-6" data-eno="{{eno}}" style="align-items: center; display: flex; justify-content: center;">
+		<div style="padding: 5px; position: relative;">
+			<input type="hidden" name="workManagerEno" value="{{eno}}">
+			<span class="badge bg-success wmstepBtn" style="display:none; position:absolute; top: 0; left: 0">책임</span>
+			<input type="radio" style="display: none;" name="wmstep" value="{{eno}}" id="{{eno}}"
+				onclick="wmstepCheck(this)">
+			<label for="{{eno}}"><img class="table-avatar emp_profile" src="{{photo}}"></label>
+		</div>
+		<div class="text-left"  style="position: relative;">
+			<div style="display: flex; align-items: center">
+				<p style="font-size: 12px; font-weight: bold">{{name}} </p>&nbsp;&nbsp;
+				<i class="fas fa-times removeBtn text-danger" onclick="removeManager('{{eno}}')" style="cursor:pointer;"></i>
+			</div>
+			</span>
+			<div style="font-size: 8px;">
+				<p>{{ppsname}}</p>
+				<p>{{dname}}</p>
+			</div>
+		</div>
+	</div>
+</script>
+
+<script type="text/x-handlebars-template"  id="relation-template">
+{{#each .}}
+<tr onclick="OpenWindow('<%=request.getContextPath()%>/work/knowhowDetail.do?wcode={{wcode}}','상세보기',800,700)" style="cursor:pointer">
+	<td style="text-align:left;">{{wtitle}}</td>
+	<td>
+		{{viewCnt}}
+	</td>
+
+</tr>
+{{/each}}
+</script>
+
+<script type="text/x-handlebars-template"  id="relationMentoWork-template">
+{{#each .}}
+<tr onclick="OpenWindow('<%=request.getContextPath()%>/work/workDetail.do?wcode={{wcode}}','상세보기',1000,700)" style="cursor:pointer">
+	<td style="text-align:left;">{{wtitle}}</td>
+	<td>
+		<span class="badge {{statusCheck wstatus}}">
+		{{wstatus}}
+		</span>
+	</td>
+
+</tr>
+{{/each}}
+</script>
+
+<script type="text/x-handlebars-template"  id="relationKnowhow-paination-template">
+	<li class="page-item">
+		<a class="page-link" href="javascript:getRelationKnowhow(1)">
+			<i class="fas fa-angle-double-left"></i>
+		</a>
+	</li>
+	<li class="page-item">
+		<a class="page-link" href="{{#if prev}} javascript:getRelationKnowhow({{prevPageNum}}){{/if}}">
+			<i class="fas fa-angle-left"></i>
+		</a>
+	</li>
+	{{#each pageNum}}
+		<li class="paginate_button page-item {{signActiveRn this}}">
+		<a class="page-link" href="javascript:getRelationKnowhow({{this}})">
+			{{this}}
+		</a>
+	</li>
+	{{/each}}
+
+	<li class="page-item">
+		<a class="page-link" href="{{#if next}} javascript:getRelationKnowhow({{nextPageNum}}){{/if}}">
+			<i class="fas fa-angle-right"></i>
+		</a>
+	</li>
+	<li class="page-item">
+		<a class="page-link" href="javascript:getRelationKnowhow({{realEndPage}})">
+			<i class="fas fa-angle-double-right"></i>
+		</a>
+	</li>
+</script>
+
+<script type="text/x-handlebars-template"  id="relationMentoWork-paination-template">
+	<li class="page-item">
+		<a class="page-link" href="javascript:getRelationMentoWorkList('1')">
+			<i class="fas fa-angle-double-left"></i>
+		</a>
+	</li>
+	<li class="page-item">
+		<a class="page-link" href="{{#if prev}} javascript:getRelationMentoWorkList('{{prevPageNum}}'){{/if}}">
+			<i class="fas fa-angle-left"></i>
+		</a>
+	</li>
+{{#each pageNum}}
+<li class="paginate_button page-item {{signActiveRm this}} ">
+	<a href="javascript:getRelationMentoWorkList('{{this}}');" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">
+		{{this}}
+	</a>
+</li>
+{{/each}}
+	<li class="page-item">
+		<a class="page-link" href="{{#if next}} javascript:getRelationMentoWorkList('{{nextPageNum}}'){{/if}}">
+			<i class="fas fa-angle-right"></i>
+		</a>
+	</li>
+	<li class="page-item">
+		<a class="page-link" href="javascript:getRelationMentoWorkList('{{realEndPage}}')">
+			<i class="fas fa-angle-double-right"></i>
+		</a>
+	</li>
+</script>
+
+
+<script type="text/x-handlebars-template"  id="waitObjectionBtn-template" >
+<button type="button" class="btn btn-outline-dark" data-dismiss="modal" data-toggle="modal" data-target="#modal-reqRefuse" data-backdrop="false">반려</button>
+<button type="button" class="btn btn-outline-dark" onclick="location.href = 'toReqModifyForm.do?wcode={{wcode }}&eno={{objection.eno}}'">승인</button>
+</script>
+<script type="text/x-handlebars-template"  id="workObjectionBtn-template" >
+<button type="button" class="btn btn-outline-dark" data-dismiss="modal" data-toggle="modal" data-target="#modal-reqRefuse" data-backdrop="false">반려</button>
+<button type="button" class="btn btn-outline-dark" onclick="goDetail('<%=request.getContextPath()%>/work/toReqModifyGo.do?wcode={{wcode }}&eno={{objection.eno}}', '${menu.mcode }')">승인</button>
+</script>
+<script type="text/x-handlebars-template"  id="objectionFooter-template" >
+<button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+<button type="button" class="btn btn-outline-dark" onclick="objectionRefuse({{eno}})">반려</button>
+</script>
+
+<script>
+var replyPage = 1;
+var relationKnowhowPage = 1;
+var relationMentoWorkPage = 1;
+
+Handlebars.registerHelper({
+	"dateFormat" : function(regDate){
+		var d = new Date(regDate),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+	},
+	"VisibleByLoginCheck":function(replyer){
+		var result="none";
+		if(replyer == "${loginUser.name}") result="visible";
+		return result;
+	},
+	"signActiveRp":function(pageNum){
+		if(pageNum == replyPage) return 'active';
+	},
+	"signActiveRn":function(pageNum){
+		if(pageNum == relationKnowhowPage) return 'active';
+	},
+	"signActiveRm":function(pageNum){
+		if(pageNum == relationMentoWorkPage) return 'active';
+	},
+	"fileCheck":function(fileName){
+		var str = `
+			<span class="material-symbols-outlined">
+			draft
+			</span>
+		`;
+		if(fileName != null){
+			return new Handlebars.SafeString(str);
+		}
+
+	},
+	"statusCheck":function(wstatus){
+		var str = wstatus == '대기' ? "bg-secondary" : wstatus == '진행' ? "bg-info" : wstatus == '완료' ? "bg-success" : wstatus == '협업요청' ? "bg-primary"
+				: "bg-warning";
+
+		return new Handlebars.SafeString(str);
+	},
+	"printPage" : function(pageMakerMap){
+		var pageMaker = pageMakerMap.pageMaker;
+		var target = pageMakerMap.target
+		var str = '';
+
+
+		for(i = pageMaker.startPage; i <= pageMaker.endPage; i++){
+			var active = i == pageMaker.cri.page ? 'active' : '';
+			str += '<li class="page-item ' + active + '">';
+			str += '<a class="page-link" href="'+target+'(' + i + ')">';
+			str += i
+			str += '</a>';
+			str += '</li>';
+		}
+
+
+
+
+
+
+
+		return new Handlebars.SafeString(str);
+
+	}
+});
+
+function replyModifyModal(wrno){
+	//alert(rno);
+	//alert($('div#'+rno+'-replytext').text());
+	$('div#modal-reply div.modal-body div.row #replytext').val($('div#'+wrno+'-replytext').text());
+	$('div#modal-reply div.modal-header h4.modal-title').text(wrno);
+}
+</script>

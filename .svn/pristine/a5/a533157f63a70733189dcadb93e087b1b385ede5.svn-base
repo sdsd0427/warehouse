@@ -1,0 +1,102 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<head>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/community.css"
+	type="text/css">
+</head>
+
+<title></title>
+
+<body class="hold-transition skin-blue sidebar-collapse">
+	<div class="wrapper" style="margin-left: 190px;">
+		<div class="row" style="height: 100%;">
+			<%@ include file="./sideBar.jsp" %>
+
+
+			<section class="content-header col-10 ">
+				<div class="col-sm-12">
+					<h2>커뮤니티 > 자전거 동호회</h2>
+				</div>
+
+				<div class="col-sm-12 mt-4">
+					<div class="card card-outline card-info">
+						<div class="card-header">
+							<h3 class="card-title">소개글</h3>
+						</div>
+						<div class="card-body">자전거 동호회입니다. 모임은 매주 금요일 저녁입니다. 같이 자전거 타면서 몸 건강해지고 다른 사람도 알아가고 싶은 분들 가입신청 해주세요~</div>
+					</div>
+				</div>
+
+				<div class="col-sm-12 mt-4">
+					<div class="col-md-12">
+
+						<div class="card">
+							<div class="card-header with-border">
+								<span style="float: left;">커뮤니티 소식</span>
+							</div>
+							<div class="card-body">
+								<table class="table table-hover text-nowrap" style="text-align:center;">
+									<tr style="font-size: 0.95em;">
+										<th style="width: 15%;">게시판</th>
+										<th style="width: 55%;">게시글</th>
+										<th style="width: 15%;">작성자</th>
+										<th style="width: 15%;">등록일</th>
+									</tr>
+
+									<tr style='font-size: 0.85em;'>
+										<td onclick="">가입인사</td>
+										<td>가입인사 드립니다~</td>
+										<td>신사임당</td>
+										<td>2022-06-27</td>
+									</tr>
+
+									<tr style='font-size: 0.85em;'>
+										<td onclick="">자유게시판</td>
+										<td>오늘은 어디서 모일까요?</td>
+										<td>홍길동</td>
+										<td>2022-06-27</td>
+									</tr>
+
+									<tr style='font-size: 0.85em;'>
+										<td onclick="">자유게시판</td>
+										<td>저희 정기 모임이 언제였죠?</td>
+										<td>홍길동</td>
+										<td>2022-06-26</td>
+									</tr>
+
+									<tr style='font-size: 0.85em;'>
+										<td onclick="">자유게시판</td>
+										<td>자전거 추천점 해주세요</td>
+										<td>강감찬</td>
+										<td>2022-06-24</td>
+									</tr>
+
+									<tr style='font-size: 0.85em;'>
+										<td onclick="">가입인사</td>
+										<td>가입인사</td>
+										<td>강감찬</td>
+										<td>2022-06-20</td>
+									</tr>
+
+
+								</table>
+							</div>
+						</div>
+
+
+
+					</div>
+
+				</div>
+
+
+			</section>
+
+
+
+		</div>
+	</div>
+
+</body>

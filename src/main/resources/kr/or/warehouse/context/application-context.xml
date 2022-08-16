@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+<!-- 	summernote Image Path -->
+	<bean id="imgPath" class="java.lang.String">
+		<constructor-arg value="${summernote.img}" />
+	</bean>
+
+	<!-- member.picture -->
+	<bean id="picturePath" class="java.lang.String"> 
+ 		<constructor-arg value="${employee.picture.upload}" /> 
+ 	</bean> 
+
+	<!-- file upload -->
+	<bean id="fileUploadPath" class="java.lang.String">
+		<constructor-arg value="${file.upload}" />
+	</bean>
+
+	<!-- login user log path -->
+	<bean id="loginUserLogSavePath" class="java.lang.String">
+		<constructor-arg value="${login.user.log}" />
+	</bean>
+
+	<!-- hr user log path -->
+	<bean id="hrLogSavePath" class="java.lang.String">
+		<constructor-arg value="${hr.user.log}" />
+	</bean>
+
+	<!-- pdsUserSavePath -->
+	<bean id="pdsUserSavePath" class="java.lang.String">
+		<constructor-arg value="${pds.user.save}" />
+	</bean>
+	<!-- pdsAllEmpSavePath -->
+	<bean id="pdsAllUserSavePath" class="java.lang.String">
+		<constructor-arg value="${pds.allEmp.save}" />
+	</bean>
+
+<!-- 	<bean id="errorLogPath" class="java.lang.String"> -->
+<!-- 		<constructor-arg value="${error.log}" /> -->
+<!-- 	</bean> -->
+
+
+	<!-- Repository -->
+	<bean id="employeeDAO" class="kr.or.warehouse.dao.EmployeeDAOImpl"
+		p:session-ref="sqlSession"
+	 />
+	<bean id="loginUserLogDAO" class="kr.or.warehouse.dao.LoginUserLogDAOImpl"
+		p:session-ref="sqlSession"
+	 />
+	<bean id="taskHrDAO" class="kr.or.warehouse.dao.TaskHrDAOImpl"
+		p:session-ref="sqlSession"
+	 />
+
+
+	<!-- Service -->
+	<bean id="employeeService" class="kr.or.warehouse.service.EmployeeServiceImpl"
+		p:employeeDAO-ref="employeeDAO"
+	/>
+	<bean id="loginUserLogService" class="kr.or.warehouse.service.LoginUserLogServiceImpl"
+		p:loginUserLogDAO-ref="loginUserLogDAO"
+	/>
+	<bean id="taskHrService" class="kr.or.warehouse.service.TaskHrServiceImpl"
+		p:hrDAO-ref="taskHrDAO"
+		p:savePath-ref="hrLogSavePath"
+	/>
+
+</beans>

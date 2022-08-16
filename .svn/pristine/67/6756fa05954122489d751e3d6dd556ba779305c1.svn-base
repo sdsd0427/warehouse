@@ -1,0 +1,441 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<head>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/ehr.css">
+</head>
+
+<body>
+
+<div class="wrapper">
+	<h3 class="title">부서 근태관리&nbsp;&nbsp;&gt;&nbsp;&nbsp;인사관리팀</h3>
+	<span style="">전체인원 22명</span>
+
+<!-- 	<span style="margin-left: 7px;">전체인원 22명</span> -->
+	<section class="week" style="margin-bottom: 25px;">
+		<div class="row text-center" style="display: flex;">
+			<div class="col-md-12" style="font-size: 1.5em;">
+				<a class="btn btn-default btn-sm">&lt;</a>
+				<span>&nbsp;&nbsp;2022.06.27 - 2022.07.03&nbsp;&nbsp;</span>
+				<a class="btn btn-default btn-sm">&gt;</a>
+				<a class="" style="font-size: 0.6em;">Today</a>
+			</div>
+		</div>
+	</section>
+
+	<section>
+		<div>
+		</div>
+	</section>
+
+	<section class="content">
+			<div class="container-fluid">
+				<div class="row md-2">
+					<div class="col-md-12">
+
+						<div class="card card-info card-outline">
+							<div class="card-header with-border">
+								<button type="button" class="btn btn-sm">
+									<span class="badge rounded-circle bg-black mt-1 mr-2" style="width:10px; height: 10px;"><span class="visually-hidden"></span></span>정상
+								</button>
+								<button type="button" class="btn btn-sm">
+									<span class="badge rounded-circle bg-danger mt-1 mr-2" style="width:10px; height: 10px;"><span class="visually-hidden"></span></span>지각
+								</button>
+								<button type="button" class="btn btn-sm">
+									<span class="badge rounded-circle bg-primary mt-1 mr-2" style="width:10px; height: 10px;"><span class="visually-hidden"></span></span>수정 (변경신청 : 1건)
+								</button>
+<!-- 								<div class="row p-0"> -->
+<!-- 									<div id="marker" class="col-5"> -->
+<!-- 						                <ul style="display: flex; list-style: disc; padding-left: 30px; width: 230px; float: left; margin-bottom: 0px;"> -->
+<!-- 						                    <li style="width: 50px;"><span><small>정상</small></span></li> -->
+<!-- 						                    <li style="width: 50px; color: red;"><span style="color: black;"><small>지각</small></span></li> -->
+<!-- 						                    <li style="width: 100px; color: #007bff;"><span style="color: black;"><small>수정(수정신청 1건)</small></span></li> -->
+<!-- 						                </ul> -->
+<!-- 						            </div> -->
+<!-- 									<span style="float: left;">전체인원 22명</span> -->
+									<div id="" class="card-tools" style="width: 450px;">
+										<div class="input-group row">
+											<select class="form-control col-md-3" name="searchNum"
+												id="searchNum">
+												<option value="">정렬개수</option>
+												<option value="">10개</option>
+												<option value="">20개</option>
+												<option value="">30개</option>
+											</select>
+											<select class="form-control col-md-3" name="searchType"
+												id="searchType">
+												<option value="">이름</option>
+												<option value="">직위</option>
+											</select>
+											<input class="form-control" type="text" name="keyword"
+												placeholder="검색어를 입력하세요." value="${param.keyword }" />
+											<span class="input-group-append">
+												<button class="btn btn-info" type="button"
+													onclick="list_go(1);" data-card-widget="search">
+													<i class="fa fa-fw fa-search"></i>
+												</button>
+											</span>
+										</div>
+									</div>
+<!-- 								</div> -->
+							</div>
+
+							<div class="card-body">
+								<table class="table table-hover text-left">
+									<tr style="font-size: 0.95em;">
+										<th style="width: 16%;">이름</th>
+										<th style="width: 14%;">누적근무시간</th>
+										<th style="width: 10%;">27일(월)</th>
+										<th style="width: 10%;">28일(화)</th>
+										<th style="width: 10%;">29일(수)</th>
+										<th style="width: 10%;">30일(목)</th>
+										<th style="width: 10%;">1일(금)</th>
+										<th style="width: 10%; color: #007bff;">2일(토)</th>
+										<th style="width: 10%; color: red;">3일(일)</th>
+									</tr>
+
+									<tr style='font-size: 0.80em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="row">
+												<div class="col-5">
+													<span class="info-box-icon">
+														<img class="direct-chat-img" data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"
+															src="https://adminlte.io/themes/v3/dist/img/user5-128x128.jpg">
+													</span>
+												</div>
+												<div class="col-7">
+													<span>
+														<b>김형민</b>
+													</span><br>
+													부장<br>
+													인사관리팀<br>
+												</div>
+											</div>
+										</td>
+										<td>
+											<span>
+												<b>39h 32m 29s</b>
+											</span><br>
+											기본:39h 32m 29s<br>
+											연장:0h 0m 0s<br>
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											-
+										</td>
+										<td>
+											-
+										</td>
+									</tr>
+									<tr style='font-size: 0.80em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="row">
+												<div class="col-5">
+													<span class="info-box-icon">
+														<img class="direct-chat-img" data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"
+															src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg">
+													</span>
+												</div>
+												<div class="col-7">
+													<span>
+														<b>최민규</b>
+													</span><br>
+													과장<br>
+													인사관리팀<br>
+												</div>
+											</div>
+										</td>
+										<td>
+											<span>
+												<b>39h 32m 29s</b>
+											</span><br>
+											기본:39h 32m 29s<br>
+											연장:0h 0m 0s<br>
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											-
+										</td>
+										<td>
+											-
+										</td>
+									</tr>
+									<tr style='font-size: 0.80em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="row">
+												<div class="col-5">
+													<span class="info-box-icon">
+														<img class="direct-chat-img" data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"
+														src="https://adminlte.io/themes/v3/dist/img/user1-128x128.jpg">
+													</span>
+												</div>
+												<div class="col-7">
+													<span style="font-size: 1.2em;">
+														<b>장문석</b>
+													</span><br>
+													차장<br>
+													인사관리팀<br>
+												</div>
+											</div>
+										</td>
+										<td>
+											<span>
+												<b>39h 32m 29s</b>
+											</span><br>
+											기본:39h 32m 29s<br>
+											연장:0h 0m 0s<br>
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											-
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+									</tr>
+									<tr style='font-size: 0.80em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="row">
+												<div class="col-5">
+													<span class="info-box-icon">
+														<img class="direct-chat-img" data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"
+														src="https://adminlte.io/themes/v3/dist/img/user7-128x128.jpg">
+													</span>
+												</div>
+												<div class="col-7">
+													<span>
+														<b>서난희</b>
+													</span><br>
+													차장<br>
+													인사관리팀<br>
+												</div>
+											</div>
+										</td>
+										<td>
+											<span>
+												<b>39h 32m 29s</b>
+											</span><br>
+											기본:39h 32m 29s<br>
+											연장:0h 0m 0s<br>
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td style="color: red;">
+											09:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											-
+										</td>
+									</tr>
+									<tr style='font-size: 0.80em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="row">
+												<div class="col-5">
+													<span class="info-box-icon">
+														<img class="direct-chat-img" data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"
+														src="https://adminlte.io/themes/v3/dist/img/user4-128x128.jpg">
+													</span>
+												</div>
+												<div class="col-7">
+													<span>
+														<b>강정인</b>
+													</span><br>
+													주임<br>
+													인사관리팀<br>
+												</div>
+											</div>
+										</td>
+										<td>
+											<span>
+												<b>39h 32m 29s</b>
+											</span><br>
+											기본:39h 32m 29s<br>
+											연장:0h 0m 0s<br>
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td style="color: #007bff;" onmouseover="modify()">
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											08:54:16~
+											18:12:21<br>
+											(+)0h 0m 0s
+										</td>
+										<td>
+											-
+										</td>
+										<td>
+											-
+										</td>
+									</tr>
+
+								</table>
+							</div>
+
+							<div class="card-footer">
+								<ul class="pagination justify-content-center m-0">
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+									</li>
+
+										<li class="page-item active">
+											<a class="page-link" href="">1</a>
+										</li>
+										<li class="page-item">
+											<a class="page-link" href="">2</a>
+										</li>
+										<li class="page-item">
+											<a class="page-link" href="">3</a>
+										</li>
+										<li class="page-item">
+											<a class="page-link" href="">4</a>
+										</li>
+										<li class="page-item">
+											<a class="page-link" href="">5</a>
+										</li>
+
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+									</li>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+									</li>
+								</ul>
+							</div>
+
+						</div>
+
+
+
+					</div>
+				</div>
+			</div>
+		</section>
+
+</div>
+
+<script type="text/javascript">
+function modify() {
+	alert("변경내용띄울거야~");
+}
+</script>
+
+</body>
+
+

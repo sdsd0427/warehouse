@@ -1,0 +1,5 @@
+package kr.or.warehouse.dto;
+
+public class HrTypeVO {
+
+}

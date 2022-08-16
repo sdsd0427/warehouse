@@ -1,0 +1,276 @@
+package kr.or.warehouse.controller.rest;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.dto.EmployeeVO;
+import kr.or.warehouse.dto.SubMentoringVO;
+import kr.or.warehouse.service.MentoringService;
+
+@RestController
+@RequestMapping("/mentoring")
+public class MentoringRestController {
+	@Autowired
+	private MentoringService mentoringService;
+
+	@RequestMapping("/main/sysdateAllWork")
+	public ResponseEntity<Map<String, Object>> sysdateAllWork(Criteria cri, HttpSession session){
+		ResponseEntity<Map<String, Object>> result = null;
+		Map<String, Object> sysdateAllWork = null;
+
+		EmployeeVO loginUser = (EmployeeVO)session.getAttribute("loginUser");
+
+		try {
+			cri.setPerPageNum(4);
+			sysdateAllWork = mentoringService.getSysdateMentoringAllWork(cri, loginUser.getEno());
+			result = new ResponseEntity<Map<String, Object>>(sysdateAllWork, HttpStatus.OK);
+			System.out.println("sysdateMentoring : " + sysdateAllWork);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<Map<String, Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return result;
+	}
+
+	@RequestMapping("/main/sysdateMenteeWork")
+	public ResponseEntity<Map<String, Object>> sysdateMenteeWork(Criteria cri, HttpSession session){
+		ResponseEntity<Map<String, Object>> result = null;
+		Map<String, Object> sysdateMenteeWork = null;
+
+		EmployeeVO loginUser = (EmployeeVO)session.getAttribute("loginUser");
+
+		try {
+			cri.setPerPageNum(4);
+			sysdateMenteeWork = mentoringService.getSysdateMenteeWork(cri, loginUser.getEno());
+			result = new ResponseEntity<Map<String, Object>>(sysdateMenteeWork, HttpStatus.OK);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<Map<String, Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return result;
+	}
+
+	@RequestMapping("/main/sysdateMentoWork")
+	public ResponseEntity<Map<String, Object>> sysdateMentoWork(Criteria cri, HttpSession session){
+		ResponseEntity<Map<String, Object>> result = null;
+		Map<String, Object> sysdateMentoWork = null;
+
+		//System.out.println("sysdateMentoring");
+		EmployeeVO loginUser = (EmployeeVO)session.getAttribute("loginUser");
+
+		try {
+			cri.setPerPageNum(4);
+			sysdateMentoWork = mentoringService.getSysdateMentoWork(cri, loginUser.getEno());
+			result = new ResponseEntity<Map<String, Object>>(sysdateMentoWork, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<Map<String, Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return result;
+	}
+
+	@RequestMapping("/mentee/myMenteeDocList")
+	public ResponseEntity<Map<String, Object>> myMenteeDocList(Criteria cri, int eno){
+		ResponseEntity<Map<String, Object>> result = null;
+
+		Map<String, Object> dataMap = null;
+		try {
+			cri.setPerPageNum(5);
+			dataMap = mentoringService.getMyMenteeDocList(cri, eno);
+			result = new ResponseEntity<Map<String,Object>>(dataMap, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<Map<String,Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return result;
+	}
+
+	@RequestMapping("/mentee/myMenteeWorkList")
+	public ResponseEntity<Map<String, Object>> myMenteeWorkList(Criteria cri, int eno){
+		ResponseEntity<Map<String, Object>> result = null;
+
+		Map<String, Object> dataMap = null;
+		try {
+			cri.setPerPageNum(5);
+			dataMap = mentoringService.getMyMenteeWorkList(cri, eno);
+			result = new ResponseEntity<Map<String,Object>>(dataMap, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<Map<String,Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return result;
+	}
+
+	@RequestMapping(value="/removeMentoring",method=RequestMethod.POST)
+	public ResponseEntity<String> removeMentoring(String smno)throws Exception{
+		ResponseEntity<String> entity = null;
+		try {
+			mentoringService.removeMentoring(smno);
+			entity = new ResponseEntity<String>("OK", HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return entity;
+	}
+
+	@RequestMapping(value="/deleteEndDateMentoring",method=RequestMethod.POST)
+	public ResponseEntity<String> deleteEndDateMentoring()throws Exception{
+		ResponseEntity<String> entity = null;
+		System.out.println("deleteEndDateMentoring controller");
+		try {
+			mentoringService.deleteEndDateMentoring();
+			entity = new ResponseEntity<String>("OK", HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return entity;
+	}
+
+	@RequestMapping("/mento/myMentoDocList")
+	public ResponseEntity<Map<String, Object>> myMentoDocList(Criteria cri, int eno){
+		ResponseEntity<Map<String, Object>> result = null;
+
+		Map<String, Object> dataMap = null;
+		try {
+			cri.setPerPageNum(5);
+			dataMap = mentoringService.getMyMentoDocList(cri, eno);
+			result = new ResponseEntity<Map<String,Object>>(dataMap, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<Map<String,Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return result;
+	}
+
+	@RequestMapping("/mento/myMentoWorkList")
+	public ResponseEntity<Map<String, Object>> myMentoWorkList(Criteria cri, int eno){
+		ResponseEntity<Map<String, Object>> result = null;
+
+		Map<String, Object> dataMap = null;
+		try {
+			cri.setPerPageNum(5);
+			dataMap = mentoringService.getMyMentoWorkList(cri, eno);
+			result = new ResponseEntity<Map<String,Object>>(dataMap, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<Map<String,Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return result;
+	}
+
+	@RequestMapping("/main/myMentoList")
+	public ResponseEntity<Map<String, Object>> myMentoList(Criteria cri,int eno){
+		ResponseEntity<Map<String, Object>> result = null;
+
+		Map<String, Object> dataMap = null;
+		try {
+			cri.setPerPageNum(5);
+			dataMap = mentoringService.getMyMentoList(cri, eno);
+			result = new ResponseEntity<Map<String,Object>>(dataMap, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<Map<String,Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return result;
+	}
+
+	@RequestMapping("/main/myMenteeList")
+	public ResponseEntity<Map<String, Object>> myMenteeList(Criteria cri,int eno){
+		ResponseEntity<Map<String, Object>> result = null;
+		//System.out.println("난희야 여기 오는 거 맞아?");
+		Map<String, Object> dataMap = null;
+		try {
+			cri.setPerPageNum(5);
+			dataMap = mentoringService.getMyMenteeList(cri, eno);
+			System.out.println("dataMap : " + dataMap);
+			result = new ResponseEntity<Map<String,Object>>(dataMap, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<Map<String,Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return result;
+	}
+
+	@RequestMapping("/main/subMentoring")
+	public ResponseEntity<Map<String, Object>> subMentoringList(Criteria cri,int eno){
+		System.out.println("restmentoring");
+		ResponseEntity<Map<String, Object>> result = null;
+
+		Map<String, Object> dataMap = null;
+		try {
+			cri.setPerPageNum(5);
+			dataMap = mentoringService.getSubMentoringList(cri, eno);
+			System.out.println(dataMap.get("subMentoringList"));
+			result = new ResponseEntity<Map<String,Object>>(dataMap, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<Map<String,Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return result;
+	}
+
+	@RequestMapping("/main/endMentoring")
+	public ResponseEntity<Map<String, Object>> endMentoringList(Criteria cri,int eno){
+		ResponseEntity<Map<String, Object>> result = null;
+
+		Map<String, Object> dataMap = null;
+		try {
+			cri.setPerPageNum(5);
+			dataMap = mentoringService.getEndMentoringList(cri, eno);
+			result = new ResponseEntity<Map<String,Object>>(dataMap, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<Map<String,Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return result;
+	}
+
+	@RequestMapping(value="/exdateApply", method=RequestMethod.GET)
+	public ResponseEntity<SubMentoringVO> exdateApply(int mento, int period, SubMentoringVO sub, HttpSession session) throws Exception{
+		ResponseEntity<SubMentoringVO> result = null;
+
+		EmployeeVO loginUser = (EmployeeVO)session.getAttribute("loginUser");
+		try {
+			sub.setPeriod(period);
+			sub.setMentee(loginUser.getEno());
+			sub.setMento(mento);
+			mentoringService.exdateApply(sub);
+			//System.out.println("apply : " + mento);
+			result = new ResponseEntity<SubMentoringVO>(sub, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<SubMentoringVO>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return result;
+	}
+
+	@RequestMapping("/getSubMentoring.do")
+	public ResponseEntity<Integer> getSubMentoring(int eno, HttpSession session) throws Exception{
+		ResponseEntity<Integer> result = null;
+
+		EmployeeVO loginUser = (EmployeeVO)session.getAttribute("loginUser");
+		try {
+			int cnt = mentoringService.getSubMentoring(eno, loginUser.getEno());
+			result = new ResponseEntity<Integer>(cnt, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return result;
+	}
+
+
+}

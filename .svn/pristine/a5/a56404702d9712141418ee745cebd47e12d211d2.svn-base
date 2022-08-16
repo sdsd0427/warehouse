@@ -1,0 +1,17 @@
+package kr.or.warehouse.controller.view;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/approval")
+public class ApprovalController {
+
+	
+	@RequestMapping("/main")
+	public String main() throws Exception{
+		String url = "approval/main";
+		
+		return url;
+	}
+}

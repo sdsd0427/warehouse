@@ -1,0 +1,39 @@
+package kr.or.warehouse.controller.view;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+@RequestMapping("/ehr")
+public class EhrController {
+
+	@RequestMapping("/main")
+	public void main() {}
+	
+	@RequestMapping("/teamList")
+	public void teamList() {}
+	
+	@RequestMapping("/vacation")
+	public void vacation() {}
+	
+	@RequestMapping("/teamVacationList")
+	public void teamVacationList() {}
+	
+	@RequestMapping("/teamHrList")
+	public void teamHrList() {}
+	
+	@RequestMapping("/test")
+	public void test() {}
+	
+	@RequestMapping("/workTypeForm")
+	public String workTypeForm() {
+		String url = "ehr/workType";
+		
+		return url;
+	}
+	
+	@RequestMapping("/hrCard")
+	public void hrCard() {}
+	
+}

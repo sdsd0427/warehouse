@@ -1,0 +1,541 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<head>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/community.css" type="text/css">
+<style>
+.page-link {
+    line-height: 1;
+    color: #17a2b8;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+</style>
+</head>
+
+<title></title>
+
+<body class="hold-transition skin-blue sidebar-collapse">
+	<div class="wrapper">
+		<section class="content-header ">
+			<div class="row md-2">
+				<div class="col-sm-12">
+					<h3>노하우 게시판</h3>
+				</div>
+			</div>
+		</section>
+
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row md-2">
+					<div class="col-md-12">
+
+						<div class="card card-info card-outline">
+							<div class="card-header with-border">
+								<b>노하우 목록</b>
+								<div id="" class="card-tools" style="width: 450px;">
+									<div class="input-group row">
+										<select class="form-control col-md-3" name=""
+											id="searchType">
+											<option value="">전체</option>
+											<option value="">제목</option>
+											<option value="">담당자</option>
+											<option value="">요청자</option>
+											<option value="">부서</option>
+											<option value="">해시태그</option>
+										</select>
+										 <input class="form-control" type="text" name="keyword"
+											placeholder="검색어를 입력하세요." value="${param.keyword }" /> <span
+											class="input-group-append">
+											<button class="btn btn-info" type="button"
+												onclick="list_go(1);" data-card-widget="search">
+												<i class="fa fa-fw fa-search"></i>
+											</button>
+										</span>
+									</div>
+								</div>
+							</div>
+							<div class="card-body">
+								<table class="table table-hover projects" style="table-layout: fixed;">
+									<tr style="font-size: 0.95em;">
+										<th style="width: 30%;">제목</th>
+										<th style="width: 20%;">요청자</th>
+										<th style="width: 30%;">담당자</th>
+										<th style="width: 10%;">조회수</th>
+										<th style="width: 10%;">즐겨찾기</th>
+									</tr>
+
+									<tr style='font-size: 0.85em;'  onclick="OpenWindow('<%=request.getContextPath() %>/work/workDetail.do','상세보기',1000,700);">
+										<td>[기능]전자결재</td>
+										<td>
+											<div style="align-items: center; display: flex;">
+												<div >
+													<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+												</div>
+												<div>
+													<p style="font-size: 16px; font-weight: bold">김형민 </p>
+													<div style="font-size: 12px;">
+														<p>부장</p>
+														<p>개발1팀</p>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td>
+											<div style="align-items: center; display: flex;">
+													<div >
+														<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+													</div>
+													<div>
+														<p style="font-size: 16px; font-weight: bold">장문석 </p>
+														<div style="font-size: 12px;">
+															<p>팀장</p>
+															<p>개발1팀</p>
+														</div>
+													</div>
+													<div style="font-size: 12px">
+														<span>외 2명</span>
+													</div>
+											</div>
+										</td>
+										<td>
+											<i class="fas fa-light fa-eye" ></i> 345
+										</td>
+										<td>
+											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+<!-- 										<i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+										</td>
+									</tr>
+									<tr style='font-size: 0.85em;'  onclick="OpenWindow('manualDetail.do','상세보기',800,700);">
+										<td>[기능]전자결재</td>
+										<td>
+											<div style="align-items: center; display: flex;">
+												<div >
+													<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+												</div>
+												<div>
+													<p style="font-size: 16px; font-weight: bold">김형민 </p>
+													<div style="font-size: 12px;">
+														<p>부장</p>
+														<p>개발1팀</p>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td>
+											<div style="align-items: center; display: flex;">
+													<div >
+														<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+													</div>
+													<div>
+														<p style="font-size: 16px; font-weight: bold">장문석 </p>
+														<div style="font-size: 12px;">
+															<p>팀장</p>
+															<p>개발1팀</p>
+														</div>
+													</div>
+													<div style="font-size: 12px">
+														<span>외 2명</span>
+													</div>
+											</div>
+										</td>
+										<td>
+											<i class="fas fa-light fa-eye" ></i> 345
+										</td>
+										<td>
+											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+<!-- 										<i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+										</td>
+									</tr>
+									<tr style='font-size: 0.85em;'  onclick="OpenWindow('manualDetail.do','상세보기',800,700);">
+										<td>[기능]전자결재</td>
+										<td>
+											<div style="align-items: center; display: flex;">
+												<div >
+													<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+												</div>
+												<div>
+													<p style="font-size: 16px; font-weight: bold">김형민 </p>
+													<div style="font-size: 12px;">
+														<p>부장</p>
+														<p>개발1팀</p>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td>
+											<div style="align-items: center; display: flex;">
+													<div >
+														<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+													</div>
+													<div>
+														<p style="font-size: 16px; font-weight: bold">장문석 </p>
+														<div style="font-size: 12px;">
+															<p>팀장</p>
+															<p>개발1팀</p>
+														</div>
+													</div>
+													<div style="font-size: 12px">
+														<span>외 2명</span>
+													</div>
+											</div>
+										</td>
+										<td>
+											<i class="fas fa-light fa-eye" ></i> 345
+										</td>
+										<td>
+											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+<!-- 										<i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+										</td>
+									</tr>
+									<tr style='font-size: 0.85em;'  onclick="OpenWindow('manualDetail.do','상세보기',800,700);">
+										<td>[기능]전자결재</td>
+										<td>
+											<div style="align-items: center; display: flex;">
+												<div >
+													<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+												</div>
+												<div>
+													<p style="font-size: 16px; font-weight: bold">김형민 </p>
+													<div style="font-size: 12px;">
+														<p>부장</p>
+														<p>개발1팀</p>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td>
+											<div style="align-items: center; display: flex;">
+													<div >
+														<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+													</div>
+													<div>
+														<p style="font-size: 16px; font-weight: bold">장문석 </p>
+														<div style="font-size: 12px;">
+															<p>팀장</p>
+															<p>개발1팀</p>
+														</div>
+													</div>
+													<div style="font-size: 12px">
+														<span>외 2명</span>
+													</div>
+											</div>
+										</td>
+										<td>
+											<i class="fas fa-light fa-eye" ></i> 345
+										</td>
+										<td>
+											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+<!-- 										<i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+										</td>
+									</tr>
+									<tr style='font-size: 0.85em;'  onclick="OpenWindow('manualDetail.do','상세보기',800,700);">
+										<td>[기능]전자결재</td>
+										<td>
+											<div style="align-items: center; display: flex;">
+												<div >
+													<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+												</div>
+												<div>
+													<p style="font-size: 16px; font-weight: bold">김형민 </p>
+													<div style="font-size: 12px;">
+														<p>부장</p>
+														<p>개발1팀</p>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td>
+											<div style="align-items: center; display: flex;">
+													<div >
+														<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+													</div>
+													<div>
+														<p style="font-size: 16px; font-weight: bold">장문석 </p>
+														<div style="font-size: 12px;">
+															<p>팀장</p>
+															<p>개발1팀</p>
+														</div>
+													</div>
+													<div style="font-size: 12px">
+														<span>외 2명</span>
+													</div>
+											</div>
+										</td>
+										<td>
+											<i class="fas fa-light fa-eye" ></i> 345
+										</td>
+										<td>
+											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+<!-- 										<i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+										</td>
+									</tr>
+
+
+								</table>
+							</div>
+							<div class="card-footer">
+								<ul class="pagination justify-content-center m-0">
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+									</li>
+
+										<li class="page-item active">
+											<a class="page-link" href="">1</a>
+										</li>
+
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+									</li>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+									</li>
+								</ul>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="card card-info card-outline">
+							<div class="card-header with-border">
+								<b>관심 노하우</b>
+								<div id="" class="card-tools" style="width: 450px;">
+									<div class="input-group row">
+										<select class="form-control col-md-3" name=""
+											id="searchType">
+											<option value="">전체</option>
+											<option value="">제목</option>
+											<option value="">담당자</option>
+											<option value="">요청자</option>
+											<option value="">부서</option>
+											<option value="">해시태그</option>
+										</select>
+										<input class="form-control" type="text" name="keyword"
+											placeholder="검색어를 입력하세요." value="${param.keyword }" />
+											<span
+											class="input-group-append">
+												<button class="btn btn-info" type="button"
+													onclick="list_go(1);" data-card-widget="search">
+													<i class="fa fa-fw fa-search"></i>
+												</button>
+											</span>
+									</div>
+								</div>
+							</div>
+							<div class="card-body">
+								<table class="table table-hover projects" style="table-layout: fixed;">
+									<tr style="font-size: 0.95em;">
+										<th style="width: 30%;">제목</th>
+										<th style="width: 20%;">요청자</th>
+										<th style="width: 30%;">담당자</th>
+										<th style="width: 10%;">조회수</th>
+										<th style="width: 10%;">즐겨찾기</th>
+									</tr>
+
+									<tr style='font-size: 0.85em;'  onclick="OpenWindow('manualDetail.do','상세보기',800,700);">
+										<td>[기능]전자결재</td>
+										<td>
+											<div style="align-items: center; display: flex;">
+												<div >
+													<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+												</div>
+												<div>
+													<p style="font-size: 16px; font-weight: bold">김형민 </p>
+													<div style="font-size: 12px;">
+														<p>부장</p>
+														<p>개발1팀</p>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td>
+											<div style="align-items: center; display: flex;">
+													<div >
+														<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+													</div>
+													<div>
+														<p style="font-size: 16px; font-weight: bold">장문석 </p>
+														<div style="font-size: 12px;">
+															<p>팀장</p>
+															<p>개발1팀</p>
+														</div>
+													</div>
+													<div style="font-size: 12px">
+														<span>외 2명</span>
+													</div>
+											</div>
+										</td>
+										<td>
+											<i class="fas fa-light fa-eye" ></i> 345
+										</td>
+										<td>
+											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+<!-- 										<i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+										</td>
+									</tr>
+									<tr style='font-size: 0.85em;'  onclick="OpenWindow('manualDetail.do','상세보기',800,700);">
+										<td>[기능]전자결재</td>
+										<td>
+											<div style="align-items: center; display: flex;">
+												<div >
+													<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+												</div>
+												<div>
+													<p style="font-size: 16px; font-weight: bold">김형민 </p>
+													<div style="font-size: 12px;">
+														<p>부장</p>
+														<p>개발1팀</p>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td>
+											<div style="align-items: center; display: flex;">
+													<div >
+														<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+													</div>
+													<div>
+														<p style="font-size: 16px; font-weight: bold">장문석 </p>
+														<div style="font-size: 12px;">
+															<p>팀장</p>
+															<p>개발1팀</p>
+														</div>
+													</div>
+													<div style="font-size: 12px">
+														<span>외 2명</span>
+													</div>
+											</div>
+										</td>
+										<td>
+											<i class="fas fa-light fa-eye" ></i> 345
+										</td>
+										<td>
+											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+<!-- 										<i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+										</td>
+									</tr>
+									<tr style='font-size: 0.85em;'  onclick="OpenWindow('manualDetail.do','상세보기',800,700);">
+										<td>[기능]전자결재</td>
+										<td>
+											<div style="align-items: center; display: flex;">
+												<div >
+													<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+												</div>
+												<div>
+													<p style="font-size: 16px; font-weight: bold">김형민 </p>
+													<div style="font-size: 12px;">
+														<p>부장</p>
+														<p>개발1팀</p>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td>
+											<div style="align-items: center; display: flex;">
+													<div >
+														<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+													</div>
+													<div>
+														<p style="font-size: 16px; font-weight: bold">장문석 </p>
+														<div style="font-size: 12px;">
+															<p>팀장</p>
+															<p>개발1팀</p>
+														</div>
+													</div>
+													<div style="font-size: 12px">
+														<span>외 2명</span>
+													</div>
+											</div>
+										</td>
+										<td>
+											<i class="fas fa-light fa-eye" ></i> 345
+										</td>
+										<td>
+											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+<!-- 										<i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+										</td>
+									</tr>
+									<tr style='font-size: 0.85em;'  onclick="OpenWindow('manualDetail.do','상세보기',800,700);">
+										<td>[기능]전자결재</td>
+										<td>
+											<div style="align-items: center; display: flex;">
+												<div >
+													<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+												</div>
+												<div>
+													<p style="font-size: 16px; font-weight: bold">김형민 </p>
+													<div style="font-size: 12px;">
+														<p>부장</p>
+														<p>개발1팀</p>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td>
+											<div style="align-items: center; display: flex;">
+													<div >
+														<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+													</div>
+													<div>
+														<p style="font-size: 16px; font-weight: bold">장문석 </p>
+														<div style="font-size: 12px;">
+															<p>팀장</p>
+															<p>개발1팀</p>
+														</div>
+													</div>
+													<div style="font-size: 12px">
+														<span>외 2명</span>
+													</div>
+											</div>
+										</td>
+										<td>
+											<i class="fas fa-light fa-eye" ></i> 345
+										</td>
+										<td>
+											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+<!-- 										<i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+										</td>
+									</tr>
+
+								</table>
+							</div>
+							<div class="card-footer">
+								<ul class="pagination justify-content-center m-0">
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+									</li>
+
+										<li class="page-item active">
+											<a class="page-link" href="">1</a>
+										</li>
+
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+									</li>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+									</li>
+								</ul>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</section>
+
+		</div>
+
+	>
+
+</body>

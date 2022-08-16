@@ -1,0 +1,149 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<head>
+<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/bootstrap/plugins/summernote/summernote-bs4.min.css">
+<!-- <link rel="stylesheet" href="/warehouse/resources/bootstrap/plugins/fontawesome-free/css/all.min.css"> -->
+<!-- <link rel="stylesheet" href="/warehouse/resources/bootstrap/dist/css/adminlte.min.css"> -->
+<style>
+.fas{
+	margin-right: 10px;
+}
+
+.btn_submenu{
+	margin-left: 15px;
+}
+
+a:hover {
+    color: #0056b3;
+    text-decoration: none;
+}
+a{
+	color: black;
+}
+</style>
+</head>
+<body>
+<div class="wrapper" style="padding-left: 40px;">
+
+	<h3 style="padding: 15px 0.5rem;">메일</h3><br><br>
+	
+<!-- 	<div> -->
+<!-- 		<div class="aa"> -->
+<!--             <div class="btn_submenu"> -->
+<!--                <a class="btn_tool btn_tool_multi"> -->
+<!-- 	               <i class="fas fa-paper-plane"></i>보내기 -->
+<!--                </a> -->
+<!--             </div> -->
+<!--          	<div class="btn_submenu"> -->
+<!-- 	            <a class="btn_tool btn_tool_multi"> -->
+<!-- 	            	<i class="fas fa-download"></i>임시저장 -->
+<!--             	</a> -->
+<!--             </div> -->
+<!--          	<div class="btn_submenu"> -->
+<!-- 	            <a class="btn_tool btn_tool_multi"> -->
+<!-- 	            	<i class="fas fa-arrow"></i>다시쓰기 -->
+<!-- 	            </a> -->
+<!--             </div> -->
+<!--       	</div> -->
+<!-- 	</div> -->
+	
+	
+	
+	<section class="content" style="margin-top: -50px;">
+		<div class="container-fluid">
+			<div class="card card-outline">
+					<div class ="card-tools" style="float: left; padding: 10px 0; border-bottom: 1px solid lightgray;">
+						<div>
+							<div class="aa" style="display: flex;">
+								<div class="btn_submenu">
+									<a class="btn_tool btn_tool_multi">
+										<i class="fas fa-reply"></i>
+										답장
+									</a>
+								</div>
+							
+							
+								<div class="btn_submenu">
+									<a class="btn_tool btn_tool_multi">
+										<i class="far fa-trash-alt"></i>
+										삭제
+									</a>
+								</div>
+					      	</div>
+						</div>
+					</div>
+		
+				<div class="card-body pad">
+					<div class="form-group row">
+						<div class="col-md-2">보낸 사람&nbsp;: </div>
+						<div class="input-group input-group-sm col-md-10">
+							<a href="">최민규 &lt;12345678@warehouse.or.kr&gt;</a>
+<!-- 							<input type="text" class="form-control" value="강정인"> -->
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<div class="col-md-2">받는 사람&nbsp;: </div>
+						<div class="input-group input-group-sm col-md-10">
+							<a href="">강정인 &lt;96550766@warehouse.or.kr&gt;</a>
+						</div>
+					</div>
+					
+					
+					<div class="form-group row">
+						<div class="col-md-2">보낸 날짜&nbsp;: </div>
+						<div class="input-group input-group-sm col-md-10">
+							<span>2022/07/05 화요일 오후 12:52:27</span>
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<div class="col-md-2">제목&nbsp;: </div>
+						<div class="input-group input-group-sm col-md-10">
+							<span>[결재 반려] '최민규 부장'이(가) 작성한 '증명서신청(개인)'이(가) 반려되었습니다.</span>
+						</div>
+					</div>
+					<br>
+
+					<div class="form-group row">
+						<div class="col-md-2">내용&nbsp;:</div>					
+					
+						<div class="card-body col-md-10" style="padding: 5px !important;">
+							<textarea rows="10" cols="80"> '최민규 부장'이(가) 작성한 '증명서신청(개인)'이(가) 반려되었습니다. 다시 작성해서 보내주시기 바랍니다.
+							</textarea>
+						</div>					
+					</div>				
+	
+						<div class="form-group row">
+						<div class="col-md-2">파일첨부&nbsp;:</div>
+						<div class="col-md-10">
+							
+							<a href="">없음</a>
+						
+						</div>
+					</div>
+				</div>
+
+
+				<div class="card-footer">
+					<div class="float-right">
+<!-- 						<button type="submit" class="btn btn-info"><i class="far fa-envelope"></i>&nbsp;전송</button> -->
+						<button type="submit" class="btn btn-default"><i class="fas fa-times"></i>&nbsp;닫기</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+	
+	
+</div>
+
+<script>
+
+window.onload=function(){
+	summernote_go($('#content'),'<%=request.getContextPath()%>'); 
+}
+</script>
+
+</body>

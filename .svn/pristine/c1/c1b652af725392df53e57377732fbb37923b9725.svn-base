@@ -1,0 +1,260 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<head>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/community.css">
+</head>
+
+<title></title>
+
+<body class="hold-transition skin-blue sidebar-collapse">
+	<div class="wrapper">
+		<section class="content-header">
+			<div class="row md-2">
+				<div class="col-sm-12">
+					<h2>지식창고</h2>
+				</div>
+			</div>
+		</section>
+		
+		<!-- first section -->
+		<section class="content">
+			<div class="row ml-2">
+				<div class="col-12">
+					<div class="card card-warning">
+						<div class="card-header">
+							<h3 class="card-title"><i class="fas fa-briefcase"></i>&nbsp;&nbsp;추천 업무</h3>
+							<div class="card-tools">
+								<button type="button" class="btn btn-tool">
+									<i class="fas fa-plus"></i>
+								</button>
+							</div>
+
+						</div>
+
+						<div class="card-body " >
+								<table class="table table-hover text-nowrap"
+									style="text-align: center;">
+									<tbody>
+										<tr>
+											<td style="width: 10%;">개발</td>
+											<td style="width: 65%;">메인화면 UI 수정</td>
+											<td style="width: 10%;">홍길동 사원</td>
+											<td style="width: 15%;">2022-06-28</td>
+										</tr>
+										
+										<tr>
+											<td>개발</td>
+											<td>[기능]todo</td>
+											<td>이순신 사원</td>
+											<td>2022-06-25</td>
+										</tr>
+										
+										<tr>
+											<td>기획</td>
+											<td>[기능]전자결재</td>
+											<td>강감찬 사원</td>
+											<td>2022-06-05</td>
+										</tr>
+										
+										<tr>
+											<td>영업</td>
+											<td>신입사원 메뉴얼 작성</td>
+											<td>전우치 사원</td>
+											<td>2022-05-26</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							
+							<div class="card-footer">
+								<ul class="pagination justify-content-center m-0">
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+									</li>
+
+										<li class="page-item active">
+											<a class="page-link" href="">1</a>
+										</li>
+
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+									</li>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+									</li>
+								</ul>
+							</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- first section -->
+		
+		<!-- second section -->
+		<section class="content">
+			<div class="row ml-2">
+				<div class="col-12">
+					<div class="card card-success">
+						<div class="card-header">
+							<h3 class="card-title"><i class="fas fa-file"></i>&nbsp;&nbsp;내가 필요한 문서</h3>
+							<div class="card-tools">
+								<button type="button" class="btn btn-tool">
+									<i class="fas fa-plus"></i>
+								</button>
+							</div>
+
+						</div>
+
+						<div class="card-body ">
+								<table class="table table-hover text-nowrap"
+									style="text-align: center;">
+									<tbody>
+										<tr>
+											<td style="width: 65%;">그룹웨어 도입건</td>
+											<td style="width: 10%;">홍길동 사원</td>
+											<td style="width: 10%;">기안</td>
+											<td style="width: 15%;">2022-06-28</td>
+										</tr>
+										
+										<tr>
+											<td>이벤트 진행건</td>
+											<td>이순신 사원</td>
+											<td>기안</td>
+											<td>2022-06-25</td>
+										</tr>
+										
+										<tr>
+											<td>기획부 협조 요청</td>
+											<td>강감찬 사원</td>
+											<td>협조</td>
+											<td>2022-06-05</td>
+										</tr>
+										
+										<tr>
+											<td>영업부 협조 요청</td>
+											<td>전우치 사원</td>
+											<td>협조</td>
+											<td>2022-05-26</td>
+										</tr>
+										
+									</tbody>
+								</table>
+							</div>
+							
+							<div class="card-footer">
+								<ul class="pagination justify-content-center m-0">
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+									</li>
+
+										<li class="page-item active">
+											<a class="page-link" href="">1</a>
+										</li>
+
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+									</li>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+									</li>
+								</ul>
+							</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- second section -->
+		
+		<!-- third section -->
+		<section class="content">
+			<div class="row ml-2">
+				<div class="col-12">
+					<div class="card card-primary">
+						<div class="card-header">
+							<h3 class="card-title"><i class="fas fa-book"></i>&nbsp;&nbsp;자주 찾는 메뉴얼</h3>
+							<div class="card-tools">
+								<button type="button" class="btn btn-tool">
+									<i class="fas fa-plus"></i>
+								</button>
+							</div>
+
+						</div>
+
+						<div class="card-body ">
+								<table class="table table-hover text-nowrap"
+									style="text-align: center;">
+									<tbody>
+											<tr>
+											<td style="width: 55%;">휴가 작성 메뉴얼</td>
+											<td style="width: 10%;">홍길동 사원</td>
+											<td style="width: 10%;">휴가</td>
+											<td style="width: 10%;">1024</td>
+											<td style="width: 15%;">2022-06-28</td>
+										</tr>
+										
+										<tr>
+											<td>전자결재 운용 메뉴얼</td>
+											<td>이순신 사원</td>
+											<td>전자결재</td>
+											<td>957</td>
+											<td>2022-06-25</td>
+										</tr>
+										
+										<tr>
+											<td>메일 사용 메뉴얼</td>
+											<td>강감찬 사원</td>
+											<td>메일</td>
+											<td>854</td>
+											<td>2022-06-05</td>
+										</tr>
+										
+										<tr>
+											<td>신입 기본 메뉴얼</td>
+											<td>전우치 사원</td>
+											<td>일반</td>
+											<td>615</td>
+											<td>2022-05-26</td>
+										</tr>
+										
+									</tbody>
+								</table>
+							</div>
+							
+							<div class="card-footer">
+								<ul class="pagination justify-content-center m-0">
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+									</li>
+
+										<li class="page-item active">
+											<a class="page-link" href="">1</a>
+										</li>
+
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+									</li>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+									</li>
+								</ul>
+							</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- third section -->
+		
+	</div>
+
+
+
+
+</body>

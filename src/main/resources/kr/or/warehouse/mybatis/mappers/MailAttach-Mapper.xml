@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MailAttach-Mapper">
+	<select id="selectMailAttachByMailNo" resultType="attach">
+		select
+		mano as attachNo
+	    ,uploadPath
+	    ,fileName
+	    ,fileType
+	    ,mailno as refNo
+		from mailattach
+		where mailno = #{refNo}
+	</select>
+
+	<select id="selectMailAttachByMaNo" resultType="attach">
+		select
+		mano as attachNo
+	    ,uploadPath
+	    ,fileName
+	    ,fileType
+	    ,mailNo as refNo
+		from mailattach
+		where mano = #{attachNo}
+	</select>
+	
+	<update id="insertMailAttach">
+		insert into mailattach (
+		    mano
+		   ,mailno
+		   ,filename
+		   ,uploadpath
+		   ,filetype
+		) values (
+		    #{attachNo}
+		   ,#{refNo}
+		   ,#{fileName}
+		   ,#{uploadPath}
+		   ,#{fileType}
+		)
+	</update>
+	
+	<update id="deleteAttach">
+		delete
+		from mailattach
+		where attachNo = #{attachNo}
+	</update>
+
+	<update id="deleteAllAttach">
+		delete
+		from mailattach
+		where mailNo = #{refNo}
+	</update>
+	
+	<select id="selectMaNo" resultType="String">
+		select 'MT' ||
+		trim(nvl(max(to_char(to_number(substr(mano,3))+1,'000000')),'000001'))
+		as attachno
+		from mailattach
+
+		union
+
+		select nvl(null,'MT000001') as attachno
+		from
+		dual
+		where not exists (select mano
+		from mailattach)
+	</select>
+</mapper>
+

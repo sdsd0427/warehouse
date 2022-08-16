@@ -1,0 +1,29 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+<c:if test="${from eq 'regist'}" >
+<script>
+alert("멘토링이 신청되었습니다.");
+
+	//알림
+	var target = ${signalMento};
+	var ref = document.referrer;
+	console.log("signalMento",target);
+	console.log("signalMento",ref);
+//	console.log("window",window);
+//	console.log("parent",parent);
+//	console.log("opener",opener);
+
+	opener.opener.parent.sendSignal(target, "멘토링", "E101", "mentoring/main.do", 'M190000');
+
+	window.close();
+// 	opener.parent.location.reload();
+	</script>
+</c:if>
+
+
+
+<script>
+</script>

@@ -1,0 +1,42 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<script>
+	function getProceedingDraftDocList(page){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/approval/getProceedingDraftDocList.do?page=" + page,
+			type : 'get',
+			success : function(res){
+				console.log(res);
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+	
+	function getRecentTempSaveDocList(page){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/approval/getRecentTempSaveDocList.do?page=" + page,
+			type : 'get',
+			success : function(res){
+				console.log(res);
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+	
+	function getSignMyTurnDocList(page){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/approval/getSignMyTurnDocList.do?page=" + page,
+			type : 'get',
+			success : function(res){
+				console.log(res);
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+</script>

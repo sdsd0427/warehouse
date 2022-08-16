@@ -1,0 +1,186 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+
+
+<div class="wrapper">
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row md-2">
+				<div class="col-sm-6">
+					<h3>마이페이지 > 개인정보</h3>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="content container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card card-outline card-info">
+					<div class="card-header p-2">
+						<div class="text-center">
+							<img class="profile-user-img img-fluid img-circle"
+								src="../resources/images/indexPage/chopa.jpg" alt=""
+								style="width: 200px;">
+						</div>
+						<h3 class="profile-username text-center">chopa</h3>
+						<div class="input-group"
+							style="margin-right: auto; margin-left: auto; width: 50%;">
+							<div class="custom-file">
+								<input type="file" class="custom-file-input"
+									id="exampleInputFile"> <label class="custom-file-label"
+									for="exampleInputFile"></label>
+							</div>
+							<span class="input-group-append">
+								<button type="button" class="btn btn-secondary btn-append">Upload</button>
+							</span>
+						</div>
+
+					</div>
+					<div class="card-body">
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<th style="width: 15%">사번</th>
+									<td style="width: 35%"><input type="text"
+										class="form-control" placeholder="" readonly></td>
+									<th style="width: 15%">부서</th>
+									<td style="width: 35%"><input type="text"
+										class="form-control" placeholder="" readonly></td>
+								</tr>
+								<tr>
+									<th style="width: 15%">이름</th>
+									<td style="width: 35%"><input type="text"
+										class="form-control" placeholder=""></td>
+									<th style="width: 15%">직위</th>
+									<td style="width: 35%"><input type="text"
+										class="form-control" placeholder="" readonly></td>
+								</tr>
+								<tr>
+									<th style="width: 15%">비밀번호</th>
+									<td style="width: 35%"><input type="text"
+										class="form-control" placeholder=""></td>
+									<th style="width: 15%">직책</th>
+									<td style="width: 35%"><input type="text"
+										class="form-control" placeholder="" readonly></td>
+								</tr>
+								<tr>
+									<th style="width: 15%">MBTI</th>
+									<td style="width: 35%"><select class="custom-select">
+											<option>ISTJ</option>
+											<option>ISFJ</option>
+											<option>INFJ</option>
+											<option>INTJ</option>
+											<option>ISTP</option>
+											<option>ISFP</option>
+											<option>INFP</option>
+											<option>IFTP</option>
+											<option>ESTP</option>
+											<option>ENFP</option>
+											<option>ENTP</option>
+											<option>ESTJ</option>
+											<option>ESFJ</option>
+											<option>ENFJ</option>
+											<option>ENTJ</option>
+									</select></td>
+								</tr>
+							</tbody>
+						</table>
+						<br>
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<th style="width: 15%">휴대폰번호</th>
+									<td style="width: 35%"><input type="text"
+										class="form-control" placeholder=""></td>
+								</tr>
+								<tr>
+									<th style="width: 15%">이메일</th>
+									<td style="width: 35%">
+										<div class="row">
+											<div class="col-5">
+												<input type="text" class="form-control" placeholder="">
+											</div>
+											<div class="col-5">
+												<select class="custom-select">
+													<option>@naver.com</option>
+													<option>@google.com</option>
+													<option>@daum.net</option>
+												</select>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th style="width: 15%">내선번호</th>
+									<td style="width: 35%"><input type="text"
+										class="form-control" placeholder="" readonly></td>
+								</tr>
+							</tbody>
+						</table>
+						<br>
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<th style="width: 15%">우편번호</th>
+									<td style="width: 35%">
+										<div class="input-group input-group-md col-sm-5">
+											<input type="text" class="form-control" id="inputPost"
+												readonly> <span class="input-group-append">
+												<button type="button"
+													class="btn btn-default btn-sm btn-append">
+													<i class="fa fa-fw fa-search"></i>
+												</button>
+											</span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th style="width: 15%">주소</th>
+									<td style="width: 35%">
+										<div class="col-sm-12">
+											<input type="email" class="form-control" id="inputAdd"
+												readonly>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th style="width: 15%">상세주소</th>
+									<td style="width: 35%">
+										<div class="col-sm-12">
+											<input type="email" class="form-control" id="inputAdd2"
+												placeholder="">
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th style="width: 15%">결재수단</th>
+									<td style="width: 35%">
+										<div class="custom-file">
+											<input type="file" class="custom-file-input" id="customFile">
+											<label class="custom-file-label" for="customFile"></label>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<hr>
+						<div class="form-group row">
+							<div class="col-sm-12">
+								<button type="submit" class="btn btn-default">취소</button>
+								<button type="submit" class="btn btn-info float-right">수정</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</section>
+</div>
+
+
+

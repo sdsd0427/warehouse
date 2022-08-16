@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Signal-Mapper">
+	<sql id="search">
+		<if test="searchType == 't'.toString()">
+			and signalContent like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'w'.toString()">
+			and signalFrom = (select distinct a.signalFrom
+                         from signal a, employee b
+                        where  a.signalFrom = b.eno
+                         and b.name like '%'||#{keyword}||'%')
+		</if>
+		<if test="searchType == 'tw'.toString()">
+			and (
+			signalContent like '%'||#{keyword}||'%'
+			or
+			signalFrom = (select distinct a.signalFrom
+                         from signal a, employee b
+                        where  a.signalFrom = b.eno
+                         and b.name like '%'||#{keyword}||'%')
+			)
+		</if>
+	</sql>
+	
+	<sql id="classInit">
+		<if test="classInit == 'B'.toString()">
+			and a.classCode like '%'||#{classInit}||'%'
+		</if>
+		<if test="classInit == 'C'.toString()">
+			and a.classCode like '%'||#{classInit}||'%'
+		</if>
+		<if test="classInit == 'D'.toString()">
+			and a.classCode like '%'||#{classInit}||'%'
+		</if>
+	</sql>
+	<sql id="classInit2">
+		<if test="classInit == 'B'.toString()">
+			and classCode like '%'||#{classInit}||'%'
+		</if>
+		<if test="classInit == 'C'.toString()">
+			and classCode like '%'||#{classInit}||'%'
+		</if>
+		<if test="classInit == 'D'.toString()">
+			and classCode like '%'||#{classInit}||'%'
+		</if>
+	</sql>
+	
+	<select id="selectSignalList" resultType="signal">
+		SELECT
+			  a.signalNo
+			, a.signalTarget
+			, a.signalFrom
+			, a.signalDate
+			, a.signalTime
+			, a.signalCheck
+			, a.signalContent
+			, a.moveUrl
+			, a.classCode
+			, a.regDate
+			, a.sigMcode
+			, b.name 
+			, b.photo
+			, c.ppsName 
+			, d.className 
+			, d.explanation 
+			, d.groupName 
+		FROM
+			signal a, employee b, postposition c, common d
+		WHERE
+	    	signalTarget=#{eno}
+		AND
+			a.signalFrom = b.eno
+		AND 
+			b.ppsCode = c.ppsCode 
+		AND 
+			a.classCode = d.classCode
+    	<include refid="search" />
+    	<include refid="classInit" />
+    	ORDER BY
+    		signalDate DESC
+	</select>
+	
+	<select id="selectSignalListCount" resultType="int">
+		SELECT
+		     count(*)
+		FROM
+		    signal
+	    WHERE
+	    	signalTarget=#{eno}
+		<include refid="search" />
+		<include refid="classInit2" />
+	</select>
+	
+	<!-- 벳지용 카운트 -->
+	<select id="selectSignalCountByEno" resultType="int">
+		SELECT
+		     count(*)
+		FROM
+		    signal
+	    WHERE
+	    	signalTarget=#{eno}
+    	AND
+    		signalCheck=0
+	</select>
+	
+	<!-- 발신자 정보 -->
+	<select id="selectEmpForFrom" parameterType="int" resultType="employee">
+		SELECT 
+			*
+		FROM
+			employee
+		WHERE 
+			eno = #{eno}
+	</select>
+	
+	<select id="selectCommon" resultType="common">
+		SELECT 
+			 classCode
+			,className
+			,groupCode
+			,groupName
+			,explanation
+		FROM 
+			common
+		WHERE
+			classCode=#{classCode}
+	</select>
+
+	<update id="updateSignalCheck" parameterType="str">
+		UPDATE
+			signal
+		SET
+		   signalCheck=1
+		WHERE
+			signalNo=#{signalNo}
+	</update>
+	
+	<update id="insertSignal" parameterType="signal">
+		INSERT
+		INTO
+			signal(
+			 signalNo
+			,signalTarget
+			,signalFrom
+			,signalDate
+			,signalTime
+			,signalCheck
+			,signalContent
+			,moveUrl
+			,classCode
+			,regDate
+			,sigMcode
+			)
+		VALUES(
+			 #{signalNo}
+			,#{signalTarget}
+			,#{signalFrom}
+			,sysdate
+			,sysdate
+			,0
+			,#{signalContent}
+			,#{moveUrl}
+			,#{classCode}
+			,sysdate
+			,#{sigMcode}
+		)
+	</update>
+	
+	<select id="selectSignalBySignalNo" resultType="signal">
+		SELECT
+			  a.signalNo
+			, a.signalTarget
+			, a.signalFrom
+			, a.signalDate
+			, a.signalTime
+			, a.signalCheck
+			, a.signalContent
+			, a.moveUrl
+			, a.classCode
+			, a.regDate
+			, a.sigMcode
+			, b.name 
+			, b.photo
+			, c.ppsName 
+			, d.className 
+			, d.explanation
+			, d.groupName 
+		FROM
+			signal a, employee b, postposition c, common d
+		WHERE
+			a.signalFrom = b.eno
+		AND
+			b.ppsCode =c.ppsCode 
+		AND 
+			a.classCode = d.classCode
+		AND 
+			signalNo=#{signalNo}
+	</select>
+
+	<!-- no증가 -->
+	<select id="selectSignalSeqNext" resultType="str">
+		select 'SN'||trim(TO_CHAR(signal_seq.nextval,'000000')) as signalNo from dual
+	</select>
+	
+	<update id="deleteSignalBySignalNo">
+		DELETE
+		FROM
+			signal
+		WHERE
+			signalNo=#{signalNo}
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

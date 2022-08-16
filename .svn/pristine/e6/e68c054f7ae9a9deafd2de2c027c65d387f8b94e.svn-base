@@ -1,0 +1,190 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<head>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/pds.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/simplebar.css">
+<%-- 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/pds_style.css"> --%>
+</head> 
+
+<body>
+<div class="wrapper">
+	<h3 class="title">개인자료실</h3>
+
+		<div class="card card-info card-outline">
+			<div class="card-header">
+				<button type="button" class="btn btn-default btn-sm checkbox-toggle">
+					<i class="fas fa-folder">&nbsp;새폴더</i>
+				</button>
+				<button type="button" class="btn btn-default btn-sm">
+					<i class="fas fa-cloud-download-alt">&nbsp;다운로드</i>
+				</button>
+				<button type="button" class="btn btn-default btn-sm">
+					<i class="fas fa-trash-alt">&nbsp;삭제</i>
+				</button>
+				<button type="button" class="btn btn-default btn-sm">
+					<i class="fas fa-copy">&nbsp;복사</i>
+				</button>
+				<button type="button" class="btn btn-default btn-sm">
+					<i class="fas fa-envelope">&nbsp;메일</i>
+				</button>
+				<button type="button" class="btn btn-default btn-sm">
+					<i class="fas fa-sync-alt"></i>
+				</button>				
+				
+				<div class="card-tools">
+					<div class="input-group input-group-sm">
+						<input type="text" class="form-control" placeholder="Search file">
+						<div class="input-group-append">
+							<div class="btn btn-info">
+								<i class="fas fa-search"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div> 
+			<!-- card-header  -->
+
+
+
+
+			<div class="card-body" data-simplebar="init">
+				<div class="simplebar-wrapper" style="margin: -16px;">
+					<div class="simplebar-height-auto-observer-wrapper">
+						<div class="simplebar-height-auto-observer"></div>
+					</div>
+					
+					<div class="simplebar-mask">
+					
+						<div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+						
+							<div class="simplebar-content-wrapper" tabindex="0"
+								role="region" aria-label="scrollable content"
+								style="height: 100%; overflow: hidden;">
+								
+								<div class="simplebar-content" style="padding: 16px;">
+								
+									<div class="row row-cols-3 row-cols-sm-5 row-cols-lg-4 row-cols-xl-5 g-3 file-manager-grid">
+									
+										<div class="col">
+											<input type="checkbox" class="form-check-input">
+											<div class="card">
+												<a href="#" class="a-link"> 
+														<svg width="60" height="60" 
+															xmlns="http://www.w3.org/2000/svg" 
+															viewBox="0 0 20 20" 
+															fill="currentColor"
+															aria-hidden="true">
+									                        <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
+														</svg> 
+														<span class="small">몰라</span>
+												</a>
+											</div>
+										</div>
+										
+										<div class="col">
+											<input type="checkbox" class="form-check-input">
+											<div class="card text-center">
+												<a href="#" class="a-link">
+												<img src="<%=request.getContextPath()%>/resources/images/pdf.svg" alt="file" loading="lazy">
+												<span class="small">License-copy.pdf</span>
+												</a>
+											</div>
+										</div>
+										
+										<div class="col">
+											<input type="checkbox" class="form-check-input">
+											<div class="card text-center">
+												<a href="#" class="a-link">
+												<img src="<%=request.getContextPath()%>/resources/images/pdf.svg" alt="file" loading="lazy">
+												<span class="small">License-copy.pdf</span>
+												</a>
+											</div>
+										</div>
+										
+										<div class="col">
+											<input type="checkbox" class="form-check-input">
+											<div class="card text-center">
+												<a href="#" class="a-link">
+												<img src="<%=request.getContextPath()%>/resources/images/pdf.svg" alt="file" loading="lazy">
+												<span class="small">License-copy.pdf</span>
+												</a>
+											</div>
+										</div>
+										
+										<div class="col">
+											<input type="checkbox" class="form-check-input">
+											<div class="card text-center">
+												<a href="#" class="a-link">
+												<img src="<%=request.getContextPath()%>/resources/images/pdf.svg" alt="file" loading="lazy">
+												<span class="small">License-copy.pdf</span>
+												</a>
+											</div>
+										</div>
+										
+										<div class="col">
+											<input type="checkbox" class="form-check-input">
+											<div class="card text-center">
+												<a href="#" class="a-link">
+												<img src="<%=request.getContextPath()%>/resources/images/pdf.svg" alt="file" loading="lazy">
+												<span class="small">License-copy.pdf</span>
+												</a>
+											</div>
+										</div>
+										
+										<div class="col">
+											<input type="checkbox" class="form-check-input">
+											<div class="card text-center">
+												<a href="#" class="a-link">
+												<img src="<%=request.getContextPath()%>/resources/images/pdf.svg" alt="file" loading="lazy">
+												<span class="small">License-copy.pdf</span>
+												</a>
+											</div>
+										</div>
+										
+										<div class="col">
+											<input type="checkbox" class="form-check-input">
+											<div class="card text-center">
+												<a href="#" class="a-link">
+												<img src="<%=request.getContextPath()%>/resources/images/pdf.svg" alt="file" loading="lazy">
+												<span class="small">License-copy.pdf</span>
+												</a>
+											</div>
+										</div>
+										
+									</div>
+									<!-- file-manager-grid -->
+									
+								</div>
+								<!-- simplebar-content -->
+								
+							</div>
+							<!-- simplebar-content-wrapper -->
+							
+						</div>
+					</div>
+					<div class="simplebar-placeholder" style="width: auto; height: 458px;">
+					</div>
+				</div>
+<!-- 				<div class="simplebar-track simplebar-horizontal" -->
+<!-- 					style="visibility: hidden;"> -->
+<!-- 					<div class="simplebar-scrollbar" -->
+<!-- 						style="width: 0px; display: none;"></div> -->
+<!-- 				</div> -->
+<!-- 				<div class="simplebar-track simplebar-vertical" -->
+<!-- 					style="visibility: hidden;"> -->
+<!-- 					<div class="simplebar-scrollbar" -->
+<!-- 						style="height: 0px; display: none; transform: translate3d(0px, 0px, 0px);"></div> -->
+<!-- 				</div> -->
+			</div>
+
+
+
+
+		</div>
+		<!-- card -->
+
+
+</div>
+</body>

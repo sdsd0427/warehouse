@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Vacation-Mapper">
+	
+	<select id="selectVacation" resultType="vacation">
+		select
+		    a.eno
+		   ,b.hireDate 
+		   ,b.ppscode
+		   ,a.totalvac
+		   ,a.usevac
+		   ,a.remainvac
+		   ,a.genervac
+		from
+		    vacation a, employee b
+		where a.eno = b.eno
+		  and a.eno = #{eno}
+	</select>
+	
+	<select id="selectVacationPeriod" resultType="HashMap">
+		select hiredate startdate
+			, last_day(add_months(trunc(hiredate, 'y'), 11)) enddate
+			from employee
+			 where eno = #{eno}
+			union
+			 select trunc(add_months(hiredate,12*addyear), 'y')  startdate
+			, last_day(add_months(trunc(add_months(hiredate,12*addyear), 'y'), 11)) enddate
+			from employee , (SELECT LEVEL AS addyear
+			                   FROM DUAL, (select to_number(to_char(sysdate,'yy')) - to_number(to_char(hiredate,'yy')) as levels
+			                                         from employee
+			                                          where eno = #{eno})
+			             <![CDATA[   CONNECT BY LEVEL <=levels)
+			where eno = #{eno}
+			  and trunc(add_months(hiredate,12*addyear), 'y') < trunc(add_months(sysdate,12), 'y') ]]>
+			    order by startdate desc
+	</select>
+	
+	<select id="selectVacationUsageHistory" resultType="vacLog">
+		select
+		    eno
+		   ,vacstart
+		   ,vacend
+		   ,vacday
+		   ,vaccontent
+		   ,remday
+		from
+		    vaclog
+		where vacstart between to_date(#{vyear}||'0101', 'YYYY-MM-DD') 
+		                   and to_date(#{vyear}||'1231', 'YYYY-MM-DD')
+		    and eno = #{eno}
+		order by vacstart desc
+	</select>
+
+	<select id="selectVacationProduceHistory" resultType="vacproduce">
+		select
+		    regdate
+		   ,proday
+		   ,procontent
+		   ,enddate
+		   ,eno
+		from
+		    vacproduce
+		where regdate between to_date(#{vyear}||'0101', 'yyyy/mm/dd') 
+		                   and to_date(#{vyear}||'1231', 'yyyy/mm/dd')
+		    and eno = #{eno}
+		order by regdate desc
+	</select>
+
+</mapper>
+

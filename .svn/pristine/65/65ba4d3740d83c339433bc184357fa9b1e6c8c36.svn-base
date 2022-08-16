@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<typeAliases>
+		<typeAlias type="java.lang.String" alias="str" />
+		<typeAlias type="java.lang.Integer" alias="int" />
+
+		<typeAlias type="kr.or.warehouse.dto.MenuVO" alias="menu"/>
+		<typeAlias type="kr.or.warehouse.dto.BoardVO" alias="board"/>
+		<typeAlias type="kr.or.warehouse.dto.ManualVO" alias="manual"/>
+		<typeAlias type="kr.or.warehouse.dto.HrVO" alias="hr"/>
+		<typeAlias type="kr.or.warehouse.dto.CalendarVO" alias="calendar"/>
+		<typeAlias type="kr.or.warehouse.dto.WorkVO" alias="work"/>
+		<typeAlias type="kr.or.warehouse.dto.MailVO" alias="mail"/>
+		<typeAlias type="kr.or.warehouse.dto.EmployeeVO" alias="employee"/>
+
+
+	</typeAliases>
+
+</configuration>
+
+
+
+
+
+
+

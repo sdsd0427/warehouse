@@ -1,0 +1,91 @@
+package kr.or.warehouse.controller.view;
+
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.service.BoardService;
+
+@Controller
+@RequestMapping("/board")
+public class BoardController {
+	@Autowired
+	private BoardService boardService;
+
+	@RequestMapping("/notice/list.do")
+	public ModelAndView noticeList(Criteria cri, ModelAndView mnv)throws Exception {
+		String url="board/notice/list";
+		String temp = "n";
+
+		Map<String, Object> dataMap = boardService.getBoardList(cri, temp);
+		mnv.addObject("dataMap", dataMap);
+		mnv.setViewName(url);
+		return mnv;
+	}
+	@RequestMapping("/notice/registGo.do")
+	public String noticeregistform()throws Exception {
+		String url="board/notice/registForm";
+		return url;
+	}
+	@RequestMapping("/notice/modifyGo.do")
+	public String noticeModifyForm()throws Exception {
+		String url="board/notice/modifyForm";
+		return url;
+	}
+	@RequestMapping("/notice/detailGo.do")
+	public String noticeDetail()throws Exception {
+		String url="board/notice/detail";
+		return url;
+	}
+
+	@RequestMapping("/free/list.do")
+	public ModelAndView freeList(Criteria cri, ModelAndView mnv)throws Exception {
+		System.out.println("controller");
+		String url="board/free/list";
+		String temp = "f";
+
+		Map<String, Object> dataMap = boardService.getBoardList(cri, temp);
+		mnv.addObject("dataMap", dataMap);
+		mnv.setViewName(url);
+		return mnv;
+	}
+	@RequestMapping("/free/registGo.do")
+	public String freeRegistForm()throws Exception {
+		String url="board/free/registForm";
+		return url;
+	}
+	@RequestMapping("/free/modifyGo.do")
+	public String freeModifyForm()throws Exception {
+		String url="board/free/modifyForm";
+		return url;
+	}
+	@RequestMapping("/free/detailGo.do")
+	public String freeDetail()throws Exception {
+		String url="board/free/detail";
+		return url;
+	}
+
+	@RequestMapping("/event/list.do")
+	public void event()throws Exception {
+	}
+	@RequestMapping("/event/registGo.do")
+	public String eventRegistForm()throws Exception {
+		String url="board/event/registForm";
+		return url;
+	}
+	@RequestMapping("/event/modifyGo.do")
+	public String eventModifyForm()throws Exception {
+		String url="board/event/modifyForm";
+		return url;
+	}
+	@RequestMapping("/event/detailGo.do")
+	public String eventDetail()throws Exception {
+		String url="board/event/detail";
+		return url;
+	}
+
+}

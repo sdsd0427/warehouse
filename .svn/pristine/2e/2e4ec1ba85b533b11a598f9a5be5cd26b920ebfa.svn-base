@@ -1,0 +1,45 @@
+package kr.or.warehouse.service;
+
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.command.PageMaker;
+import kr.or.warehouse.dao.ContactDAO;
+import kr.or.warehouse.dto.BoardVO;
+import kr.or.warehouse.dto.EmployeeVO;
+
+@Service
+public class ContactServiceImpl implements ContactService{
+
+	@Autowired
+	private ContactDAO contactDAO;
+
+	@Override
+	public Map<String, Object> getContactList(Criteria cri) throws SQLException {
+		System.out.println("service");
+		List<EmployeeVO> contactList = null;
+
+		int totalCount = contactDAO.selectSearchContactListCount(cri);
+
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(totalCount);
+
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap.put("contactList", contactList);
+		dataMap.put("pageMaker", pageMaker);
+
+		return dataMap;
+
+	}
+
+
+
+
+}

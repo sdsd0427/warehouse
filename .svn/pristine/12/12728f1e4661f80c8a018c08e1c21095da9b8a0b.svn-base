@@ -1,0 +1,661 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<head>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+	<style>
+		th{
+			vertical-align: middle !important;
+			text-align: center;
+		}
+		section{
+			display: none;
+		}
+		.menu{
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<h2 class="title">업무 > 요청한 업무</h2>
+		<div class="card">
+			<div class="row" style="margin: 0;">
+				<div class="col-8">
+					<div class="row" style="justify-content: space-between;">
+						<h2 class="title" >상세보기</h2>
+						<div class="col-3 title menu detail-menu" style="display: block">
+								<button type="button" class="btn btn-block bg-info">수정</button>
+						</div>
+					</div>
+					<div class="card card-info" style="margin-top: 50px;">
+						<div class="card-header p-0 pt-1 border-bottom-0">
+							<ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+								<li class="nav-item">
+									<a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home"
+									aria-selected="true" data-link="detail">업무상세</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home"
+									aria-selected="true" data-link="report">업무보고</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home"
+									aria-selected="true" data-link="proceeding">회의록</a>
+								</li>
+							</ul>
+						</div>
+						<section id="detail" style="display: block;">
+							<table class="table projects" style="width: 100%; table-layout: fixed; font-size: 14px;  ">
+								<tr>
+									<th style="width: 30%;">
+										요청자
+									</th>
+									<td style="width: 60%">
+										<div style="align-items: center; display: flex; justify-content: center">
+											<div >
+												<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+											</div>
+											<div>
+												<p style="font-size: 16px; font-weight: bold">김형민 </p>
+												<div style="font-size: 12px;">
+													<p>부장</p>
+													<p>개발1팀</p>
+												</div>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th style="width: 30%">제목</th>
+									<td style="word-break:break-all">
+										[기능]전자결재
+									</td>
+								</tr>
+								<tr>
+									<th style="width: 30%">상세내용</th>
+									<td style="width: 60%;word-break:break-all;">
+										조직도에서 결재선 추가 기능, 참조자 추가 기능, 회람기능, 임시저장기능, 추천 문서 검색 기능
+									</td>
+								</tr>
+								<tr>
+									<th style="width: 30%">담당자</th>
+									<td style="width: 60%">
+										<div style="align-items: center; display: flex; justify-content: center; position: relative;">
+											<div>
+												<span class="badge bg-success" style="position:absolute; top: 0; left: 50px">책임</span>
+												<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+											</div>
+											<div>
+												<p style="font-size: 16px; font-weight: bold">장문석 </p>
+												<div style="font-size: 12px;">
+													<p>팀장</p>
+													<p>개발1팀</p>
+												</div>
+											</div>
+											<div >
+												<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+											</div>
+											<div>
+												<p style="font-size: 16px; font-weight: bold">서난희 </p>
+												<div style="font-size: 12px;">
+													<p>사원</p>
+													<p>개발1팀</p>
+												</div>
+											</div>
+											<div >
+												<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+											</div>
+											<div>
+												<p style="font-size: 16px; font-weight: bold">오지현 </p>
+												<div style="font-size: 12px;">
+													<p>사원</p>
+													<p>개발1팀</p>
+												</div>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th style="width: 30%">기한</th>
+									<td style="width: 60%;">2022-07-18</td>
+								</tr>
+								<tr>
+									<th style="width: 30%">해시태그</th>
+									<td style="width: 60%; word-break:break-all;">#개발1팀 #5년차 #2년차 #1년차 #전자결재 #그룹웨어</td>
+								</tr>
+								<tr>
+									<th style="width: 30%">진척도</th>
+									<td class="project_progress">
+										<div class="progress progress-sm">
+											<div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0"
+											aria-valuemax="100" style="width: 50%"></div>
+										</div>
+										<small>50% 완료</small>
+									</td>
+								</tr>
+							</table>
+						</section>
+						<section id="report">
+							<table class="table table-hover projects" style="table-layout: fixed; font-size: 14px;">
+								<thead>
+									<tr>
+										<th style="width: 40%">제목</th>
+										<th style="width: 30%">보고자</th>
+										<th style="width: 20%">등록일</th>
+										<th style="width: 10%">첨부파일</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>07/08_장문석_일일업무보고</td>
+										<td>
+											<div style="align-items: center; display: flex; justify-content: center; position: relative;">
+												<div >
+													<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+												</div>
+												<div>
+													<p style="font-size: 16px; font-weight: bold">장문석 </p>
+													<div style="font-size: 12px;">
+														<p>팀장</p>
+														<p>개발1팀</p>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td>2022-07-08</td>
+										<td>
+											<span class="material-symbols-outlined">
+											draft
+											</span>
+										</td>
+									</tr>
+									<tr>
+										<td>07/08_서난희_일일업무보고</td>
+										<td>
+											<div style="align-items: center; display: flex; justify-content: center; position: relative;">
+												<div >
+													<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+												</div>
+												<div>
+													<p style="font-size: 16px; font-weight: bold">서난희 </p>
+													<div style="font-size: 12px;">
+														<p>사원</p>
+														<p>개발1팀</p>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td>2022-07-08</td>
+										<td>
+											<span class="material-symbols-outlined">
+											draft
+											</span>
+										</td>
+									</tr>
+									<tr>
+										<td>07/08_오지현_일일업무보고</td>
+										<td>
+											<div style="align-items: center; display: flex; justify-content: center; position: relative;">
+												<div >
+													<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+												</div>
+												<div>
+													<p style="font-size: 16px; font-weight: bold">오지현 </p>
+													<div style="font-size: 12px;">
+														<p>사원</p>
+														<p>개발1팀</p>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td>2022-07-08</td>
+										<td>
+											<span class="material-symbols-outlined">
+											draft
+											</span>
+										</td>
+									</tr>
+									<tr>
+										<td>07/07_장문석_일일업무보고</td>
+										<td>
+											<div style="align-items: center; display: flex; justify-content: center; position: relative;">
+												<div >
+													<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+												</div>
+												<div>
+													<p style="font-size: 16px; font-weight: bold">장문석 </p>
+													<div style="font-size: 12px;">
+														<p>팀장</p>
+														<p>개발1팀</p>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td>2022-07-07</td>
+										<td>
+											<span class="material-symbols-outlined">
+											draft
+											</span>
+										</td>
+									</tr>
+									<tr>
+										<td>07/07_서난희_일일업무보고</td>
+										<td>
+											<div style="align-items: center; display: flex; justify-content: center; position: relative;">
+												<div >
+													<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+												</div>
+												<div>
+													<p style="font-size: 16px; font-weight: bold">서난희 </p>
+													<div style="font-size: 12px;">
+														<p>사원</p>
+														<p>개발1팀</p>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td>2022-07-07</td>
+										<td>
+											<span class="material-symbols-outlined">
+											draft
+											</span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</section>
+						<section id="proceeding">
+							<table class="table table-hover projects" style="table-layout: fixed; font-size: 14px;">
+								<thead>
+									<tr>
+										<th style="width: 40%">제목</th>
+										<th style="width: 30%">작성자</th>
+										<th style="width: 20%">등록일</th>
+										<th style="width: 10%">첨부파일</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>07/08_회의록</td>
+										<td>
+											<div style="align-items: center; display: flex; justify-content: center; position: relative;">
+												<div >
+													<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+												</div>
+												<div>
+													<p style="font-size: 16px; font-weight: bold">장문석 </p>
+													<div style="font-size: 12px;">
+														<p>팀장</p>
+														<p>개발1팀</p>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td>2022-07-08</td>
+										<td>
+											<span class="material-symbols-outlined">
+											draft
+											</span>
+										</td>
+									</tr>
+									<tr>
+										<td>07/07_회의록</td>
+										<td>
+											<div style="align-items: center; display: flex; justify-content: center; position: relative;">
+												<div >
+													<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+												</div>
+												<div>
+													<p style="font-size: 16px; font-weight: bold">서난희 </p>
+													<div style="font-size: 12px;">
+														<p>사원</p>
+														<p>개발1팀</p>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td>2022-07-07</td>
+										<td>
+											<span class="material-symbols-outlined">
+											draft
+											</span>
+										</td>
+									</tr>
+									<tr>
+										<td>07/06_회의록</td>
+										<td>
+											<div style="align-items: center; display: flex; justify-content: center; position: relative;">
+												<div >
+													<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+												</div>
+												<div>
+													<p style="font-size: 16px; font-weight: bold">오지현 </p>
+													<div style="font-size: 12px;">
+														<p>사원</p>
+														<p>개발1팀</p>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td>2022-07-06</td>
+										<td>
+											<span class="material-symbols-outlined">
+											draft
+											</span>
+										</td>
+									</tr>
+									<tr>
+										<td>07/05_회의록</td>
+										<td>
+											<div style="align-items: center; display: flex; justify-content: center; position: relative;">
+												<div >
+													<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+												</div>
+												<div>
+													<p style="font-size: 16px; font-weight: bold">장문석 </p>
+													<div style="font-size: 12px;">
+														<p>팀장</p>
+														<p>개발1팀</p>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td>2022-07-05</td>
+										<td>
+											<span class="material-symbols-outlined">
+											draft
+											</span>
+										</td>
+									</tr>
+									<tr>
+										<td>07/04_회의록</td>
+										<td>
+											<div style="align-items: center; display: flex; justify-content: center; position: relative;">
+												<div >
+													<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+												</div>
+												<div>
+													<p style="font-size: 16px; font-weight: bold">서난희 </p>
+													<div style="font-size: 12px;">
+														<p>사원</p>
+														<p>개발1팀</p>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td>2022-07-04</td>
+										<td>
+											<span class="material-symbols-outlined">
+											draft
+											</span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</section>
+					</div>
+					<div class="card-footer">
+						<p class="title" style="font-weight: bold">댓글 목록</p>
+						<table class="table table-hover projects">
+							<tr>
+								<td style="width: 20%">
+									<div style="align-items: center; display: flex; justify-content: center">
+										<div >
+											<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+										</div>
+										<div>
+											<p style="font-size: 16px; font-weight: bold">김형민 </p>
+											<div style="font-size: 12px;">
+												<p>부장</p>
+												<p>개발1팀</p>
+											</div>
+										</div>
+									</div>
+								</td>
+								<td style="width: 60%">
+									이번주 금요일에 진척사항 브리핑 할거야
+								</td>
+								<td style="width: 20%">
+									2022-07-08
+								</td>
+							</tr>
+							<tr>
+								<td style="width: 20%">
+									<div style="align-items: center; display: flex; justify-content: center">
+										<div >
+											<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+										</div>
+										<div>
+											<p style="font-size: 16px; font-weight: bold">최민규 </p>
+											<div style="font-size: 12px;">
+												<p>팀장</p>
+												<p>개발1팀</p>
+											</div>
+										</div>
+									</div>
+								</td>
+								<td style="width: 60%">
+									화이팅 ㅋㅋㅋㅋㅋㅋ
+								</td>
+								<td style="width: 20%">
+									2022-07-08
+								</td>
+							</tr>
+						</table>
+						<div style="margin-top: 50px">
+							<table class="table projects">
+								<tr>
+									<td style="width: 20%">
+									<div style="align-items: center; display: flex; justify-content: center">
+										<div >
+											<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+										</div>
+										<div>
+											<p style="font-size: 16px; font-weight: bold">최민규 </p>
+											<div style="font-size: 12px;">
+												<p>팀장</p>
+												<p>개발1팀</p>
+											</div>
+										</div>
+									</div>
+								</td>
+								<td style="width: 60%">
+									<input type="text" class="form-control" placeholder="내용을 입력하세요.">
+								</td>
+								<td style="width: 20%">
+									<button class="btn btn-block bg-info">등록</button>
+								</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="col-4" style="border-left: 1px solid gray">
+					<div>
+						<p style="font-weight: bold">관련 노하우</p>
+						<div style="display: flex;">
+							<input class="form-control" type="search" placeholder="해시태그 검색">
+							<button type="submit" class="btn btn-default" style="height: 38px;">
+								<i class="fa fa-search"></i>
+							</button>
+						</div>
+						<div style="overflow: scroll; height: 40vh">
+							<table class="table table-hover" style="margin-top: 10px; font-size: 12px; text-align: center;">
+								<thead>
+									<tr>
+										<th style="width: 70%">제목</th>
+										<th style="width: 30%">조회수</th>
+									</tr>
+								</thead>
+								<tr onclick="OpenWindow('workDetail.do', '업무 상세보기', 1000, 600);">
+									<td style="width: 70%">웨어하우스 전자결재</td>
+									<td>
+										542
+									</td>
+								</tr>
+								<tr onclick="OpenWindow('workDetail.do', '업무 상세보기', 1000, 600);">
+									<td style="width: 70%">가온소프트 전자결재</td>
+									<td>
+										209
+									</td>
+								</tr>
+								<tr onclick="OpenWindow('workDetail.do', '업무 상세보기', 1000, 600);">
+									<td style="width: 70%">가람시스템 전자결재</td>
+									<td>
+										182
+									</td>
+								</tr>
+								<tr onclick="OpenWindow('workDetail.do', '업무 상세보기', 1000, 600);">
+									<td style="width: 70%">다우오피스 전자결재</td>
+									<td>
+										87
+									</td>
+								</tr>
+								<tr onclick="OpenWindow('workDetail.do', '업무 상세보기', 1000, 600);">
+									<td style="width: 70%">전자결재 알고리즘 개발</td>
+									<td>
+										66
+									</td>
+								</tr>
+								<tr onclick="OpenWindow('workDetail.do', '업무 상세보기', 1000, 600);">
+									<td style="width: 70%">전자결재 알고리즘 개발</td>
+									<td>
+										66
+									</td>
+								</tr>
+								<tr onclick="OpenWindow('workDetail.do', '업무 상세보기', 1000, 600);">
+									<td style="width: 70%">전자결재 알고리즘 개발</td>
+									<td>
+										66
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div>
+						<p style="font-weight: bold; margin-top: 20px;">관련 멘토 업무</p>
+						<div style="display: flex;">
+							<input class="form-control" type="search" placeholder="해시태그 검색">
+							<button type="submit" class="btn btn-default" style="height: 38px;">
+								<i class="fa fa-search"></i>
+							</button>
+						</div>
+						<div style="overflow: scroll; height: 40vh">
+							<table class="table table-hover" style="margin-top: 10px; font-size: 12px; text-align: center;">
+								<thead>
+									<tr>
+										<th style="width: 70%">제목</th>
+										<th style="width: 30%">상태</th>
+									</tr>
+								</thead>
+								<tr onclick="OpenWindow('workDetail.do', '업무 상세보기', 1000, 600);">
+									<td style="width: 70%">웨어하우스 전자결재</td>
+									<td>
+										<span class="badge bg-info">진행</span>
+									</td>
+								</tr>
+								<tr onclick="OpenWindow('workDetail.do', '업무 상세보기', 1000, 600);">
+									<td style="width: 70%">가온소프트 전자결재</td>
+									<td>
+										<span class="badge bg-info">진행</span>
+									</td>
+								</tr>
+								<tr onclick="OpenWindow('workDetail.do', '업무 상세보기', 1000, 600);">
+									<td style="width: 70%">가람시스템 전자결재</td>
+									<td>
+										<span class="badge bg-success">완료</span>
+									</td>
+								</tr>
+								<tr onclick="OpenWindow('workDetail.do', '업무 상세보기', 1000, 600);">
+									<td style="width: 70%;">다우오피스 전자결재</td>
+									<td>
+										<span class="badge bg-success">완료</span>
+									</td>
+								</tr>
+								<tr onclick="OpenWindow('workDetailGo.do', '업무 상세보기', 1000, 600);">
+									<td style="width: 70%">전자결재 알고리즘 개발</td>
+									<td>
+										<span class="badge bg-success">완료</span>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="modal-cooper">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form action="#" method="post">
+					<div class="modal-header">
+						<h4 class="modal-title">협업요청</h4>
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<b>요청 내용</b>
+						<textarea class="form-control" rows="5" cols="5"></textarea>
+					</div>
+					<div class="modal-footer justify-content-between">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">협업 요청</button>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+	<div class="modal" id="modal-proxy">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form action="#" method="post">
+					<div class="modal-header">
+						<h4 class="modal-title">대리요청</h4>
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<b>요청 내용</b>
+						<textarea class="form-control" rows="5" cols="5"></textarea>
+					</div>
+					<div class="modal-footer justify-content-between">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-warning">대리요청</button>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+	<script>
+		var li = $('li .nav-link');
+		li.click(function(){
+			var dataLink = $(this).attr('data-link');
+			$('section').hide();
+			$('#' + dataLink).show();
+
+			if(dataLink == 'detail'){
+				$('.menu').hide();
+				$('.detail-menu').show();
+			}
+
+			if(dataLink == 'report'){
+				$('.menu').hide();
+
+			}
+
+			if(dataLink == 'proceeding'){
+				$('.menu').hide();
+
+			}
+		});
+
+		$('.modal-backdrop').remove();
+	</script>
+	<%@ include file="./work_js.jsp" %>
+</body>

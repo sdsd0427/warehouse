@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="Qna-Mapper">
+  	<update id="insertQna" parameterType="qna">
+  		INSERT INTO qna (
+		    qnano
+		   ,wcode
+		   ,eno
+		   ,title
+		   ,content
+		   ,regdate
+		) VALUES (
+		    qna_seq.nextval
+		   ,#{wcode}
+		   ,#{eno}
+		   ,#{title}
+		   ,#{content}
+		   ,sysdate
+		)
+  	</update>
+
+  	<update id="insertQnaReply" parameterType="qnaReply">
+  		INSERT INTO qnareply (
+		    qrno
+		   ,qnano
+		   ,content
+		   ,eno
+		   ,regdate
+		) VALUES (
+		    qnaReply_seq.nextval
+		   ,#{qnano}
+		   ,#{content}
+		   ,#{eno}
+		   ,sysdate
+		)
+  	</update>
+
+  	<update id="updateQna" parameterType="qna">
+  		UPDATE qna
+		    SET
+		        title = #{title},
+		        content = #{content}
+		WHERE
+		    qnano =#{qnaNo}
+  	</update>
+
+  	<update id="updateQnaReply" parameterType="qnaReply">
+  		UPDATE qnareply
+		    SET
+		        content = #{content}
+		WHERE
+		    qrno = #{qrno}
+  	</update>
+
+  	<update id="deleteQna">
+  		DELETE FROM qna
+  		WHERE qnano = #{qnaNo}
+  	</update>
+
+  	<update id="deleteQnaReply">
+  		DELETE FROM qnareply
+  		WHERE qrno = #{qrno}
+  	</update>
+
+	<select id="selectWorkQnaList" resultType="qna">
+		SELECT
+		    qnano
+		   ,wcode
+		   ,eno
+		   ,title
+		   ,content
+		   ,regdate
+		FROM
+		    qna
+		WHERE wcode = #{wcode}
+	</select>
+
+	<select id="selectWorkQnaTotalCount" resultType="int">
+		SELECT
+		   count(*)
+		FROM
+		    qna
+		WHERE wcode = #{wcode}
+	</select>
+
+	<select id="selectWorkQnaReplyList" resultType="qnaReply">
+		SELECT
+		    qrno
+		   ,qnano
+		   ,content
+		   ,eno
+		   ,regdate
+		FROM
+		    qnareply
+		WHERE qnano = #{qnaNo}
+	</select>
+	<select id="selectWorkQnaReplyTotalCount" resultType="int">
+		SELECT
+		   count(*)
+		FROM
+		    qnareply
+		WHERE qnano = #{qnaNo}
+	</select>
+
+	<select id="selectWorkQnaDetail" resultType="qna">
+		SELECT
+		    qnano
+		   ,wcode
+		   ,eno
+		   ,title
+		   ,content
+		   ,regdate
+		FROM
+		    qna
+		WHERE qnano = #{qnaNo}
+	</select>
+
+	<select id="selectWorkQnaReplyDetail" resultType="qnaReply">
+		SELECT
+		    qrno
+		   ,qnano
+		   ,content
+		   ,eno
+		   ,regdate
+		FROM
+		    qnareply
+		WHERE qrno = #{qrno}
+	</select>
+  </mapper>

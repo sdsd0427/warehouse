@@ -1,0 +1,64 @@
+package kr.or.warehouse.controller.view;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/kw")
+public class KwController {
+
+	@RequestMapping("/main")
+	public void main()throws Exception{}
+
+	@RequestMapping("/hashTagListForm")
+	public void hashTagListForm()throws Exception{}
+
+	@RequestMapping("/empWorkListForm")
+	public void empWorkListForm()throws Exception{}
+
+	@RequestMapping("/empDocumentListForm")
+	public void empDocumentListForm()throws Exception{}
+
+	@RequestMapping("/manual/list")
+	public String manual()throws Exception{
+		String url="/kw/manual";
+		return url;
+	}
+
+	@RequestMapping("/manual/manualRegistForm")
+	public String manualRegistForm()throws Exception{
+		String url="/kw/manualRegistForm";
+		return url;
+	}
+
+	@RequestMapping("/manual/manualDetail")
+	public String manualDetail()throws Exception{
+		String url="/kw/manualDetail";
+		return url;
+	}
+
+	@RequestMapping("/manual/manualmodifyForm")
+	public String manualmodifyForm()throws Exception{
+		String url="/kw/manualmodifyForm";
+		return url;
+	}
+
+	@RequestMapping("/knowHowList")
+	public String knowHowList() throws Exception{
+		String url = "kw/knowHowList";
+
+		return url;
+	}
+
+	@RequestMapping("/approvalList")
+	public String historyList() throws Exception{
+		String url = "/kw/approvalList";
+		return url;
+	}
+
+	@RequestMapping("/approvalDetailGo")
+	public String approvalDetailGo()throws Exception{
+		String url="/kw/approvalDetailGo";
+		return url;
+	}
+}

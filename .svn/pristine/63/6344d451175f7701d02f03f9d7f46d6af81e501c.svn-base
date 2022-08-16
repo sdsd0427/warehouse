@@ -1,0 +1,14 @@
+package kr.or.warehouse.service;
+
+import java.sql.SQLException;
+import java.util.Map;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.dto.BoardVO;
+import kr.or.warehouse.dto.EmployeeVO;
+
+public interface ContactService {
+
+	Map<String,Object> getContactList(Criteria cri)throws SQLException;
+
+}

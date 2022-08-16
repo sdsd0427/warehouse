@@ -1,0 +1,93 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<head>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/community.css">
+</head>
+
+<title>근무계획표</title>
+
+<body>
+	<div class="wrapper">
+<!-- 		<h3 class="title">근무계획표</h3> -->
+		
+		<section class="content container-fluid">
+		
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card card-outline card-info">
+					
+						<div class="card-header">
+							<h5 class="card-title mt-2">근무계획표</h5>
+							<div class="card-tools">
+								<button type="button" id="modifyBtn" class="btn btn-info" onclick="">제출</button>						
+							    <button type="button" id="listBtn" class="btn btn-secondary" onclick="CloseWindow();">취소</button>
+						    </div>
+						</div>
+						
+						<div class="card-body">
+							<table class="table text-center" style="font-size: 0.95em;">
+									<tr>
+										<td style="width: 40%">근무유형 선택</td>
+										<td style="width: 60%">
+											<select class="form-control text-left" name="perPageNum" id="perPageNum">
+										  		<option value="" >유연근무</option>
+										  		<option value="" >기본근무</option>
+										  		<option value="" >재택근무</option>
+										  	</select>	
+										</td>
+									</tr>
+									<tr>
+										<td style="width: 40%">적용기간</td>
+										<td style="width: 60%">
+										<div class="form-group">
+										<label>Date range:</label>
+										<div class="input-group">
+										<div class="input-group-prepend">
+										<span class="input-group-text">
+										<i class="far fa-calendar-alt"></i>
+										</span>
+										</div>
+										<input type="text" class="form-control float-right" id="reservation">
+										</div>
+										
+										</div>
+										</td>
+									</tr>
+								</table>
+							<div class="row">	
+								<div class="form-group col-sm-3">
+									<label for="title">근무유형 선택</label>
+								</div>
+								<div class="form-group col-sm-9">
+									<select class="form-control text-left" name="perPageNum" id="perPageNum">
+								  		<option value="" >유연근무</option>
+								  		<option value="" >기본근무</option>
+								  		<option value="" >재택근무</option>
+								  	</select>							
+								</div>
+							</div>
+							<div class="row">	
+								<div class="form-group col-sm-3">
+									<label for="title">적용기간</label>
+								</div>
+								<div class="form-group col-sm-9">
+									<select class="form-control text-left" name="perPageNum" id="perPageNum">
+								  		<option value="" >유연근무</option>
+								  		<option value="" >기본근무</option>
+								  		<option value="" >재택근무</option>
+								  	</select>							
+								</div>
+							</div>
+							<div class="form-group col-sm-12">
+								<label for="content">소개글</label>
+								<div id="content">자전거 동호회입니다. 모임은 매주 금요일 저녁입니다. 같이 자전거 타면서 몸 건강해지고 다른 사람도 알아가고 싶은 분들 많이 가입신청 해주세요~</div>	
+							</div>				
+						</div>													
+					</div><!-- end card -->				
+				</div><!-- end col-md-12 -->
+			</div><!-- end row  -->
+	    </section>
+	</div>
+</body>

@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+
+/* select#perPageNum { */
+/* 	width: 10px; */
+/* } */
+
+a#mailDetailSearchBtn {
+	width: 60px;
+	border: 1px solid;
+	text-align: center;
+	padding-top: 6px;
+	border-radius: 5px;
+	background-color: #6c757d;
+	color: white;
+}
+
+.btn_submenu {
+	display: inline;
+}
+
+div#bigLine {
+	margin-left: 10px;
+	width: 300px;
+	display: inline;
+	color: rgb(56 61 66/ 80%);
+}
+
+div#rig {
+	display: flex;
+}
+
+a {
+	color: #212529;
+}
+
+select#searchType {
+	width: 120px;
+}
+
+input.form-control {
+	width: 150px;
+}
+
+.fa-paperclip {
+	margin-left: 8px;
+	color: #6c757d !important;
+}
+
+/* button[type=button]{ */
+/* 	font-size: 1.1em !important; */
+/* } */
+
+.table td,.card-footer{
+	padding: 6px 0.75rem;
+}
+.card-header, .table th{
+	padding: 8px 0.75rem;
+}
+.table th, .table td{
+	text-align: center;
+}
+
+.page-link {
+    line-height: 1;
+    color: #001f3f;
+    background-color: #fff;
+}
+
+.page-item.active .page-link {
+	z-index: 3;
+	color: #fff;
+	background-color: #001f3f;
+    border-color: #001f3f;
+}

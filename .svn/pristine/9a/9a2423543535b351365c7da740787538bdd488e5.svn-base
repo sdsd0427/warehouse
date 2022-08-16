@@ -1,0 +1,128 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+   
+<head>
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/bootstrap/plugins/summernote/summernote-bs4.min.css">
+</head>
+<title>일정 수정</title>
+<body>   
+	 <!-- Main content -->
+	<section class="content-header">
+	  	<div class="container-fluid">
+	  		<div class="row md-2">
+	  			<div class="col-sm-6">
+	  				<h1>일정수정</h1>  				
+	  			</div>
+	  			<div class="col-sm-6">
+	  				<ol class="breadcrumb float-sm-right">
+			        <li class="breadcrumb-item">
+			        	<a href="list.do">
+				        	<i class="fa fa-dashboard"></i>일정
+				        </a>
+			        </li>
+			        <li class="breadcrumb-item active">
+			        	수정
+			        </li>		        
+	    	  </ol>
+	  			</div>
+	  		</div>
+	  	</div>
+	</section>
+	
+  <!-- Main content -->
+    <section class="content container-fluid">
+		<div class="row justify-content-center">
+			<div class="col-md-9" style="max-width:960px;">
+				<div class="card card-outline card-info">
+					<div class="card-header">
+						<h3 class="card-title p-1">일정수정</h3>
+						<div class ="card-tools">
+							<button type="button" class="btn btn-primary" id="modifyBtn" onclick="modify_go();">수 정</button>
+								&nbsp;&nbsp;&nbsp;&nbsp;
+								<button type="button" class="btn btn-warning " id="cancelBtn" onclick="CloseWindow();">취 소</button>
+						</div>
+					</div><!--end card-header  -->
+					<div class="card-body pad">
+						<form role="form" method="post" action="regist.do" name="registForm">
+							<div class="form-group">
+								<input type="text" id="title" name='title' class="form-control" placeholder="일정 제목">
+							</div>							
+							<div class="form-group">
+								<input type="date" id="Date">
+								<input type="time" id="time">
+								&nbsp;&nbsp;~&nbsp;&nbsp;
+								<input type="date" id="Date">
+								<input type="time" id="time">
+							</div>							
+							<div class="form-group">
+								<label for="calen">내 일정</label> 
+								<select class="" name="" id="calen">
+                       				<option value="" selected>(기본)개인일정</option>
+                       				<option value="" >부서일정</option>
+                       				<option value="" >회사일정</option>
+                    			</select>
+							</div>
+							<div class="form-group">
+								<label for="writer">참조자</label> 
+								<button type="button">참조자 선택</button>
+							</div>
+							<div class="form-group row">
+								<label for="addr" class="col-1">주 소</label>
+								<input type="text" id="addr" name='addr' class="col-11">
+							</div>
+							<div class="form-group row">
+								<label for="content" class="col-1">내 용</label>
+								<textarea class="textarea col-11" name="content" id="content" cols="100" rows="10" placeholder="일정 상세 내용을 작성하세요."></textarea>
+							</div>
+							<div class="form-group">
+								<label for="num">알 림</label>
+								<button type="button">알림 추가</button>&nbsp;&nbsp;
+								<input type="text" id="num" name="num" style="width:40px;">&nbsp;&nbsp;
+								<select class="" name="" id="minute">
+                       				<option value="" >분전</option>
+                       				<option value="" >시간전</option>
+                       				<option value="" selected>일전</option>
+                    			</select>&nbsp;&nbsp;
+								<select class="" name="" id="alarm">
+                       				<option value="" selected>푸시알림</option>
+                       				<option value="" >메일알림</option>
+                       				<option value="" >문자알림</option>
+                    			</select>
+							</div>
+							<div class="form-group">
+								<label for="important">중요도</label>
+								<select class="" name="" id="important">
+                       				<option value="" >높음</option>
+                       				<option value="" selected>보통</option>
+                       				<option value="" >낮음</option>
+                    			</select>
+							</div>
+						</form>
+					</div><!--end card-body  -->
+					<div class="card-footer" style="display:none">
+					
+					</div><!--end card-footer  -->
+				</div><!-- end card -->				
+			</div><!-- end col-md-12 -->
+		</div><!-- end row -->
+    </section>
+    <!-- /.content -->   
+     
+    <script>
+    	function modify_go(){
+    		$("form[role='form']").submit();
+    	}
+    	
+    	//팝업창 닫기
+    	function CloseWindow(){
+    		
+    		window.opener.location.reload(true);		
+    		window.close();
+    	}
+    </script>
+    
+  
+</body>    
+    

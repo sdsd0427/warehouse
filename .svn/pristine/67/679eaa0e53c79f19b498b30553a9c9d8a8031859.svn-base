@@ -1,0 +1,5 @@
+file.upload=c:/file/upload
+#member.picture.upload=c:/member/picture/upload/
+#error.log=c:/error_log/
+summernote.img=c:/summernote/images
+#login.user.log=c:/log/loginUser

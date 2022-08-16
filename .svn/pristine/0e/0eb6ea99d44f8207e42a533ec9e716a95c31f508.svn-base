@@ -1,0 +1,403 @@
+package kr.or.warehouse.dao;
+
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.dto.EmployeeVO;
+import kr.or.warehouse.dto.MentoringVO;
+import kr.or.warehouse.dto.SubMentoringVO;
+import kr.or.warehouse.dto.WorkVO;
+
+
+@Repository
+public class MentoringDAOImpl implements MentoringDAO{
+	private static final Logger LOGGER = LoggerFactory.getLogger(MentoringDAOImpl.class);
+
+	@Autowired
+	private SqlSession session;
+
+	@Override
+	public String selectPhoto(int eno) throws SQLException {
+		return session.selectOne("Mentoring-Mapper.selectPhoto", eno);
+	}
+
+	@Override
+	public List<SubMentoringVO> selectMyMentoMain(int eno) throws Exception {
+		return session.selectList("Mentoring-Mapper.selectMyMentoMain", eno);
+	}
+
+	@Override
+	public List<SubMentoringVO> selectMyMenteeMain(int eno) throws Exception {
+		return session.selectList("Mentoring-Mapper.selectMyMenteeMain", eno);
+	}
+
+	@Override
+	public List<SubMentoringVO> selectMyMento(Criteria cri, int eno) throws Exception {
+		System.out.println("eno : " +eno);
+		int offset = cri.getStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno", eno);
+		param.put("searchType", cri.getSearchType());
+		param.put("keyword", cri.getKeyword());
+
+		return session.selectList("Mentoring-Mapper.selectMyMento", param, rowBounds);
+	}
+
+	@Override
+	public int selectMyMentoCount(Criteria cri, int eno) throws Exception {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno",eno);
+		param.put("searchType", cri.getSearchType());
+		param.put("keyword", cri.getKeyword());
+		return session.selectOne("Mentoring-Mapper.selectMyMentoCount", param);
+	}
+	@Override
+	public int selectMyMentoCountMain(int eno) throws Exception {
+		return session.selectOne("Mentoring-Mapper.selectMyMentoCount", eno);
+	}
+
+	@Override
+	public List<SubMentoringVO> selectMyMentee(Criteria cri, int eno) throws Exception {
+
+		int offset = cri.getStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno", eno);
+		param.put("searchType", cri.getSearchType());
+		param.put("keyword", cri.getKeyword());
+
+		return session.selectList("Mentoring-Mapper.selectMyMentee", param, rowBounds);
+	}
+
+	@Override
+	public int selectMyMenteeCount(Criteria cri, int eno) throws Exception {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno",eno);
+		param.put("searchType", cri.getSearchType());
+		param.put("keyword", cri.getKeyword());
+		return session.selectOne("Mentoring-Mapper.selectMyMenteeCount", param);
+	}
+	@Override
+	public int selectMyMenteeCountMain(int eno) throws Exception {
+		return session.selectOne("Mentoring-Mapper.selectMyMenteeCount", eno);
+	}
+
+	@Override
+	public List<SubMentoringVO> selectMentoRank() throws Exception {
+		return session.selectList("Mentoring-Mapper.selectMentoRank");
+	}
+
+	@Override
+	public List<SubMentoringVO> subMentoringList(Criteria cri, int eno) throws Exception {
+		int offset = cri.getStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno", eno);
+		param.put("searchType", cri.getSearchType());
+		param.put("keyword", cri.getKeyword());
+
+		return session.selectList("Mentoring-Mapper.subMentoringList", param, rowBounds);
+	}
+
+	@Override
+	public int subMentoringListCount(Criteria cri, int eno) throws Exception {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno",eno);
+		param.put("searchType", cri.getSearchType());
+		param.put("keyword", cri.getKeyword());
+
+		System.out.println("param : " + param);
+		return session.selectOne("Mentoring-Mapper.subMentoringListCount", param);
+	}
+
+	@Override
+	public List<SubMentoringVO> endMentoringList(Criteria cri, int eno) throws Exception {
+		int offset = cri.getStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno", eno);
+
+		param.put("searchType", cri.getSearchType());
+		param.put("keyword", cri.getKeyword());
+		return session.selectList("Mentoring-Mapper.endMentoringList", param, rowBounds);
+	}
+
+	@Override
+	public int endMentoringListCount(Criteria cri, int eno) throws Exception {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno",eno);
+		param.put("searchType", cri.getSearchType());
+		param.put("keyword", cri.getKeyword());
+		return session.selectOne("Mentoring-Mapper.endMentoringListCount", param);
+	}
+
+	@Override
+	public List<WorkVO> myWorkList(int eno) throws Exception {
+		System.out.println("workDao");
+		return session.selectList("Mentoring-Mapper.myWorkList", eno);
+	}
+
+	@Override
+	public void applyMentoring(SubMentoringVO subMentoring) throws Exception {
+		session.update("Mentoring-Mapper.applyMentoring",subMentoring);
+	}
+
+	@Override
+	public String selectSmno() throws Exception {
+		return session.selectOne("Mentoring-Mapper.selectSmno");
+	}
+
+	@Override
+	public int subMentoring(int mento, int mentee) throws Exception {
+		Map<String, Integer> param = new HashMap<String, Integer>();
+		param.put("mento", mento);
+		param.put("mentee", mentee);
+		return session.selectOne("Mentoring-Mapper.subMentoring", param);
+	}
+
+	@Override
+	public MentoringVO selectMenteeDate(int eno) throws Exception {
+		return session.selectOne("Mentoring-Mapper.selectMenteeDate",eno);
+	}
+
+	@Override
+	public List<SubMentoringVO> myMentoWorkList(Criteria cri, int eno) throws Exception {
+		int offset = cri.getStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno", eno);
+
+		param.put("searchType", cri.getSearchType());
+		param.put("keyword", cri.getKeyword());
+		return session.selectList("Mentoring-Mapper.myMentoWorkList", param, rowBounds);
+	}
+
+	@Override
+	public int myMentoWorkListCount(Criteria cri, int eno) throws Exception {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno", eno);
+
+		param.put("searchType", cri.getSearchType());
+		param.put("keyword", cri.getKeyword());
+		return session.selectOne("Mentoring-Mapper.myMentoWorkListCount", param);
+	}
+
+	@Override
+	public List<SubMentoringVO> myMentoDocList(Criteria cri, int eno) throws Exception {
+		int offset = cri.getStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno", eno);
+		param.put("searchType", cri.getSearchType());
+		param.put("keyword", cri.getKeyword());
+
+		return session.selectList("Mentoring-Mapper.myMentoDocList", param, rowBounds);
+	}
+
+	@Override
+	public int myMentoDocListCount(Criteria cri, int eno) throws Exception {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno", eno);
+		param.put("searchType", cri.getSearchType());
+		param.put("keyword", cri.getKeyword());
+
+		return session.selectOne("Mentoring-Mapper.myMentoDocListCount", param);
+	}
+
+	@Override
+	public void endMentoring(String smno) throws Exception {
+		session.delete("Mentoring-Mapper.endMentoring",smno);
+	}
+
+	@Override
+	public List<SubMentoringVO> myMenteeWorkList(Criteria cri, int eno) throws Exception {
+		int offset = cri.getStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno", eno);
+		param.put("searchType", cri.getSearchType());
+		param.put("keyword", cri.getKeyword());
+
+		return session.selectList("Mentoring-Mapper.myMenteeWorkList", param, rowBounds);
+	}
+
+	@Override
+	public int myMenteeWorkListCount(Criteria cri, int eno) throws Exception {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno", eno);
+
+		param.put("searchType", cri.getSearchType());
+		param.put("keyword", cri.getKeyword());
+		return session.selectOne("Mentoring-Mapper.myMenteeWorkListCount", param);
+	}
+
+	@Override
+	public List<SubMentoringVO> myMenteeDocList(Criteria cri, int eno) throws Exception {
+		int offset = cri.getStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno", eno);
+		param.put("searchType", cri.getSearchType());
+		param.put("keyword", cri.getKeyword());
+
+		return session.selectList("Mentoring-Mapper.myMenteeDocList", param, rowBounds);
+	}
+
+	@Override
+	public int myMenteeDocListCount(Criteria cri, int eno) throws Exception {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno", eno);
+		param.put("searchType", cri.getSearchType());
+		param.put("keyword", cri.getKeyword());
+
+		return session.selectOne("Mentoring-Mapper.myMenteeDocListCount", param);
+	}
+
+	@Override
+	public void exdateApply(SubMentoringVO subMentoring) throws Exception {
+		session.update("Mentoring-Mapper.exdateApply", subMentoring);
+	}
+
+	@Override
+	public SubMentoringVO subMenteeDetail(String smno) throws Exception {
+		return session.selectOne("Mentoring-Mapper.subMenteeDetail", smno);
+	}
+
+	@Override
+	public void acceptMentoring(MentoringVO mentoring) throws Exception {
+		session.update("Mentoring-Mapper.acceptMentoring", mentoring);
+	}
+
+	@Override
+	public String selectMtno() throws Exception {
+		return session.selectOne("Mentoring-Mapper.selectMtno");
+	}
+
+	@Override
+	public List<SubMentoringVO> sysdateMentoWork(Criteria cri, int eno) throws Exception {
+		int offset = cri.getStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno", eno);
+		param.put("searchType", cri.getSearchType());
+		param.put("keyword", cri.getKeyword());
+
+		return session.selectList("Mentoring-Mapper.sysdateMentoWork", param, rowBounds);
+	}
+
+	@Override
+	public List<SubMentoringVO> sysdateMenteeWork(Criteria cri, int eno) throws Exception {
+		int offset = cri.getStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno", eno);
+		param.put("searchType", cri.getSearchType());
+		param.put("keyword", cri.getKeyword());
+
+		return session.selectList("Mentoring-Mapper.sysdateMenteeWork", param, rowBounds);
+	}
+
+	@Override
+	public List<SubMentoringVO> sysdateMentoringAllWork(Criteria cri, int eno) throws Exception {
+		int offset = cri.getStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno", eno);
+		param.put("searchType", cri.getSearchType());
+		param.put("keyword", cri.getKeyword());
+
+		return session.selectList("Mentoring-Mapper.sysdateMentoringAllWork", param, rowBounds);
+	}
+
+	@Override
+	public void updateReadCheck(String smno) throws Exception {
+		session.update("Mentoring-Mapper.updateReadCheck",smno);
+	}
+
+	@Override
+	public int sysdateMentoWorkCount(Criteria cri, int eno) throws Exception {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno", eno);
+		param.put("searchType", cri.getSearchType());
+		param.put("keyword", cri.getKeyword());
+
+		return session.selectOne("Mentoring-Mapper.sysdateMentoWorkCount", param);
+	}
+
+	@Override
+	public int sysdateMenteeWorkCount(Criteria cri, int eno) throws Exception {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno", eno);
+		param.put("searchType", cri.getSearchType());
+		param.put("keyword", cri.getKeyword());
+
+		return session.selectOne("Mentoring-Mapper.sysdateMenteeWorkCount", param);
+	}
+
+	@Override
+	public void deleteEndDateMentoring() throws Exception {
+		System.out.println("deleteEndDateMentoring dao");
+		session.delete("Mentoring-Mapper.deleteEndDateMentoring");
+	}
+
+	@Override
+	public List<SubMentoringVO> recommendMbti(int eno) throws Exception {
+		return session.selectList("Mentoring-Mapper.recommendMbti",eno);
+	}
+
+	@Override
+	public void refuseSubMentoring(String smno) throws Exception {
+		session.delete("Mentoring-Mapper.refuseSubMentoring", smno);
+	}
+
+	@Override
+	public List<EmployeeVO> selectMbti(int eno) throws Exception {
+		return session.selectList("Mentoring-Mapper.selectMbti",eno);
+	}
+
+	@Override
+	public int sysdateMentoringAllWorkCount(Criteria cri, int eno) throws Exception {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno", eno);
+		param.put("searchType", cri.getSearchType());
+		param.put("keyword", cri.getKeyword());
+
+		return session.selectOne("Mentoring-Mapper.sysdateMentoringAllWorkCount", param);
+	}
+
+
+
+}

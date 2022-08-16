@@ -1,0 +1,46 @@
+package kr.or.warehouse.controller.view;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/community")
+public class CommnuityConrtoller {
+	
+	@RequestMapping("/main")
+	public void main()throws Exception{}
+	
+	@RequestMapping("/detail")
+	public void detail()throws Exception{}
+	
+	@RequestMapping("/commuRegistGo")
+	public void commuRegistGo()throws Exception{}
+	
+	@RequestMapping("/commuApproval")
+	public void commuApproval()throws Exception{}
+	
+	@RequestMapping("/commuSub")
+	public void commuSub(){}
+	
+	@RequestMapping("/commuInviteForm")
+	public void commuInviteForm(){}
+	
+	@RequestMapping("/boardGo")
+	public String boardGo(){
+		String url = "/community/board";
+		return url;
+	}
+	
+	@RequestMapping("/boardRegistForm")
+	public void boardRegistForm()throws Exception{}
+	
+	@RequestMapping("/boardDetail")
+	public void boardDetail()throws Exception{}
+	
+	@RequestMapping("/boardModifyForm")
+	public void boardModifyForm()throws Exception{}
+	
+	@RequestMapping("/management")
+	public void management()throws Exception{}
+	
+}

@@ -1,0 +1,154 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<head>
+
+
+<!-- jQuery EasyUi API -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<style type="text/css">
+/* Remove the navbar's default rounded borders and increase the bottom margin */
+.navbar {
+	margin-bottom: 50px;
+	border-radius: 0;
+}
+
+/* Remove the jumbotron's default bottom margin */
+.jumbotron {
+	margin-bottom: 0;
+}
+
+/* Add a gray background color and some padding to the footer */
+#footer {
+	margin-top: 50px;
+	background-color: #f2f2f2;
+	padding: 25px;
+}
+
+#content {
+	margin-left: 50px;
+	margin-right: 50px;
+	overflow: hidden;
+}
+
+/*  */
+#title {
+	border-bottom: 2px solid #727377;
+}
+
+#rightMenu {
+	margin-top: 10px;
+}
+
+.profileImg {
+	height: 128px;
+	width: 96px;
+}
+
+#officerList > thead > tr > th, #officerList > tbody > tr > td {
+	text-align: center;
+}
+
+.jstree-folder-open {
+background-image: url('plusIcon.PNG') !important;
+background-position: -105px -70px !important;
+margin-left: 500px;
+}
+
+.jstree-icon jstree-ocl{
+background-image: url('plusIcon.png') !important;
+margin-left: 500px;
+}
+</style>
+
+</head>
+<body>
+
+	<div id="chart">
+			<div id="inName"><span id="RecName"><strong>조직도</strong></span></div>
+			
+			
+				<div id="inAll" style="margin: 30px;margin-left: 500px;">
+
+
+
+
+					
+				<div id="wrap">
+		<!-- header 시작 -->
+		<!-- nav 종료 -->
+		<span class="material-symbols-outlined">
+			corporate_fare
+			</span>
+	   <span >PoJo기업</span>
+		<div id="container" >
+		  <ul>
+		    <li><span>최민규 대표이사</span></li>
+		    <li>영업본부
+		      <ul>
+		        <li>영업팀</li>
+		        <li>마케팅 팀</li>
+		      </ul>
+		    </li>
+		    <li>경영지원본부
+		    	<ul>
+		        <li>재경팀</li>
+		        <li>총무 팀</li>
+		        <li>인사 팀</li>
+		      </ul>
+		    </li>
+		     <li>개발본부
+		    	<ul>
+		        <li>서비스개발팀</li>
+		        <li>플랫폼운영팀</li>
+		        <li>디자인팀</li>
+		      </ul>
+		    </li>
+		     <li>서비스본부
+		    	<ul>
+		        <li>인터넷사업팀</li>
+		        <li>커머스사업팀</li>
+		      </ul>
+		    </li>
+		  </ul>
+		</div>
+		<!-- content 종료 -->
+
+
+	</div>
+	<script>
+			  $('#container').jstree({   //문서 없는 버전
+				"types" : {
+				      "default" : {
+				        "icon" : "glyphicon glyphicon-flash"
+				      },
+				      "demo" : {
+				        "icon" : "glyphicon glyphicon-ok"
+				      }
+				    },
+				    "plugins" : [ "types" ]
+			}); 
+			
+			
+			/*  $('#container').jstree({     //문서 버전 
+				
+			});  */
+			
+			
+			
+			
+	</script>
+							
+							
+
+							
+
+
+
+
+
+						</div>
+		</div> <!-- chart -->
+</body>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Hr-Mapper">
+
+	<select id="selectHrList" resultType="hr">
+		SELECT
+		    hrcode
+		   ,eno
+		   ,state
+		   ,hrtime
+		   ,overtime
+		   ,ontime
+		   ,offtime
+		   ,hrdate
+		FROM
+		    hr
+	    WHERE
+	    	eno=#{eno}
+	</select>
+
+	<select id="selectHrType" resultType="hrtype">
+		SELECT
+		    hrtypecode
+		   ,hrtype
+		   ,ontime
+		   ,offtime
+		   ,eno
+		   ,startdate
+		   ,enddate
+		   ,hrday
+		   ,hrapprove
+		   ,weektime
+		FROM
+		    hrtype
+	    WHERE
+	    	eno=#{eno}
+	</select>
+
+	<select id="selectHrByDate" parameterType="hashmap" resultType="hr">
+		SELECT
+		    hrcode
+		   ,eno
+		   ,state
+		   ,hrtime
+		   ,overtime
+		   ,ontime
+		   ,offtime
+		   ,hrdate
+		FROM
+		    hr
+	    WHERE
+	    	eno=#{eno}
+    	AND
+    		hrdate=#{hrDate}
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

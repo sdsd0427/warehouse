@@ -1,0 +1,66 @@
+package kr.or.warehouse.controller.view;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.dto.DepartmentVO;
+import kr.or.warehouse.service.ContactService;
+
+@Controller
+@RequestMapping("/contact")
+public class ContactController {
+
+	@Autowired
+	private ContactService service;
+
+	@RequestMapping("/main")
+	 public ModelAndView main(Criteria cri, @RequestParam(defaultValue = "개발팀") String dname,ModelAndView mnv)throws Exception{
+		/* public String main()throws Exception{ */
+
+		  String url="contact/main";
+
+		Map<String,Object> dataMap = service.getContactList(cri);
+
+		  mnv.addObject("dataMap",dataMap); mnv.setViewName(url);
+
+		  System.out.println("ConController");
+		  return mnv;
+
+		/*
+		 * String url="contact/main"; return url;
+		 */
+	}
+
+
+	@RequestMapping("/deptList")
+	public String deptList()throws Exception{
+		String url="contact/deptList";
+		return url;
+	}
+
+	@RequestMapping("/personalList")
+	public String personalList()throws Exception{
+		String url="contact/personalList";
+		return url;
+	}
+
+	//
+	@RequestMapping("/organization")
+	public String organization()throws Exception{
+		String url="contact/organization";
+		return url;
+	}
+
+
+}

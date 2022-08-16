@@ -1,0 +1,285 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<script>
+	function getProceedingDraftDocList(page){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/approval/getProceedingDraftDocList.do?page=" + page,
+			type : 'get',
+			success : function(res){
+				if(res.draftList.length == 0){
+					var str = `
+						<tr>
+							<td colspan="6" style="font-size:14px; text-align:center">
+								해당 문서가 존재하지 않습니다.
+							</td>
+						</tr>
+					`;
+
+					$('.proceedDoc').html(str);
+				}else{
+					printDocList(res.draftList, $('.proceedDoc'), $('#proceed-template'));
+				}
+				lPage = page - 1;
+				if(lPage < 1){lPage = 1;}
+				rPage = page + 1;
+				if(rPage > res.pageMaker.realEndPage){rPage = res.pageMaker.realEndPage;}
+				pageMakerData = {
+						pageMaker : res.pageMaker,
+						target : 'getProceedingDraftDocList',
+						left : "javascript:getProceedingDraftDocList("+lPage+")",
+						right : "javascript:getProceedingDraftDocList("+rPage+")",
+						doubleLeft : "javascript:getProceedingDraftDocList("+(1)+")",
+						doubleRight :"javascript:getProceedingDraftDocList("+(res.pageMaker.endPage)+")"
+				}
+				printDocPageMaker(pageMakerData, $('#proceedPage'), $('#pageMaker-template'));
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function getRecentTempSaveDocList(page){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/approval/getRecentTempSaveDocList.do?page=" + page,
+			type : 'get',
+			success : function(res){
+				if(res.tempList.length == 0){
+					var str = `
+						<tr>
+							<td colspan="6" style="font-size:14px;text-align:center">
+								해당 문서가 존재하지 않습니다.
+							</td>
+						</tr>
+					`;
+
+					$('.tempDoc').html(str);
+				}else{
+					printDocList(res.tempList, $('.tempDoc'), $('#tempDoc-template'));
+				}
+				lPage = page - 1;
+				if(lPage < 1){lPage = 1;}
+				rPage = page + 1;
+				if(rPage > res.pageMaker.realEndPage){rPage = res.pageMaker.realEndPage;}
+				pageMakerData = {
+						pageMaker : res.pageMaker,
+						target : 'getRecentTempSaveDocList',
+						left : "javascript:getRecentTempSaveDocList("+lPage+")",
+						right : "javascript:getRecentTempSaveDocList("+rPage+")",
+						doubleLeft : "javascript:getRecentTempSaveDocList("+(1)+")",
+						doubleRight :"javascript:getRecentTempSaveDocList("+(res.pageMaker.endPage)+")"
+				}
+				printDocPageMaker(pageMakerData, $('#tempDocPage'), $('#pageMaker-template'));
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function getSignMyTurnDocList(page){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/approval/getSignMyTurnDocList.do?page=" + page,
+			type : 'get',
+			success : function(res){
+				if(res.signList.length == 0){
+					var str = `
+						<tr>
+							<td colspan="6" style="font-size:14px; text-align:center">
+								해당 문서가 존재하지 않습니다.
+							</td>
+						</tr>
+					`;
+
+					$('.signMyTurnList').html(str);
+				}else{
+					printDocList(res.signList, $('.signMyTurnList'), $('#signList-template'));
+				}
+				lPage = page - 1;
+				if(lPage < 1){lPage = 1;}
+				rPage = page + 1;
+				if(rPage > res.pageMaker.realEndPage){rPage = res.pageMaker.realEndPage;}
+				pageMakerData = {
+						pageMaker : res.pageMaker,
+						target : 'getSignMyTurnDocList',
+						left : "javascript:getSignMyTurnDocList("+lPage+")",
+						right : "javascript:getSignMyTurnDocList("+rPage+")",
+						doubleLeft : "javascript:getSignMyTurnDocList("+(1)+")",
+						doubleRight :"javascript:getSignMyTurnDocList("+(res.pageMaker.endPage)+")"
+				}
+				printDocPageMaker(pageMakerData, $('#signPage'), $('#pageMaker-template'));
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function getRefuseDraftList(page){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/approval/getRefuseDraftList.do?page=" + page,
+			type : 'get',
+			success : function(res){
+				if(res.draftList.length == 0){
+					var str = `
+						<tr>
+							<td colspan="6" style="font-size:12px; text-align:center">
+								해당 문서가 존재하지 않습니다.
+							</td>
+						</tr>
+					`;
+
+					$('.signMyTurnList').html(str);
+				}else{
+					printDocList(res.draftList, $('.signMyTurnList'), $('#signList-template'));
+				}
+				lPage = page - 1;
+				if(lPage < 1){lPage = 1;}
+				rPage = page + 1;
+				if(rPage > res.pageMaker.realEndPage){rPage = res.pageMaker.realEndPage;}
+				pageMakerData = {
+						pageMaker : res.pageMaker,
+						target : 'getRefuseDraftList',
+						left : "javascript:getRefuseDraftList("+lPage+")",
+						right : "javascript:getRefuseDraftList("+rPage+")",
+						doubleLeft : "javascript:getRefuseDraftList("+(1)+")",
+						doubleRight :"javascript:getRefuseDraftList("+(res.pageMaker.endPage)+")"
+				}
+				printDocPageMaker(pageMakerData, $('#signPage'), $('#pageMaker-template'));
+			},
+			error : function(error){
+				AjaxErrorSecurityRedirectHandler(error.status);
+			}
+		});
+	}
+
+	function detail_go(signNo){
+		OpenWindow('detail.do?signNo=' + signNo ,'결재상세', '1000', '800')
+	}
+
+	function printDocList(list, target, templateObject){
+		var template=Handlebars.compile(templateObject.html());
+		var html = template(list);
+		target.html(html);
+	}
+
+	function printDocPageMaker(data,target,templateObject){
+		var template = Handlebars.compile(templateObject.html());
+		var html = template(data);
+		target.html(html);
+	}
+</script>
+
+<script type="text/x-handlebars-template"  id="signList-template" >
+{{#each .}}
+<tr onclick="detail_go('{{signNo}}')" style="cursor:pointer;height:30px; font-size:12px;">
+	<td style="text-align:center">{{dateFormat ddate}}</td>
+	<td style="text-align:center">
+		{{formText}}
+	</td>
+	<td>{{emergencyCheck emergency}}</td>
+	<td style="text-align:left; width:35%; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">
+		{{title}}
+	</td>
+	<td style="text-align:center">{{drafter}}</td>
+	<td style="text-align:center">{{lastSigner}}</td>
+</tr>
+{{/each}}
+</script>
+
+<script type="text/x-handlebars-template"  id="proceed-template" >
+{{#each .}}
+<tr onclick="detail_go('{{signNo}}')" style="cursor:pointer; font-size:12px;">
+	<td style="text-align:center">{{dateFormat ddate}}</td>
+	<td style="text-align:center">
+		{{formText}}
+	</td>
+	<td style="text-align:left; width:25%; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">
+		{{title}}
+	</td>
+	<td style="text-align:center">{{curSigner}}</td>
+</tr>
+{{/each}}
+</script>
+
+<script type="text/x-handlebars-template"  id="tempDoc-template" >
+{{#each .}}
+<tr onclick="detail_go('{{signNo}}')" style="cursor:pointer; font-size:12px;">
+	<td style="text-align:center">
+		{{formText}}
+	</td>
+	<td style="text-align:left; width:60%; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">
+		{{title}}
+	</td>
+	<td style="text-align:center">{{dateFormat ddate}}</td>
+</tr>
+{{/each}}
+</script>
+
+<script type="text/x-handlebars-template" id="pageMaker-template">
+	<li class="page-item">
+		<a class="page-link" href="{{doubleLeft}}">
+			<i class="fas fa-angle-double-left"></i>
+		</a>
+	</li>
+	<li class="page-item">
+		<a class="page-link" href="{{left}}">
+			<i class="fas fa-angle-left"></i>
+		</a>
+	</li>
+		{{printPage this}}
+	<li class="page-item">
+		<a class="page-link" href="{{right}}">
+			<i class="fas fa-angle-right"></i>
+		</a>
+	</li>
+	<li class="page-item">
+		<a class="page-link" href="{{doubleRight}}">
+			<i class="fas fa-angle-double-right"></i>
+		</a>
+	</li>
+</script>
+
+<script>
+	Handlebars.registerHelper({
+		"dateFormat" : function(ddate){
+			var d = new Date(ddate),
+	        month = '' + (d.getMonth() + 1),
+	        day = '' + d.getDate(),
+	        year = d.getFullYear();
+
+		    if (month.length < 2)
+		        month = '0' + month;
+		    if (day.length < 2)
+		        day = '0' + day;
+
+		    return [year, month, day].join('-');
+		},
+		"emergencyCheck" : function(emergency){
+			var str = `
+				<span class="material-symbols-outlined" style="color:red;">e911_emergency </span>
+			`;
+
+			if(emergency == 1){
+				return new Handlebars.SafeString(str);
+			}
+		},
+		"printPage" : function(pageMakerData){
+			var pageMaker = pageMakerData.pageMaker;
+			var target = pageMakerData.target;
+			var str = '';
+
+			for(i = pageMaker.startPage; i <= pageMaker.endPage; i++){
+				var active = i == pageMaker.cri.page ? 'active' : '';
+				str += '<li class="page-item ' + active + '">';
+				str += '<a class="page-link" href="javascript:'+target+'(' + i + ')">';
+				str += i
+				str += '</a>';
+				str += '</li>';
+			}
+
+			return new Handlebars.SafeString(str);
+
+		},
+	});
+</script>

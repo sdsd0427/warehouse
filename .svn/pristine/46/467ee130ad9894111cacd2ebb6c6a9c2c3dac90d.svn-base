@@ -1,0 +1,136 @@
+@charset "UTF-8";
+
+
+.card-body.table-responsive.p-0 {
+    overflow-x: hidden;
+}
+
+.row{
+	margin: 0;
+}
+
+.table td, .table th {
+    padding: 0.3rem;
+    }
+
+.Photohover img {
+  transition: all 0.2s linear;
+}
+.Photohover:hover img {
+  transform: scale(1.4);
+}
+
+
+.navbar {
+	margin-bottom: 50px;
+	border-radius: 0;
+}
+
+.jumbotron {
+	margin-bottom: 0;
+}
+
+#content {
+	margin-left: 50px;
+	margin-right: 50px;
+	overflow: hidden;
+}
+
+#title {
+	border-bottom: 2px solid #727377;
+}
+
+#rightMenu {
+	margin-top: 10px;
+}
+
+.profileImg {
+	height: 128px;
+	width: 96px;
+}
+
+#officerList > thead > tr > th, #officerList > tbody > tr > td {
+	text-align: center;
+}
+
+
+.table th,.table td{
+	padding: 4px 0.75rem;
+}
+
+.card-header{
+	padding: 4px 1.25rem;
+}
+.card-body{
+	padding: 0.75rem 1.25rem;
+}
+.small-box{
+	margin: 0;
+}
+.table{
+	margin: 0;
+}
+.upWord .word{
+	    list-style-type: none;
+	    float: left;
+	    margin: 5px;
+	}
+
+.btn_submenu {
+    display: inline-block;
+}
+
+	span#RecName{
+		margin-left: 64px;
+	}
+
+
+	pribut{
+	 border:1px solid;
+
+	}
+	div#chart {
+    padding-top: 10px;
+}
+
+	select#perPageNum ,select#searchType {
+	list-style-type: none;
+    width: 140px;
+    float: left;
+}
+
+input.form-control{
+list-style-type: none;
+    width: 180px;
+    float: left;
+}
+
+div#inName {
+ 	width: 210px;
+ 	height:40px;
+    margin-left: 8px;
+     margin-top: 3px;
+     background-color: #ffc107;
+         padding-top: 8px;
+}
+
+div#botle {
+    margin-left: 500px;
+
+}
+div#b {
+    border-radius: 5px;
+}
+.sename{
+color:black;
+}
+div#bottom {
+     margin-left: 20px; 
+    margin-top: -30PX;
+}
+ul.upWord {
+    margin-left: -30px;
+}
+.emailcur{
+cursor:pointer;
+}

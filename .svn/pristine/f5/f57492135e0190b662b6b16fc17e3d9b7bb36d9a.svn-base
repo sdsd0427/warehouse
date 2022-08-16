@@ -1,0 +1,89 @@
+package kr.or.warehouse.service;
+
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.command.PageMaker;
+import kr.or.warehouse.dao.BoardDAO;
+import kr.or.warehouse.dto.BoardVO;
+
+@Service
+public class BoardServiceImpl implements BoardService{
+	@Autowired
+	private BoardDAO boardDAO;
+
+	@Override
+	public Map<String, Object> getBoardList(Criteria cri, String temp) throws SQLException {
+		System.out.println("service");
+		System.out.println(temp);
+		List<BoardVO> tempList = boardDAO.selectSearchBoardList(cri);
+		List<BoardVO> boardList = null;
+
+		if(temp.equals("n")) {
+			//공지사항
+			for(BoardVO board : tempList) {
+				if((board.getClassCode()).equals("A101")){
+					boardList.add(board);
+				}
+			}
+		} else if(temp.equals("f")){
+			//자유게시판
+			for(BoardVO board : tempList) {
+				if((board.getClassCode()).equals("A102")){
+					boardList.add(board);
+				}
+			}
+		} else {
+			//경조사게시판
+			for(BoardVO board : tempList) {
+				if((board.getClassCode()).equals("A103")){
+					boardList.add(board);
+				}
+			}
+		}
+		int totalCount = boardDAO.selectSearchBoardListCount(cri);
+
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(totalCount);
+
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap.put("boardList", boardList);
+		dataMap.put("pageMaker", pageMaker);
+
+		return dataMap;
+	}
+
+	@Override
+	public BoardVO getBoard(int boardNo) throws SQLException {
+		BoardVO board = boardDAO.selectBoardByBoardNo(boardNo);
+		boardDAO.increaseViewCnt(boardNo);
+		return board;
+	}
+
+	@Override
+	public void regist(BoardVO board) throws SQLException {
+		int no = boardDAO.selectBoardSeqNext();
+		String boardNo = board.getClassCode() + no;
+		board.setBoardNo(boardNo);
+		boardDAO.insertBoard(board);
+		System.out.println(boardNo);
+	}
+
+	@Override
+	public void modify(BoardVO board) throws SQLException {
+		boardDAO.updateBoard(board);
+	}
+
+	@Override
+	public void remove(int boardNo) throws SQLException {
+		boardDAO.deleteBoard(boardNo);
+	}
+
+}

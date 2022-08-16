@@ -1,0 +1,19 @@
+package kr.or.warehouse.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.dto.EmployeeVO;
+
+public interface ContactDAO {
+
+	List<EmployeeVO> selectSearchContactList(Criteria cri) throws SQLException;
+
+
+	int selectSearchContactListCount(Criteria cri) throws SQLException;
+
+
+
+
+}

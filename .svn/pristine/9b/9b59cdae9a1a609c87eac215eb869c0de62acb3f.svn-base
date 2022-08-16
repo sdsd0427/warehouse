@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Contact-Mapper">
+	<sql id="search">
+		<if test="searchType == 'n'.toString()">
+			and name like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'p'.toString()">
+			and phone like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'e'.toString()">
+			and email like '%'||#{keyword}||'%'
+		</if>
+	</sql>
+
+	<select id="selectSearchContactList" resultType="employee">
+
+		SELECT b.name ,b.email,b.phone,b.call,b.condition,c.ppsname,a.name
+		FROM department a, employee b,  postposition c
+		where a.dno = b.dno
+		and b.PPSCODE = c.PPSCODE
+		and b.name is not null
+		<include refid="search" />
+		order by b.name
+	</select>
+
+	<select id="selectSearchContactListCount" resultType="int">
+		select
+		count(*)
+		from
+		employee
+		where name is not null
+		<include refid="search" />
+		order by name
+	</select>
+
+
+</mapper>

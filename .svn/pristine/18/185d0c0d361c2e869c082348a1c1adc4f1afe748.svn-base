@@ -1,0 +1,408 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<head>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mail.css">
+</head>
+
+<body>
+	<div class="wrapper">
+		<div class="Allmidle">
+			<div id="upAll">
+
+				<section class="content-header">
+					<div class="row md-2">
+						<div class="col" style="display: inline; width: 200px">
+							<h3 style="width: 200px; display: inline;">전체메일함</h3>
+
+							<div id="bigLine">
+								<a>안읽은 메일</a> <a>12</a> <a>/</a> <a>전체메일</a> <a>81</a> 
+							</div>
+						</div>
+					</div>
+				</section>
+
+
+				<!--  	<h2 style="width: 200px;display: inline;">전체메일함</h2>
+		<div id="bigLine">
+			<a>전체메일</a>
+			<a>81</a>
+			<a>/</a>
+			<a>안읽은 메일</a>
+			<a>12</a>
+		</div>
+-->
+
+
+				<div id="total"
+					style="display: flex; justify-content: space-between;">
+					<div class="aa">
+						<div class="btn_submenu">
+							<a class="btn_tool btn_tool_multi"> <i class="fas fa-reply"></i>
+								답장
+							</a>
+						</div>
+
+
+						<div class="btn_submenu">
+							<a class="btn_tool btn_tool_multi"> <i
+								class="far fa-trash-alt"></i> 삭제
+							</a>
+						</div>
+
+						<div class="btn_submenu">
+							<a class="btn_tool btn_tool_multi"> <i class="fas fa-inbox"></i>
+								읽음
+							</a>
+
+						</div>
+<!-- 						<select class=" col-md-3" name="perPageNum" id="perPageNum" -->
+<!-- 							style="display: inline-block" onchange="list_go();"> -->
+<!-- 							<option value="10"><span -->
+<!-- 									class="select2-selection__rendered" id="select2-vesq-container" -->
+<!-- 									role="textbox" aria-readonly="true" title="Title">읽음</span></option> -->
+<%-- 							<option value="20" ${cri.perPageNum == 20 ? 'selected':''}>안읽음</option> --%>
+
+<!-- 						</select> -->
+					</div>
+
+					<div id="rig">
+						<!-- 				<select class="form-control" name="searchType" id="searchType"> -->
+						<%-- 							<option value="tcw"  ${cri.searchType eq 'tcw' ? 'selected':'' }>메일</option> --%>
+						<%-- 							<option value="t" ${cri.searchType eq 't' ? 'selected':'' }>이름</option> --%>
+						<%-- 							<option value="w" ${cri.searchType eq 'w' ? 'selected':'' }>통합검색</option> --%>
+						<!-- 				</select>					 -->
+						<input class="form-control" type="text" name="keyword"
+							placeholder="검색" value="${param.keyword }" /> <span
+							class="input-group-append">
+							<button class="btn btn-info" type="button" style="height: 37px;"
+								onclick="list_go(1);" data-card-widget="search">
+								<i class="fa fa-fw fa-search"></i>
+							</button>
+						</span>
+
+						<!-- 					<a class="c_btn_detail" id="mailDetailSearchBtn" title="상세검색" evt-rol="mail-detail-search"> -->
+						<!-- 						<span class="txt">상세</span><span class="ic ic_cs_detail_arrow  "></span> -->
+						<!-- 					</a> -->
+						<button class="btn btn-info ml-1" type="button"
+							style="height: 37px;">상세</button>
+
+					</div>
+
+				</div>
+				<!-- total -->
+
+			</div>
+			<!-- 맨위 상단 -->
+
+			<div class="all">
+				<div class="card card-info card-outline" style="margin-top: 10px">
+
+					<div class="card-body p-0">
+
+						<div class="table-responsive mailbox-messages">
+							<table class="table table-hover text-nowrap">
+							
+								<thead>
+									<tr>
+										<th style="width: 7%">
+											<div class="form-check">
+												<input type="checkbox" class="form-check-input"
+													id="exampleCheck1"> <label class="form-check-label"
+													for="exampleCheck1">&nbsp;&nbsp;</label>
+											</div>
+										</th>
+										<th style="width: 8%">중요</th>
+										<th style="width: 10%">보낸 사람</th>
+										<th style="width: 20%">제목</th>
+										<th style="width: 10%">첨부</th>
+										<th style="width: 20%">수신 시간</th>
+									</tr>
+								</thead>
+							
+								<tbody>
+									<tr class="text-muted">
+										<td>
+											<div class="icheck-primary">
+												<input type="checkbox" value="" id="check1"> <label
+													for="check1"></label>
+											</div>
+										</td>
+										<td class="mailbox-star"><a href="#"> <!--  <i class="fas fa-star text-warning"></i>-->
+												<span evt-rol="switch-flag" flag="F" flaged="off"
+												class="ic ic_important_off" title="중요 메일"></span> <i
+												class="fas fa-star text-warning"></i>
+										</a></td>
+										<td class="mailbox-name">강정인</td>
+										<td class="mailbox-subject">결재문서 검토 필요</td>
+										<td class="mailbox-attachment"></td>
+										<td class="mailbox-date">2022-07-04 (월) 14:17</td>
+									</tr>
+									<tr class="text-muted">
+										<td>
+											<div class="icheck-primary">
+												<input type="checkbox" value="" id="check2"> <label
+													for="check2"></label>
+											</div>
+										</td>
+										<!-- <td class="mailbox-star"><a href="#"><i class="fas fa-star-o text-warning"></i></a></td> -->
+										<td class="mailbox-star"><a href="#"> <!--  <i class="fas fa-star text-warning"></i>-->
+												<span evt-rol="switch-flag" flag="F" flaged="off"
+												class="ic ic_important_off" title="중요 메일"></span> <i
+												class="fas fa-star text-warning"></i>
+										</a></td>
+
+										<td class="mailbox-name">장문석</td>
+										<td class="mailbox-subject">오늘 몇시까지</td>
+										<td class="mailbox-attachment"><i
+											class="fas fa-paperclip"></i></td>
+										<td class="mailbox-date">2022-07-04 (월) 14:17</td>
+									</tr>
+									<tr class="text-muted">
+										<td>
+											<div class="icheck-primary">
+												<input type="checkbox" value="" id="check3"> <label
+													for="check3"></label>
+											</div>
+										</td>
+										<!-- <td class="mailbox-star"><a href="#"><i class="fas fa-star-o text-warning"></i></a></td> -->
+										<td class="mailbox-star"><a href="#"> <!--  <i class="fas fa-star text-warning"></i>-->
+												<span evt-rol="switch-flag" flag="F" flaged="off"
+												class="ic ic_important_off" title="중요 메일"></span> <i
+												class="fas fa-star" style="color: #CCCCCC;"></i>
+										</a></td>
+										<td class="mailbox-name">서난희</td>
+										<td class="mailbox-subject">결재 문서 확인 부탁드립니다</td>
+										<td class="mailbox-attachment"><i
+											class="fas fa-paperclip"></i></td>
+										<td class="mailbox-date">2022-07-04 (월) 14:17</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="icheck-primary">
+												<input type="checkbox" value="" id="check4"> <label
+													for="check4"></label>
+											</div>
+										</td>
+										<!-- <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td> -->
+										<td class="mailbox-star"><a href="#"> <!--  <i class="fas fa-star text-warning"></i>-->
+												<span evt-rol="switch-flag" flag="F" flaged="off"
+												class="ic ic_important_off" title="중요 메일"></span> <i
+												class="fas fa-star" style="color: #CCCCCC;"></i>
+										</a></td>
+										<td class="mailbox-name">최민규</td>
+										<td class="mailbox-subject">결재문서 확인 해주세요</td>
+										<td class="mailbox-attachment"></td>
+										<td class="mailbox-date">2022-07-04 (월) 14:17</td>
+									</tr>
+									<tr class="text-muted">
+										<td>
+											<div class="icheck-primary">
+												<input type="checkbox" value="" id="check5"> <label
+													for="check5"></label>
+											</div>
+										</td>
+										<td class="mailbox-star"><a href="#"><i
+												class="fas fa-star text-warning"></i></a></td>
+										<td class="mailbox-name">장문석</td>
+										<td class="mailbox-subject">멘토링 과제 언제까지인가요?</td>
+										<td class="mailbox-attachment"><i
+											class="fas fa-paperclip"></i></td>
+										<td class="mailbox-date">2022-07-04 (월) 14:17</td>
+									</tr>
+									<tr class="text-muted">
+										<td>
+											<div class="icheck-primary">
+												<input type="checkbox" value="" id="check6"> <label
+													for="check6"></label>
+											</div>
+										</td>
+										<!-- <td class="mailbox-star"><a href="#"><i class="fas fa-star-o text-warning"></i></a></td> -->
+										<td class="mailbox-star"><a href="#"> <!--  <i class="fas fa-star text-warning"></i>-->
+												<span evt-rol="switch-flag" flag="F" flaged="off"
+												class="ic ic_important_off" title="중요 메일"></span> <i
+												class="fas fa-star" style="color: #CCCCCC;"></i>
+										</a></td>
+										<td class="mailbox-name">이종민</td>
+										<td class="mailbox-subject">결재문서</td>
+										<td class="mailbox-attachment"><i
+											class="fas fa-paperclip"></i></td>
+										<td class="mailbox-date">2022-07-04 (월) 14:17</td>
+									</tr>
+									<tr class="text-muted">
+										<td>
+											<div class="icheck-primary">
+												<input type="checkbox" value="" id="check7"> <label
+													for="check7"></label>
+											</div>
+										</td>
+										<td class="mailbox-star"><a href="#"> <!--  <i class="fas fa-star text-warning"></i>-->
+												<span evt-rol="switch-flag" flag="F" flaged="off"
+												class="ic ic_important_off" title="중요 메일"></span> <i
+												class="fas fa-star" style="color: #CCCCCC;"></i>
+										</a></td>
+
+										<td class="mailbox-name">오지현</td>
+										<td class="mailbox-subject">결재문서</td>
+										<td class="mailbox-attachment"><i
+											class="fas fa-paperclip"></i></td>
+										<td class="mailbox-date">2022-07-04 (월) 14:17</td>
+									</tr>
+									<tr class="text-muted">
+										<td>
+											<div class="icheck-primary">
+												<input type="checkbox" value="" id="check8"> <label
+													for="check8"></label>
+											</div>
+										</td>
+										<td class="mailbox-star"><a href="#"><i
+												class="fas fa-star text-warning"></i></a></td>
+										<td class="mailbox-name">홍길동</td>
+										<td class="mailbox-subject">결재문서</td>
+										<td class="mailbox-attachment"></td>
+										<td class="mailbox-date">2022-07-04 (월) 14:17</td>
+									</tr>
+									<tr class="text-muted">
+										<td>
+											<div class="icheck-primary">
+												<input type="checkbox" value="" id="check9"> <label
+													for="check9"></label>
+											</div>
+										</td>
+										<td class="mailbox-star"><a href="#"><i
+												class="fas fa-star text-warning"></i></a></td>
+										<td class="mailbox-name">강정인</td>
+										<td class="mailbox-subject">결재문서</td>
+										<td class="mailbox-attachment"></td>
+										<td class="mailbox-date">2022-07-04 (월) 14:17</td>
+									</tr>
+									<tr class="text-muted">
+										<td>
+											<div class="icheck-primary">
+												<input type="checkbox" value="" id="check10"> <label
+													for="check10"></label>
+											</div>
+										</td>
+
+										<td class="mailbox-star"><a href="#"> <!--  <i class="fas fa-star text-warning"></i>-->
+												<span evt-rol="switch-flag" flag="F" flaged="off"
+												class="ic ic_important_off" title="중요 메일"></span> <i
+												class="fas fa-star" style="color: #CCCCCC;"></i>
+										</a></td>
+
+										<td class="mailbox-name">이종민</td>
+										<td class="mailbox-subject">결재문서 [긴급]</td>
+										<td class="mailbox-attachment"></td>
+										<td class="mailbox-date">2022-07-04 (월) 14:17</td>
+									</tr>
+									<tr class="text-muted">
+										<td>
+											<div class="icheck-primary">
+												<input type="checkbox" value="" id="check11"> <label
+													for="check11"></label>
+											</div>
+										</td>
+
+										<td class="mailbox-star"><a href="#"> <!--  <i class="fas fa-star text-warning"></i>-->
+												<span evt-rol="switch-flag" flag="F" flaged="off"
+												class="ic ic_important_off" title="중요 메일"></span> <i
+												class="fas fa-star" style="color: #CCCCCC;"></i>
+										</a></td>
+
+										<td class="mailbox-name">이종민</td>
+										<td class="mailbox-subject">결재확인바람</td>
+										<td class="mailbox-attachment"><i
+											class="fas fa-paperclip"></i></td>
+										<td class="mailbox-date">2022-07-04 (월) 14:17</td>
+									</tr>
+									<tr class="text-muted">
+										<td>
+											<div class="icheck-primary">
+												<input type="checkbox" value="" id="check12"> <label
+													for="check12"></label>
+											</div>
+										</td>
+										<td class="mailbox-star"><a href="#"><i
+												class="fas fa-star" style="color: #CCCCCC;"></i></a></td>
+										<td class="mailbox-name">오지현</td>
+										<td class="mailbox-subject">결재문서 확인해주세요</td>
+										<td class="mailbox-attachment"></td>
+										<td class="mailbox-date">2022-07-04 (월) 14:17</td>
+									</tr>
+									<tr class="text-muted">
+										<td>
+											<div class="icheck-primary">
+												<input type="checkbox" value="" id="check13"> <label
+													for="check13"></label>
+											</div>
+										</td>
+
+										<td class="mailbox-star"><a href="#"> <!--  <i class="fas fa-star text-warning"></i>-->
+												<span evt-rol="switch-flag" flag="F" flaged="off"
+												class="ic ic_important_off" title="중요 메일"></span> <i
+												class="fas fa-star text-warning"></i>
+										</a></td>
+
+										<td class="mailbox-name">오지현</td>
+										<td class="mailbox-subject">결재요청</td>
+										<td class="mailbox-attachment"><i
+											class="fas fa-paperclip"></i></td>
+										<td class="mailbox-date">2022-07-04 (월) 14:17</td>
+									</tr>
+									<tr class="text-muted">
+										<td>
+											<div class="icheck-primary">
+												<input type="checkbox" value="" id="check14"> <label
+													for="check14"></label>
+											</div>
+										</td>
+										<td class="mailbox-star"><a href="#"><i
+												class="fas fa-star" style="color: #CCCCCC;"></i></a></td>
+										<td class="mailbox-name">오지현</td>
+										<td class="mailbox-subject">화면정의서 아직 멀었..</td>
+										<td class="mailbox-attachment"><i
+											class="fas fa-paperclip"></i></td>
+										<td class="mailbox-date">2022-07-04 (월) 14:17</td>
+									</tr>
+									<tr class="text-muted">
+										<td>
+											<div class="icheck-primary">
+												<input type="checkbox" value="" id="check15"> <label
+													for="check15"></label>
+											</div>
+										</td>
+										<td class="mailbox-star"><a href="#"><i
+												class="fas fa-star" style="color: #CCCCCC;"></i></a></td>
+										<td class="mailbox-name">최민규</td>
+										<td class="mailbox-subject">화면정의서 오늘까지 부탁드려요</td>
+										<td class="mailbox-attachment"><i
+											class="fas fa-paperclip"></i></td>
+										<td class="mailbox-date">2022-07-04 (월) 14:17</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					
+					<div class="card-footer">
+						<ul class="pagination justify-content-center m-0">
+							<li class="page-item"><a class="page-link" href=""> <i
+									class="fas fa-angle-double-left"></i></a></li>
+							<li class="page-item"><a class="page-link" href=""> <i
+									class="fas fa-angle-left"></i></a></li>
+			
+							<li class="page-item active"><a class="page-link" href="">1</a>
+							</li>
+			
+							<li class="page-item"><a class="page-link" href=""> <i
+									class="fas fa-angle-right"></i></a></li>
+							<li class="page-item"><a class="page-link" href=""> <i
+									class="fas fa-angle-double-right"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--  div class="Allmidle"-->
+
+	</div>
+</body>

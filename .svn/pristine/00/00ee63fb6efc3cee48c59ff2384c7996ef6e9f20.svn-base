@@ -1,0 +1,60 @@
+package kr.or.warehouse.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.dto.BoardVO;
+
+@Repository
+public class BoardDAOImpl implements BoardDAO{
+	@Autowired
+	private SqlSession session;
+
+	@Override
+	public List<BoardVO> selectSearchBoardList(Criteria cri) throws SQLException {
+		return session.selectList("Board-Mapper.selectSearchBoardList");
+	}
+
+	@Override
+	public int selectSearchBoardListCount(Criteria cri) throws SQLException {
+		return session.selectOne("Board-Mapper.selectSearchBoardListCount");
+	}
+
+	@Override
+	public BoardVO selectBoardByBoardNo(int BoardNo) throws SQLException {
+		return session.selectOne("Board-Mapper.selectBoardByBoardNo");
+	}
+
+	@Override
+	public void insertBoard(BoardVO board) throws SQLException {
+		session.insert("Board-Mapper.insertBoard");
+
+	}
+
+	@Override
+	public void updateBoard(BoardVO board) throws SQLException {
+		session.update("Board-Mapper.updateBoard");
+	}
+
+	@Override
+	public void deleteBoard(int bno) throws SQLException {
+		session.delete("Board-Mapper.deleteBoard");
+	}
+
+	@Override
+	public void increaseViewCnt(int BoardNo) throws SQLException {
+		session.selectOne("Board-Mapper.increaseViewCnt");
+	}
+
+	@Override
+	public int selectBoardSeqNext() throws SQLException {
+		return session.selectOne("Board-Mapper.selectBoardSeqNext");
+	}
+
+
+}

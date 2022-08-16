@@ -1,0 +1,8 @@
+package kr.or.warehouse.dao;
+
+import kr.or.warehouse.dto.CalendarVO;
+
+public interface CalendarDAO {
+
+	public void insertCalendar(CalendarVO calendar) throws Exception;
+}

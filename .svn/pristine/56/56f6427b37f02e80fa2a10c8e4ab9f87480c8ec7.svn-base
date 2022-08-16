@@ -1,0 +1,23 @@
+package kr.or.warehouse.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.or.warehouse.dao.HrDAO;
+import kr.or.warehouse.dto.HrVO;
+
+@Service
+public class HrServiceImpl implements HrService {
+
+	@Autowired
+	private HrDAO hrDAO;
+	@Override
+	public List<HrVO> getHrList(int eno) throws Exception {
+		List<HrVO> hrList = null;
+		hrList = hrDAO.selectHrList(eno);
+		return hrList;
+	}
+
+}

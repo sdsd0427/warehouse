@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="Todo-Mapper">
+
+  	<update id="insertTodo" parameterType="todo">
+  		INSERT INTO todo (
+		    todono
+		   ,todotitle
+		   ,todocontent
+		   ,todotime
+		   ,todocheck
+		   ,todosignal
+		   ,eno
+		) VALUES (
+		    todo_seq.nextval
+		   ,#{todoTitle}
+		   ,#{todoContent}
+		   ,#{todoTime}
+		   ,#{todoCheck}
+		   ,#{todoSignal}
+		   ,#{eno}
+		)
+  	</update>
+
+  	<select id="selectTodoList" resultType="todo">
+  		SELECT
+		    todono
+		   ,todotitle
+		   ,todocontent
+		   ,to_char(todotime, 'yyyy/MM/dd HH:mm') as todotime
+		   ,todocheck
+		   ,todosignal
+		   ,eno
+		FROM
+		    todo
+		where eno = #{eno}
+		order by todono
+  	</select>
+
+  	<select id="selectTodoByTodoNo" resultType="todo">
+  		SELECT
+		    todono
+		   ,todotitle
+		   ,todocontent
+		   ,to_char(todotime, 'yyyy/MM/dd HH:mm') as todotime
+		   ,todocheck
+		   ,todosignal
+		   ,eno
+		FROM
+		    todo
+		where todono = #{todoNo}
+  	</select>
+
+  	<update id="deleteTodo">
+  		DELETE FROM todo
+  		WHERE todono = #{todoNo}
+  	</update>
+
+  	<update id="updateTodo" parameterType="todo">
+  		UPDATE todo
+  		SET
+  			todotitle = #{todoTitle},
+  			todocontent = #{todoContent},
+  			todotime = #{todoTime},
+  			todocheck = #{todoCheck},
+  			todosignal = #{todoSignal}
+  		WHERE todono = #{todoNo}
+  	</update>
+  </mapper>

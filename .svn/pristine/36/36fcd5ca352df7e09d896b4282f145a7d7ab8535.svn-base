@@ -1,0 +1,453 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<head>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/indexPage.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+</head>
+<body>
+	<div class="wrapper" style="overflow-x:hidden; overflow-y:auto">
+		<section id="top">
+			<div id="loginEmp" class="card">
+				<div class="divContainer">			
+					<div class="imgContainer">
+						<img class="img" src="<%=request.getContextPath() %>/resources/images/indexPage/chopa.jpg"/>
+					</div>
+					<div class="textContainer">
+						<p class="empInfo">장문석 사원</p>
+						<p class="empDep">개발부서</p>
+					</div>
+				</div>
+			</div>
+			<div id="todo" class="card">
+				<div class="card-header ui-sortable-handle">			
+					To do List
+					<div class="card-tools">
+						<button type="button" class="btn btn-primary">
+							등록
+						</button>
+					</div>
+				</div>
+				<div id="todo_main">
+					<ul class="todo-list ui-sortable">
+						<li>
+							<div class="icheck-primary d-inline ml-2">
+								<input type="checkbox" id="todoCheck1">
+								<label for="todoCheck1"></label>
+							</div>
+							<span class="text">테스트 to do</span>
+						</li>
+						<li>
+							<div class="icheck-primary d-inline ml-2">
+								<input type="checkbox" id="todoCheck1">
+								<label for="todoCheck1"></label>
+							</div>
+							<span class="text">테스트 to do</span>
+						</li>
+						<li>
+							<div class="icheck-primary d-inline ml-2">
+								<input type="checkbox" id="todoCheck1">
+								<label for="todoCheck1"></label>
+							</div>
+							<span class="text">테스트 to do</span>
+						</li>
+						<li>
+							<div class="icheck-primary d-inline ml-2">
+								<input type="checkbox" id="todoCheck1">
+								<label for="todoCheck1"></label>
+							</div>
+							<span class="text">테스트 to do</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div id="recentNotice" class="card">
+				<div class="row">
+					<div class="col-12">
+						<div class="card-header">
+			                <h3 class="card-title" >최근 공지사항</h3>
+		              	</div>	
+						<div class="card-body table-responsive p-0">
+			                <table class="table table-hover text-nowrap">
+			                  <thead>
+			                    <tr>
+			                      <th>번호</th>
+			                      <th>제목</th>
+			                      <th>작성자</th>
+			                      <th>등록일</th>
+			                    </tr>
+			                  </thead>
+			                  <tbody>
+			                    <tr>
+			                      <td>219</td>
+			                      <td>Alexander Pierce</td>
+			                      <td>11-7-2014</td>
+			                      <td><span class="tag tag-warning">Pending</span></td>
+			                    </tr>
+			                    <tr>
+			                      <td>657</td>
+			                      <td>Bob Doe</td>
+			                      <td>11-7-2014</td>
+			                      <td><span class="tag tag-primary">Approved</span></td>
+			                    </tr>
+			                    <tr>
+			                      <td>175</td>
+			                      <td>Mike Doe</td>
+			                      <td>11-7-2014</td>
+			                      <td><span class="tag tag-danger">Denied</span></td>
+			                    </tr>
+			                  </tbody>
+			                </table>
+			              </div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section id="middle">
+			<div id="ehr" class="card">
+				<div class="card-header">
+					<h3 class="card-title title" style="margin:20px 0">근태관리</h3>
+				</div>
+				<div class="card-body">
+					<p style="font-size: 16px; color: gray">2022-07-01(금) 20:31:11</p>
+					<span style="font-size: 32px;">11h 33m</span>
+					<span style="font-size: 16px; color: gray; float: right; padding-top: 30px;">8h</span>
+					<div class="progress mb-3" style="margin-top: 10px;">					
+						<div class="progress-bar bg-info" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+						aria-valuemax="100" style="width: 100%">
+						</div>
+					</div>
+					<div class="ehrTime_check">
+						<p class="timeCheck">
+							<span>출근시간</span>
+							<span>09 : 00</span>
+						</p>
+						<p class="timeCheck">
+							<span>퇴근시간</span>
+							<span>미등록</span>
+						</p>
+					</div>
+					<div class="ehr_button">
+						<div class="ehrClick">
+							<button type="button" class="btn btn-info">
+								출근
+							</button>
+							<button type="button" class="btn btn-info">
+								퇴근
+							</button>
+						</div>
+					</div>
+					<div class="row" style="margin: 10px 0; padding: 0;">					
+						<div class="btn-group" style="width: 100%;">
+							<button type="button" class="btn btn-info">근무상태</button>
+							<button type="button" class="btn btn-info dropdown-toggle dropdown-icon"></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="work" class="card">
+				<div class="card-header p-0 pt-1 border-bottom-0" style="margin-top: 20px;">
+					<ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist" style="margin: 0">
+						<li class="nav-item">
+							<a href="#" class="nav-link active" id="custom-tabs-three-home-tab">금주 마감 업무</a>
+						</li>
+						<li class="nav-item">
+							<a href="#" class="nav-link " id="custom-tabs-three-home-tab">새로운 업무</a>
+						</li>
+						<li class="nav-item">
+							<a href="#" class="nav-link " id="custom-tabs-three-home-tab">요청한 업무</a>
+						</li>
+					</ul>
+				</div>
+				<div class="card-body" style="padding: 0">
+					<table class="table table-striped projects">
+						<thead>
+							<tr>
+								<th style="width: 30%">제목</th>
+								<th style="width: 30%">담당자</th>
+								<th style="width: 32%">진행도</th>
+								<th style="width:10%">상태</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<p>테스트 업무<span class="badge bg-danger">임박</span></p>
+									<small>2022-06-20 ~ 2022-07-04</small>
+								</td>
+								<td>
+									<ul class="list-inline">
+										<li class="list-inline-item">
+											<img class="table-avatar" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+										</li>
+										<li class="list-inline-item">
+											<img class="table-avatar" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+										</li>
+										<li class="list-inline-item">
+											<img class="table-avatar" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar3.png">
+										</li>
+									</ul>
+								</td>
+								<td class="project_progress">
+									<div class="progress progress-sm">
+										<div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0"
+										aria-valuemax="100" style="width: 60%"></div>
+									</div>
+									<small>60% 완료</small>
+								</td>
+								<td class="project-state">
+									<span class="badge bg-info">진행</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p>테스트 업무</p>
+									<small>2022-06-20 ~ 2022-07-10</small>
+								</td>
+								<td>
+									<ul class="list-inline">
+										<li class="list-inline-item">
+											<img class="table-avatar" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+										</li>
+										<li class="list-inline-item">
+											<img class="table-avatar" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+										</li>
+										<li class="list-inline-item">
+											<img class="table-avatar" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar3.png">
+										</li>
+									</ul>
+								</td>
+								<td class="project_progress">
+									<div class="progress progress-sm">
+										<div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0"
+										aria-valuemax="100" style="width: 50%"></div>
+									</div>
+									<small>50% 완료</small>
+								</td>
+								<td class="project-state">
+									<span class="badge bg-info">진행</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p>테스트 업무</p>
+									<small>2022-06-20 ~ 2022-06-27</small>
+								</td>
+								<td>
+									<ul class="list-inline">
+										<li class="list-inline-item">
+											<img class="table-avatar" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+										</li>
+										<li class="list-inline-item">
+											<img class="table-avatar" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+										</li>
+										<li class="list-inline-item">
+											<img class="table-avatar" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar3.png">
+										</li>
+									</ul>
+								</td>
+								<td class="project_progress">
+									<div class="progress progress-sm">
+										<div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0"
+										aria-valuemax="100" style="width: 100%"></div>
+									</div>
+									<small>100% 완료</small>
+								</td>
+								<td class="project-state">
+									<span class="badge bg-success">완료</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p>테스트 업무</p>
+									<small>2022-06-20 ~ 2022-07-20</small>
+								</td>
+								<td>
+									<ul class="list-inline">
+										<li class="list-inline-item">
+											<img class="table-avatar" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+										</li>
+										<li class="list-inline-item">
+											<img class="table-avatar" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+										</li>
+										<li class="list-inline-item">
+											<img class="table-avatar" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar3.png">
+										</li>
+									</ul>
+								</td>
+								<td class="project_progress">
+									<div class="progress progress-sm">
+										<div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0"
+										aria-valuemax="100" style="width: 32%"></div>
+									</div>
+									<small>32% 완료</small>
+								</td>
+								<td class="project-state">
+									<span class="badge bg-primary">협업요청</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="card-footer">
+					<ul class="pagination pagination-sm m-0 float-right">
+						<li class="page-item">
+							<a class="page-link" href="#"><<</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">1</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">2</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">3</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">>></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+		<section id="bottom">
+			<div id="menu" style="margin-left:5px;">
+				<div class="card-body" style="padding: 0;">
+					<button type="button" class="btn btn-app" style="margin:0; background: transparent;">
+						<span class="material-symbols-outlined">
+						post_add
+						</span>
+						<small style="display: block">새 결재</small>
+					</button>
+					<button type="button" class="btn btn-app" style="margin: 0; background: transparent;">
+						<span class="material-symbols-outlined">
+						create_new_folder
+						</span>
+						<small style="display: block">자료 등록</small>
+					</button>
+					<button type="button" class="btn btn-app" style="margin: 0; background: transparent;">
+						<span class="material-symbols-outlined">
+						mail
+						</span>
+						<small style="display: block">메일 작성</small>
+					</button>
+					<button type="button" class="btn btn-app" style="margin: 0; background: transparent;">
+						<span class="material-symbols-outlined">
+						work
+						</span>
+						<small style="display: block">업무 등록</small>
+					</button>
+					<button type="button" class="btn btn-app" style="margin: 0; background: transparent;">
+						<span class="material-symbols-outlined">
+						calendar_month
+						</span>
+						<small style="display: block">일정 등록</small>
+					</button>
+					<button type="button" class="btn btn-app" style="margin: 0; background: transparent;">
+						<span class="material-symbols-outlined">
+						group
+						</span>
+						<small style="display: block">클래스룸</small>
+					</button>
+				</div>
+			</div>
+			<div id="doc" class="card">
+				<div class="card-header p-0 pt-1 border-bottom-0" style="margin-top: 20px;">
+					<ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist" style="margin: 0">
+						<li class="nav-item">
+							<a href="#" class="nav-link active" id="custom-tabs-three-home-tab">결재 대기 문서</a>
+						</li>
+						<li class="nav-item">
+							<a href="#" class="nav-link " id="custom-tabs-three-home-tab">내가 올린 결재</a>
+						</li>
+					</ul>
+				</div>
+				<div class="card-body" style="padding: 0">
+					<table class="table table-striped projects">
+						<thead>
+							<tr>
+								<th style="width:20%">기안일</th>
+								<th style="width:15%">문서양식</th>
+								<th style="width:40%">제목</th>
+								<th style="width:10%">첨부파일</th>
+								<th style="width:15%">기안자</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>2022-07-02</td>
+								<td>업무기안</td>
+								<td>테스트 기안</td>
+								<td>
+									<span class="material-symbols-outlined">
+									attachment
+									</span>
+								</td>
+								<td>
+									장문석 사원
+								</td>
+							</tr>
+							<tr>
+								<td>2022-07-01</td>
+								<td>업무기안</td>
+								<td>테스트 기안</td>
+								<td>
+									<span class="material-symbols-outlined">
+									attachment
+									</span>
+								</td>
+								<td>
+									강정인 사원
+								</td>
+							</tr>
+							<tr>
+								<td>2022-06-30</td>
+								<td>업무기안</td>
+								<td>테스트 기안</td>
+								<td>
+									<span class="material-symbols-outlined">
+									attachment
+									</span>
+								</td>
+								<td>
+									이종민 사원
+								</td>
+							</tr>
+							<tr>
+								<td>2022-06-29</td>
+								<td>업무기안</td>
+								<td>테스트 기안</td>
+								<td>
+									<span class="material-symbols-outlined">
+									attachment
+									</span>
+								</td>
+								<td>
+									서난희 사원
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="card-footer">
+					<ul class="pagination pagination-sm m-0 float-right">
+						<li class="page-item">
+							<a class="page-link" href="#"><<</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">1</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">2</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">3</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#">>></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+	</div>
+</body>

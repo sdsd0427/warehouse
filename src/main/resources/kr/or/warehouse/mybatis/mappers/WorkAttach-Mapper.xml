@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="WorkAttach-Mapper">
+	<select id="selectWorkAttachByWcode" resultType="attach">
+		SELECT
+			  wano as attachNo
+			, uploadpath
+			, filename
+			, filetype
+			, wcode as refNo
+			, regdate
+		FROM
+			workattach
+		WHERE
+			wcode = #{wcode}
+	</select>
+
+	<select id="selectWorkAttachByWano" resultType="attach">
+		SELECT
+			 wano as attachNo
+			,uploadpath
+			,filename
+			,filetype
+			,manualno as refNo
+			,regdate
+		FROM
+			workattach
+		WHERE 
+			wano=#{attachNo}
+	</select>
+
+	<update id="insertWorkAttach">
+		INSERT INTO 
+			workattach (
+			 wano
+			,uploadpath
+			,filename
+			,filetype
+			,wcode
+		) VALUES (
+			 #{attachNo}
+			,#{uploadPath}
+			,#{fileName}
+			,#{fileType}
+			,#{refNo}
+		)
+	</update>
+
+	<update id="deleteWorkAttach">
+		DELETE
+		FROM 
+			workattach
+		WHERE 
+			wano = #{attachNo}
+	</update>
+
+	<update id="deleteAllWorkAttach">
+		DELETE
+		FROM 
+			workattach
+		WHERE 
+			wcode = #{wcode}
+	</update>
+
+	<select id="selectWano" resultType="String">
+		SELECT 
+			'WA'||trim(nvl(max(to_char(to_number(substr(wano,3))+1,'000000')),'000001')) as attachNo
+		FROM 
+			workattach
+
+		UNION
+
+		SELECT 
+			nvl(null,'WA000001') as attachNo
+		FROM
+			dual
+		WHERE 
+			not exists 
+			(SELECT 
+				wano
+			 FROM 
+				workattach)
+	</select>
+</mapper>
+

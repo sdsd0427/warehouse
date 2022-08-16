@@ -1,0 +1,361 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<style>
+	.upWord .word{
+	    list-style-type: none;
+	    float: left;
+	    margin: 5px;
+	}
+	
+	
+	
+	div#Rectangle {
+	  
+	    border: 2px solid;
+	}
+	span#RecName{
+		margin-left: 100px;
+	}
+	
+	
+	pribut{
+	 border:1px solid;
+	 
+	}
+	div#chart {
+    padding-top: 10px;
+}
+/* 	div#b {
+	    width: 150px;
+	    height: 40px;
+	} */
+	
+	select#perPageNum ,select#searchType {
+	list-style-type: none;
+    width: 140px;
+    float: left;
+}
+
+input.form-control{
+list-style-type: none;
+    width: 180px;
+    float: left;
+}
+
+div#inName {
+ 	width: 250px;
+ 	height: 30px;
+    margin-left: 20px;
+     margin-top: 3px;
+     background-color: #dfdfdf;
+}
+
+div#botle {
+    margin-left: 500px;
+   
+}
+.card-footer {
+    background-color: white;
+}
+div#b {
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-top: 30px;
+}
+.sename{
+color:black;"
+}
+div#bottom {
+    margin-left: 40px;
+    margin-top: -30PX;
+}
+ul.upWord {
+    margin-left: -30px;
+}
+
+</style>
+</head>
+
+
+
+
+
+<body>
+
+
+
+
+
+
+
+
+
+<div class="wrapper">
+	<section class="content-header">
+			<div class="row md-2">
+				<div class="col-sm-12" style="margin-top: 20px;margin-left: 50px;">
+					<h2>주소록   >  전체주소록</h2>
+				</div>
+			</div>
+		</section>
+	<!-- <div id="a" > <h2>주소록 > 전체주소록</h2></div> -->
+	<div id="bottom">
+	<div id="b" class="bg-info" style="height: 40px; width:140px"><a id="pribut" style="padding-left: 10px" ><span style="vertical-align: -7px">개인주소록 추가</span></a></div>
+	<div>
+		<ul class="upWord">
+			<li class="word"><a href="#" class="sename"><strong>전체</strong></a></li>
+			<li class="word"><a href="#" class="sename"><strong>ㄱ</strong></a></li>
+			<li class="word"><a href="#" class="sename"><strong>ㄴ</strong></a></li>
+			<li class="word"><a href="#" class="sename"><strong>ㄷ</strong></a></li>
+			<li class="word"><a href="#" class="sename"><strong>ㄹ</strong></a></li>
+			<li class="word"><a href="#" class="sename"><strong>ㅁ</strong></a></li>
+			<li class="word"><a href="#" class="sename"><strong>ㅂ</strong></a></li>
+			<li class="word"><a href="#" class="sename"><strong>ㅅ</strong></a></li>
+			<li class="word"><a href="#" class="sename"><strong>ㅇ</strong></a></li>
+			<li class="word"><a href="#" class="sename"><strong>ㅈ</strong></a></li>
+			<li class="word"><a href="#" class="sename"><strong>ㅊ</strong></a></li>
+			<li class="word"><a href="#" class="sename"><strong>ㅋ</strong></a></li>
+			<li class="word"><a href="#" class="sename"><strong>ㅌ</strong></a></li>
+			<li class="word"><a href="#" class="sename"><strong>ㅍ</strong></a></li>
+			<li class="word"><a href="#" class="sename"><strong>ㅎ</strong></a></li><!-- </li> -->
+			</ul>
+			<!-- <li class="word"> -->
+			<div id="rig" style="float: left; margin-left: 10px">
+				<select class="form-control col-md-3" name="perPageNum" id="perPageNum"
+					  		onchange="list_go();">
+					  		<option value="10" ><span class="select2-selection__rendered" id="select2-vesq-container" role="textbox" aria-readonly="true" title="Title">정렬개수</span></option>
+					  		<option value="20" ${cri.perPageNum == 20 ? 'selected':''}>20개씩</option>
+					  		<option value="50" ${cri.perPageNum == 30 ? 'selected':''}>30개씩</option>
+					  		<option value="100" ${cri.perPageNum == 50 ? 'selected':''}>50개씩</option>
+					  		
+				</select>						
+				<select class="form-control col-md-4" name="searchType" id="searchType">
+							<option value="tcw"  ${cri.searchType eq 'tcw' ? 'selected':'' }>전 체</option>
+							<option value="t" ${cri.searchType eq 't' ? 'selected':'' }>이름</option>
+							<option value="w" ${cri.searchType eq 'w' ? 'selected':'' }>휴대폰</option>
+							<option value="c" ${cri.searchType eq 'c' ? 'selected':'' }>이메일</option>
+				</select>					
+				<input  class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="${param.keyword }"/>
+					<span class="input-group-append">
+						<button class="btn btn-primary" type="button" style="height: 37px;" onclick="list_go(1);" data-card-widget="search">
+							<i class="fa fa-fw fa-search"></i>
+						</button>
+					</span>
+			</div>
+			
+		
+	</div>  <!-- ㄱ,ㄴ,ㄷ -->
+	
+	<br>
+	<br>
+<div class="row" style="margin-left: 10px;">	
+	<div id="Rectangle" style="border: 3px solid #a8b0b7;margin-left: 10px; margin-top: 20px;" class="col-lg-4">
+		<div id="chart">
+			<div id="inName"><span id="RecName">조직도</span></div>
+			
+			
+				<div id="inAll" style="margin: 30px">
+			
+				<li title="POJO그룹" rel="company" nodeid="10" id="company_10" class="jstree-last jstree-open">
+				<a title="POJO그룹" rel="company" nodeid="10" id="company_10" href="#" data-bypass="1" class="jstree-clicked">
+				POJO그룹</a>
+				<ul style=""><li title="영업본부" rel="org" nodeid="123" id="org_123" class="jstree-open">
+				<a title="영업본부" rel="org" nodeid="123" id="org_123" href="#" data-bypass="1" class="">
+				영업본부</a><ul style=""><li title="영업팀" rel="org" nodeid="130" id="org_130" class="jstree-leaf">
+				<a title="영업팀" rel="org" nodeid="130" id="org_130" href="#" data-bypass="1" class="">
+				영업팀</a></li><li title="마케팅팀" rel="org" nodeid="131" id="org_131" class="jstree-last jstree-leaf">
+				<a title="마케팅팀" rel="org" nodeid="131" id="org_131" href="#" data-bypass="1" class="">
+				마케팅팀</a></li></ul></li><li title="경영지원본부" rel="org" nodeid="124" id="org_124" class="jstree-open">
+				<a title="경영지원본부" rel="org" nodeid="124" id="org_124" href="#" data-bypass="1" class="jstree-clicked">
+				경영지원본부</a><ul><li title="재경팀" rel="org" nodeid="132" id="org_132" class="jstree-leaf">
+				<a title="재경팀" rel="org" nodeid="132" id="org_132" href="#" data-bypass="1" class="">
+				>재경팀</a></li><li title="총무팀" rel="org" nodeid="176" id="org_176" class="jstree-leaf">
+				<a title="총무팀" rel="org" nodeid="176" id="org_176" href="#" data-bypass="1" class="">
+				총무팀</a></li><li title="인사팀" rel="org" nodeid="177" id="org_177" class="jstree-last jstree-leaf">
+				<a title="인사팀" rel="org" nodeid="177" id="org_177" href="#" data-bypass="1" class="">
+				인사팀</a></li></ul></li><li title="개발본부" rel="org" nodeid="178" id="org_178" class="jstree-open">
+				<a title="개발본부" rel="org" nodeid="178" id="org_178" href="#" data-bypass="1" class="">
+				개발본부</a><ul><li title="개발팀" rel="org" nodeid="179" id="org_179" class="jstree-leaf">
+				<a title="개발팀" rel="org" nodeid="179" id="org_179" href="#" data-bypass="1">
+				개발팀</a></li><li title="플랫폼운영팀" rel="org" nodeid="180" id="org_180" class="jstree-leaf">
+							
+					</li>
+					</ul>
+					</li>
+					</ul>
+					</li>
+					</ul>
+			</div>
+		</div> <!-- chart -->
+	</div> <!-- Rectangle  -->
+	
+	<div id="bot" class="col-lg-6" >
+		<div class="card-body">
+								<table class="table table-hover text-nowrap">
+									<tbody><tr style="font-size: 0.95em; background-color: #dfdfdf;" >
+										<th >
+											<!-- <div class="icheck-primary"> -->
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											<!-- </div> -->
+									    </th>
+										<th >이름</th>
+										<th >직위</th>
+										<th >휴대폰</th>
+										<th >이메일</th>
+										<th >부서</th>
+										<th >내선번호</th>
+									</tr>
+
+									<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+													
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">이름</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td>qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+													
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">이름</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td>qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+													
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">이름</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td>qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+													
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">이름</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td>qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+													
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">이름</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td>qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+													
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">이름</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td>qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+													
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">이름</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td>qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+								</tbody></table>
+							</div>
+		
+		
+		
+		
+	
+	</div>
+		<div class="card-footer" id= "botle" >
+				<ul class="pagination justify-content-center m-0">
+					<li class="page-item">
+						<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+					<li class="page-item">
+						<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+					</li>
+
+						<li class="page-item active">
+							<a class="page-link" href="">1</a>
+						</li>
+
+					<li class="page-item">
+						<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+					</li>
+					<li class="page-item">
+						<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+					</li>
+				</ul>
+		</div>
+</div> <!-- <div id="bottom"> -->
+	
+	
+	
+</div><!-- bottom  -->	
+	
+</div><!-- 전체 -->
+
+						
+
+
+</body>
+</html>

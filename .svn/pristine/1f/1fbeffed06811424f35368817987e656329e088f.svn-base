@@ -1,0 +1,278 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<head>
+<style>
+#modal-fdefault td:nth-child(2n+1) {
+    background-color: #EEEEEE;
+  }
+</style>
+</head>
+
+<body>
+	<div class="wrapper">
+		<h2 class="title">참조문서함</h2>
+		<div class="row">
+			<div class="col-12">
+				<div style="display: flex; justify-content: space-between; float: right;">
+					<div class="approve-search" style="display: flex; margin-top: 10px;">
+						<select class="form-control">
+							<option>전체기간</option>
+							<option>1개월</option>
+							<option>6개월</option>
+							<option>1년</option>
+						</select>
+						<select class="form-control">
+							<option>제목</option>
+							<option>결재양식</option>
+							<option>기안자</option>
+						</select>
+						<input class="form-control" type="search">
+						<button type="submit" class="btn btn-info" style="height: 38px;">
+							<i class="fa fa-search"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 mt-1">
+				<div class="field" data-toggle="modal" data-target="#modal-fdefault">
+					<button type="button" class="btn btn-default btn-sm" style="float: left; margin-left: 1.5rem!important;">
+						<i class="fas fa-cog">&nbsp;필드설정</i>
+					</button>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal fade show" id="modal-fdefault" style="display: none;" aria-modal="true" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content" style="width: 620px;">
+					<div class="modal-header">
+						<h4 class="modal-title">필드 설정</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<td>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input" id="exampleCheck1"> 
+												<label class="form-check-label" for="exampleCheck1">기안일</label>
+										</div>
+									</td>
+									<td>최종 결재문서가 시작된 날짜를 표시합니다.</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input" id="exampleCheck1"> 
+												<label class="form-check-label" for="exampleCheck1">결재양식</label>
+										</div>
+									</td>
+									<td>최종 결재가 되어 결재 문서의 진행이 완료된 날짜입니다.</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input" id="exampleCheck1"> 
+												<label class="form-check-label" for="exampleCheck1">긴급</label>
+										</div>
+									</td>
+									<td>긴급으로 기안한 문서가 표시됩니다.</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input" id="exampleCheck1"> 
+												<label class="form-check-label" for="exampleCheck1">제목</label>
+										</div>
+									</td>
+									<td>문서의 제목이 표시됩니다.</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input" id="exampleCheck1"> 
+												<label class="form-check-label" for="exampleCheck1">첨부</label>
+										</div>
+									</td>
+									<td>첨부파일이 포함되었는지 표시합니다.</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input" id="exampleCheck1"> 
+												<label class="form-check-label" for="exampleCheck1">기안부서</label>
+										</div>
+									</td>
+									<td>기안자가 소속된 부서를 표시합니다.</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input" id="exampleCheck1"> 
+												<label class="form-check-label" for="exampleCheck1">최종 결재자</label>
+										</div>
+									</td>
+									<td>이 문서의 마지막 결재자를 표시합니다.</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input" id="exampleCheck1"> 
+												<label class="form-check-label" for="exampleCheck1">문서번호</label>
+										</div>
+									</td>
+									<td>문서의 고유한 문서번호를 표시합니다.</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input" id="exampleCheck1"> 
+												<label class="form-check-label" for="exampleCheck1">결재상태</label>
+										</div>
+									</td>
+									<td>현재 결재 상태를 표시합니다.</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input" id="exampleCheck1"> 
+												<label class="form-check-label" for="exampleCheck1">완료일</label>
+										</div>
+									</td>
+									<td>최종 결재가 일어난 날짜를 표시합니다.</td>
+								</tr>
+							</tbody>
+						</table>
+
+
+					</div>
+					<div class="modal-footer " style="float:right;">
+						<button type="button" class="btn btn-info" >확인</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal" >취소</button>
+					</div>
+				</div>
+			</div>
+		</div> <!-- 필드 설정 -->
+
+			
+		
+		<div class="row ml-4">
+			<div class="card col-md-12" style="margin-top:15px;">
+				<table class="table table-hover text-nowrap projects">
+					<thead>
+						<tr>
+							<th style="width: 5%">
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input" id="exampleCheck1"> 
+									<label class="form-check-label" for="exampleCheck1">&nbsp;&nbsp;</label>
+								</div>
+							</th>
+							<th style="width: 15%">기안일</th>
+							<th style="width: 15%">결재양식</th>
+							
+							<th style="width: 10%">긴급</th>
+							<th style="width: 15%">제목</th>
+							<th style="width: 10%">첨부</th>
+							<th style="width: 20%">문서번호</th>
+							<th style="width: 10%">결재상태</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input" id="exampleCheck1"> 
+									<label class="form-check-label" for="exampleCheck1">&nbsp;&nbsp;</label>
+								</div>
+							</td>
+							<td>2022-07-07</td>
+							<td>업무기안</td>
+							<td>2022-07-04</td>
+							<td>테스트</td>
+							<td><span class="badge bg-info">진행</span></td>
+						</tr>
+						<tr>
+							<td>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input" id="exampleCheck1"> 
+									<label class="form-check-label" for="exampleCheck1">&nbsp;&nbsp;</label>
+								</div>
+							</td>
+							<td>2022-07-07</td>
+							<td>경조화신청</td>
+							<td>2022-07-04</td>
+							<td>경조화 신청서</td>
+							<td><span class="badge bg-info">진행</span></td>
+						</tr>
+						<tr>
+							<td>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input" id="exampleCheck1"> 
+									<label class="form-check-label" for="exampleCheck1">&nbsp;&nbsp;</label>
+								</div>
+							</td>
+							<td>2022-07-07</td>
+							<td>업무협조</td>
+							<td>2022-07-04</td>
+							<td>업무협조</td>
+							<td><span class="badge bg-info">진행</span></td>
+						</tr>
+						<tr>
+							<td>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input" id="exampleCheck1"> 
+									<label class="form-check-label" for="exampleCheck1">&nbsp;&nbsp;</label>
+								</div>
+							</td>
+							<td>2022-07-07</td>
+							<td>택배/퀵 신청서</td>
+							<td>2022-07-04</td>
+							<td>택배/퀵 신청서</td>
+							<td><span class="badge bg-info">진행</span></td>
+						</tr>
+						<tr>
+							<td>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input" id="exampleCheck1"> 
+									<label class="form-check-label" for="exampleCheck1">&nbsp;&nbsp;</label>
+								</div>
+							</td>
+							<td>2022-07-07</td>
+							<td>업무기안</td>
+							<td>2022-07-04</td>
+							<td>기안테스트</td>
+							<td><span class="badge bg-info">진행</span></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="card-footer">
+					<ul class="pagination justify-content-center m-0">
+						<li class="page-item">
+							<a class="page-link" href=""><i class="fas fa-angle-double-left"></i></a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href=""><i class="fas fa-angle-left"></i></a>
+						</li>
+						<li class="page-item active">
+							<a class="page-link" href="">1</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="">2</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href=""><i class="fas fa-angle-double-right"></i></a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href=""><i class="fas fa-angle-right"></i></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>	
+			
+
+	</div>
+</body>

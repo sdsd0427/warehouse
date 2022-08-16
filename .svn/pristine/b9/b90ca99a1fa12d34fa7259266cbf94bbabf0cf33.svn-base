@@ -1,0 +1,156 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<head>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/community.css">
+</head>
+
+<title></title>
+
+<body class="hold-transition skin-blue sidebar-collapse">
+	<div class="wrapper">
+		<section class="content-header ">
+			<div class="row md-2">
+				<div class="col-sm-12">
+					<h2>커뮤니티 > 커뮤니티 개설</h2>
+				</div>
+			</div>
+		</section>
+
+		<section class="content card card-outline card-info">
+			<div class="container-fluid">
+				<div class="row card-header">
+					<div class="col-lg-12">
+						<label>개설 신청</label>
+						<button class="btn btn-secondary" style="float: right; margin-left:20px;" type="button" onclick="javascript:history.back();">취소</button>
+						<button class="btn btn-info" style="float: right;" type="button" onclick="">신청</button>
+					</div>
+				</div>
+				
+				<div class="card-body">
+						<div class="row ">
+							<label class="col-2">커뮤니티 명</label>
+							<input class="form-control col-10" type="text" id="" name='' class="form-control" placeholder="커뮤니티 명을 쓰세요">
+							
+							<label class="col-2 mt-3">소개글</label>
+							<textarea class="form-control col-10 mt-3" rows="5" cols="" placeholder="소개글을 작성하세요"></textarea>
+							
+							<label class="col-2 mt-3">공개 여부</label>
+							<div class="form-check col-1 mt-3">
+								<input class="form-check-input" type="radio" id="open" name="open" checked>
+								<label for="open" class="form-check-label">공개</label>
+							</div>
+							<div class="form-check col-9 mt-3">
+								<input class="form-check-input" type="radio" id="notOpen" name="open" >
+								<label for="notOpen" class="form-check-label">비공개</label>
+							</div>
+							<div class="col-2"></div>
+							<div class="col-10">
+								<small><strong>*비공개로 설정 할 경우 전체 커뮤니티 목록에 보이지 않습니다.</strong></small><br/>
+								<small><strong>*비공개로 설정 할 경우 초대로만 가입이 가능합니다.</strong></small>
+							</div>
+						</div>	
+						
+						<div class="row mt-5">
+							<div class="col-6">
+								
+								<div class="card">
+							<div class="card-header with-border">
+								<span>전체 커뮤니티</span>
+							</div>
+							<div class="card-body">
+								<table class="table table-hover text-nowrap" style="text-align:center;">
+									<tr style="font-size: 0.95em;">
+										<th style="width: 70%;">커뮤니티</th>
+										<th style="width: 10%;">회장</th>
+										<th style="width: 10%;">회원 수</th>
+										<th style="width: 10%;">개설일</th>
+									</tr>
+
+									<tr style='font-size: 0.85em;'>
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">독서회</td>
+										<td>이순신</td>
+										<td>3</td>
+										<td>2022-06-28</td>
+									</tr>
+
+									<tr style='font-size: 0.85em;'>
+										<td>롤하자</td>
+										<td>전우치</td>
+										<td>4</td>
+										<td>2022-03-01</td>
+									</tr>
+
+									<tr style='font-size: 0.85em;'>
+										<td>프로젝트</td>
+										<td>이순신</td>
+										<td>3</td>
+										<td>2022-02-15</td>
+									</tr>
+
+								</table>
+							</div>
+						</div>
+							</div>
+							
+							
+							<div class="col-6">
+								<div class="card">
+							<div class="card-header with-border">
+								<span >전체 커뮤니티</span>
+							</div>
+							<div class="card-body">
+								<table class="table table-hover text-nowrap" style="text-align:center;">
+									<tr style="font-size: 0.95em;">
+										<th style="width: 70%;">커뮤니티</th>
+										<th style="width: 10%;">회장</th>
+										<th style="width: 10%;">회원 수</th>
+										<th style="width: 10%;">개설일</th>
+									</tr>
+
+									<tr style='font-size: 0.85em;'>
+										<td onclick="OpenWindow('detail.do','상세보기',800,600);">독서회</td>
+										<td>이순신</td>
+										<td>3</td>
+										<td>2022-06-28</td>
+									</tr>
+
+									<tr style='font-size: 0.85em;'>
+										<td>자전거 동호회</td>
+										<td>홍길동</td>
+										<td>9</td>
+										<td>2022-06-25</td>
+									</tr>
+
+									<tr style='font-size: 0.85em;'>
+										<td>신입사원 커뮤</td>
+										<td>강감찬</td>
+										<td>7</td>
+										<td>2022-06-25</td>
+									</tr>
+
+									<tr style='font-size: 0.85em;'>
+										<td>영화감상회</td>
+										<td>신사임당</td>
+										<td>5</td>
+										<td>2022-06-24</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+							</div>
+						
+						</div>
+				</div>
+				
+			</div>
+		</section>
+
+
+
+
+	</div>
+
+
+</body>

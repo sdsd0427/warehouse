@@ -1,0 +1,565 @@
+package kr.or.warehouse.controller.rest;
+
+import java.io.File;
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import kr.or.warehouse.command.MakeFileName;
+import kr.or.warehouse.command.PnoListCommand;
+import kr.or.warehouse.dto.EmployeeVO;
+import kr.or.warehouse.dto.PdsNode;
+import kr.or.warehouse.dto.PdsVO;
+import kr.or.warehouse.service.HrService;
+import kr.or.warehouse.service.PdsService;
+
+@RestController
+@RequestMapping("/pds")
+public class PdsRestController {
+
+	@Autowired
+	private PdsService pdsService;
+
+	@Autowired
+	private HrService hrService;
+
+	@RequestMapping("/reDrow")
+	public ResponseEntity<List<PdsNode>> reDrow(HttpSession session) throws Exception {
+		ResponseEntity<List<PdsNode>> entity = null;
+		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
+		List<PdsVO> pdsListForTree = null;
+		List<PdsNode> pdsExplorer = null;
+
+		try {
+			pdsListForTree = pdsService.getPdsListForTree(loginUser.getEno());
+			pdsExplorer = pdsService.pdsExplorer(pdsListForTree);
+			entity = new ResponseEntity<List<PdsNode>>(pdsExplorer, HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<List<PdsNode>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return entity;
+	}
+
+	@RequestMapping("/getEmp")
+	public ResponseEntity<EmployeeVO> getEmp(int eno) throws Exception{
+		ResponseEntity<EmployeeVO> entity = null;
+		EmployeeVO emp = null;
+
+		try {
+			emp = hrService.getEmp(eno);
+			entity = new ResponseEntity<EmployeeVO>(emp, HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<EmployeeVO>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return entity;
+	}
+
+	//경로상의 자료 목록
+	@RequestMapping(value ="/goInOut")
+	public ResponseEntity<List<PdsVO>> goInOut(PdsVO pds)throws Exception{
+		ResponseEntity<List<PdsVO>> entity = null;
+		List<PdsVO> pdsList = null;
+		System.out.println(pds);
+
+		try {
+			pdsList = pdsService.getPdsListByUpPno(pds);
+			//파일명 재정의
+//			if(pds!=null) {
+//				String fileName = pds.getFileName().split("\\$\\$")[1];
+//				pds.setFileName(fileName);
+//			}
+			entity = new ResponseEntity<List<PdsVO>>(pdsList, HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<List<PdsVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return entity;
+	}
+
+	//사용 안 할듯..
+	@RequestMapping("/getPds")
+	public ResponseEntity<List<PdsVO>> getPds(PdsVO pds) throws Exception{
+		ResponseEntity<List<PdsVO>> entity = null;
+		List<PdsVO> pdsList = null;
+
+		try {
+			pdsList = pdsService.getPdsList(pds);
+
+			//파일명 재정의
+//			if(pdsList!=null) {
+//		      for(PdsVO pdsTemp : pdsList) {
+//		         String fileName = pdsTemp.getFileName().split("\\$\\$")[1];
+//		         pdsTemp.setFileName(fileName);
+//		      }
+//			}
+
+			entity = new ResponseEntity<List<PdsVO>>(pdsList, HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<List<PdsVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return entity;
+	}
+
+	@Resource(name = "pdsUserSavePath")
+	private String pdsUserSavePath;
+
+	@Resource(name = "pdsAllUserSavePath")
+	private String pdsAllUserSavePath;
+
+	//폴더 생성
+	@RequestMapping(value = "/newFolder", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
+	public ResponseEntity<String> newFolder(PdsVO pds)throws Exception{
+		ResponseEntity<String> entity = null;
+
+		//파일저장
+//		String fileName = MakeFileName.toUUIDFileName(pds.getFileName(), "$$");
+
+		String filePath = pdsUserSavePath+"/"+pds.getEno();
+		PdsVO pdsByPno = null;
+		String upPno = pds.getUpPno();
+
+		//폴더 내부면 폴더경로 포함해주기
+		if(!"#".equals(upPno)) {
+			pdsByPno = pdsService.getPdsByPno(upPno);
+			filePath = pdsByPno.getUploadPath()+ "/" +pdsByPno.getFileName();
+		}
+
+//		String dist = pds.getDist();
+//		String[] split = dist.split("/");
+//		for(int i = 1; i < split.length; i++) {
+//			System.out.println(split[i]);
+//			res += "/"+split[i];
+//		}
+//		if(split.length > 1) filePath += res;
+
+		File target = new File(filePath, pds.getFileName());
+		target.mkdirs();
+
+
+		try {
+//			pds.setFileName(fileName);
+			pds.setUploadPath(filePath);
+			pds.setFileType("folder");
+			pds.setFileSize(target.length());
+			pds.setFolderYn(1);
+			pdsService.uploadFile(pds);
+			entity = new ResponseEntity<String>("OK", HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return entity;
+	}
+
+	//경로에 자료 등록
+	@RequestMapping(value = "/regist", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
+	public ResponseEntity<String> regist(PdsVO pds, HttpServletRequest request) throws Exception{
+		ResponseEntity<String> entity = null;
+		//파일저장
+//		String fileName = MakeFileName.toUUIDFileName(pds.getFileName(), "$$");
+
+		String filePath = pdsUserSavePath+"/"+pds.getEno();
+		PdsVO pdsByPno = null;
+		String upPno = pds.getUpPno();
+
+		//폴더 내부면 폴더경로 포함해주기
+		if(!"#".equals(upPno)) {
+			pdsByPno = pdsService.getPdsByPno(upPno);
+			filePath = pdsByPno.getUploadPath()+ "/" +pdsByPno.getFileName();
+		}
+
+//		String dist = pds.getDist();
+//		String[] split = dist.split("/");
+//		String res = "";
+//		for(int i = 1; i < split.length; i++) {
+//			System.out.println(split[i]);
+//			res += "/"+split[i];
+//		}
+//
+//		String filePath = pdsUserSavePath+"/"+pds.getEno();
+//		if(split.length > 1) filePath += res;
+
+		File target = new File(filePath, pds.getFileName());
+		target.mkdirs();
+		pds.getUploadFile().transferTo(target);
+
+		//db저장
+		try {
+			//1.pno -> DAO
+			//2.eno -> OK
+			//3.name
+//			pds.setFileName(fileName);
+			//4.path
+			pds.setUploadPath(filePath);
+			//5.fileType
+			String fileType = pds.getFileName().substring(pds.getFileName().lastIndexOf('.')+1).toLowerCase();
+			pds.setFileType(fileType);
+			//6.fileSize
+			long size = pds.getUploadFile().getSize();
+			pds.setFileSize(size);
+//			System.out.println(pds);
+			pds.setFolderYn(0);
+			pdsService.uploadFile(pds);
+			entity = new ResponseEntity<String>("OK", HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return entity;
+	}
+
+	@RequestMapping("/getTrash")
+	public ResponseEntity<List<PdsVO>> getTrash(PdsVO pds) throws Exception{
+		ResponseEntity<List<PdsVO>> entity = null;
+		List<PdsVO> pdsList = null;
+
+		try {
+			pdsList = pdsService.getTrashList(pds);
+			entity = new ResponseEntity<List<PdsVO>>(pdsList, HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<List<PdsVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return entity;
+	}
+
+	//휴지통 이동
+	@RequestMapping(value ="/moveTrash", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
+	public ResponseEntity<String> moveTrash(String pno)throws Exception{
+		ResponseEntity<String> entity = null;
+
+		try {
+			pdsService.moveTrash(pno);
+			entity = new ResponseEntity<String>("OK", HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return entity;
+	}
+
+	//파일 삭제
+	@RequestMapping(value = "/removeAllFile", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
+	public ResponseEntity<String> removeAllFile(int eno) throws Exception{
+		ResponseEntity<String> entity = null;
+		List<PdsVO> pdsList = null;
+		try {
+			pdsList = pdsService.getAllTrashByEno(eno);
+			if(pdsList != null) for(PdsVO pds : pdsList) {
+				File target=new File(pds.getUploadPath(),pds.getFileName());
+				if(target.exists()) {
+					if(target.isFile()) {
+						target.delete();
+					}else {
+						deleteFolder(target.getPath());
+					}
+					target.delete();
+				}
+			}
+			pdsService.removeAllPdsByEno(eno);
+			entity = new ResponseEntity<String>(pdsList.size()+"", HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return entity;
+	}
+
+	//파일 삭제
+	@RequestMapping(value = "/removeFile", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
+	public ResponseEntity<String> removeFile(String pno) throws Exception{
+		ResponseEntity<String> entity = null;
+		PdsVO pds = null;
+
+		try {
+			pds = pdsService.getPdsByPno(pno);
+			if(pds != null) {
+				File target=new File(pds.getUploadPath(),pds.getFileName());
+				if(target.exists()) {
+					if(target.isFile()) {
+						target.delete();
+					}else {
+						deleteFolder(target.getPath());
+					}
+					target.delete();
+				}
+
+			}
+            pdsService.removePdsByPno(pno);
+			entity = new ResponseEntity<String>("OK", HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return entity;
+	}
+
+	//파일 상세 정보
+	@RequestMapping(value ="/detail")
+	public ResponseEntity<PdsVO> detail(String pno)throws Exception{
+		ResponseEntity<PdsVO> entity = null;
+		PdsVO pds = null;
+
+		try {
+			pds = pdsService.getPdsByPno(pno);
+			//파일명 재정의
+//			if(pds!=null) {
+//				String fileName = pds.getFileName().split("\\$\\$")[1];
+//				pds.setFileName(fileName);
+//			}
+			entity = new ResponseEntity<PdsVO>(pds, HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<PdsVO>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return entity;
+	}
+
+
+	//휴지통 이동
+	@RequestMapping(value ="/recycleFile", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
+	public ResponseEntity<String> recycleFile(String pno)throws Exception{
+		ResponseEntity<String> entity = null;
+
+		try {
+			pdsService.recycleFile(pno);
+			entity = new ResponseEntity<String>("OK", HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return entity;
+	}
+
+
+
+	@RequestMapping(value ="/getPnoForfileDownload", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	public ResponseEntity<List<String>> getPnoForfileDownload(@RequestBody PnoListCommand plc,
+			HttpServletRequest request, HttpServletResponse response)throws Exception{
+		ResponseEntity<List<String>> entity = null;
+		System.out.println(plc);
+
+		List<String> pnoList = plc.getPno();
+
+		try {
+			entity = new ResponseEntity<List<String>>(pnoList, HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<List<String>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return entity;
+	}
+
+	//자료실 남은 용량 계산_개인
+	@RequestMapping(value ="/pdsLength")
+	public ResponseEntity<String> pdsLength(int eno) throws Exception{
+		ResponseEntity<String> entity = null;
+		String result = "";
+		String path = pdsUserSavePath+"/"+eno;
+		System.out.println("path : " + path);
+		File dir = new File(path);
+		if(!dir.exists()) dir.mkdirs();
+	    result = getFolderSize(dir)+"";
+
+		try {
+			entity = new ResponseEntity<String>(result, HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return entity;
+	}
+
+	//---전사 전용----
+
+	//전사자료실 리스트
+	@RequestMapping("/getAllEmpPds")
+	public ResponseEntity<List<PdsVO>> getAllEmpPds(PdsVO pds) throws Exception{
+		ResponseEntity<List<PdsVO>> entity = null;
+		List<PdsVO> pdsList = null;
+
+		try {
+			pdsList = pdsService.getAllEmpPdsList(pds);
+
+			entity = new ResponseEntity<List<PdsVO>>(pdsList, HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<List<PdsVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return entity;
+	}
+
+	//자료실 남은 용량 계산_전사
+	@RequestMapping(value ="/pdsLengthForAll")
+	public ResponseEntity<String> pdsLengthForAll(int eno) throws Exception{
+		ResponseEntity<String> entity = null;
+		String result = "";
+		String path = pdsAllUserSavePath;
+		File dir = new File(path);
+		if(!dir.exists()) dir.mkdirs();
+		result = getFolderSize(dir)+"";
+
+		try {
+			entity = new ResponseEntity<String>(result, HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return entity;
+	}
+
+	//폴더 생성
+	@RequestMapping(value = "/newFolderForAllEmp", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
+	public ResponseEntity<String> newFolderForAllEmp(PdsVO pds)throws Exception{
+		ResponseEntity<String> entity = null;
+		System.out.println("s"+pds);
+		//파일저장
+		String dist = pds.getDist();
+		String[] split = dist.split("/");
+		String res = "";
+		for(int i = 1; i < split.length; i++) {
+			System.out.println(split[i]);
+			res += "/"+split[i];
+		}
+
+		String filePath = pdsAllUserSavePath;
+		//폴더 내부면 폴더경로 포함해주기
+		if(split.length > 1) filePath += res;
+		File target = new File(filePath, pds.getFileName());
+		target.mkdirs();
+
+
+		try {
+//				pds.setFileName(fileName);
+			pds.setUploadPath(filePath);
+			pds.setFileType("folder");
+			pds.setFileSize(target.length());
+			pds.setFolderYn(1);
+			pdsService.uploadFile(pds);
+			entity = new ResponseEntity<String>("OK", HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return entity;
+	}
+
+	@RequestMapping(value = "/registForAllPds", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
+	public ResponseEntity<String> registForAllPds(PdsVO pds, HttpServletRequest request) throws Exception{
+		ResponseEntity<String> entity = null;
+
+		String dist = pds.getDist();
+		String[] split = dist.split("/");
+		String res = "";
+		for(int i = 1; i < split.length; i++) {
+			System.out.println(split[i]);
+			res += "/"+split[i];
+		}
+
+		String filePath = pdsAllUserSavePath;
+		//폴더 내부면 폴더경로 포함해주기
+		if(split.length > 1) filePath += res;
+		File target = new File(filePath, pds.getFileName());
+		target.mkdirs();
+		pds.getUploadFile().transferTo(target);
+
+		//db저장
+		try {
+			//1.pno -> DAO
+			//2.eno -> OK
+			//3.name
+//			pds.setFileName(fileName);
+			//4.path
+			pds.setUploadPath(filePath);
+			//5.fileType
+			String fileType = pds.getFileName().substring(pds.getFileName().lastIndexOf('.')+1).toLowerCase();
+			pds.setFileType(fileType);
+			//6.fileSize
+			long size = pds.getUploadFile().getSize();
+			pds.setFileSize(size);
+			System.out.println(pds);
+			pds.setFolderYn(0);
+			pds.setSeparation("전사자료실");
+			pdsService.uploadFile(pds);
+			entity = new ResponseEntity<String>("OK", HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return entity;
+	}
+
+
+	private long getFolderSize(File folder) {
+	    long length = 0;
+	    length += folder.length();
+	    File[] files = folder.listFiles();
+	    int count = files.length;
+	    for (int i = 0; i < count; i++) {
+	        if (files[i].isFile()) {
+	            length += files[i].length();
+	        } else {
+	            length += getFolderSize(files[i]);
+	        }
+	    }
+	    return length;
+	}
+
+	private void deleteFolder(String path) {
+		File folder = new File(path);
+		try {
+			if (folder.exists()) {
+				File[] folder_list = folder.listFiles(); // 파일리스트 얻어오기
+
+				for (int i = 0; i < folder_list.length; i++) {
+					if (folder_list[i].isFile()) {
+						folder_list[i].delete();
+						System.out.println("파일이 삭제되었습니다.");
+					} else {
+						deleteFolder(folder_list[i].getPath()); // 재귀함수호출
+						System.out.println("폴더가 삭제되었습니다.");
+					}
+					folder_list[i].delete();
+				}
+				folder.delete(); // 폴더 삭제
+			}
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+	}
+
+
+}

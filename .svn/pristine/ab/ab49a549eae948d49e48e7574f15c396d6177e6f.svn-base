@@ -1,0 +1,106 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<head>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+<style>
+th{
+	fontsize: 1.5em;
+	fontweight: bold;
+}
+#in{
+	border: 2px solid darkgray;
+}
+.table td,.card-footer{
+	padding: 6px 0.75rem;
+}
+.table th{
+	padding: 8px 0.75rem;
+}
+table tr{
+	cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+<div class="wrapper">
+	<section class="content-header ">
+		<div class="row md-2">
+			<div>
+				<h3>일정 검색</h3>
+			</div>
+			<div style="display: inline; margin-left: 10px; margin-top: 10px;">
+				<span  class="text-muted"  style="padding-right: 535px;">일정 > 일정 검색</span>
+			</div>
+		</div>
+	</section>
+	<div id="margin1">
+		<div class="row">
+			<div class="col-10">
+				<h5>
+					&nbsp;&nbsp;&nbsp;'${keyword}'의 검색결과(총 ${fn:length(calendarList)}건)
+				</h5>
+			</div>
+			<div class="col-2" style="padding-left:30px;padding-bottom:10px;">
+				<button class="btn btn-outline-dark" onclick="goIframPage('/warehouse/calendar/main.do','M200000')"><i class="fas fa-arrow-left"></i> 뒤로가기</button>
+			</div>
+		</div>
+
+<!-- 		<div class="form-group"> -->
+<%-- 			<input id="in" type="text" id="title" name='title' class="form-control" value="${keyword}"> --%>
+<!-- 		</div> -->
+
+		<div class="card card-outline card-navy">
+
+			<div class="card-body table-responsive p-0">
+				<table class="table table-hover text-nowrap">
+					<thead>
+						<tr style="text-align: center;">
+							<th style="width: 40%;">기간</th>
+							<th style="width: 30%;">일정구분</th>
+							<th style="width: 30%;">일정명</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${calendarList }" var="calendar">
+							<tr style="text-align: center;" onclick="OpenWindow('detail.do?ccode=${calendar.ccode}','상세보기',940,550)">
+								<td>${calendar.start } ~ ${calendar.end }</td>
+								<td>
+									<c:if test="${calendar.catecode eq '1'}">개인일정</c:if>
+									<c:if test="${calendar.catecode eq '2'}">부서일정</c:if>
+									<c:if test="${calendar.catecode eq '3'}">회사일정</c:if>
+								</td>
+								<td>${calendar.title }</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+
+	$(document).on('click', 'body > aside > div > ul > li:nth-child(2) > a', function(){
+		$(this).attr("href", "#");
+		regist();
+	})
+
+
+
+
+
+	function regist() {
+		window.open('registForm.do','일정 등록',"scrollbars=yes,width=940, height=550, top=100, left=400, resizable=1, status=yes" );
+	}
+
+
+</script>
+
+</body>

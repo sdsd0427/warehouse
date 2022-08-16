@@ -1,0 +1,320 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="myWorkList" value="${dataMap.myWorkList }"/>
+<c:set var="pageMaker" value="${dataMap.pageMaker }"/>
+<c:set var="noneCheckCnt" value="${dataMap.noneCheckCnt }"/>
+<head>
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/work/workMain.css">
+</head>
+<body>
+	<div class="wrapper">
+		<div style="display: flex; justify-content: space-between;">
+
+			<h2 class="title">업무 > 내 업무</h2>
+			<div class="work-search" style="padding-top: 10px;">
+					<select class="form-control" name="searchType" id="searchType">
+						<option value="tmrh" ${pageMaker.cri.searchType eq 'tmrh' ? 'selected' : '' }>전체</option>
+						<option value="t" ${pageMaker.cri.searchType eq 't' ? 'selected' : '' }>제목</option>
+						<option value="m" ${pageMaker.cri.searchType eq 'm' ? 'selected' : '' }>담당자</option>
+						<option value="r" ${pageMaker.cri.searchType eq 'r' ? 'selected' : '' }>요청자</option>
+						<option value="h" ${pageMaker.cri.searchType eq 'h' ? 'selected' : '' }>해시태그</option>
+					</select>
+					<input class="form-control" type="search" name="keyword">
+					<button type="button" class="btn btn-default" style="height: 38px;" onclick="">
+						<i class="fa fa-search"></i>
+					</button>
+			</div>
+		</div>
+		<div class="row ml-4">
+			<div class="card card-info col-12" style="padding: 0">
+				<div class="card-header p-0 pt-1 border-bottom-0">
+					<ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home"
+							aria-selected="true">대기
+								<c:if test="${dataMap.noneCheckCnt.get('0') > 0}">
+									<b style="border: 1px soild white; border-radius: 50%">
+										${dataMap.noneCheckCnt.get('0')}
+									</b>
+								</c:if>
+
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home"
+							aria-selected="true">진행
+								<c:if test="${dataMap.noneCheckCnt.get('1') > 0}">
+									<b style="border: 1px soild white; border-radius: 50%">
+										${dataMap.noneCheckCnt.get('1')}
+									</b>
+								</c:if>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home"
+							aria-selected="true">이의신청
+								<c:if test="${dataMap.noneCheckCnt.get('3') > 0}">
+									<b style="border: 1px soild white; border-radius: 50%">
+										${dataMap.noneCheckCnt.get('3')}
+									</b>
+								</c:if>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home"
+							aria-selected="true">협업요청
+								<c:if test="${dataMap.noneCheckCnt.get('4') > 0}">
+									<b style="border: 1px soild white; border-radius: 50%">
+										${dataMap.noneCheckCnt.get('4')}
+									</b>
+								</c:if>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home"
+							aria-selected="true">대리요청
+								<c:if test="${dataMap.noneCheckCnt.get('5') > 0}">
+									<b style="border: 1px soild white; border-radius: 50%">
+										${dataMap.noneCheckCnt.get('5')}
+									</b>
+								</c:if>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home"
+							aria-selected="true">완료
+								<c:if test="${dataMap.noneCheckCnt.get('2') > 0}">
+									<b style="border: 1px soild white; border-radius: 50%">
+										${dataMap.noneCheckCnt.get('2')}
+									</b>
+								</c:if>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home"
+							aria-selected="true">전체</a>
+						</li>
+					</ul>
+				</div>
+				<table class="table table-hover text-nowrap projects">
+					<thead>
+						<tr>
+							<th style="width: 30%">제목</th>
+							<th style="width: 15%">요청자</th>
+							<th style="width: 15%">담당자</th>
+							<th style="width: 15%">진척도</th>
+							<th style="width: 20%">기한
+								<span class="material-symbols-outlined" style="font-size: 14px;">
+								unfold_more_double
+								</span>
+							</th>
+							<th style="width: 5%">상태</th>
+						</tr>
+					</thead>
+					<tbody class="workList">
+						<c:if test="${empty myWorkList }">
+							<tr>
+								<td colspan="6">
+									등록된 업무가 없습니다.
+								</td>
+							</tr>
+						</c:if>
+						<c:forEach items="${myWorkList }" var="work">
+							<tr style="${work.wcheck eq 1 ? 'color:lightgray' : ''}">
+								<td>
+								${work.wtitle}
+									<c:if test="${work.wstatus eq '대기' and work.overDay >= 3}">
+										<span class="badge bg-danger">D+${work.overDay }</span>
+									</c:if>
+									<c:if test="${work.dDay <= 3 }">
+										<span class="badge bg-danger">임박</span>
+									</c:if>
+								</td>
+								<td>
+									<div style="align-items: center; display: flex;">
+										<div >
+											<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+										</div>
+										<div>
+											<p style="font-size: 16px; font-weight: bold">${work.requestBy.name} </p>
+											<div style="font-size: 12px;">
+												<p>${work.requestBy.ppsname }</p>
+												<p>${work.requestBy.dname }</p>
+											</div>
+										</div>
+									</div>
+								</td>
+								<td>
+									<div style="align-items: center; display: flex;">
+										<c:forEach items="${work.workManagerList }" var="manager">
+											<c:if test="${manager.wmstep eq 1 }">
+												<div >
+													<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+												</div>
+												<div>
+													<p style="font-size: 16px; font-weight: bold">${manager.name } </p>
+													<div style="font-size: 12px;">
+														<p>${manager.ppsname }</p>
+														<p>${manager.dname }</p>
+													</div>
+												</div>
+											</c:if>
+										</c:forEach>
+										<div style="font-size: 12px">
+											<span>외 ${work.managerCnt - 1}명</span>
+										</div>
+									</div>
+								</td>
+								<td class="project_progress">
+									<div class="progress progress-sm">
+										<div class="progress-bar bg-green" role="progressbar" aria-valuenow="${work.wprogress}" aria-valuemin="0"
+										aria-valuemax="100" style="width: ${work.wprogress}%"></div>
+									</div>
+									<small>${work.wprogress}% 완료</small>
+								</td>
+								<td>
+									<fmt:formatDate value="${work.wend }" pattern="yyyy-MM-dd"/>
+								</td>
+								<td>
+									<span class="badge bg-secondary">${work.wstatus }</span>
+								</td>
+							</tr>
+						</c:forEach>
+
+					</tbody>
+				</table>
+				<div class="card-footer">
+					<ul class="pagination justify-content-center m-0">
+						<li class="page-item">
+							<a class="page-link" href="javascript:list_go(1)">
+								<i class="fas fa-angle-double-left"></i>
+							</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="javascript:list_go(${param.page - 1 lt 0 ? 1 : param.page - 1})">
+								<i class="fas fa-angle-left"></i>
+							</a>
+						</li>
+						<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="page">
+							<li class="page-item ${page eq pageMaker.cri.page ? 'active' : ''}">
+								<a class="page-link" href="javascript:myWorkListGo(${page },'대기')">
+								${page }
+								</a>
+							</li>
+						</c:forEach>
+						<li class="page-item">
+							<a class="page-link" href="javascript:list_go(${param.page + 1})">
+								<i class="fas fa-angle-right"></i>
+							</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="javascript:list_go(${pageMaker.realEndPage })">
+								<i class="fas fa-angle-double-right"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="row ml-4" style="justify-content: space-between;">
+			<div class="card" style="width: 48%">
+				<canvas id="myChart"  height="300"></canvas>
+			</div>
+			<div class="card" style="width: 48%">
+				<canvas id="myChart2"  height="300"></canvas>
+			</div>
+		</div>
+		<div class="emp_card">
+			<div class="card-header" style="display: flex; align-items: center;">
+				<span class="name"></span>
+				<a class="mail" href="#">
+					<span class="material-symbols-outlined">
+					mail
+					</span>
+				</a>
+			</div>
+			<div class="card-body">
+				<span>부서</span>
+				<span class="dep">개발팀</span>
+				<br>
+				<span>연락처</span>
+				<span>010-1111-1111</span>
+			</div>
+		</div>
+	</div>
+	<script>
+	const ctx = document.getElementById('myChart').getContext('2d');
+	const myChart = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels: ['최민규', '김형민', '강동주', '이병진', '이정규', '하재관'],
+	        datasets: [{
+	            label: '나에게 많이 요청한 사람',
+	            data: [8, 7, 5, 3, 3, 1],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            y: {
+	                beginAtZero: true
+	            }
+	        }
+	    }
+	});
+	const ctx2 = document.getElementById('myChart2').getContext('2d');
+	const myChart2 = new Chart(ctx2, {
+	    type: 'bar',
+	    data: {
+	        labels: ['서난희', '강정인', '이종민', '오지현', '김기웅', '강현수'],
+	        datasets: [{
+	            label: '나와 협업 많이 한 사람',
+	            data: [9, 7, 6, 6, 5, 3],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            y: {
+	                beginAtZero: true
+	            }
+	        }
+	    }
+	});
+	</script>
+	<%@ include file="./work_js.jsp" %>
+</body>

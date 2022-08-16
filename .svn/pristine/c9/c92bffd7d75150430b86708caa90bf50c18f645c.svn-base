@@ -1,0 +1,704 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Contact-Mapper">
+
+	<sql id="search">
+		<if test="searchType == 'p'.toString()">
+			and c.PPSCODE = (select distinct c.PPSCODE
+                        	 from  employee b, postposition c
+                        	where  b.PPSCODE = c.PPSCODE
+                        	 and c.ppsname like '%'||#{keyword}||'%')
+		</if>
+		<if test="searchType == 'n'.toString()">
+			and b.eno = (select distinct b.eno
+                         from employee b
+                         where b.name like '%'||#{keyword}||'%')
+		</if>
+		<if test="searchType == 'pn'.toString()">
+			and(
+			c.ppscode in (select distinct c.PPSCODE
+                        	 from  employee b, postposition c
+                        	where  b.PPSCODE = c.PPSCODE
+                        	 and c.ppsname like '%'||#{keyword}||'%')
+			or
+			 b.eno in (select distinct b.eno
+                         from employee b
+                         where b.name like '%'||#{keyword}||'%')
+			)
+		</if>
+	</sql>
+
+
+	<!-- 전체 주소록 리스트-->
+	<select id="selectSearchContactList" resultType="employee">
+
+		SELECT
+		b.eno,
+		b.name ,
+		b.email,
+		b.phone,
+		b.call,
+		b.condition,
+		c.ppsname,
+		a.dname,
+		b.photo
+
+		FROM department a, employee b,  postposition c
+		where b.eno is not null
+		<include refid="search" />
+		and a.dno = b.dno
+		and b.PPSCODE = c.PPSCODE
+		order by b.name
+	</select>
+
+	<select id="selectSearchContactListCount" resultType="int">
+
+		SELECT
+		count(*)
+
+		FROM department a, employee b,  postposition c
+		where b.eno is not null
+		<include refid="search" />
+		and a.dno = b.dno
+		and b.PPSCODE = c.PPSCODE
+		order by b.name
+	</select>
+
+
+
+
+<!-- 팀 클릭 시 정보 가져옴  -->
+	<select id="selectTeamContactList" resultType="employee">
+		SELECT
+			   b.eno,
+			   b.name ,
+			   b.email,
+			   b.phone,
+			   b.call,
+			   b.condition,
+			   c.ppsname,
+			   a.dname,
+			   b.photo
+		FROM department a, employee b,  postposition c
+		where b.eno is not null
+		and a.dno = b.dno
+		and b.PPSCODE = c.PPSCODE
+		and a.dname = #{dname}
+		order by b.name
+	</select>
+
+
+
+
+	<!-- cogroupcode -->
+	<select id="selectContactGrNo" resultType="String">
+		SELECT 'GR' ||
+		trim(nvl(max(to_char(to_number(substr(cogroupcode,3))+1,'000000')),'000001'))
+		as COGROUPCODE
+		from contactgr
+
+		union
+
+		select nvl(null,'GR000001') as COGROUPCODE
+		from
+		dual
+		where not exists (select COGROUPCODE
+		from contactgr)
+	</select>
+	
+	
+		<!-- 부서주소록 -->
+	<select id="selectDepartment" resultType="employee">
+	select
+	       b.eno,
+	       b.name ,
+	       b.email,
+	       b.phone,
+	       b.call,
+	       b.condition,
+	       c.ppsname,
+	       a.dname,
+	       a.dno,
+	       b.photo
+
+	from department a, employee b,  postposition c
+	where b.eno is not null
+	<include refid="search" />
+	and a.dno = b.dno
+	and b.ppscode = c.ppscode
+	and b.dno = #{dno}
+		order by b.name
+	</select>
+	
+	
+	<select id="selectDepartmentCount" resultType="int">
+	select
+		count(*)
+
+	from department a, employee b,  postposition c
+	where b.eno is not null
+	<include refid="search" />
+	and a.dno = b.dno
+	and b.ppscode = c.ppscode
+	and b.dno = #{dno}
+		order by b.name
+	</select>
+	
+
+	<!-- 그룹 저장 -->
+	<update id="insertGroup" parameterType="contactgr">
+			insert
+			into
+			contactgr(cogroupcode,cogroupname,eno)
+			values
+			(#{cogroupcode},#{cogroupname},#{eno})
+	</update>
+
+
+	<!-- 개인주소록 그룹 리스트 사원 정보 저장 -->
+	<update id="insertGrInfo" parameterType="contactgr">
+			insert
+			into
+			mycontact (eno,cogroupcode) values (#{eno} ,#{cogroupcode})
+	</update>
+
+
+	<!-- 그룹 리스트  -->
+	<select id="selectGroupList" resultType="contactgr">
+	 SELECT a.cogroupname,
+			 a.cogroupcode,
+			 a.eno,
+	       		 (select COUNT(*) 
+	       		 from MYCONTACT b 
+	       		 where a.cogroupcode = b.cogroupcode) as groupcount
+  	 FROM contactgr a
+  	where a.eno = #{eno}
+  	order by a.cogroupname
+	 </select>
+	 
+
+
+
+	<!-- 개인주소록 그룹 리스트의 사원 정보 -->
+	<select id="selectGroupInfoList" resultType="employee">
+		select
+		a.eno,
+	    b.name,
+	    d.ppsname,
+	    b.phone,
+	    b.email,
+	    b.condition,
+	    c.dname,
+	    b.call,
+	    e.cogroupname,
+	    b.photo
+	    
+
+		from
+		    mycontact a, employee b, department c, postposition d, contactgr e
+		where a.eno = b.eno
+		and b.dno = c.dno
+		and b.ppscode = d.ppscode
+		and a.cogroupcode = e.cogroupcode
+		and a.cogroupcode = #{cogroupcode}
+		order by b.name
+
+	</select>
+
+
+
+	<!-- 개인주소록 전체 리스트 -->
+	<select id="selectPersonalList" resultType="contactgr">
+		select  d.eno,
+	        b.name,
+	        b.phone,
+	        b.call,
+	        a.dname,
+	        c.ppsname,
+	        b.condition,
+	        b.email,
+	        b.photo,
+	        e.COGROUPNAME
+	
+		from department a, employee b, postposition c,  mycontact d,CONTACTGR e
+		where b.eno is not null
+		<include refid="search" />
+			and d.eno = b.eno
+			and b.dno = a.dno
+			and b.ppscode = c.ppscode
+	        and d.COGROUPCODE = e.COGROUPCODE
+			and e.eno = #{eno}
+			order by e.COGROUPNAME
+	</select>
+
+	<select id="selectPersonalListCount" resultType="int">
+			select  count(*)
+	
+		from department a, employee b, postposition c,  mycontact d,CONTACTGR e
+		where b.eno is not null
+		<include refid="search" />
+			and d.eno = b.eno
+			and b.dno = a.dno
+			and b.ppscode = c.ppscode
+	        and d.COGROUPCODE = e.COGROUPCODE
+			and e.eno = #{eno}
+			order by b.name
+	</select>
+
+
+
+	<!-- 개인주소록 그룹안 사원 삭제 -->
+	<update id="deleteGrEmployee" parameterType="mycontact">
+		delete from mycontact
+		where cogroupcode = #{cogroupcode}
+ 		and eno = #{eno}
+
+	</update>
+
+
+	<!-- 그룹삭제 -->
+	<update id="deleteGr" parameterType="str">
+	 delete from contactgr
+	 where cogroupcode=#{cogroupcode}
+	</update>
+
+	<!-- 그룹 count -->
+	<select id="selectGroupCount" resultType="str">
+	SELECT
+		    count(*)
+		FROM
+		    mycontact
+		where cogroupcode= #{cogroupcode}
+	</select>
+
+
+	<!-- 초성 선택 -->
+<!--
+	<sql id="searchFirst">
+		<if test='searchFirstType== "ㄱ"'>
+			and name between nchr(0) and nchr(45207)
+		</if>
+		<if test='searchFirstType== "ㄴ"'>
+			and name between nchr(45208) and nchr(45795)
+		</if>
+		<if test='searchFirstType== "ㄷ"'>
+			and name between nchr(45796) and nchr(46971)
+		</if>
+	</sql>
+ -->
+
+
+<!-- 개인 초성 -->
+<select id="PselectGirstList" resultType="employee">
+		select  d.eno, b.name,b.phone, b.call, a.dname, c.ppsname, b.condition, b.email,b.photo,e.COGROUPNAME
+		from department a, employee b, postposition c,  mycontact d,CONTACTGR e
+		where b.eno is not null
+			and d.eno = b.eno
+			and b.dno = a.dno
+			and b.ppscode = c.ppscode
+	        and d.COGROUPCODE = e.COGROUPCODE
+            and name between nchr(0) and nchr(45207)
+			and e.eno = #{eno}
+			order by e.COGROUPNAME
+</select>
+
+	<select id="PselectNirstList" resultType="employee">
+		select  d.eno, b.name,b.phone, b.call, a.dname, c.ppsname, b.condition, b.email,b.photo,e.COGROUPNAME
+		from department a, employee b, postposition c,  mycontact d,CONTACTGR e
+		where b.eno is not null
+			and d.eno = b.eno
+			and b.dno = a.dno
+			and b.ppscode = c.ppscode
+	        and d.COGROUPCODE = e.COGROUPCODE
+           and name between nchr(45208) and nchr(45795)
+			and e.eno = #{eno}
+			order by e.COGROUPNAME
+		
+		
+	</select>
+	<select id="PselectDirstList" resultType="employee">
+		select  d.eno, b.name,b.phone, b.call, a.dname, c.ppsname, b.condition, b.email,b.photo,e.COGROUPNAME
+		from department a, employee b, postposition c,  mycontact d,CONTACTGR e
+		where b.eno is not null
+			and d.eno = b.eno
+			and b.dno = a.dno
+			and b.ppscode = c.ppscode
+	        and d.COGROUPCODE = e.COGROUPCODE
+          and name between nchr(45796) and nchr(46971)
+			and e.eno = #{eno}
+			order by e.COGROUPNAME
+	
+	</select>
+	<select id="PselectRirstList" resultType="employee">
+		select  d.eno, b.name,b.phone, b.call, a.dname, c.ppsname, b.condition, b.email,b.photo,e.COGROUPNAME
+		from department a, employee b, postposition c,  mycontact d,CONTACTGR e
+		where b.eno is not null
+			and d.eno = b.eno
+			and b.dno = a.dno
+			and b.ppscode = c.ppscode
+	        and d.COGROUPCODE = e.COGROUPCODE
+           and name between nchr(46972) and nchr(47559)
+			and e.eno = #{eno}
+			order by e.COGROUPNAME
+	
+	</select>
+	<select id="PselectMirstList" resultType="employee">
+	select  d.eno, b.name,b.phone, b.call, a.dname, c.ppsname, b.condition, b.email,b.photo,e.COGROUPNAME
+		from department a, employee b, postposition c,  mycontact d,CONTACTGR e
+		where b.eno is not null
+			and d.eno = b.eno
+			and b.dno = a.dno
+			and b.ppscode = c.ppscode
+	        and d.COGROUPCODE = e.COGROUPCODE
+          and name between nchr(47560) and nchr(48147)
+			and e.eno = #{eno}
+			order by e.COGROUPNAME
+	
+	</select>
+	<select id="PselectBirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(48148) and nchr(49323)
+			and a.eno = #{eno}
+			order by b.name
+	</select>
+	<select id="PselectXirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(49324) and nchr(50499)
+			and a.eno = #{eno}
+			order by b.name
+	
+	
+	</select>
+	<select id="PselectOirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(50500) and nchr(51087)
+			and a.eno = #{eno}
+			order by b.name
+	
+	</select>
+	<select id="PselectJirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(51088) and nchr(52263)
+			and a.eno = #{eno}
+			order by b.name
+		
+	</select>
+	<select id="PselectCirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(52264) and nchr(52851)
+			and a.eno = #{eno}
+			order by b.name
+	
+	
+	</select>
+	<select id="PselectCairstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(52851) and nchr(53439)
+			and a.eno = #{eno}
+			order by b.name
+	
+	</select>
+	<select id="PselectTirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(53440) and nchr(54027)
+			and a.eno = #{eno}
+			order by b.name
+	
+	</select>
+	<select id="PselectPirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(54028) and nchr(54615)
+			and a.eno = #{eno}
+			order by b.name
+	
+	
+	</select>
+	<select id="PselectHirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(54616) and nchr(55203)
+			and a.eno = #{eno}
+			order by b.name
+		
+	
+	</select>
+
+
+<!-- 부서 초성  -->
+	<select id="DselectGirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(0) and nchr(45207)
+			 and a.dno = #{dno}
+			order by b.name
+	</select>
+	<select id="DselectNirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(45208) and nchr(45795)
+			 and a.dno = #{dno}
+			order by b.name
+	</select>
+	<select id="DselectDirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(45796) and nchr(46971)
+			 and a.dno = #{dno}
+			order by b.name
+	</select>
+	<select id="DselectRirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(46972) and nchr(47559)
+			 and a.dno = #{dno}
+			order by b.name
+	</select>
+	<select id="DselectMirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(47560) and nchr(48147)
+			 and a.dno = #{dno}
+			order by b.name
+	</select>
+	<select id="DselectBirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(48148) and nchr(49323)
+			 and a.dno = #{dno}
+			order by b.name
+	</select>
+	<select id="DselectXirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(49324) and nchr(50499)
+			 and a.dno = #{dno}
+			order by b.name
+	</select>
+	<select id="DselectOirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(50500) and nchr(51087)
+			 and a.dno = #{dno}
+			order by b.name
+	</select>
+	<select id="DselectJirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(51088) and nchr(52263)
+			 and a.dno = #{dno}
+			order by b.name
+	</select>
+	<select id="DselectCirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(52264) and nchr(52851)
+			 and a.dno = #{dno}
+			order by b.name
+	</select>
+	<select id="DselectCairstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(52851) and nchr(53439)
+			 and a.dno = #{dno}
+			order by b.name
+	</select>
+	<select id="DselectTirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(53440) and nchr(54027)
+			 and a.dno = #{dno}
+			order by b.name
+	</select>
+	<select id="DselectPirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(54028) and nchr(54615)
+			 and a.dno = #{dno}
+			order by b.name
+	</select>
+	<select id="DselectHirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(54616) and nchr(55203)
+			 and a.dno = #{dno}
+			order by b.name
+	</select>
+
+
+
+
+<!-- 전체 초성 -->
+	<select id="selectGirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(0) and nchr(45207)
+			order by b.name
+	</select>
+	<select id="selectNirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(45208) and nchr(45795)
+			order by b.name
+	</select>
+	<select id="selectDirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(45796) and nchr(46971)
+			order by b.name
+	</select>
+	<select id="selectRirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(46972) and nchr(47559)
+			order by b.name
+	</select>
+	<select id="selectMirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(47560) and nchr(48147)
+			order by b.name
+	</select>
+	<select id="selectBirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(48148) and nchr(49323)
+			order by b.name
+	</select>
+	<select id="selectXirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(49324) and nchr(50499)
+			order by b.name
+	</select>
+	<select id="selectOirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(50500) and nchr(51087)
+			order by b.name
+	</select>
+	<select id="selectJirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(51088) and nchr(52263)
+			order by b.name
+	</select>
+	<select id="selectCirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(52264) and nchr(52851)
+			order by b.name
+	</select>
+	<select id="selectCairstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(52851) and nchr(53439)
+			order by b.name
+	</select>
+	<select id="selectTirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(53440) and nchr(54027)
+			order by b.name
+	</select>
+	<select id="selectPirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(54028) and nchr(54615)
+			order by b.name
+	</select>
+	<select id="selectHirstList" resultType="employee">
+		select b.eno,b.name,b.email,b.phone,b.call,b.condition,c.ppsname,a.dname,b.photo
+		from department a, employee b,  postposition c
+		where a.dno = b.dno
+			and b.ppscode = c.ppscode
+			and name between nchr(54616) and nchr(55203)
+			order by b.name
+	</select>
+
+
+
+
+</mapper>

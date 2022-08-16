@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  <mapper namespace="Report-Mapper">
+  	<update id="insertReport" parameterType="report">
+  		INSERT INTO report (
+  			repno
+		   ,wcode
+		   ,eno
+		   ,title
+		   ,content
+		   ,regdate
+		   ,filename
+		   ,uploadpath
+		) VALUES (
+			report_seq.nextval
+		   ,#{wcode}
+		   ,#{eno}
+		   ,#{title}
+		   ,#{content}
+		   ,sysdate
+		   ,#{fileName}
+		   ,#{uploadPath}
+		)
+  	</update>
+
+  	<select id="selectReportList" resultType="report">
+  		SELECT
+  			repno
+		   ,wcode
+		   ,eno
+		   ,title
+		   ,content
+		   ,regdate
+		   ,filename
+		   ,uploadpath
+		FROM
+		    report
+		WHERE wcode = #{wcode}
+		ORDER BY regdate desc
+  	</select>
+
+  	<select id="selectReportTotalCount" resultType="int">
+  		SELECT
+  			count(*)
+  		FROM
+  			report
+  		WHERE wcode = #{wcode}
+  	</select>
+
+  	<select id="selectReportByRepNo" resultType="report">
+  		SELECT
+  			repno
+		   ,wcode
+		   ,eno
+		   ,title
+		   ,content
+		   ,regdate
+		   ,filename
+		   ,uploadpath
+		FROM
+		    report
+		WHERE repno = #{repNo}
+  	</select>
+
+  	<update id="deleteReportFile">
+  		UPDATE
+  			report
+  		SET
+  			filename = null,
+  			uploadPath = null
+  		WHERE repno = #{repNo}
+  	</update>
+
+  	<update id="updateReport" parameterType="report">
+  		UPDATE
+  			report
+  		SET
+  			title = #{title},
+  			content = #{content},
+  			filename = #{fileName},
+  			uploadPath = #{uploadPath}
+  		WHERE repno = #{repNo}
+  	</update>
+
+  	<update id="deleteReport">
+  		DELETE FROM report
+  		WHERE repno = #{repno}
+  	</update>
+  </mapper>

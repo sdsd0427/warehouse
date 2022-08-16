@@ -1,0 +1,111 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<head>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/community.css">
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/bootstrap/plugins/summernote/summernote-bs4.min.css">
+</head>
+
+<title></title>
+
+<body>
+	<div class="wrapper">
+		<section class="content-header ">
+			<div class="row md-2">
+				<div class="col-sm-12">
+					<h2>메뉴얼 수정</h2>
+				</div>
+			</div>
+		</section>
+
+		<section class="content card card-outline card-info">
+			<div class="container-fluid">
+				<div class="card-header">
+							<h5 class="card-title">메뉴얼 수정</h5>
+							<div class="card-tools">
+								<button type="button" id="modifyBtn" class="btn btn-info"
+									onclick="modify_go()">수정</button>
+								<button type="button" id="listBtn" class="btn btn-secondary"
+									onclick="history.go(-1);">최소</button>
+							</div>
+						</div>
+						<div class="card-body">
+						<form enctype="multipart/form-data" role="form" method="post" action="manualModify.do" name="modifyForm">
+							<input type="hidden" name="manualNo" value="${manual.manualNo}" />
+							<div class="form-group col-sm-12">
+								<label for="manualTitle">제목</label> <input type="text"
+									class="form-control" id="manualTitle" name="manualTitle" value="${manual.manualTitle}"/>
+							</div>
+							<div class="row">
+								<div class="form-group col-sm-6">
+									<label for="name">작성자</label> <input type="text"
+										class="form-control" id="name" name="name" readonly value="${manual.name }"/>
+								</div>
+
+								<div class="form-group col-sm-6">
+									<label >카테고리</label>
+									<div class="card-tool" style="width: 67rem;">
+										<select class="form-control col-md-4" name="cateNo"
+												id="cateNo">
+												<option value="1" ${manual.cateNo eq '1' ? 'selected':'' }>그룹웨어</option>
+												<option value="2" ${manual.cateNo eq '2' ? 'selected':'' }>회사내규</option>
+												<option value="3" ${manual.cateNo eq '3' ? 'selected':'' }>참고자료</option>
+											</select>
+									</div>
+								</div>
+
+							</div>
+							<div class="form-group col-sm-12">
+								<label class="col-2 mt-1">내용</label>
+							<textarea class="form-control col-12 mt-1" id="manualContent" name="manualContent" rows="5" cols="" placeholder="소개글을 작성하세요">${manual.manualContent}</textarea>
+							</div>
+
+							<div class="card card-light card-outline">
+								<div class="card-header">
+								<h5 class="card-title"><i class="fas fa-paperclip"></i>&nbsp;&nbsp;첨부파일</h5>
+								&nbsp;&nbsp;&nbsp;<button class="btn btn-xs btn-info"
+												onclick="addFile_go();"	type="button" id="addFileBtn">Add File</button>
+								</div>
+								<div class="card-footer fileInput">
+									<ul>
+										<li>휴가 작성 메뉴얼.pdf</li>
+									</ul>
+								</div>
+						    </div>
+						    </form>
+						</div>
+
+			</div>
+		</section>
+
+
+
+
+	</div>
+
+<script>
+
+window.onload=function(){
+	summernote_go($("#manualContent"),'<%=request.getContextPath()%>');
+}
+</script>
+
+<script>
+	function modify_go(){
+		var form = $('form[name="modifyForm"]');
+
+		//유효성 체크
+		if($("input[name='manualTitle']").val()==""){
+			alert("제목은 필수입니다.");
+			$("input[name='manualTitle']").focus();
+			return;
+		}
+
+		$("form[role='form']").submit()
+	}
+
+</script>
+
+</body>
+
+

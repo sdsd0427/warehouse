@@ -1,0 +1,237 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<head>
+<style>
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #17a2b8;
+}
+a {
+    color: #17a2b8;
+    text-decoration: none;
+    background-color: transparent;
+}
+</style>
+</head>
+
+<div class="wrapper" style="padding-left: 40px;">
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row md-2">
+				<div class="col-sm-6">
+					<h3>마이페이지 > 나의 활동</h3>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="content container-fluid">
+		<div class="card card-info card-outline">
+			<div class="card-header">
+				<h3 class="card-title">나의 멘토링 활동</h3>
+			</div>
+			<div class="card-header p-2">
+				<ul class="nav nav-pills">
+					<li class="nav-item"><a class="nav-link active" href="#mento"
+						data-toggle="tab">멘토</a></li>
+					<li class="nav-item"><a class="nav-link" href="#menti"
+						data-toggle="tab">멘티</a></li>
+				</ul>
+			</div>
+
+			<div class="card-body">
+				<div class="tab-content">
+					<div class="tab-pane active" id="mento">
+						<div class="row">
+
+							<div class="col-lg-3 col-6">
+								<div class="small-box bg-success">
+									<div class="inner">
+										<h5>1:1멘토링</h5>
+										<p>이순신</p>
+										<i class="nav-icon far fa-calendar-alt">
+											2202-07-04~2022-07-28</i>
+									</div>
+									<div class="icon">
+										<i class="ion ion-stats-bars"></i>
+									</div>
+									<a href="#" class="small-box-footer">More info <i
+										class="fas fa-arrow-circle-right"></i></a>
+								</div>
+							</div>
+
+							<div class="col-lg-3 col-6">
+								<div class="small-box bg-warning">
+									<div class="inner">
+										<h5>그룹멘토링</h5>
+										<div>
+											<p>
+												이순신&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-users"> 4</i>
+											</p>
+										</div>
+										<i class="nav-icon far fa-calendar-alt">
+											2202-07-04~2022-07-28</i>
+									</div>
+									<div class="icon">
+										<i class="ion ion-person-add"></i>
+									</div>
+									<a href="#" class="small-box-footer">More info <i
+										class="fas fa-arrow-circle-right"></i></a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+					<div class="tab-pane" id="menti">
+						<div class="row">
+
+							<div class="col-lg-3 col-6">
+								<div class="small-box bg-success">
+									<div class="inner">
+										<h5>1:1멘토링</h5>
+										<p>성춘향</p>
+										<i class="nav-icon far fa-calendar-alt">
+											2202-07-04~2022-07-28</i>
+									</div>
+									<div class="icon">
+										<i class="ion ion-stats-bars"></i>
+									</div>
+									<a href="#" class="small-box-footer">More info <i
+										class="fas fa-arrow-circle-right"></i></a>
+								</div>
+							</div>
+
+							<div class="col-lg-3 col-6">
+								<div class="small-box bg-warning">
+									<div class="inner">
+										<h5>그룹멘토링</h5>
+										<div>
+											<p>
+												홍길동&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-users"> 3</i>
+											</p>
+										</div>
+										<i class="nav-icon far fa-calendar-alt">
+											2202-07-04~2022-07-28</i>
+									</div>
+									<div class="icon">
+										<i class="ion ion-person-add"></i>
+									</div>
+									<a href="#" class="small-box-footer">More info <i
+										class="fas fa-arrow-circle-right"></i></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="row md-2">
+			<div class="col-md-6">
+				<div class="card card-success">
+					<div class="card-header">
+						<h3 class="card-title">가입한 커뮤니티</h3>
+					</div>
+					<div class="card-body " style="overflow: auto; height: 180px;">
+						<table class="table table-hover text-nowrap"
+							style="text-align: center;">
+							<tbody>
+								<tr>
+									<td>독서회</td>
+									<td>이순신</td>
+									<td><i class="fas fa-users"></i> 3</td>
+									<td>2022-06-28</td>
+								</tr>
+								<tr>
+									<td>롤 하자</td>
+									<td>프로젝트</td>
+									<td><i class="fas fa-users"></i> 4</td>
+									<td>2022-03-01</td>
+								</tr>
+								<tr>
+									<td>프로젝트</td>
+									<td>이순신</td>
+									<td><i class="fas fa-users"></i> 3</td>
+									<td>2022-02-15</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="card card-warning">
+					<div class="card-header">
+						<h3 class="card-title">내가 쓴 커뮤니티 게시글</h3>
+					</div>
+					<div class="card-body " style="overflow: auto; height: 180px;">
+						<table class="table table-hover text-nowrap"
+							style="text-align: center;">
+							<tbody>
+								<tr>
+									<td>영화감상회</td>
+									<td>안녕하세요~</td>
+									<td>이순신</td>
+									<td>2022-07-27</td>
+								</tr>
+								<tr>
+									<td>신입사원 커뮤</td>
+									<td>환영합니다~</td>
+									<td>이순신</td>
+									<td>2022-07-11</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row">
+			<div class="col-12">
+				<div class="card card-info card-outline">
+					<div class="card-header">
+						<h3 class="card-title">내가 쓴 게시글</h3>
+					</div>
+
+					<div class="card-body table-responsive p-0">
+						<table class="table table-hover text-nowrap">
+							<thead>
+								<tr>
+									<th>번호</th>
+									<th>분류</th>
+									<th>제목</th>
+									<th>작성자</th>
+									<th>작성일</th>
+									<th>첨부파일</th>
+									<th>조회수</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>12</td>
+									<td>자유게시판</td>
+									<td>자유자유</td>
+									<td>서난희 사원</td>
+									<td>2022-07-15</td>
+									<td></td>
+									<td>0</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+
+
+

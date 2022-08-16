@@ -1,0 +1,24 @@
+package kr.or.warehouse.dao;
+
+import static org.junit.Assert.*;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class BoardDAOImplTest {
+
+	AnnotationConfigApplicationContext dao;
+
+	@SuppressWarnings("resource")
+	@Before
+	public void before(){
+		dao = new AnnotationConfigApplicationContext(BoardDAOImpl.class);
+	}
+
+	@Test
+	public void beanTest() {
+		Assert.assertNotNull(dao);
+	}
+}

@@ -1,0 +1,414 @@
+package kr.or.warehouse.controller.rest;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.dto.AllSignVO;
+import kr.or.warehouse.dto.AttachVO;
+import kr.or.warehouse.dto.EmployeeVO;
+import kr.or.warehouse.dto.FieldVO;
+import kr.or.warehouse.dto.SignDocVO;
+import kr.or.warehouse.dto.SignLineGrVO;
+import kr.or.warehouse.dto.SignerVO;
+import kr.or.warehouse.service.NewApprovalService;
+
+@RestController
+@RequestMapping("approval")
+public class ApprovalRestController {
+
+	@Autowired
+	private NewApprovalService newApprovalService;
+
+	@Resource(name = "fileUploadPath")
+	private String fileUploadPath;
+
+
+
+	@RequestMapping("getRelatedDocList")
+	public ResponseEntity<Map<String, Object>> getRelatedDocList(Criteria cri, String sFormNo) throws Exception {
+		ResponseEntity<Map<String, Object>> result = null;
+		try {
+			Map<String, Object> dataMap = newApprovalService.getRelatedDocList(cri, sFormNo);
+			result = new ResponseEntity<Map<String, Object>>(dataMap, HttpStatus.OK);
+			System.out.println("getRelatedDocList : " + dataMap);
+		} catch (Exception e) {
+			result = new ResponseEntity<Map<String, Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+
+	@RequestMapping("getDeptName")
+	public ResponseEntity<Map<String, Object>> getDeptName(Criteria cri, int eno) throws Exception {
+		ResponseEntity<Map<String, Object>> result = null;
+		try {
+			Map<String, Object> dataMap = newApprovalService.getDeptName(cri, eno);
+			result = new ResponseEntity<Map<String, Object>>(dataMap, HttpStatus.OK);
+		} catch (Exception e) {
+			result = new ResponseEntity<Map<String, Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	@RequestMapping("getDrafterInfo")
+	public ResponseEntity<Map<String, Object>> getDrafterInfo(Criteria cri, int eno) throws Exception {
+
+		ResponseEntity<Map<String, Object>> result = null;
+		try {
+			Map<String, Object> dataMap = newApprovalService.getContactList(cri, eno);
+
+			result = new ResponseEntity<Map<String, Object>>(dataMap, HttpStatus.OK);
+
+		} catch (Exception e) {
+			result = new ResponseEntity<Map<String, Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	@RequestMapping("getSignDocNo")
+	public ResponseEntity<Map<String, Object>> getSignDocNo() throws Exception {
+
+		ResponseEntity<Map<String, Object>> result = null;
+		try {
+
+			Map<String, Object> dataSignDocMap = newApprovalService.getSignDocNo();
+
+			// System.out.println("dataSignDocMap:"+dataSignDocMap);
+			result = new ResponseEntity<Map<String, Object>>(dataSignDocMap, HttpStatus.OK);
+
+		} catch (Exception e) {
+			result = new ResponseEntity<Map<String, Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	// 나의 결재선 저장
+	@RequestMapping(value = "/registMySign", method = RequestMethod.POST, produces = "text/plain; charset=utf-8")
+	public ResponseEntity<String> registMySign(SignLineGrVO signLineGr,
+			@RequestParam("signerMemberList") List<String> signerMemberList, HttpSession session) {
+		ResponseEntity<String> result = null;
+
+		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
+
+		try {
+			newApprovalService.registSignGr(signLineGr, loginUser.getEno(), signerMemberList);
+			result = new ResponseEntity<String>(HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return result;
+	}
+
+	// 개인결재선에 속한 사원 리스트
+	@RequestMapping("MySignList")
+	public ResponseEntity<Map<String, Object>> MySignList(String signGroupNo) throws Exception {
+
+		ResponseEntity<Map<String, Object>> resultGroup = null;
+
+		try {
+			Map<String, Object> MygroupInfoMap = newApprovalService.getMySignMemberList(signGroupNo);
+			resultGroup = new ResponseEntity<Map<String, Object>>(MygroupInfoMap, HttpStatus.OK);
+		} catch (Exception e) {
+			resultGroup = new ResponseEntity<Map<String, Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return resultGroup;
+	}
+
+	// 필드설정
+	@RequestMapping("fieldSetting")
+	public ResponseEntity<String> fieldSetting(@RequestBody List<String> fieldList, HttpSession session) throws Exception{
+		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
+
+		ResponseEntity<String> result = null;
+
+		try {
+			newApprovalService.deleteField(loginUser.getEno());
+			for(String field : fieldList) {
+				FieldVO fieldVO = new FieldVO();
+				fieldVO.setEno(loginUser.getEno());
+				fieldVO.setField(field);
+				newApprovalService.insertFieldSetting(fieldVO);
+			}
+
+
+			result = new ResponseEntity<String>(HttpStatus.OK);
+		} catch (Exception e) {
+			result = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return result;
+
+	}
+
+	@RequestMapping("getFieldSetting")
+	public ResponseEntity<List<FieldVO>> getFieldSetting (HttpSession session) throws Exception{
+		ResponseEntity<List<FieldVO>> result = null;
+
+		EmployeeVO loginUser = (EmployeeVO)session.getAttribute("loginUser");
+
+		try {
+			List<FieldVO> fieldSetting = newApprovalService.getFieldSetting(loginUser.getEno());
+			result = new ResponseEntity<List<FieldVO>>(fieldSetting, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<List<FieldVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+
+		return result;
+	}
+
+	@RequestMapping(value = "/approveSignDoc", method = RequestMethod.POST, produces = "text/plain; charset=utf-8")
+	public ResponseEntity<String> approveSignDoc (SignerVO signer, String signNo, String last, String first) throws Exception{
+		ResponseEntity<String> result = null;
+		System.out.println("signNo : " + signNo);
+		try {
+			newApprovalService.updateSignRank(signer);
+
+			signer.setSignRank(signer.getSignRank() + 1);
+			newApprovalService.updateNextSignCheck(signer);
+
+			if("first".equals(first)) {
+				signer.setState(3);
+				newApprovalService.updateStateOfSignDocIng(signer);
+			}
+
+			if("last".equals(last)) {
+				signer.setState(5);
+				newApprovalService.updateLastSignState(signer.getSignLineno());
+				newApprovalService.updateStateOfSignDoc(signer);
+				newApprovalService.insertApproveSignDoc(signNo);
+
+				AllSignVO allSign = new AllSignVO();
+				allSign.setSignNo(signNo);
+				allSign.setClassCode("C102");
+
+				newApprovalService.updateClassCodeHashTag(allSign);
+				newApprovalService.updateClassCodeSignDoc(allSign);
+
+			}
+			result = new ResponseEntity<String>("결재 성공", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<String>("결재 실패",HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/rejectSignDoc", method = RequestMethod.POST, produces = "text/plain; charset=utf-8")
+	public ResponseEntity<String> rejectSignDoc (SignerVO signer, String signNo) throws Exception{
+		ResponseEntity<String> result = null;
+
+		try {
+			newApprovalService.updateSignStateByReject(signer);
+			newApprovalService.updateLowRankSignStateByReject(signer.getSignLineno());
+
+			signer.setState(4);
+			newApprovalService.updateStateOfSignDocIng(signer);
+			System.out.println("signer : " + signer);
+
+			AllSignVO allSign = new AllSignVO();
+			allSign.setSignNo(signNo);
+			allSign.setClassCode("C103");
+
+			newApprovalService.updateClassCodeHashTag(allSign);
+			newApprovalService.updateClassCodeSignDoc(allSign);
+
+			result = new ResponseEntity<String>("반려 처리 완료", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<String>("반려 처리 실패",HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/waitSignDoc", method = RequestMethod.POST, produces = "text/plain; charset=utf-8")
+	public ResponseEntity<String> waitSignDoc (SignerVO signer) throws Exception{
+		ResponseEntity<String> result = null;
+
+		try {
+			newApprovalService.updateSignStateByWait(signer);
+			signer.setState(2);
+			newApprovalService.updateStateOfSignDocIng(signer);
+//
+			result = new ResponseEntity<String>("보류 처리 완료", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<String>("보류 처리 실패",HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/registSignDoc", method = RequestMethod.POST)
+	public ResponseEntity<String> registSignDoc(SignDocVO signDoc, @RequestParam("signerMemberList") List<String> signerMemberList,
+			@RequestParam("reFMemberList") List<String> reFMemberList,
+			@RequestParam("viewerMemberList") List<String> viewerMemberList) throws Exception {
+
+		ResponseEntity<String> result = null;
+		// System.out.println("문서저장");
+		System.out.println("컨트롤러 전체" + signDoc);
+		// System.out.println("signerMemberList:"+signerMemberList);
+
+		try {
+			String savePath = this.fileUploadPath;
+			List<AttachVO> attachList = GetAttachesByMultipartFileAdatpter.save(signDoc.getUploadFile(), savePath);
+
+			System.out.println("attachList컨트롤" + attachList);
+			signDoc.setAttachList(attachList);
+			newApprovalService.registSignDoc(signDoc, signerMemberList, reFMemberList, viewerMemberList);
+			result = new ResponseEntity<String>(HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/reRegistSignDoc", method = RequestMethod.POST)
+	public ResponseEntity<String> reRegistSignDoc(SignDocVO signDoc, @RequestParam("signerMemberList") List<String> signerMemberList,
+			@RequestParam("reFMemberList") List<String> reFMemberList,
+			@RequestParam("viewerMemberList") List<String> viewerMemberList) throws Exception {
+
+		ResponseEntity<String> result = null;
+		// System.out.println("문서저장");
+		System.out.println("컨트롤러 전체" + signDoc);
+		// System.out.println("signerMemberList:"+signerMemberList);
+
+		try {
+			String savePath = this.fileUploadPath;
+			List<AttachVO> attachList = GetAttachesByMultipartFileAdatpter.save(signDoc.getUploadFile(), savePath);
+
+			System.out.println("attachList컨트롤" + attachList);
+			signDoc.setAttachList(attachList);
+
+			newApprovalService.deleteSignDoc(signDoc.getSignNo());
+			newApprovalService.deleteHashTag(signDoc.getSignNo());
+			newApprovalService.reRegistSignDoc(signDoc, signerMemberList, reFMemberList, viewerMemberList);
+			System.out.println("signDoc : " + signDoc);
+			System.out.println("signerMemberList : " + signerMemberList);
+			System.out.println("reFMemberList : " + reFMemberList);
+			System.out.println("viewerMemberList : " + viewerMemberList);
+
+			result = new ResponseEntity<String>(HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return result;
+	}
+
+	@RequestMapping("/getProceedingDraftDocList")
+	public ResponseEntity<Map<String,Object>> getProceedingDraftDocList(Criteria cri, HttpSession session) {
+		ResponseEntity<Map<String,Object>> result = null;
+
+		EmployeeVO loginUser = (EmployeeVO)session.getAttribute("loginUser");
+
+		try {
+			Map<String, Object> dataMap = newApprovalService.getProceedingDraftDocList(cri, loginUser.getEno());
+			result = new ResponseEntity<Map<String,Object>>(dataMap, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<Map<String,Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return result;
+	}
+
+	@RequestMapping("/getRecentTempSaveDocList")
+	public ResponseEntity<Map<String,Object>> getRecentTempSaveDocList(Criteria cri, HttpSession session) {
+		ResponseEntity<Map<String,Object>> result = null;
+
+		EmployeeVO loginUser = (EmployeeVO)session.getAttribute("loginUser");
+
+		try {
+			Map<String, Object> dataMap = newApprovalService.getRecentTempSaveDocList(cri, loginUser.getEno());
+			result = new ResponseEntity<Map<String,Object>>(dataMap, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<Map<String,Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return result;
+	}
+
+	@RequestMapping("/getSignMyTurnDocList")
+	public ResponseEntity<Map<String,Object>> getSignMyTurnDocList(Criteria cri, HttpSession session) {
+		ResponseEntity<Map<String,Object>> result = null;
+
+		EmployeeVO loginUser = (EmployeeVO)session.getAttribute("loginUser");
+
+		try {
+			Map<String, Object> dataMap = newApprovalService.getSignMyTurnDocList(cri, loginUser.getEno());
+			result = new ResponseEntity<Map<String,Object>>(dataMap, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<Map<String,Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return result;
+	}
+
+	@RequestMapping("/getRefuseDraftList")
+	public ResponseEntity<Map<String,Object>> getRefuseDraftList(Criteria cri, HttpSession session){
+		ResponseEntity<Map<String,Object>> result = null;
+
+		EmployeeVO loginUser = (EmployeeVO)session.getAttribute("loginUser");
+
+		try {
+			Map<String, Object> draftList = newApprovalService.getDraftList(cri, loginUser.getEno(), 4);
+			result = new ResponseEntity<Map<String,Object>>(draftList, HttpStatus.OK);
+		} catch (Exception e) {
+			result = new ResponseEntity<Map<String,Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return result;
+	}
+
+	@RequestMapping("/getWaitSignList")
+	public ResponseEntity<Map<String,Object>> getWaitSignList(Criteria cri, HttpSession session){
+		ResponseEntity<Map<String,Object>> result = null;
+
+		EmployeeVO loginUser = (EmployeeVO)session.getAttribute("loginUser");
+
+		try {
+			Map<String, Object> approveList = newApprovalService.getApproveList(cri, loginUser.getEno(), 2);
+			result = new ResponseEntity<Map<String,Object>>(approveList, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<Map<String,Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return result;
+	}
+}

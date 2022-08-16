@@ -1,0 +1,342 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+
+ <div>
+ 	<!-- Main content -->
+	<section class="top">
+		<div class="card">
+<!-- 			<div class="card-header with-border"> -->
+<!--     				<button type="button" class="btn btn-primary" onclick="OpenWindow('registForm.do','회원등록',800,800);" >회원등록</button> -->
+<!--    			</div> -->
+   			<div class="card-body" style="text-align:left;">
+				<div class="row">
+					<div class="col-sm-12">	
+		   				<p>기본근무</p>
+						<div class="info-box bg-gradient-info">
+							<span class="info-box-icon">
+<!-- 								<i class="far fa-bookmark"></i> -->
+								<img data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image" src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg">
+							</span>
+							<div class="info-box-content">
+								<div class="row">
+									<div class="col-md-2">
+										<span class="info-box-text">최민규 팀장</span>
+										<span class="info-box-text">인사관리팀</span>
+									</div>
+									<div class="col-md-10">
+		<!-- 								<span class="info-box-number">41,410</span> -->
+										<div class="progress">
+											<div class="progress-bar" style="width: 70%"></div>
+										</div>
+										<span class="progress-description">
+											70% Increase in 30 Days
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> <!-- row -->
+    		</div> <!-- card-body -->
+<!-- 			<div class="card-footer"> -->
+<!-- 			</div> -->
+	     </div>
+   	</section>
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-3">
+
+					<div class="card card-info card-outline">
+						<div class="card-body box-profile">
+							<div class="text-center">
+<!-- 								<img class="profile-user-img img-fluid img-circle" -->
+<!-- 									data-cfsrc="../../dist/img/user4-128x128.jpg" -->
+<!-- 									alt="User profile picture" -->
+<!-- 									src="https://adminlte.io/themes/v3/dist/img/user4-128x128.jpg"> -->
+							</div>
+							<p class="text-muted text-left">2022-07-04(월)</p>
+							<h1 class="text-left">12:20:42</h1>
+							<div class="progress">
+								<div class="progress-bar" style="width: 60%"></div>
+							</div>
+							<ul class="list-group list-group-unbordered mb-3">
+								<li class="list-group-item"><b>출근시간</b> 
+									<a class="float-right">08:47:13</a>
+								</li>
+								<li class="list-group-item"><b>퇴근시간</b> 
+									<a class="float-right">미등록</a>
+								</li>
+								<li class="list-group-item"><b>주간 누적근무시간</b> 
+									<a class="float-right">3h 22m 13s</a>
+								</li>
+							</ul>
+							<button class="btn btn-info col-5"><b>출근하기</b></button>
+							<button class="btn btn-info col-5"><b>퇴근하기</b></button>
+<!-- 							<a href="#" class="btn btn-info btn-block"><b>업무</b></a> -->
+						</div>
+
+					</div>
+
+					<div class="card card-info card-outline">
+						<div class="card-body box-profile">
+							<h3 class="profile-username text-left">기본근무</h3>
+							<p class="text-muted text-left">Software Engineer</p>
+							<ul class="list-group list-group-unbordered mb-3">
+								<li class="list-group-item"><b>출근시간</b> 
+									<a class="float-right">09:00:00</a>
+								</li>
+								<li class="list-group-item"><b>퇴근시간</b> 
+									<a class="float-right">18:00:00</a>
+								</li>
+								<li class="list-group-item"><b>주간 근무시간</b> 
+									<a class="float-right">40h 0m 0s</a>
+								</li>
+							</ul>
+							<a href="#" class="btn btn-info btn-block"><b>근무유형 변경</b></a>
+						</div>
+
+					</div>
+
+
+					<div class="card card-info">
+						<div class="card-header">
+							<h3 class="card-title">About Me</h3>
+						</div>
+
+						<div class="card-body">
+							<strong><i class="fas fa-book mr-1"></i> Education</strong>
+							<p class="text-muted">B.S. in Computer Science from the
+								University of Tennessee at Knoxville</p>
+							<hr>
+							<strong><i class="fas fa-map-marker-alt mr-1"></i>
+								Location</strong>
+							<p class="text-muted">Malibu, California</p>
+							<hr>
+							<strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
+							<p class="text-muted">
+								<span class="tag tag-danger">UI Design</span> <span
+									class="tag tag-success">Coding</span> <span
+									class="tag tag-info">Javascript</span> <span
+									class="tag tag-warning">PHP</span> <span
+									class="tag tag-primary">Node.js</span>
+							</p>
+							<hr>
+							<strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
+							<p class="text-muted">Lorem ipsum dolor sit amet, consectetur
+								adipiscing elit. Etiam fermentum enim neque.</p>
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="col-md-9">
+
+					<div class="card-body">
+						<table class="table table-bordered table-hover">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>User</th>
+									<th>Date</th>
+									<th>Status</th>
+									<th>Reason</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-widget="expandable-table" aria-expanded="false">
+									<td>183</td>
+									<td>John Doe</td>
+									<td>11-7-2014</td>
+									<td>Approved</td>
+									<td>Bacon ipsum dolor sit amet salami venison chicken
+										flank fatback doner.</td>
+								</tr>
+								<tr class="expandable-body d-none">
+									<td colspan="5">
+										<p style="display: none;">Lorem Ipsum is simply dummy text
+											of the printing and typesetting industry. Lorem Ipsum has
+											been the industry's standard dummy text ever since the 1500s,
+											when an unknown printer took a galley of type and scrambled
+											it to make a type specimen book. It has survived not only
+											five centuries, but also the leap into electronic
+											typesetting, remaining essentially unchanged. It was
+											popularised in the 1960s with the release of Letraset sheets
+											containing Lorem Ipsum passages, and more recently with
+											desktop publishing software like Aldus PageMaker including
+											versions of Lorem Ipsum.</p>
+									</td>
+								</tr>
+								<tr data-widget="expandable-table" aria-expanded="false">
+									<td>219</td>
+									<td>Alexander Pierce</td>
+									<td>11-7-2014</td>
+									<td>Pending</td>
+									<td>Bacon ipsum dolor sit amet salami venison chicken
+										flank fatback doner.</td>
+								</tr>
+								<tr class="expandable-body d-none">
+									<td colspan="5">
+										<p style="display: none;">Lorem Ipsum is simply dummy text
+											of the printing and typesetting industry. Lorem Ipsum has
+											been the industry's standard dummy text ever since the 1500s,
+											when an unknown printer took a galley of type and scrambled
+											it to make a type specimen book. It has survived not only
+											five centuries, but also the leap into electronic
+											typesetting, remaining essentially unchanged. It was
+											popularised in the 1960s with the release of Letraset sheets
+											containing Lorem Ipsum passages, and more recently with
+											desktop publishing software like Aldus PageMaker including
+											versions of Lorem Ipsum.</p>
+									</td>
+								</tr>
+								<tr data-widget="expandable-table" aria-expanded="false">
+									<td>657</td>
+									<td>Alexander Pierce</td>
+									<td>11-7-2014</td>
+									<td>Approved</td>
+									<td>Bacon ipsum dolor sit amet salami venison chicken
+										flank fatback doner.</td>
+								</tr>
+								<tr class="expandable-body d-none">
+									<td colspan="5">
+										<p style="display: none;">Lorem Ipsum is simply dummy text
+											of the printing and typesetting industry. Lorem Ipsum has
+											been the industry's standard dummy text ever since the 1500s,
+											when an unknown printer took a galley of type and scrambled
+											it to make a type specimen book. It has survived not only
+											five centuries, but also the leap into electronic
+											typesetting, remaining essentially unchanged. It was
+											popularised in the 1960s with the release of Letraset sheets
+											containing Lorem Ipsum passages, and more recently with
+											desktop publishing software like Aldus PageMaker including
+											versions of Lorem Ipsum.</p>
+									</td>
+								</tr>
+								<tr data-widget="expandable-table" aria-expanded="false">
+									<td>175</td>
+									<td>Mike Doe</td>
+									<td>11-7-2014</td>
+									<td>Denied</td>
+									<td>Bacon ipsum dolor sit amet salami venison chicken
+										flank fatback doner.</td>
+								</tr>
+								<tr class="expandable-body d-none">
+									<td colspan="5">
+										<p style="display: none;">Lorem Ipsum is simply dummy text
+											of the printing and typesetting industry. Lorem Ipsum has
+											been the industry's standard dummy text ever since the 1500s,
+											when an unknown printer took a galley of type and scrambled
+											it to make a type specimen book. It has survived not only
+											five centuries, but also the leap into electronic
+											typesetting, remaining essentially unchanged. It was
+											popularised in the 1960s with the release of Letraset sheets
+											containing Lorem Ipsum passages, and more recently with
+											desktop publishing software like Aldus PageMaker including
+											versions of Lorem Ipsum.</p>
+									</td>
+								</tr>
+								<tr data-widget="expandable-table" aria-expanded="false">
+									<td>134</td>
+									<td>Jim Doe</td>
+									<td>11-7-2014</td>
+									<td>Approved</td>
+									<td>Bacon ipsum dolor sit amet salami venison chicken
+										flank fatback doner.</td>
+								</tr>
+								<tr class="expandable-body d-none">
+									<td colspan="5">
+										<p style="display: none;">Lorem Ipsum is simply dummy text
+											of the printing and typesetting industry. Lorem Ipsum has
+											been the industry's standard dummy text ever since the 1500s,
+											when an unknown printer took a galley of type and scrambled
+											it to make a type specimen book. It has survived not only
+											five centuries, but also the leap into electronic
+											typesetting, remaining essentially unchanged. It was
+											popularised in the 1960s with the release of Letraset sheets
+											containing Lorem Ipsum passages, and more recently with
+											desktop publishing software like Aldus PageMaker including
+											versions of Lorem Ipsum.</p>
+									</td>
+								</tr>
+								<tr data-widget="expandable-table" aria-expanded="false">
+									<td>494</td>
+									<td>Victoria Doe</td>
+									<td>11-7-2014</td>
+									<td>Pending</td>
+									<td>Bacon ipsum dolor sit amet salami venison chicken
+										flank fatback doner.</td>
+								</tr>
+								<tr class="expandable-body d-none">
+									<td colspan="5">
+										<p style="display: none;">Lorem Ipsum is simply dummy text
+											of the printing and typesetting industry. Lorem Ipsum has
+											been the industry's standard dummy text ever since the 1500s,
+											when an unknown printer took a galley of type and scrambled
+											it to make a type specimen book. It has survived not only
+											five centuries, but also the leap into electronic
+											typesetting, remaining essentially unchanged. It was
+											popularised in the 1960s with the release of Letraset sheets
+											containing Lorem Ipsum passages, and more recently with
+											desktop publishing software like Aldus PageMaker including
+											versions of Lorem Ipsum.</p>
+									</td>
+								</tr>
+								<tr data-widget="expandable-table" aria-expanded="false">
+									<td>832</td>
+									<td>Michael Doe</td>
+									<td>11-7-2014</td>
+									<td>Approved</td>
+									<td>Bacon ipsum dolor sit amet salami venison chicken
+										flank fatback doner.</td>
+								</tr>
+								<tr class="expandable-body d-none">
+									<td colspan="5">
+										<p style="display: none;">Lorem Ipsum is simply dummy text
+											of the printing and typesetting industry. Lorem Ipsum has
+											been the industry's standard dummy text ever since the 1500s,
+											when an unknown printer took a galley of type and scrambled
+											it to make a type specimen book. It has survived not only
+											five centuries, but also the leap into electronic
+											typesetting, remaining essentially unchanged. It was
+											popularised in the 1960s with the release of Letraset sheets
+											containing Lorem Ipsum passages, and more recently with
+											desktop publishing software like Aldus PageMaker including
+											versions of Lorem Ipsum.</p>
+									</td>
+								</tr>
+								<tr data-widget="expandable-table" aria-expanded="false">
+									<td>982</td>
+									<td>Rocky Doe</td>
+									<td>11-7-2014</td>
+									<td>Denied</td>
+									<td>Bacon ipsum dolor sit amet salami venison chicken
+										flank fatback doner.</td>
+								</tr>
+								<tr class="expandable-body d-none">
+									<td colspan="5">
+										<p style="display: none;">Lorem Ipsum is simply dummy text
+											of the printing and typesetting industry. Lorem Ipsum has
+											been the industry's standard dummy text ever since the 1500s,
+											when an unknown printer took a galley of type and scrambled
+											it to make a type specimen book. It has survived not only
+											five centuries, but also the leap into electronic
+											typesetting, remaining essentially unchanged. It was
+											popularised in the 1960s with the release of Letraset sheets
+											containing Lorem Ipsum passages, and more recently with
+											desktop publishing software like Aldus PageMaker including
+											versions of Lorem Ipsum.</p>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	</section>
+</div>	

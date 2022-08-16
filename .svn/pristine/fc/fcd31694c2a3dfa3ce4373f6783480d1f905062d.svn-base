@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+#modal-fdefault td:nth-child(2n+1) {
+	background-color: #EEEEEE;
+}
+
+.badge {
+	width: 50px;
+	height: 22px;
+	font-size: 0.85em;
+}
+
+.mailbox-attachment i {
+	margin-left: 10px;
+}
+
+.material-symbols-outlined {
+	color: red;
+	margin-left: 3px;
+	font-size: 20px;
+}
+
+.table th, .table td {
+	padding: 5px 0.6rem;
+	text-align: center;
+}
+
+a.nav-link {
+	color: white;
+}
+
+.card-header {
+	padding: 4px 1.25rem;
+}
+
+.card-body {
+	padding: 0.75rem 1.25rem;
+}
+
+.table {
+	margin: 0;
+}
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #495057;
+    background-color: #fff;
+    border-color: #dee2e6 #dee2e6 #fff;
+}
+.page-link {
+    line-height: 1;
+    color: #001f3f;
+    background-color: #fff;
+}
+
+.page-item.active .page-link {
+	z-index: 3;
+	color: #fff;
+	background-color: #001f3f;
+    border-color: #001f3f;
+}
+.table td,.card-footer{
+	padding: 6px 0.75rem;
+}
+.card-header, .table th{
+	padding: 8px 0.75rem;
+}

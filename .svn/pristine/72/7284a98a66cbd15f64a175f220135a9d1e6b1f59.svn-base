@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Manual-Mapper">
+
+	<sql id="search">
+		<if test="searchType == 't'.toString()">
+			and manualtitle like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'w'.toString()">
+			and eno = (select distinct a.eno
+                         from manual a, employee b
+                        where  a.eno = b.eno
+                         and b.name like '%'||#{keyword}||'%')
+		</if>
+		<if test="searchType == 'tw'.toString()">
+			and (
+			manualtitle like '%'||#{keyword}||'%'
+			or
+			eno = (select distinct a.eno
+                         from manual a, employee b
+                        where  a.eno = b.eno
+                         and b.name like '%'||#{keyword}||'%')
+			)
+		</if>
+		<if test="searchType == 'favW'.toString()">
+			and b.eno = (select distinct a.eno
+                         from manual a, employee b
+                        where  a.eno = b.eno
+                         and b.name like '%'||#{keyword}||'%')
+		</if>
+		<if test="searchType == 'tfavW'.toString()">
+			and (
+			manualtitle like '%'||#{keyword}||'%'
+			or
+			b.eno = (select distinct a.eno
+                         from manual a, employee b
+                        where  a.eno = b.eno
+                         and b.name like '%'||#{keyword}||'%')
+			)
+		</if>
+	</sql>
+
+	<sql id="category">
+		<if test="category == 1">
+			and cateno = 1
+		</if>
+		<if test="category == 2">
+			and cateno = 2
+		</if>
+		<if test="category == 3">
+			and cateno = 3
+		</if>
+	</sql>
+
+
+	<select id="selectName" resultType="str">
+		select b.name
+		from
+		manual a,
+		employee b
+		where a.eno = b.eno
+		and a.manualno = #{manualNo}
+	</select>
+
+	<select id="selectCategory" resultType="str">
+		select b.title
+		from
+		manual
+		a, manualcate b
+		where a.cateno = b.cateno
+		and a.manualno = #{manualNo}
+	</select>
+
+	<select id="selectSearchManualList" resultType="manual">
+		SELECT
+		manualno
+		,manualtitle
+		,manualcontent
+		,regdate
+		,viewcnt
+		,updatedate
+		,cateno
+		,eno
+		FROM
+		manual
+		where manualno is not null
+		<include refid="search" />
+		<include refid="category" />
+		order by regDate desc
+	</select>
+
+	<select id="selectSearchManualListCount" resultType="int">
+		select
+		count(*)
+		from
+		manual
+		where manualno is not null
+		<include refid="search" />
+		<include refid="category" />
+	</select>
+
+	<select id="selectManualByManualNo" resultType="manual">
+		select
+		manualno
+		,manualtitle
+		,manualcontent
+		,regdate
+		,viewcnt
+		,updatedate
+		,cateno
+		,eno
+		from
+		manual
+		where manualNo=#{manualNo}
+	</select>
+
+	<select id="selectViewManualList" resultType="manual">
+		SELECT
+		manualno
+		,manualtitle
+		,manualcontent
+		,regdate
+		,viewcnt
+		,updatedate
+		,cateno
+		,eno
+		FROM
+		manual
+		ORDER BY
+		viewcnt desc, regDate desc
+	</select>
+
+	<update id="insertManual" parameterType="manual">
+		INSERT INTO manual (
+		manualno
+		,manualtitle
+		,manualcontent
+		,cateno
+		,eno
+		) VALUES (
+		#{manualNo}
+		,#{manualTitle}
+		,#{manualContent}
+		,#{cateNo}
+		,#{eNo}
+		)
+	</update>
+
+	<update id="updateManual" parameterType="manual">
+		update manual
+		set
+		manualtitle = #{manualTitle}
+		,manualcontent = #{manualContent}
+		,updatedate = sysdate
+		,cateno = #{cateNo}
+		where
+		manualno = #{manualNo}
+
+	</update>
+
+	<update id="deleteManual" parameterType="str">
+		delete
+		from manual
+		where
+		manualno = #{manualNo}
+	</update>
+
+	<update id="increaseViewCnt" parameterType="str">
+		update
+		manual
+		set
+		viewcnt = viewcnt+1
+		where manualno =#{manualNo}
+	</update>
+
+	<select id="selectManualNo" resultType="String">
+		SELECT 'MN' ||
+		trim(nvl(max(to_char(to_number(substr(manualno,3))+1,'000000')),'000001'))
+		as manualno
+		from manual
+
+		union
+
+		select nvl(null,'MN000001') as manualno
+		from
+		dual
+		where not exists (select manualno
+		from manual)
+	</select>
+
+	<select id="selectCheckFav" resultType="int" parameterType="manual">
+		SELECT
+		count(*)
+		FROM
+		favmanual
+		where manualno = #{manualNo}
+		and ENO = #{eNo}
+	</select>
+
+	<select id="selectSearchFAVManualList" resultType="manual" parameterType="hashMap">
+		select
+		b.manualno
+		,b.manualtitle
+		,b.manualcontent
+		,b.regdate
+		,b.viewcnt
+		,b.updatedate
+		,b.cateno
+		,b.eno
+		from
+		favmanual a, manual b
+		where a.manualno
+		= b.manualno
+		and a.eno =#{eno}
+		<include refid="search" />
+		<include refid="category" />
+		order by regdate desc
+	</select>
+
+	<select id="selectSearchFavManualListCount" resultType="int">
+		select
+		count(*)
+		from
+		favmanual a, manual b
+		where a.manualno
+		= b.manualno
+		and a.eno =#{eno}
+        <include refid="search" />
+        <include refid="category" />
+                           
+	</select>
+
+
+	<update id="insertFavManual" parameterType="manual">
+		INSERT INTO favmanual
+		(
+		manualno
+		,eno
+		) VALUES (
+		#{manualNo}
+		,#{eNo}
+		)
+	</update>
+
+	<update id="deleteFavManual" parameterType="manual">
+		DELETE FROM favmanual
+		WHERE
+		manualno =#{manualNo}
+		AND eno = #{eNo}
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

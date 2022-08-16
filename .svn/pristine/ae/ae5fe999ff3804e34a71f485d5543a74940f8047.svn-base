@@ -1,0 +1,91 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<head>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/community.css">
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/bootstrap/plugins/summernote/summernote-bs4.min.css">
+</head>
+
+<title></title>
+
+<body>
+	<div class="wrapper">
+		<section class="content-header ">
+			<div class="row md-2">
+				<div class="col-sm-12">
+					<h2>메뉴얼 작성</h2>
+				</div>
+			</div>
+		</section>
+
+		<section class="content card card-outline card-info">
+			<div class="container-fluid">
+				<div class="card-header">
+							<h5 class="card-title">메뉴얼 작성</h5>
+							<div class="card-tools">
+								<button type="button" id="modifyBtn" class="btn btn-info"
+									onclick="">작성</button>
+								<button type="button" id="listBtn" class="btn btn-secondary"
+									onclick="CloseWindow();">닫기</button>
+							</div>
+						</div>
+						<div class="card-body">
+							<div class="form-group col-sm-12">
+								<label for="title">제목</label> <input type="text"
+									class="form-control" id="" value=""/>
+							</div>
+							<div class="row">
+								<div class="form-group col-sm-6">
+									<label for="writer">작성자</label> <input type="text"
+										class="form-control" id="" readonly value="홍길동"/>
+								</div>
+
+								<div class="form-group col-sm-6">
+									<label >카테고리</label>
+									<div class="card-tool" style="width: 67rem;">
+										<select class="form-control col-md-4" name=""
+												id="">
+												<option value="">휴가</option>
+												<option value="">업무</option>
+												<option value="">전자결재</option>
+												<option value="">메일</option>
+												<option value="">신입</option>
+											</select>
+									</div>
+								</div>
+
+							</div>
+							<div class="form-group col-sm-12">
+								<label class=" mt-1">내용</label>
+							<textarea class="form-control col-12 mt-1" id="content" rows="5" cols="" placeholder="소개글을 작성하세요"></textarea>
+							</div>
+
+							<div class="card card-light card-outline">
+								<div class="card-header">
+								<h5 class="card-title"><i class="fas fa-paperclip"></i>&nbsp;&nbsp;첨부파일</h5>
+								&nbsp;&nbsp;&nbsp;<button class="btn btn-xs btn-info"
+												onclick="addFile_go();"	type="button" id="addFileBtn">Add File</button>
+								</div>
+								<div class="card-footer fileInput"></div>
+						    </div>
+						</div>
+
+			</div>
+		</section>
+
+
+
+
+	</div>
+
+<script>
+
+window.onload=function(){
+	summernote_go($("#content"),'<%=request.getContextPath()%>');
+}
+</script>
+
+
+</body>
+
+

@@ -1,0 +1,183 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<head>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/community.css">
+</head>
+
+<title>게시글 상세</title>
+
+<body>
+
+	<!-- Content Wrapper. Contains page content -->
+	<div class="wrapper">
+
+
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row md-2">
+					<div class="col-sm-6">
+						<h3>인기 해시태그</h3>
+					</div>
+
+				</div>
+			</div>
+		</section>
+
+
+		<!-- Main content -->
+		<section class="content container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card card-outline card-info">
+						<div class="card-header">
+							<h5 class="card-title">인기 해시태그</h5>
+							<div class="card-tools">
+								<button type="button" id="listBtn" class="btn btn-secondary"
+									onclick="CloseWindow();">닫기</button>
+							</div>
+						</div>
+						<div class="card-body">
+							<table class="table table-hover text-nowrap"
+									style="text-align: center;">
+									<thead>
+										<tr>
+											<td>NO.</td>
+											<td>해시태그</td>
+											<td>갯수</td>
+											<td>노하우</td>
+											<td>문서</td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>1</td>
+											<td >#휴가</td>
+											<td >126</td>
+											<td ><a href="#">76</a></td>
+											<td ><a href="#">50</a></td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td >#전자결재</td>
+											<td >104</td>
+											<td ><a href="#">80</a></td>
+											<td ><a href="#">24</a></td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td >#메인</td>
+											<td >54</td>
+											<td ><a href="#">15</a></td>
+											<td ><a href="#">39</a></td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td >#개발</td>
+											<td >39</td>
+											<td ><a href="#">21</a></td>
+											<td ><a href="#">18</a></td>
+										</tr>
+										<tr>
+											<td>5</td>
+											<td >#업무</td>
+											<td >25</td>
+											<td ><a href="#">12</a></td>
+											<td ><a href="#">13</a></td>
+										</tr>
+										<tr>
+											<td>6</td>
+											<td >#신입</td>
+											<td >24</td>
+											<td ><a href="#">16</a></td>
+											<td ><a href="#">8</a></td>
+										</tr>
+										<tr>
+											<td>7</td>
+											<td >#일정</td>
+											<td >21</td>
+											<td ><a href="#">16</a></td>
+											<td ><a href="#">5</a></td>
+										</tr>
+										<tr>
+											<td>8</td>
+											<td >#지출</td>
+											<td >18</td>
+											<td ><a href="#">2</a></td>
+											<td ><a href="#">16</a></td>
+										</tr>
+										<tr>
+											<td>9</td>
+											<td >#보고</td>
+											<td >14</td>
+											<td ><a href="#">5</a></td>
+											<td ><a href="#">9</a></td>
+										</tr>
+										<tr>
+											<td>10</td>
+											<td >#협업</td>
+											<td >10</td>
+											<td ><a href="#">3</a></td>
+											<td ><a href="#">7</a></td>
+										</tr>
+									</tbody>
+								</table>
+						</div>
+
+						<div class="card-footer">
+							<ul class="pagination justify-content-center m-0">
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+									</li>
+
+										<li class="page-item active">
+											<a class="page-link" href="">1</a>
+										</li>
+
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+									</li>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+									</li>
+								</ul>
+						</div>
+
+					</div>
+					<!-- end card -->
+				</div>
+				<!-- end col-md-12 -->
+			</div>
+			<!-- end row  -->
+		</section>
+		<!-- /.content -->
+
+
+
+	</div>
+	<!-- /.content-wrapper -->
+
+
+
+
+
+	<script>
+		
+	</script>
+
+</body>
+
+
+
+
+
+
+
+
+

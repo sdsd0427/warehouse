@@ -1,0 +1,165 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<head>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/ehr.css">
+</head>
+
+<body>
+
+<div class="wrapper">
+	<h3 class="title">멘토링</h3>
+
+	<!-- Main content -->
+	<section class="top">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="card card-info card-outline">
+						<div class="card-header">
+							<div class="row">
+								<div class="col-11">
+									<span class="">내 소개</span>
+								</div>
+								<div class="col-1">
+									<button type="button" class="btn" style="visibility:hidden;">
+										<i class="fas fa-plus fa-xs"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="card-body" style="display : block;">
+							<div class="row">
+								<div class="col-3">
+									<span class="info-box-icon">
+										<img src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg" alt="User" width="70" height="70" class="rounded-circle" loading="lazy">
+										<span class="position-absolute bottom-0 badge border border-white p-1" style="background:white; right: 14!important"><span class="">ESFJ</span></span>
+<!-- 										<img class="direct-chat-img" data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"  -->
+<!-- 											src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg"> -->
+									</span>	
+								</div>
+								<div class="col-9">
+									<div class="row">
+										<div class="col-8">
+											<span>
+												<b>최민규</b>&nbsp;&nbsp;과장
+											</span><br>
+										</div>
+										<div class="col-4">
+											<button type="button" class="btn btn-info btn-sm">수정</button>
+										</div>
+									</div>
+									<span>인사관리팀</span>&nbsp;&nbsp;팀원<br>
+									<span>아주 잘 부탁드립니다^^</span>
+								</div>
+							</div>
+							<br><br><br><br>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-md-8">
+					<div class="card card-info card-outline">
+						<div class="card-header">
+							<div class="row">
+								<div class="col-11">
+									<span class="">멘토/멘티의 활동</span>
+								</div>
+								<div class="col-1">
+									<button type="button" class="btn">
+										<i class="fas fa-plus fa-xs"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="card-body" style="display : block;">
+							<div class="card col-md-12">
+								<div class="card-header p-0 pt-1 border-bottom-0">
+									<ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+										<li class="nav-item">
+											<a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">전체</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">멘토</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">멘티</a>
+										</li>
+									</ul>
+								</div>
+								<table class="table table-hover text-nowrap projects">
+<!-- 									<thead> -->
+<!-- 										<tr> -->
+<!-- 											<th style="width: 40%">제목</th> -->
+<!-- 											<th style="width: 25%">요청자</th> -->
+<!-- 											<th style="width: 25%">기한</th> -->
+<!-- 											<th style="width: 10%">상태</th> -->
+<!-- 										</tr> -->
+<!-- 									</thead> -->
+									<tbody>
+										<tr>
+											<td>
+												<div class="position-relative">
+													<img src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg" alt="User" width="25" height="25" class="rounded-circle" loading="lazy">
+													<span class="position-absolute bottom-0 badge border border-white rounded-circle bg-success p-1" style="right: 520!important"><span class="visually-hidden">online</span></span>
+													<span style="font-size: 0.95em;"><b>강정인 주임이(가) 새로운 업무 '테스트'을(를) 시작했습니다.</b></span>&nbsp;<span class="right badge badge-danger">New</span><br>
+							                    </div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-4">
+					<div class="card card-info card-outline">
+						<div class="card-header">
+						</div>
+					나의 멘토
+					<br><br><br><br>
+					</div>
+				</div>
+				
+				<div class="col-md-4">
+					<div class="card card-info card-outline">
+						<div class="card-header">
+						</div>
+					나의 멘티
+					<br><br><br><br>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="card card-info card-outline">
+						<div class="card-header">
+						</div>
+					사내 인기 멘토
+					<br><br><br><br>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-6">
+					<div class="card card-info card-outline">
+					멘토링 신청 내역
+					<br><br><br><br>
+					</div>
+				</div>
+				
+				<div class="col-md-6">
+					<div class="card card-info card-outline">
+					만료직전 멘토링
+					<br><br><br><br>
+					</div>
+				</div>
+			</div>
+		</div>
+   	</section>
+</div>
+
+</body>

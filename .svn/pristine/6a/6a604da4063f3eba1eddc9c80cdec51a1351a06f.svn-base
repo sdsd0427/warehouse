@@ -1,0 +1,30 @@
+@charset "UTF-8";
+.card{
+	border: 1px solid rgb(111, 204, 237);
+	border-radius: 10px;
+}
+
+
+#status-list{
+	display: flex;
+	justify-content: space-between;
+	padding: 5px 10px;
+}
+.list-item{
+	width: 80px;
+	text-align: center;
+	padding: 5px;
+}
+.cnt{
+	border-top: 1px solid white;
+}
+.mention-emp{
+	font-weight: bold;
+}
+.mention-content{
+	font-weight: bold;
+}
+
+.work-search{
+	display: flex;
+}

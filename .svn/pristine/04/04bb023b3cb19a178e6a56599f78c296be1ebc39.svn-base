@@ -1,0 +1,230 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+<head>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/community.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+<style type="text/css">
+	.table td,.card-footer{
+		padding: 6px 0.75rem;
+	}
+	.card-header, .table th{
+		padding: 8px 0.75rem;
+	}
+	
+	.card-success.card-outline{
+	 		border-top: 3px solid #1e6e0c;
+	 	}
+ 	
+ 	.card-success:not(.card-outline)>.card-header{
+ 		background-color: #1e6e0c;
+ 	}
+</style>
+</head>
+
+<title>커뮤니티 상세</title>
+
+<body>
+
+	<!-- Content Wrapper. Contains page content -->
+	<div class="wrapper">
+
+
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row md-2">
+					<div class="col-sm-6">
+						<h3>자전거 동호회</h3>
+					</div>
+
+				</div>
+			</div>
+		</section>
+
+
+		<!-- Main content -->
+		<section class="content container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card card-outline card-success">
+						<div class="card-header">
+							<h5 class="card-title">초대하기</h5>
+							<div class="card-tools">
+								<button type="button" id="modifyBtn" class="btn btn-outline-primary"
+									onclick="invite_go();">초대하기</button>
+								<button type="button" id="listBtn" class="btn btn-outline-dark"
+									onclick="CloseWindow();" style="margin-right:10px;">닫기</button>
+							</div>
+						</div>
+						<div class="card-body row">
+							<form class="col-7" id="inviteCommu" method="post" action="commuInvite.do">
+								<input type="hidden" name="cmno" value="${cmno}">
+								<div class="col-11 row" id="invite">
+
+								</div>
+							</form>
+
+							<div class="col-5 row" style="border-left: 1px solid lightgray;">
+								<div class="col-12 mt-2">
+									<div class="card card-success">
+										<div class="card-header">
+											<h3 class="card-title">사원 선택</h3>
+											<div class="card-tools"></div>
+
+										</div>
+
+										<div class="card-body">
+
+											<form class="form-horizontal">
+												<div class="tab-pane fade active show"
+													id="custom-tabs-four-home" role="tabpanel"
+													aria-labelledby="custom-tabs-four-home-tab"
+													style="margin: 20px">
+													<span class="material-symbols-outlined">
+														corporate_fare </span> <span>PoJo기업</span>
+													<div id="organization"></div>
+												</div>
+											</form>
+										</div>
+
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+					<!-- end card -->
+				</div>
+				<!-- end col-md-12 -->
+			</div>
+			<!-- end row  -->
+		</section>
+		<!-- /.content -->
+
+		
+
+
+
+
+	</div>
+	<!-- /.content-wrapper -->
+
+
+
+
+
+	<script>
+	$('#organization').jstree({
+		core : {
+			data :${organizationNode}
+		},
+
+		types : {
+			'default' : {'icon': 'jstree-folder'}
+		},
+		 plugins: ['wholerow', 'types']
+	});
+
+	$('#organization').on("changed.jstree", function (e, data) {
+	    if(data.node.id.length > 3){
+	    	$.ajax({
+	    		url : "<%=request.getContextPath()%>/community/getEmpByNodeId.do?eno=" + data.node.id + "&cmno=${cmno}",
+	    		type:'get',
+	    		success:function(res){
+
+    				for(var emp of res.joinCommuEmpList){
+    					if(res.employee.eno == emp.eno){
+    						Swal.fire({
+						      icon: 'warning',
+						      title: '이미 가입한 회원은 추가 할 수 없습니다.',
+						      confirmButtonColor: '#3085d6',
+						    });
+		    				return false;
+    					}
+    				}
+	    			var temp = $('.emp_select_card');
+	    			for (var test of temp){
+	    				var result = $(test).attr('data-eno');
+		    			if(result == res.employee.eno){
+		    				Swal.fire({
+							      icon: 'warning',
+							      title: '이미 등록된 회원은 추가 할 수 없습니다.',
+							      confirmButtonColor: '#3085d6',
+							    });
+		    				return false;
+		    			}
+	    			}
+	    			addEmp(res.employee, $('div[id="invite"]'), $('#addEmp-template'));
+	    		},
+	    		error:function(error){
+	    			alert(error);
+	    		}
+	    	});
+	    }
+	});
+
+	function addEmp(data, target, templateObject){
+		var template=Handlebars.compile(templateObject.html());
+		var html = template(data);
+		target.append(html);
+	}
+	</script>
+
+		<script type="text/x-handlebars-template"  id="addEmp-template">
+			<div class="emp_select_card callout callout-success col-12" data-eno="{{eno}}">
+					<div>
+						<span style="font-size: 16px; font-weight: bold">{{name}} {{ppsname}}</span>
+						<input type="hidden" name="eno" value="{{eno}}">
+						<button type="button" id="" class="btn btn-sm btn-danger col-1" onclick="removeManager('{{eno}}')"  style="cursor:pointer; float:right;">X</button>
+					</div>
+					<span style="font-size: 0.8em;">{{dname}}</span>
+			</div>
+		</script>
+
+	<script>
+	function removeManager(eno){
+		var removeItem = $('div[data-eno="' + eno + '"]');
+		removeItem.remove();
+		removeWorkManager.push(eno);
+		console.log(removeWorkManager);
+	}
+	</script>
+
+	<script type="text/javascript">
+		function invite_go(){
+
+			if(typeof $("input[name='eno']").val() == 'undefined'){
+				Swal.fire({
+				      icon: 'warning',
+				      title: '초대할 사원을 선택해주세요.',
+				      confirmButtonColor: '#3085d6',
+				    });
+				return;
+			}
+
+			$("#inviteCommu").submit();
+		}
+
+	</script>
+
+</body>
+
+
+
+
+
+
+
+
+

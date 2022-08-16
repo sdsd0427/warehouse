@@ -1,0 +1,49 @@
+package kr.or.warehouse.controller.view;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/board")
+public class BoardController {
+	
+	@RequestMapping("/notice/list.do")
+	public void notice() {
+	}
+	@RequestMapping("/notice/registForm.do")
+	public void noticeRegistForm() {
+	}
+	@RequestMapping("/notice/modifyForm.do")
+	public void noticeModifyForm() {
+	}
+	@RequestMapping("/notice/detail.do")
+	public void noticeDetail() {
+	}
+	
+	@RequestMapping("/free/list.do")
+	public void free() {
+	}
+	@RequestMapping("/free/registForm.do")
+	public void freeRegistForm() {
+	}
+	@RequestMapping("/free/modifyForm.do")
+	public void freeModifyForm() {
+	}
+	@RequestMapping("/free/detail.do")
+	public void freeDetail() {
+	}
+	
+	@RequestMapping("/event/list.do")
+	public void event() {
+	}
+	@RequestMapping("/event/registForm.do")
+	public void eventRegistForm() {
+	}
+	@RequestMapping("/event/modifyForm.do")
+	public void eventModifyForm() {
+	}
+	@RequestMapping("/event/detail.do")
+	public void eventDetail() {
+	}
+
+}

@@ -1,0 +1,58 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<input type="hidden" name="sFormNo" id="${RelateDocList.sFormNo}" value="">
+ 
+<script>
+
+
+
+function relatedDoc(){
+	
+	$.ajax({
+ 		url:'<%=request.getContextPath()%>/approval/getRelatedDocList.do?sFormNo=${sFormNo}',
+ 		type:'get',
+ 		dataType : 'json',
+ 		success:function(response){
+ 			console.log("response관련문서",response);
+/* 				
+ 		if(response.myconList.length > 0){
+			printWorkData(response.myconList, $('#reldoc'), $('#relatedList-template'));
+		}else{
+			var str = `
+				<tr>
+					<td colspan="6" style="text-align:center">
+						관련된 문서가 없습니다.
+					</td>
+				</tr>
+			`;
+
+			$('#reldoc').html(str);
+		}
+	*/	
+ 		}
+ 	});
+	
+}
+
+</script>  
+
+
+<script type="text/x-handlebars-template"  id="relatedList-template">
+	<div>
+		<div class="info-box" style="margin-left: -5px;" onclick="OpenWindow('../kw/RelateddetailDocform.do?signNo=${RelateDocList.signNo }','관련문서',1000,800);">
+			<div class="imgContainer">
+				<li class="list-inline-item">
+					<img class="table-avatar emp_profile" src="${photo}">
+				</li>
+			</div>
+		<div class="info-box-content">
+			<div class="infoandspan" style="display: flex";>
+				<span class="info-box-text">${RelateDocList.title}</span>
+					<span class="material-symbols-outlined">assignment</span>
+			</div>
+				<span class="info-box-number">${name} ${ppsname}</span>
+		</div>
+		</div>
+		</div> 
+</script>	  

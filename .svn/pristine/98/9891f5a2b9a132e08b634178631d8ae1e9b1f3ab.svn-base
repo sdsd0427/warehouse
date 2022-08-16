@@ -1,0 +1,152 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<head>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/community.css">
+</head>
+
+<title>게시글 상세</title>
+
+<body>
+
+	<!-- Content Wrapper. Contains page content -->
+	<div class="wrapper">
+
+
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row md-2">
+					<div class="col-sm-6">
+						<h3>상세보기</h3>
+					</div>
+
+				</div>
+			</div>
+		</section>
+
+
+		<!-- Main content -->
+		<section class="content container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card card-outline card-info">
+						<div class="card-header">
+							<h5 class="card-title">상세보기</h5>
+							<div class="card-tools">
+								<button type="button" id="modifyBtn" class="btn btn-info"
+									onclick="location.href='boardModifyForm.do'">수정</button>
+								<button type="button" id="modifyBtn" class="btn btn-danger"
+									onclick="remove_go();">삭제</button>
+								<button type="button" id="listBtn" class="btn btn-secondary"
+									onclick="CloseWindow();">닫기</button>
+							</div>
+						</div>
+						<div class="card-body">
+							<div class="form-group col-sm-12">
+								<label for="title">제목</label> <input type="text"
+									class="form-control" id="" readonly disabled value="가입인사 드립니다~" />
+							</div>
+							<div class="row">
+								<div class="form-group col-sm-6">
+									<label for="writer">작성자</label> <input type="text"
+										class="form-control" id="" readonly value="신사임당" />
+								</div>
+
+								<div class="form-group col-sm-6">
+									<label for="regDate">등록일</label> <input type="text"
+										class="form-control" id="regDate" readonly value="2022-06-27" />
+								</div>
+
+							</div>
+							<div class="form-group col-sm-12">
+								<div id="content">가입인사요 잘 부탁드립니다.</div>
+							</div>
+						</div>
+
+						<div class="card-footer">
+							<div class="card card-info">
+								<div class="card-header">
+									<h3 class="card-title">
+										<i class="fas fa-comments"></i>&nbsp;&nbsp;댓글
+									</h3>
+								</div>
+
+								<div class="card-body row">
+									<input type="text" class="form-control col-11" id="" value="" />
+									<button type="button" id="" class="btn btn-default col-1">
+										<i class="fas fa-edit"></i>
+									</button>
+								</div>
+
+								<div class="card-footer">
+									<div class="timeline">
+
+										<div class="time-label">
+											<span class="bg-red">댓글 목록</span>
+										</div>
+
+
+										<div>
+											<img class="direct-chat-img"
+												src="<%=request.getContextPath()%>/resources/images/noimg.jpg">
+											<div class="timeline-item">
+												<span class="time"><i class="fas fa-clock"></i> 12:05
+												<a class="btn btn-info btn-xs">수정</a> 
+													<a class="btn btn-danger btn-xs">삭제</a>
+												</span>
+												<h3 class="timeline-header">
+													<a href="#">홍길동</a> 
+												</h3>
+												<div class="timeline-body">반가워요
+													</div>
+												<div class="timeline-footer">
+												
+												</div>
+											</div>
+										</div>
+
+
+									
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+					<!-- end card -->
+				</div>
+				<!-- end col-md-12 -->
+			</div>
+			<!-- end row  -->
+		</section>
+		<!-- /.content -->
+
+
+
+	</div>
+	<!-- /.content-wrapper -->
+
+
+
+
+
+	<script>
+		
+	</script>
+
+</body>
+
+
+
+
+
+
+
+
+

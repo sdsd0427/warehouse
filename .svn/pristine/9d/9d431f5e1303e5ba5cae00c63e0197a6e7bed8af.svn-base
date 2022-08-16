@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Manual-Mapper">
+
+	<sql id="search">
+		<if test="searchType == 't'.toString()">
+			and manualtitle like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'w'.toString()">
+			and writer like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'tc'.toString()">
+			and (
+			title like '%'||#{keyword}||'%'
+			or
+			content like
+			'%'||#{keyword}||'%'
+			)
+		</if>
+	</sql>
+
+	<sql id="category">
+
+	</sql>
+
+
+
+
+	<select id="selectSearchManualList" resultType="manual">
+		SELECT
+		manualno
+		,manualtitle
+		,manualcontent
+		,regdate
+		,viewcnt
+		,updatedate
+		,cateno
+		,eno
+		FROM
+		manual;
+		where manualno is not null
+		<include refid="search" />
+		order by regDate desc
+	</select>
+
+	<select id="selectSearchManualListCount" resultType="int">
+		select
+		count(*)
+		from
+		manual
+		where manualno is not null
+		<include refid="search" />
+		order by regdate desc
+	</select>
+
+	<select id="selectManualByManualNo" resultType="manual">
+		select
+		manualno
+		,manualtitle
+		,manualcontent
+		,regdate
+		,viewcnt
+		,updatedate
+		,cateno
+		,eno
+		from
+		manual
+		where manualNo=#{manualNo}
+	</select>
+
+	<select id="selectViewManualList" resultType="manual">
+		SELECT
+		manualno
+		,manualtitle
+		,manualcontent
+		,regdate
+		,viewcnt
+		,updatedate
+		,cateno
+		,eno
+		FROM
+		manual
+		ORDER BY
+		viewcnt desc;
+	</select>
+
+	<update id="insertManual" parameterType="manual">
+		INSERT INTO manual (
+		manualno
+		,manualtitle
+		,manualcontent
+		,cateno
+		,eno
+		) VALUES (
+		#{manualNo}
+		,#{manualTitle}
+		,#{manualContent}
+		,#{cateNo}
+		,#{eNo}
+		)
+	</update>
+
+	<update id="updateManual" parameterType="manual">
+		update
+		board
+		set
+		title=#{title}, content=#{content}, updatedate=sysdate
+		where bno=#{bno}
+
+		UPDATE manual
+		SET
+		manualno = #{manualno}
+		,manualtitle = #{manualtitle}
+		,manualcontent = #{manualcontent}
+		,updatedate = sysdate
+		,cateno =
+		#{cateno}
+
+	</update>
+
+	<update id="deleteManual" parameterType="str">
+		delete
+		from manual
+		where
+		manualno = #{manualNo}
+	</update>
+
+	<update id="increaseViewCnt" parameterType="str">
+		update
+		manual
+		set
+		viewcnt = viewcnt+1
+		where manualno =#{manualNo}
+	</update>
+
+	<update id="insertFavManual" parameterType="manual">
+		INSERT INTO favmanual
+		(
+		manualno
+		,eno
+		) VALUES (
+		#{manualNo}
+		,#{eNo}
+		);
+	</update>
+
+	<update id="deleteFavManual" parameterType="manual">
+		DELETE FROM favmanual
+		WHERE
+		manualno =#{manualNo}
+		AND eno = #{eNo}
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,381 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<style type="text/css">
+
+<meta charset="UTF-8">
+<title>주소록</title>
+
+<style>
+.navbar {
+	margin-bottom: 50px;
+	border-radius: 0;
+}
+
+/* Remove the jumbotron's default bottom margin */
+.jumbotron {
+	margin-bottom: 0;
+}
+
+/* Add a gray background color and some padding to the footer */
+#footer {
+	margin-top: 50px;
+	background-color: #f2f2f2;
+	padding: 25px;
+}
+
+#content {
+	margin-left: 50px;
+	margin-right: 50px;
+	overflow: hidden;
+}
+
+/*  */
+#title {
+	border-bottom: 2px solid #727377;
+}
+
+#rightMenu {
+	margin-top: 10px;
+}
+
+.profileImg {
+	height: 128px;
+	width: 96px;
+}
+
+#officerList > thead > tr > th, #officerList > tbody > tr > td {
+	text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+.page-link {
+    line-height: 1;
+    color: #17a2b8;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+
+	.upWord .word{
+	    list-style-type: none;
+	    float: left;
+	    margin: 5px;
+	}
+
+.btn_submenu {
+    display: inline-block;
+}
+	
+	span#RecName{
+		margin-left: 120px;
+	}
+	
+	
+	pribut{
+	 border:1px solid;
+	 
+	}
+	div#chart {
+    padding-top: 10px;
+}
+/* 	div#b {
+	    width: 150px;
+	    height: 40px;
+	} */
+	
+	select#perPageNum ,select#searchType {
+	list-style-type: none;
+    width: 140px;
+    float: left;
+}
+
+input.form-control{
+list-style-type: none;
+    width: 180px;
+    float: left;
+}
+
+div#inName {
+ 	width: 290px;
+ 	height:40px;
+    margin-left: 8px;
+     margin-top: 3px;
+     background-color: #ffc107;
+         padding-top: 8px;
+}
+
+div#botle {
+    margin-left: 500px;
+   
+}
+div#b {
+    border-radius: 5px;
+}
+.sename{
+color:black;"
+}
+div#bottom {
+    margin-left: 40px;
+    margin-top: -30PX;
+}
+ul.upWord {
+    margin-left: -30px;
+}
+.emailcur{
+cursor:pointer;
+}
+
+img.table-avatar {
+    width: 70px;
+    border: 1px solid #17a2b8;
+    border-radius: 10px;
+    height: 90px
+}
+</style>
+
+
+</head>
+
+
+
+
+
+<body>
+
+
+
+
+
+
+
+
+
+<div class="wrapper">
+	<section class="content-header">
+			<div class="row md-2">
+				<div class="col-lg-10" style="margin-top: 20px;margin-left: 50px;">
+					<h5>업무기안</h5>
+				</div>
+			</div>
+		</section>
+	<!-- <div id="a" > <h2>주소록 > 전체주소록</h2></div> -->
+	<div id="bottom">
+	<div style=" justify-content: space-between; padding: 20px 0 ">	
+			<div class="upAll"style="display: flex;">
+											<div class="firstreq" >
+												<a href="#">
+													<span class="material-symbols-outlined">
+													inventory
+													</span>
+													<span>결재요청</span>
+												</a>
+											</div>
+										
+											<a href="#">	
+												<span class="material-symbols-outlined">
+												archive
+												</span>
+											임시저장</a>	
+											
+											
+											<a href="#">
+												<span class="material-symbols-outlined">
+												cancel
+												</span>
+											취소</a>
+									</div>
+	
+	</div>
+	
+	
+				
+	<hr>
+	
+	
+<div class="row" style="justify-content: space-between;">	
+	<div  class="col-lg-8 card" style="border:1px solid">
+		<div style="padding-top:10px;">
+			
+			<%@ include file="./registDoc.jsp" %>
+		</div> <!-- chart -->
+	</div> <!-- Rectangle  -->
+	
+	<div class="col-lg-4 card">
+			
+			
+
+
+
+					<div class="card">
+						<div class="card-header p-2">
+							<ul class="nav nav-pills">
+								<li class="nav-item"><a class="nav-link" href="#activity" style="padding: .0.5rem 1rem"
+									data-toggle="tab">관련문서</a></li>
+								<li class="nav-item"><a class="nav-link" href="#timeline" style="padding: .0.5rem 1rem"
+									data-toggle="tab">문서정보</a></li>
+								<li class="nav-item"><a class="nav-link active" style="padding: .0.6rem 1rem"
+									href="#settings" data-toggle="tab">결재선</a></li>
+								<li class="nav-item"><a class="nav-link" href="#activity" style="padding: .0.5rem 1rem"
+									data-toggle="tab">참조자</a></li>
+							</ul>
+						</div>
+						<div class="card-body">
+							<div class="tab-content">
+								<div class="tab-pane" id="activity">
+
+
+											<div id="reldoc" class="bot" style="margin-left: 7px;">
+													<div class="input-group row"><input class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value=""> <span class="input-group-append">
+																	<button class="btn btn-info" type="button" data-card-widget="search">
+																		<i class="fa fa-fw fa-search"></i>
+																	</button>
+																</span>
+													</div>
+													
+													
+														<a href="#">
+															<div class="info-box" style="margin-left: -5px">
+																<div class="imgContainer">
+																	<li class="list-inline-item">
+																				<img class="table-avatar" src="/warehouse/resources/bootstrap/dist/img/avatar.png">
+																	</li>
+																</div>
+													
+																<div class="info-box-content">
+																	<div class="infoandspan" style="display: flex";>
+																		<span class="info-box-text">베트남 해외 출장</span>
+																		<span class="material-symbols-outlined">
+																		assignment
+																		</span>
+																	</div>
+																	<span class="info-box-number">
+																	 강정인 부장
+																	</span>
+																</div>
+																
+															</div>
+														</a>
+														
+														<a href="#">	
+															<div class="info-box" style="margin-left: -5px">
+																<div class="imgContainer">
+																	<li class="list-inline-item">
+																				<img class="table-avatar" src="/warehouse/resources/bootstrap/dist/img/avatar.png">
+																	</li>
+																</div>
+													
+																<div class="info-box-content ">
+																	<div class="infoandspan" style="display: flex";>
+																		<span class="info-box-text">중국 해외 출장</span>
+																		<span class="material-symbols-outlined">
+																		assignment
+																		</span>
+																	</div>
+																	<span class="info-box-number">
+																	 오지현 차장
+																	</span>
+																</div>
+																
+															</div>
+														</a>
+														
+														<a href="#">	
+															<div class="info-box" style="margin-left: -5px">
+																<div class="imgContainer">
+																	<li class="list-inline-item">
+																				<img class="table-avatar" src="/warehouse/resources/bootstrap/dist/img/avatar.png">
+																	</li>
+																</div>
+													
+																<div class="info-box-content">
+																	<div class="infoandspan" style="display: flex";>
+																		<span class="info-box-text">일본 해외 출장</span>
+																		<span class="material-symbols-outlined">
+																		assignment
+																		</span>
+																	</div>
+																	<span class="info-box-number">
+																	 서난희 부장
+																	</span>
+																</div>
+															</div>		
+														</a>
+											</div>				
+												
+
+								</div>
+								
+								
+								
+								
+								
+
+								<div class="tab-pane" id="timeline">
+										<div id="docInfo">
+											<span>문서정보</span><p>012022689</p>
+										
+										</div>
+								</div>
+
+								<div class="tab-pane active" id="settings">
+									<form class="form-horizontal">
+									</form>
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+
+
+
+				</div> <!-- card-4 -->
+   
+
+
+
+
+
+
+
+	
+	<!-- <div id="bot" class="col-lg-4" style="border:1px solid">
+				
+							
+		
+	</div> -->
+	
+	
+</div> <!-- <div id="bottom"> -->
+	
+	
+	
+</div><!-- bottom  -->	
+	
+</div><!-- 전체 -->
+
+						
+
+
+</body>
+</html>

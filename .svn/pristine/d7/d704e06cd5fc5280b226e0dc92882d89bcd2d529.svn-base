@@ -1,0 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<script>
+	$(document).on('click', 'body > aside > div > ul > li:nth-child(2) > a', function(){
+		console.log($(this));
+		$(this).attr("href", "#");
+		OpenWindow('<%=request.getContextPath()%>/work/workRegistForm.do', '새 업무', '1000', '600');
+	});
+</script>

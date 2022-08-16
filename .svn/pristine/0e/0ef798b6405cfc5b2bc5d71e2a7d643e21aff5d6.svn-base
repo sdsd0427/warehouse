@@ -1,0 +1,560 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<c:set var="pageMaker" value="${dataMap.pageMaker }" />
+<c:set var="cri" value="${dataMap.pageMaker.cri }" />
+<c:set var="myconList" value="${dataMap.myconList }" />
+<head>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<style type="text/css">
+
+<meta charset="UTF-8">
+
+<style>
+.navbar {
+	margin-bottom: 50px;
+	border-radius: 0;
+}
+
+.jumbotron {
+	margin-bottom: 0;
+}
+
+#footer {
+	margin-top: 50px;
+	background-color: #f2f2f2;
+	padding: 25px;
+}
+
+#content {
+	margin-left: 50px;
+	margin-right: 50px;
+	overflow: hidden;
+}
+
+/*  */
+#title {
+	border-bottom: 2px solid #727377;
+}
+
+#rightMenu {
+	margin-top: 10px;
+}
+
+.profileImg {
+	height: 128px;
+	width: 96px;
+}
+
+#officerList > thead > tr > th, #officerList > tbody > tr > td {
+	text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+.page-link {
+    line-height: 1;
+    color: #17a2b8;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+
+	.upWord .word{
+	    list-style-type: none;
+	    float: left;
+	    margin: 5px;
+	}
+
+.btn_submenu {
+    display: inline-block;
+}
+
+	span#RecName{
+		margin-left: 120px;
+	}
+
+
+	pribut{
+	 border:1px solid;
+
+	}
+	div#chart {
+    padding-top: 10px;
+}
+/* 	div#b {
+	    width: 150px;
+	    height: 40px;
+	} */
+
+	select#perPageNum ,select#searchType {
+	list-style-type: none;
+    width: 140px;
+    float: left;
+}
+
+input.form-control{
+list-style-type: none;
+    width: 180px;
+    float: left;
+}
+
+div#inName {
+ 	width: 290px;
+ 	height:40px;
+    margin-left: 8px;
+     margin-top: 3px;
+     background-color: #ffc107;
+         padding-top: 8px;
+}
+
+div#botle {
+    margin-left: 500px;
+
+}
+div#b {
+    border-radius: 5px;
+}
+.sename{
+color:black;
+}
+div#bottom {
+    margin-left: 40px;
+    margin-top: -30PX;
+}
+ul.upWord {
+    margin-left: -30px;
+}
+.emailcur{
+cursor:pointer;
+}
+</style>
+
+
+</head>
+<body>
+
+
+
+
+
+<div class="wrapper">
+	<section class="content-header">
+			<div class="row md-2">
+				<div class="col-sm-12" style=";margin-left: 40px;">
+					<h3>전체주소록</h3>
+				</div>
+			</div>
+		</section>
+	<!-- <div id="a" > <h2>주소록 > 전체주소록</h2></div> -->
+	<div id="bottom">
+	<div style="display: flex; justify-content: space-between; padding: 20px 0 ">
+		<div id="b" class="bg-info" style="height: 40px; width:140px"><a id="pribut" style="padding-left: 10px" href="javascript:test()" ><span style="vertical-align: -7px">개인주소록 추가</span></a></div>
+		<div id="c">
+			<ul class="upWord">
+				<li class="word"><a href="#" class="sename"><strong>전체</strong></a></li>
+				<li class="word"><a href="#" class="sename"><strong>ㄱ</strong></a></li>
+				<li class="word"><a href="#" class="sename"><strong>ㄴ</strong></a></li>
+				<li class="word"><a href="#" class="sename"><strong>ㄷ</strong></a></li>
+				<li class="word"><a href="#" class="sename"><strong>ㄹ</strong></a></li>
+				<li class="word"><a href="#" class="sename"><strong>ㅁ</strong></a></li>
+				<li class="word"><a href="#" class="sename"><strong>ㅂ</strong></a></li>
+				<li class="word"><a href="#" class="sename"><strong>ㅅ</strong></a></li>
+				<li class="word"><a href="#" class="sename"><strong>ㅇ</strong></a></li>
+				<li class="word"><a href="#" class="sename"><strong>ㅈ</strong></a></li>
+				<li class="word"><a href="#" class="sename"><strong>ㅊ</strong></a></li>
+				<li class="word"><a href="#" class="sename"><strong>ㅋ</strong></a></li>
+				<li class="word"><a href="#" class="sename"><strong>ㅌ</strong></a></li>
+				<li class="word"><a href="#" class="sename"><strong>ㅍ</strong></a></li>
+				<li class="word"><a href="#" class="sename"><strong>ㅎ</strong></a></li><!-- </li> -->
+				</ul>
+				<!-- <li class="word"> -->
+		</div>  <!-- ㄱ,ㄴ,ㄷ -->
+	</div>
+<div class="row" style="justify-content: space-between;">
+	<div  class="col-lg-4 card">
+		<div id="chart">
+			<div id="inName"><span id="RecName"><strong>조직도</strong></span></div>
+				<div id="inAll" style="margin: 30px">
+				<div id="wrap">
+				<span class="material-symbols-outlined">
+					corporate_fare
+					</span>
+			   <span >PoJo기업</span>
+				<div id="container" >
+				  <ul>
+				    <li><span>송찬중 대표이사</span></li>
+				    <li>영업본부팀
+				      <ul>
+				        <li>영업팀</li>
+				        <li>마케팅 팀</li>
+				      </ul>
+				    </li>
+				    <li>경영지원본부팀
+				    	<ul>
+				        <li>총무 팀</li>
+				        <li>인사 팀</li>
+				      </ul>
+				    </li>
+				     <li>개발본부팀
+				    	<ul>
+				        <li id="devteam">개발팀</li>
+				        <li>디자인팀</li>
+				      </ul>
+				    </li>
+				  </ul>
+				</div>
+			</div>
+	<script>
+			  $('#container').jstree({   //문서 없는 버전
+				"types" : {
+				      "default" : {
+				        "icon" : "fas fa-user"
+				      },
+				      "demo" : {
+				        "icon" : "fas fa-user"
+				      }
+				    },
+				    "plugins" : [ "types" ]
+			});
+			/*   fas fa-user */
+			/* <i class="fa-light fa-user"></i>
+			/*  $('#container').jstree({     / *문서 버전
+
+			});  */
+	</script>
+
+
+			</div>
+		</div> <!-- chart -->
+	</div> <!-- Rectangle  -->
+	<div id="bot" class="col-lg-8" >
+				<div class="card card-info card-outline">
+					<div class="card-header with-border">
+						<div id="" class="card-tools" >
+							<div class="input-group row">
+								<select class="form-control col-md-4" name="searchType" id="searchType">
+									<option value="n" ${cri.searchType eq 'n' ? 'selected':'' }>이름</option>
+									<option value="p" ${cri.searchType eq 'p' ? 'selected':'' }>휴대폰</option>
+									<option value="e" ${cri.searchType eq 'e' ? 'selected':'' }>이메일</option>
+								</select> <input class="form-control" type="text" name="keyword"
+									placeholder="검색어를 입력하세요" value=""> <span
+									class="input-group-append">
+									<button class="btn btn-info" type="button"
+										data-card-widget="search">
+										<i class="fa fa-fw fa-search"></i>
+									</button>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="card-body table-responsive p-0">
+						<table class="table table-hover text-nowrap">
+							<thead>
+								<tr>
+									<th >
+										<!-- <div class="icheck-primary"> -->
+										<input type="checkbox" value="" id="check1">
+										<label for="check1"></label>
+										<!-- </div> -->
+									</th>
+										<th >이름</th>
+										<th >직위</th>
+										<th >휴대폰</th>
+										<th >이메일</th>
+										<th >부서</th>
+										<th >내선번호</th>
+								</tr>
+							</thead>
+							<tbody id="tall">
+
+
+
+							<c:if test="${empty myconList }">
+										<tr>
+											<td colspan="6"><strong>해당 내용이 없습니다.</strong></td>
+										</tr>
+							</c:if>
+
+
+
+
+							<c:forEach items="${myconList }" var="contact">
+										<tr style='font-size: 0.85em;'>
+											<!-- <td id="ContactTitle"
+												style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+											</td> -->
+											<td>
+												<div class="icheck-primary">
+													<input type="checkbox" value="" id="check1" name="check1">
+													<label for="check1"></label>
+												</div>
+											</td>
+
+											<td>${contact.name}
+												<c:if test="${contact.condition eq '업무중'}">
+														<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden"></span></span>
+												</c:if>
+												<c:if test="${contact.condition eq '업무종료'}">
+														<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1" style="background-color: #e10a14!important;"><span class="visually-hidden"></span></span>
+												</c:if>
+												<c:if test="${contact.condition eq '자리비움'}">
+														<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1" style="background-color: #ffc107!important;"><span class="visually-hidden"></span></span>
+												</c:if>
+
+
+											</td>
+
+
+											<td>${contact.ppsname }</td>
+											<td>${contact.phone }</td>
+											<td>${contact.email }</td>
+											<td>${contact.dname }</td>
+											<td>${contact.call }</td>
+
+
+										</tr>
+							</c:forEach>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+								<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1" name="check1" >
+											<label for="check1"></label>
+											</div>
+											</td>
+										<td>오지현
+										<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden"></span></span>
+										</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td class="emailcur" onclick="OpenWindow('../mail/send.do','메일보내기',1000,800);"> qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+								<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+										<td>오지현
+										<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden"></span></span>
+										</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td class="emailcur" onclick="OpenWindow('../mail/send.do','메일보내기',1000,800);">qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+								<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+										<td>오지현
+										<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden"></span></span>
+										</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td  class="emailcur"onclick="OpenWindow('../mail/send.do','메일보내기',1000,800);">qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+								<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+										<td>오지현
+										<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden"></span></span>
+										</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td  class="emailcur"onclick="OpenWindow('../mail/send.do','메일보내기',1000,800);">qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+										<td>오지현
+										<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden"></span></span>
+										</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td class="emailcur" onclick="OpenWindow('../mail/send.do','메일보내기',1000,800);">qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+										<td>오지현
+										<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden"></span></span>
+										</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td class="emailcur" onclick="OpenWindow('../mail/send.do','메일보내기',1000,800);">qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+										<td>오지현
+										<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden"></span></span>
+										</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td class="emailcur" onclick="OpenWindow('../mail/send.do','메일보내기',1000,800);">qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+										<td>오지현
+										<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden"></span></span>
+										</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td class="emailcur" onclick="OpenWindow('../mail/send.do','메일보내기',1000,800);">qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+										<td>오지현
+										<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden"></span></span>
+										</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td onclick="OpenWindow('../mail/send.do','메일보내기',1000,800);">qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+									<tr style="font-size: 0.85em;">
+									     <td>
+											<div class="icheck-primary">
+											<input type="checkbox" value="" id="check1">
+											<label for="check1"></label>
+											</div>
+											</td>
+										<td>오지현
+										<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden"></span></span>
+										</td>
+										<td>사원</td>
+										<td>010-1111-1111</td>
+										<td onclick="OpenWindow('../mail/send.do','메일보내기',1000,800);">qwer@naver.com</td>
+										<td>영업본부</td>
+										<td>070-111-1111</td>
+									</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="card-footer">
+						<ul class="pagination justify-content-center m-0">
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+							</li><li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+							</li>
+
+								<li class="page-item active">
+									<a class="page-link" href="">1</a>
+								</li>
+
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+	</div>
+</div> <!-- <div id="bottom"> -->
+</div><!-- bottom  -->
+</div><!-- 전체 -->
+<script>
+/* 개인주소록 추가 버튼 클릭시 이벤트 */
+	function test(){
+		var checked = $('input[type="checkbox"]:checked');
+		console.log(checked);
+		alert("개인주소록에 추가되었습니다.")
+		location.href='personalList.do';
+	};
+
+
+
+
+
+
+	$('#devteam').click(function(){
+		console.log("dsfsd");
+	/* $ ('#tall').hide(); //클릭 시 첫 번째 요소 숨김 */
+	});
+
+
+</script>
+</body>

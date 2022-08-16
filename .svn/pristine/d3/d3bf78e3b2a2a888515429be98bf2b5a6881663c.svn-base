@@ -1,0 +1,203 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<head>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+	integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA="
+	crossorigin="anonymous" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css"
+	integrity="sha512-0/rEDduZGrqo4riUlwqyuHDQzp2D1ZCgH/gFIfjMIL5az8so6ZiXyhf1Rg8i6xsjv+z/Ubc4tt1thLigEcu6Ug=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+<div class="wrapper">
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row md-2">
+				<div class="col-sm-6">
+					<h3>마이페이지 > 내 정보</h3>
+				</div>
+				<div class="col-sm-6">
+					<button class="btn btn-default float-right"
+						style="margin-left: 20px;" type="button">취소</button>
+					<button class="btn btn-info float-right" style="margin-left: 20px;"
+						type="button" data-toggle="modal" data-target="#pwdModal">수정</button>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="content">
+		<div class=" container-fluid">
+			<div class="row">
+				<div class="col-md-4">
+
+					<div class="card card-info card-outline">
+						<div class="card-body box-profile">
+							<div class="text-center">
+								<img class="profile-user-img img-fluid img-circle"
+									src="../resources/images/indexPage/chopa.jpg"
+									alt="User profile picture">
+							</div>
+							<h3 class="profile-username text-center">노혜지 부장</h3>
+
+							<ul class="list-group list-group-unbordered mb-3">
+								<li class="list-group-item"><strong><i
+										class="fas fa-briefcase"></i> 사원번호</strong>
+								<p class="float-right">123456</p></li>
+								<li class="list-group-item"><strong><i
+										class="fas fa-building"></i> 부서</strong>
+								<p class="float-right">경영지원팀</p></li>
+								<li class="list-group-item"><strong><i
+										class="fas fa-pencil-alt mr-1"></i> 직위</strong>
+									<p class="float-right">사원</p></li>
+								<li class="list-group-item"><strong><i
+										class="fas fa-book"></i> 직책</strong>
+									<p class="float-right">사원</p></li>
+								<li class="list-group-item"><strong><i
+										class="fas fa-phone"></i> 내선번호</strong>
+									<p class="float-right">070-111-1132</p></li>
+								<li class="list-group-item"><strong><i
+										class="far fa-calendar-alt"></i> 입사일</strong>
+									<p class="float-right">2022-09-01</p></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="card card-info card-outline">
+						<div class="card-body box-profile">
+							<strong><i class="fas fa-key"></i> 비밀번호 변경</strong> <input
+								type="text" class="form-control form-control-border"
+								id="exampleInputBorder" placeholder="변경할 비밀번호를 입력하세요"> <br>
+							<strong><i class="fas fa-key"></i> 비밀번호 확인</strong> <input
+								type="text" class="form-control form-control-border"
+								id="exampleInputBorder" placeholder="변경할 비밀번호를 다시 입력하세요">
+						</div>
+					</div>
+
+				</div>
+
+				<div class="col-md-8">
+					<div class="card card-info card-outline">
+						<div class="card-body box-profile">
+							<div class="row">
+								<strong class="col-sm-3"><i class="fas fa-file-image"></i>
+									사진 변경</strong>
+								<div class="input-group input-group-sm col-sm-9"
+									style="margin-right: auto; margin-left: auto;">
+									<div class="custom-file">
+										<input type="file" class="custom-file-input"
+											id="exampleInputFile"> <label
+											class="custom-file-label" for="exampleInputFile"></label>
+									</div>
+									<span class="input-group-append">
+										<button type="button" class="btn btn-secondary btn-append">Upload</button>
+									</span>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<strong class="col-sm-3"><i class="fas fa-file-export"></i>
+									결재수단 변경</strong>
+								<div class="input-group input-group-sm col-sm-9"
+									style="margin-right: auto; margin-left: auto;">
+									<div class="custom-file">
+										<input type="file" class="custom-file-input"
+											id="exampleInputFile"> <label
+											class="custom-file-label" for="exampleInputFile"></label>
+									</div>
+									<span class="input-group-append">
+										<button type="button" class="btn btn-secondary btn-append">Upload</button>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="card card-info">
+						<div class="card-header">개인정보</div>
+
+						<div class="card-body">
+							<strong><i class="fas fa-user"></i> 이름</strong> <input
+								type="text" class="form-control form-control-border"
+								id="exampleInputBorder"> <br> <strong><i
+								class="fas fa-heart"></i> MBTI</strong> <select
+								class="custom-select form-control-border"
+								id="exampleSelectBorder">
+								<option>ISTJ</option>
+								<option>ISFJ</option>
+								<option>INFJ</option>
+								<option>INTJ</option>
+								<option>ISTP</option>
+								<option>ISFP</option>
+								<option>INFP</option>
+								<option>IFTP</option>
+								<option>ESTP</option>
+								<option>ENFP</option>
+								<option>ENTP</option>
+								<option>ESTJ</option>
+								<option>ESFJ</option>
+								<option>ENFJ</option>
+								<option>ENTJ</option>
+							</select> <br>
+							<br> <strong><i class="fas fa-mobile"></i> 휴대폰번호</strong> <input
+								type="text" class="form-control form-control-border"
+								id="exampleInputBorder"> <br> <strong><i
+								class="fas fa-at"></i> 이메일</strong> <input type="text"
+								class="form-control form-control-border" id="exampleInputBorder">
+							<br> <strong><i class="fas fa-map-marker-alt mr-1"></i>
+								주소</strong>
+							<div class="row">
+								<div class="input-group input-group-sm col-sm-5"
+									style="padding-top: 10px;">
+									<input type="text" class="form-control" id="inputPost" readonly>
+									<span class="input-group-append">
+										<button type="button"
+											class="btn btn-default btn-sm btn-append">우편번호찾기</button>
+									</span>
+								</div>
+								<div class="input-group input-group-sm col-sm-7"
+									style="padding-top: 10px;">
+									<input type="text" class="form-control" id="inputPost" readonly>
+								</div>
+							</div>
+							<input type="text" class="form-control form-control-border"
+								id="exampleInputBorder" placeholder="상세주소 입력를 입력하세요.">
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+
+<div class="modal fade show" id="pwdModal" style="display: none;" aria-modal="true" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">비밀번호 확인</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="form-group row">
+					<div class="input-group input-group-md">
+						<input type="text" class="form-control" placeholder="비밀번호를 입력하세요">
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer justify-content-between">
+				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+				<button type="button" class="btn btn-info">확인</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+</body>

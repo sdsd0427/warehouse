@@ -1,0 +1,79 @@
+package kr.or.warehouse.controller.view;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import kr.or.warehouse.dto.HrTypeVO;
+import kr.or.warehouse.dto.HrVO;
+import kr.or.warehouse.service.HrService;
+
+@Controller
+@RequestMapping("/ehr")
+public class EhrController {
+
+	@Autowired
+	private HrService hrService;
+
+	@RequestMapping("/main")
+	public ModelAndView main(ModelAndView mnv, @RequestParam(defaultValue = "14310056") int eno) throws Exception {
+		String url = "ehr/main";
+
+//		System.out.println(eno);
+		List<HrVO> hrList = null;
+		HrTypeVO hrType = null;
+		try {
+			hrList = hrService.getHrList(eno);
+			System.out.println(hrList);
+			hrType = hrService.getHrType(eno);
+			System.out.println(hrType);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		mnv.addObject("hrList", hrList);
+		mnv.addObject("hrType", hrType);
+		mnv.setViewName(url);
+
+		return mnv;
+	}
+
+//	@RequestMapping("/main")
+//	public void main() {}
+
+	@RequestMapping("/teamList")
+	public void teamList() {}
+
+	@RequestMapping("/vacation")
+	public void vacation() {}
+
+	@RequestMapping("/teamVacationList")
+	public void teamVacationList() {}
+
+	@RequestMapping("/teamHrList")
+	public void teamHrList() {}
+
+	@RequestMapping("/test")
+	public void test() {}
+
+	@RequestMapping("/hrCard")
+	public void hrCard() {}
+
+	@RequestMapping("/workTypeForm")
+	public String workTypeForm() {
+		String url = "ehr/workType";
+
+		return url;
+	}
+
+}

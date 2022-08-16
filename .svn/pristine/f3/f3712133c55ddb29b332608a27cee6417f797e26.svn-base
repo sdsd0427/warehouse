@@ -1,0 +1,483 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<body>
+	<div class="wrapper">
+		<h2 class="title">업무 > 업무 부당신고</h2>
+		<div class="row ml-4" style="justify-content: space-between;">
+			<div class="col-lg-7">
+				<div class="card">
+					<div class="card-header bg-info" style="font-weight: bold">
+						신고목록
+					</div>
+					<table class="table table-hover text-nowrap projects">
+						<thead>
+							<tr>
+								<th style="width: 25%">신고자</th>
+								<th style="width: 20%">신고유형</th>
+								<th style="width: 25%">피신고자</th>
+								<th style="width: 20%">신고일자</th>
+								<th style="width: 10%">처리상태
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<div class="row" style="align-items: center">
+										<div class="col-5">
+											<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+										</div>
+										<div class="col-7">
+											<b style="font-size: 16px">서난희 </b>
+											<br>
+											<small style="font-size: 12px">사원</small><br>
+											<small style="font-size: 12px">개발1팀</small>
+										</div>
+									</div>
+								</td>
+								<td>
+									직책 남용
+								</td>
+								<td>
+									<div class="row" style="align-items: center">
+										<div class="col-5">
+											<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+										</div>
+										<div class="col-7">
+											<b style="font-size: 16px">최민규 </b>
+											<br>
+											<small style="font-size: 12px">팀장</small><br>
+											<small style="font-size: 12px">개발1팀</small>
+										</div>
+									</div>
+								</td>
+								<td>
+									2022-07-07
+								</td>
+								<td>
+									<span class="badge bg-secondary">처리대기</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="row" style="align-items: center">
+										<div class="col-5">
+											<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+										</div>
+										<div class="col-7">
+											<b style="font-size: 16px">서난희 </b>
+											<br>
+											<small style="font-size: 12px">사원</small><br>
+											<small style="font-size: 12px">개발1팀</small>
+										</div>
+									</div>
+								</td>
+								<td>
+									직책 남용
+								</td>
+								<td>
+									<div class="row" style="align-items: center">
+										<div class="col-5">
+											<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+										</div>
+										<div class="col-7">
+											<b style="font-size: 16px">최민규 </b>
+											<br>
+											<small style="font-size: 12px">팀장</small><br>
+											<small style="font-size: 12px">개발1팀</small>
+										</div>
+									</div>
+								</td>
+								<td>
+									2022-07-07
+								</td>
+								<td>
+									<span class="badge bg-secondary">처리대기</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="row" style="align-items: center">
+										<div class="col-5">
+											<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+										</div>
+										<div class="col-7">
+											<b style="font-size: 16px">서난희 </b>
+											<br>
+											<small style="font-size: 12px">사원</small><br>
+											<small style="font-size: 12px">개발1팀</small>
+										</div>
+									</div>
+								</td>
+								<td>
+									직책 남용
+								</td>
+								<td>
+									<div class="row" style="align-items: center">
+										<div class="col-5">
+											<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+										</div>
+										<div class="col-7">
+											<b style="font-size: 16px">최민규 </b>
+											<br>
+											<small style="font-size: 12px">팀장</small><br>
+											<small style="font-size: 12px">개발1팀</small>
+										</div>
+									</div>
+								</td>
+								<td>
+									2022-07-07
+								</td>
+								<td>
+									<span class="badge bg-secondary">처리대기</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="row" style="align-items: center">
+										<div class="col-5">
+											<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+										</div>
+										<div class="col-7">
+											<b style="font-size: 16px">서난희 </b>
+											<br>
+											<small style="font-size: 12px">사원</small><br>
+											<small style="font-size: 12px">개발1팀</small>
+										</div>
+									</div>
+								</td>
+								<td>
+									직책 남용
+								</td>
+								<td>
+									<div class="row" style="align-items: center">
+										<div class="col-5">
+											<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+										</div>
+										<div class="col-7">
+											<b style="font-size: 16px">최민규 </b>
+											<br>
+											<small style="font-size: 12px">팀장</small><br>
+											<small style="font-size: 12px">개발1팀</small>
+										</div>
+									</div>
+								</td>
+								<td>
+									2022-07-07
+								</td>
+								<td>
+									<span class="badge bg-secondary">처리대기</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="row" style="align-items: center">
+										<div class="col-5">
+											<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+										</div>
+										<div class="col-7">
+											<b style="font-size: 16px">서난희 </b>
+											<br>
+											<small style="font-size: 12px">사원</small><br>
+											<small style="font-size: 12px">개발1팀</small>
+										</div>
+									</div>
+								</td>
+								<td>
+									직책 남용
+								</td>
+								<td>
+									<div class="row" style="align-items: center">
+										<div class="col-5">
+											<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+										</div>
+										<div class="col-7">
+											<b style="font-size: 16px">최민규 </b>
+											<br>
+											<small style="font-size: 12px">팀장</small><br>
+											<small style="font-size: 12px">개발1팀</small>
+										</div>
+									</div>
+								</td>
+								<td>
+									2022-07-07
+								</td>
+								<td>
+									<span class="badge bg-secondary">처리대기</span>
+								</td>
+							</tr>
+
+
+						</tbody>
+					</table>
+					<div class="card-footer">
+						<ul class="pagination justify-content-center m-0">
+							<li class="page-item">
+								<a class="page-link" href><i class="fas fa-angle-double-left"></i></a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href><i class="fas fa-angle-left"></i></a>
+							</li>
+							<li class="page-item active">
+								<a class="page-link" href>1</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href>2</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href><i class="fas fa-angle-double-right"></i></a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href><i class="fas fa-angle-right"></i></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="row" style="justify-content: space-between;">
+					<div class="card col-6">
+						<canvas id="myChart"  height="300"></canvas>
+					</div>
+					<div class="card col-6">
+						<canvas id="myChart2"  height="300"></canvas>
+					</div>
+				</div>
+
+
+			</div>
+			<div class="col-lg-5">
+				<div class="card">
+					<div class="card-header bg-info">
+						<b>관련신고</b>
+					</div>
+					<div>
+						<table class="table table-hover text-nowrap projects">
+							<thead>
+								<tr>
+									<th>신고유형</th>
+									<th>피신고자</th>
+									<th>처리일자</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>직책남용</td>
+									<td>
+										<div class="row" style="align-items: center">
+											<div class="col-5">
+												<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+											</div>
+											<div class="col-7">
+												<b style="font-size: 16px">김형민 </b>
+												<br>
+												<small style="font-size: 12px">부장</small><br>
+												<small style="font-size: 12px">개발1팀</small>
+											</div>
+										</div>
+									</td>
+									<td>2022-07-01</td>
+								</tr>
+								<tr>
+									<td>직책남용</td>
+									<td>
+										<div class="row" style="align-items: center">
+											<div class="col-5">
+												<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+											</div>
+											<div class="col-7">
+												<b style="font-size: 16px">김형민 </b>
+												<br>
+												<small style="font-size: 12px">부장</small><br>
+												<small style="font-size: 12px">개발1팀</small>
+											</div>
+										</div>
+									</td>
+									<td>2022-07-01</td>
+								</tr>
+								<tr>
+									<td>직책남용</td>
+									<td>
+										<div class="row" style="align-items: center">
+											<div class="col-5">
+												<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+											</div>
+											<div class="col-7">
+												<b style="font-size: 16px">김형민 </b>
+												<br>
+												<small style="font-size: 12px">부장</small><br>
+												<small style="font-size: 12px">개발1팀</small>
+											</div>
+										</div>
+									</td>
+									<td>2022-07-01</td>
+								</tr>
+								<tr>
+									<td>직책남용</td>
+									<td>
+										<div class="row" style="align-items: center">
+											<div class="col-5">
+												<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+											</div>
+											<div class="col-7">
+												<b style="font-size: 16px">김형민 </b>
+												<br>
+												<small style="font-size: 12px">부장</small><br>
+												<small style="font-size: 12px">개발1팀</small>
+											</div>
+										</div>
+									</td>
+									<td>2022-07-01</td>
+								</tr>
+								<tr>
+									<td>직책남용</td>
+									<td>
+										<div class="row" style="align-items: center">
+											<div class="col-5">
+												<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+											</div>
+											<div class="col-7">
+												<b style="font-size: 16px">김형민 </b>
+												<br>
+												<small style="font-size: 12px">부장</small><br>
+												<small style="font-size: 12px">개발1팀</small>
+											</div>
+										</div>
+									</td>
+									<td>2022-07-01</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="card-footer">
+								<div class="card">
+									<div class="card-header">
+										신고 상세정보
+									</div>
+										<table class="table text-nowrap projects">
+											<tr>
+												<th>신고자</th>
+												<td>강정인 사원</td>
+											</tr>
+											<tr>
+												<th>신고유형</th>
+												<td>직책남용</td>
+											</tr>
+											<tr>
+												<th>신고내용</th>
+												<td>
+													<p>업무를 너무 떠 넘기는거 같습니다...</p>
+												</td>
+											</tr>
+											<tr>
+												<th>피신고자</th>
+												<td>
+													<div class="row" style="align-items: center">
+														<div class="col-5">
+															<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+														</div>
+														<div class="col-7">
+															<b style="font-size: 16px">김형민 </b>
+															<br>
+															<small style="font-size: 12px">부장</small><br>
+															<small style="font-size: 12px">개발1팀</small>
+														</div>
+													</div>
+												</td>
+											</tr>
+										</table>
+								</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="emp_card">
+		<div class="card-header" style="display: flex; align-items: center;">
+			<span class="name"></span>
+			<a class="mail" href="#">
+				<span class="material-symbols-outlined">
+				mail
+				</span>
+			</a>
+		</div>
+		<div class="card-body">
+			<span>부서</span>
+			<span class="dep">개발팀</span>
+			<br>
+			<span>연락처</span>
+			<span>010-1111-1111</span>
+		</div>
+	</div>
+	<script>
+	const ctx = document.getElementById('myChart').getContext('2d');
+	const myChart = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels: ['최민규', '김형민', '강동주', '이병진', '이정규', '하재관'],
+	        datasets: [{
+	            label: '신고를 많이 당한 사원',
+	            data: [8, 7, 5, 3, 3, 1],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            y: {
+	                beginAtZero: true
+	            }
+	        }
+	    }
+	});
+	const ctx2 = document.getElementById('myChart2').getContext('2d');
+	const myChart2 = new Chart(ctx2, {
+	    type: 'bar',
+	    data: {
+	        labels: ['서난희', '강정인', '이종민', '오지현', '김기웅', '강현수'],
+	        datasets: [{
+	            label: '신고를 많이 한 사원',
+	            data: [9, 7, 6, 6, 5, 3],
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            y: {
+	                beginAtZero: true
+	            }
+	        }
+	    }
+	});
+	</script>
+	<%@ include file="./work_js.jsp" %>
+</body>

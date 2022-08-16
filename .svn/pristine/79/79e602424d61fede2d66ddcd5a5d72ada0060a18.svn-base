@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BoardReply-Mapper">
+	<select id="selectReplySeqNextValue" resultType="int" >
+		select boardReply_seq.nextval
+		from dual
+	</select>
+
+	<select id="selectReplyList" resultType="boardReply">
+		select
+		replyNo
+	   ,content
+	   ,regDate
+	   ,updateDate
+	   ,boardNo
+	   ,eno
+		from reply
+		where boardNo=#{boardNo}
+		order by replyNo asc
+	</select>
+
+	<select id="countReply" resultType="int">
+		select count(boardNo)
+		from reply
+		where boardNo=#{boardNo}
+	</select>
+
+	<update id="insertReply">
+		insert into reply(replyNo,boardNo,content,eno)
+		values(#{replyNo},#{boardNo},#{content},#{eno})
+	</update>
+
+	<update id="updateReply" parameterType="boardReply">
+		update reply
+		set
+		content=#{content}
+		where replyNo=#{replyNo}
+	</update>
+
+	<update id="deleteReply" parameterType="str">
+		delete
+		from reply
+		where replyNo=#{replyNo}
+	</update>
+</mapper>
+

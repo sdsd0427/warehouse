@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BoardReply-Mapper">
+	<select id="selectReplyNo" resultType="str">
+		SELECT 'BR' ||
+		trim(nvl(max(to_char(to_number(substr(replyNo,3))+1,'000000')),'000001'))
+		as replyNo
+		from reply
+
+		union
+
+		select nvl(null,'BR000001') as replyNo
+		from
+		dual
+		where not exists (select replyNo
+		from reply)
+	</select>
+
+	<select id="selectReplyList" resultType="reply">
+		select
+		replyNo as rno
+	   ,content as replyText
+	   ,regDate
+	   ,updateDate
+	   ,boardNo as refNo
+	   ,eno
+	   ,anonym
+		from reply
+		where boardNo=#{refNo}
+		order by replyNo asc
+	</select>
+
+	<select id="countReply" resultType="int">
+		select count(boardNo)
+		from reply
+		where boardNo=#{refNo}
+	</select>
+
+	<select id="selectEno" resultType="int">
+		select eno
+		from
+		employee
+		where name = #{name}
+	</select>
+
+	<select id="selectName" resultType="str">
+		select b.name
+		from reply a, employee b
+		where a.eno = b.eno
+		and a.replyNo = #{rno}
+	</select>
+
+	<select id="selectPhoto" resultType="str">
+		select photo
+		from
+		employee
+		where eno = #{eno}
+	</select>
+
+	<update id="insertReply">
+		insert into reply(replyNo,boardNo,content,eno,anonym)
+		values(#{rno},#{refNo},#{replyText},#{eno},#{anonym})
+	</update>
+
+	<update id="updateReply" parameterType="reply">
+		update reply
+		set
+		content=#{replyText},anonym=#{anonym}
+		where replyNo=#{rno}
+	</update>
+
+	<update id="deleteReply" parameterType="str">
+		delete
+		from reply
+		where replyNo=#{rno}
+	</update>
+
+	<update id="deleteAllReply" parameterType="str">
+		delete
+		from reply
+		where boardNo=#{refNo}
+	</update>
+</mapper>
+

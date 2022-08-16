@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Pds-Mapper">
+
+	<select id="selectPdsListByEnoForTree" parameterType="int" resultType="pds">
+		SELECT 
+			 pno
+			,eno
+			,fileName
+			,uploadPath
+			,fileType
+			,fileSize
+			,regDate
+			,dist
+			,delYn
+			,delDate
+			,folderYn
+			,separation
+			,upPno
+		FROM
+			PDS
+		WHERE
+			eno=#{eno}
+		ORDER BY
+			folderYn DESC,
+			fileName
+			
+	</select>	
+	
+	<!-- 개인자료실 자료 select -->
+	<select id="selectPdsListByEno" parameterType="pds" resultType="pds">
+		SELECT 
+			 pno
+			,eno
+			,fileName
+			,uploadPath
+			,fileType
+			,fileSize
+			,regDate
+			,dist
+			,delYn
+			,delDate
+			,folderYn
+			,separation
+			,upPno
+		FROM
+			PDS
+		WHERE
+			eno=#{eno}
+		AND
+			dist=#{dist}
+		ORDER BY
+			folderYn DESC,
+			fileName
+			
+			
+	</select>	
+	
+	<select id="selectPdsListByUpPno" parameterType="pds" resultType="pds">
+		SELECT 
+			 pno
+			,eno
+			,fileName
+			,uploadPath
+			,fileType
+			,fileSize
+			,regDate
+			,dist
+			,delYn
+			,delDate
+			,folderYn
+			,separation
+			,upPno
+		FROM
+			PDS
+		WHERE
+			eno=#{eno}
+		AND
+			upPno=#{upPno}
+		AND
+			dist=#{dist}
+		ORDER BY
+			folderYn DESC,
+			fileName
+	</select>	
+	
+	<!-- 폴더 삭제를 위한 select -->
+	<select id="selectPdsListByEnoForMoveTrash" parameterType="pds" resultType="pds">
+		SELECT 
+			 pno
+			,eno
+			,fileName
+			,uploadPath
+			,fileType
+			,fileSize
+			,regDate
+			,dist
+			,delYn
+			,delDate
+			,folderYn
+			,separation
+			,upPno
+		FROM
+			PDS
+		WHERE
+			eno=#{eno}
+		AND
+			upPno = #{upPno}
+		AND
+			separation=#{separation}
+			
+			
+	</select>	
+	
+	<!-- 휴지통 자료 select -->
+	<select id="selectTrashListByEno" parameterType="pds" resultType="pds">
+<!-- 		SELECT  -->
+<!-- 			 pno -->
+<!-- 			,eno -->
+<!-- 			,fileName -->
+<!-- 			,uploadPath -->
+<!-- 			,fileType -->
+<!-- 			,fileSize -->
+<!-- 			,regDate -->
+<!-- 			,dist -->
+<!-- 			,delYn -->
+<!-- 			,delDate -->
+<!-- 			,folderYn -->
+<!-- 			,separation -->
+<!-- 			,upPno -->
+<!-- 		FROM -->
+<!-- 			PDS -->
+<!-- 		WHERE -->
+<!-- 			eno=#{eno} -->
+<!-- 		AND -->
+<!-- 			dist=#{dist} -->
+<!-- 		AND -->
+<!-- 			delYn=1 -->
+<!-- 		ORDER BY -->
+<!-- 			folderYn DESC, -->
+<!-- 			fileName -->
+			
+		SELECT 
+			 pno
+			,eno
+			,fileName
+			,uploadPath
+			,fileType
+			,fileSize
+			,regDate
+			,dist
+			,delYn
+			,delDate
+			,folderYn
+			,separation
+			,upPno
+		FROM
+			PDS
+		WHERE
+			eno=#{eno}
+		AND
+			upPno=#{upPno}
+		AND
+			dist=#{dist}
+		AND
+			delYn=1	
+		ORDER BY
+			folderYn DESC,
+			fileName	
+	</select>	
+	
+	<!-- 자료 업로드 -->
+	<update id="insertFile" parameterType="pds">
+		INSERT INTO 
+			PDS (pno, eno, fileName, uploadPath, fileType, fileSize, regDate, dist, folderYn, separation, upPno)
+		VALUES
+			(#{pno}, #{eno}, #{fileName}, #{uploadPath}, #{fileType}, #{fileSize}, sysdate, #{dist}, #{folderYn}, #{separation}, #{upPno})
+	</update>
+
+	<!-- pno증가 -->
+	<select id="selectPdsSeqNext" resultType="str">
+		select 'PD'||trim(TO_CHAR(pds_seq.nextval,'000000')) as pno from dual
+	</select>
+	
+	<!-- 자료 select -->
+	<select id="selectPdsByPno" parameterType="str" resultType="pds">
+		SELECT 
+			 pno
+			,eno
+			,fileName
+			,uploadPath
+			,fileType
+			,fileSize
+			,regDate
+			,dist
+			,delYn
+			,delDate
+			,folderYn
+			,separation
+			,upPno
+		FROM
+			PDS
+		WHERE
+			pno=#{pno}
+	</select>
+	
+	<!-- 휴지통 이동 -->
+	<update id="updateDelYnByPno" parameterType="pds">
+		UPDATE
+			pds
+		SET 
+			 dist=#{dist}
+			,delYn=#{delYn}
+			,delDate=#{delDate}
+		WHERE 
+			pno=#{pno}
+
+	</update>
+	
+	<!-- 자료 삭제 -->
+	<update id="deletePdsByPno">
+		DELETE
+		FROM 
+			pds
+		WHERE 
+			pno = #{pno}
+	</update>
+	
+	<!-- 휴지통 비우기 -->
+	<update id="deleteAllPdsByEno">
+		DELETE
+		FROM 
+			pds
+		WHERE 
+			eno = #{eno}
+		AND
+			delYn=1
+			
+	</update>
+	
+	<!-- 휴지통 모든 파일 select -->
+	<select id="selectAllTrashByPno" resultType="pds">
+		SELECT
+			 pno
+			,eno
+			,fileName
+			,uploadPath
+			,fileType
+			,fileSize
+			,regDate
+			,dist
+			,delYn
+			,delDate
+			,folderYn
+			,separation
+			,upPno
+		FROM
+			pds
+		WHERE
+			eno = #{eno}
+		AND
+			delYn=1
+	</select>
+	
+	<!-- 전사 자료 select -->
+	<select id="selectPdsListForAllEmpPds" parameterType="pds" resultType="pds">
+		SELECT 
+			 pno
+			,eno
+			,fileName
+			,uploadPath
+			,fileType
+			,fileSize
+			,regDate
+			,dist
+			,delYn
+			,delDate
+			,folderYn
+			,separation
+			,upPno
+		FROM
+			PDS
+		WHERE
+			upPno=#{upPno}
+		AND
+			dist=#{dist}
+		ORDER BY
+			folderYn DESC,
+			fileName
+			
+	</select>	
+	
+	<select id="selectAllEmpPdsListForTree" resultType="pds">
+		SELECT 
+			 pno
+			,eno
+			,fileName
+			,uploadPath
+			,fileType
+			,fileSize
+			,regDate
+			,dist
+			,delYn
+			,delDate
+			,folderYn
+			,separation
+			,upPno
+		FROM
+			PDS
+		WHERE
+			separation='전사자료실'
+		ORDER BY
+			folderYn DESC,
+			fileName
+			
+	</select>	
+	
+	<select id="selectTrashPdsListForTree" parameterType="int" resultType="pds">
+		SELECT 
+			 pno
+			,eno
+			,fileName
+			,uploadPath
+			,fileType
+			,fileSize
+			,regDate
+			,dist
+			,delYn
+			,delDate
+			,folderYn
+			,separation
+			,upPno
+		FROM
+			PDS
+		WHERE
+			eno=#{eno}
+		AND	
+			dist='휴지통'
+		ORDER BY
+			folderYn DESC,
+			fileName
+			
+	</select>	
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Calendar-Mapper">
+	<resultMap type="calendar" id="calendarMap">
+		<result property="start" column="sdate"/>
+		<result property="end" column="edate"/>
+	</resultMap>
+
+	<sql id="search">
+		<if test="searchType == 't'.toString()">
+			and calendartitle like '%'||#{keyword}||'%'
+		</if>
+	</sql>
+
+	<select id="selectSearchCalendarList" resultMap="calendarMap">
+		select
+		    ccode
+		   ,catecode
+		   ,title
+		   ,content
+		   ,space
+		   ,important
+		   ,TO_char(sdate, 'YYYY-MM-DD"T"HH24:MI:SS') sdate
+		   ,TO_char(edate, 'YYYY-MM-DD"T"HH24:MI:SS') edate
+		   ,eno
+		   ,allday
+		   ,background
+		from calendar
+<!-- 		where ccode is not null
+		<include refid="search" /> -->
+	</select>
+
+<!-- 	<update id="insertCalendar" parameterType="calendar"> -->
+<!-- 		insert into calendar   -->
+<!-- 		values (#{ccode},#{catecode},#{title},#{content},#{space},#{important},#{sdate},#{edate},#{eno}) -->
+<!-- 	</update> -->
+	
+<!-- 	<update id="updateCalendar" parameterType="calendar"> -->
+<!-- 		update calendar -->
+<!-- 	    set title=#{title}, content=#{content}, space=#{space}, important=#{important}, sdate=#{sdate}, edate=#{edate} -->
+<!-- 		where ccode=#{ccode}     -->
+<!-- 	</update> -->
+	
+<!-- 	<update id="deleteCalendar" parameterType="int"> -->
+<!-- 		delete -->
+<!-- 		from calendar -->
+<!-- 		where ccode=#{ccode} -->
+<!-- 	</update> -->
+	
+<!-- 	<select id="selectCalendarSeqNext" resultType="int"> -->
+<!-- 		select calendar_seq.nextval as ccode from dual -->
+<!-- 	</select> -->
+
+</mapper>
+

@@ -1,0 +1,538 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<head>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/community.css">
+<style>
+.page-link {
+    line-height: 1;
+    color: #17a2b8;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+</style>
+</head>
+
+<title></title>
+
+<body class="hold-transition skin-blue sidebar-collapse">
+	<div class="wrapper">
+		<section class="content-header">
+			<div class="row md-2">
+				<div class="col-sm-12">
+					<h3>지식창고</h3>
+
+				</div>
+			</div>
+		</section>
+
+		<!-- first section -->
+		<section class="content">
+			<div class="row ml-2">
+				<div class="col-12">
+					<div class="card card-info card-tabs">
+						<div class="card-header p-0 pt-1">
+							<ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+								<li class="nav-item"><a class="nav-link active"
+									id="custom-tabs-one-work-tab" data-toggle="pill"
+									href="#custom-tabs-one-work" role="tab"
+									aria-controls="custom-tabs-one-work" aria-selected="true">추천
+										노하우</a></li>
+								<li class="nav-item"><a class="nav-link"
+									id="custom-tabs-one-document-tab" data-toggle="pill"
+									href="#custom-tabs-one-document" role="tab"
+									aria-controls="custom-tabs-one-document" aria-selected="false">내게
+										필요한 문서</a></li>
+								<li class="nav-item"><a class="nav-link"
+									id="custom-tabs-one-menual-tab" data-toggle="pill"
+									href="#custom-tabs-one-menual" role="tab"
+									aria-controls="custom-tabs-one-menual" aria-selected="false">자주찾는
+										메뉴얼</a></li>
+
+							</ul>
+						</div>
+						<div class="card-body">
+							<div class="tab-content" id="custom-tabs-one-tabContent">
+								<div class="tab-pane fade show active" id="custom-tabs-one-work"
+									role="tabpanel" aria-labelledby="custom-tabs-one-work-tab">
+									<div class="row">
+										<div class="col-12">
+											<a style="float: right;" href="#"> <i
+												class="fas fa-light fa-arrow-right"></i>
+											</a>
+										</div>
+										<div class="col-12 mt-3">
+											<table class="table table-hover text-nowrap"
+												style="text-align: center; table-layout: fixed;">
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">개발</td>
+													<td style="width: 60%%">메인화면 UI 수정</td>
+													<td style="width: 15%">홍길동 사원</td>
+													<td style="width: 15%">2022-06-28</td>
+												</tr>
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">개발</td>
+													<td style="width: 60%%">[기능]todo</td>
+													<td style="width: 15%">이순신 사원</td>
+													<td style="width: 15%">2022-06-25</td>
+												</tr>
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">기획</td>
+													<td style="width: 60%%">[기능]전자결재</td>
+													<td style="width: 15%">강감찬 사원</td>
+													<td style="width: 15%">2022-06-05</td>
+												</tr>
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">영업</td>
+													<td style="width: 60%%">신입사원 메뉴얼 작성</td>
+													<td style="width: 15%">전우치 사원</td>
+													<td style="width: 15%">2022-05-26</td>
+												</tr>
+
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">개발</td>
+													<td style="width: 60%%">메인화면 UI 수정</td>
+													<td style="width: 15%">홍길동 사원</td>
+													<td style="width: 15%">2022-06-28</td>
+												</tr>
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">개발</td>
+													<td style="width: 60%%">[기능]todo</td>
+													<td style="width: 15%">이순신 사원</td>
+													<td style="width: 15%">2022-06-25</td>
+												</tr>
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">기획</td>
+													<td style="width: 60%%">[기능]전자결재</td>
+													<td style="width: 15%">강감찬 사원</td>
+													<td style="width: 15%">2022-06-05</td>
+												</tr>
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">영업</td>
+													<td style="width: 60%%">신입사원 메뉴얼 작성</td>
+													<td style="width: 15%">전우치 사원</td>
+													<td style="width: 15%">2022-05-26</td>
+												</tr>
+
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">기획</td>
+													<td style="width: 60%%">[기능]전자결재</td>
+													<td style="width: 15%">강감찬 사원</td>
+													<td style="width: 15%">2022-06-05</td>
+												</tr>
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">영업</td>
+													<td style="width: 60%%">신입사원 메뉴얼 작성</td>
+													<td style="width: 15%">전우치 사원</td>
+													<td style="width: 15%">2022-05-26</td>
+												</tr>
+
+
+											</table>
+											<ul class="pagination justify-content-center m-0">
+												<li class="page-item"><a class="page-link" href="">
+														<i class="fas fa-angle-double-left"></i>
+												</a>
+												<li class="page-item"><a class="page-link" href="">
+														<i class="fas fa-angle-left"></i>
+												</a></li>
+
+												<li class="page-item active"><a class="page-link"
+													href="">1</a></li>
+
+												<li class="page-item"><a class="page-link" href="">
+														<i class="fas fa-angle-right"></i>
+												</a></li>
+												<li class="page-item"><a class="page-link" href="">
+														<i class="fas fa-angle-double-right"></i>
+												</a></li>
+											</ul>
+
+										</div>
+									</div>
+
+								</div>
+								<div class="tab-pane fade" id="custom-tabs-one-document"
+									role="tabpanel" aria-labelledby="custom-tabs-one-document-tab">
+									<div class="row">
+										<div class="col-12">
+											<a style="float: right;" href="#"> <i
+												class="fas fa-light fa-arrow-right"></i>
+											</a>
+										</div>
+										<div class="col-12 mt-3">
+											<table class="table table-hover text-nowrap"
+												style="text-align: center; table-layout: fixed;">
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">홍길동</td>
+													<td style="width: 10%">개발</td>
+													<td style="width: 15%">업무 협조</td>
+													<td style="width: 50%%">업무 협조</td>
+													<td style="width: 15%">2022-06-28</td>
+												</tr>
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">이순신</td>
+													<td style="width: 10%">개발</td>
+													<td style="width: 15%">업무기안</td>
+													<td style="width: 50%%">기안서</td>
+													<td style="width: 15%">2022-06-28</td>
+												</tr>
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">신사임당</td>
+													<td style="width: 10%">영업</td>
+													<td style="width: 15%">휴가 신청</td>
+													<td style="width: 50%%">[휴가 신청서] 2022 0628 연차 신청서</td>
+													<td style="width: 15%">2022-06-24</td>
+												</tr>
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">신사임당</td>
+													<td style="width: 10%">영업</td>
+													<td style="width: 15%">재무회계</td>
+													<td style="width: 50%%">[법인카드 사용 신청서] 2022 0627 부서 회식비</td>
+													<td style="width: 15%">2022-06-27</td>
+												</tr>
+
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">홍길동</td>
+													<td style="width: 10%">개발</td>
+													<td style="width: 15%">업무 협조</td>
+													<td style="width: 50%%">업무 협조</td>
+													<td style="width: 15%">2022-06-28</td>
+												</tr>
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">이순신</td>
+													<td style="width: 10%">개발</td>
+													<td style="width: 15%">업무기안</td>
+													<td style="width: 50%%">기안서</td>
+													<td style="width: 15%">2022-06-28</td>
+												</tr>
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">신사임당</td>
+													<td style="width: 10%">영업</td>
+													<td style="width: 15%">휴가 신청</td>
+													<td style="width: 50%%">[휴가 신청서] 2022 0628 연차 신청서</td>
+													<td style="width: 15%">2022-06-24</td>
+												</tr>
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">신사임당</td>
+													<td style="width: 10%">영업</td>
+													<td style="width: 15%">재무회계</td>
+													<td style="width: 50%%">[법인카드 사용 신청서] 2022 0627 부서 회식비</td>
+													<td style="width: 15%">2022-06-27</td>
+												</tr>
+
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">신사임당</td>
+													<td style="width: 10%">영업</td>
+													<td style="width: 15%">휴가 신청</td>
+													<td style="width: 50%%">[휴가 신청서] 2022 0628 연차 신청서</td>
+													<td style="width: 15%">2022-06-24</td>
+												</tr>
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">신사임당</td>
+													<td style="width: 10%">영업</td>
+													<td style="width: 15%">재무회계</td>
+													<td style="width: 50%%">[법인카드 사용 신청서] 2022 0627 부서 회식비</td>
+													<td style="width: 15%">2022-06-27</td>
+												</tr>
+
+
+											</table>
+											<ul class="pagination justify-content-center m-0">
+												<li class="page-item"><a class="page-link" href="">
+														<i class="fas fa-angle-double-left"></i>
+												</a>
+												<li class="page-item"><a class="page-link" href="">
+														<i class="fas fa-angle-left"></i>
+												</a></li>
+
+												<li class="page-item active"><a class="page-link"
+													href="">1</a></li>
+
+												<li class="page-item"><a class="page-link" href="">
+														<i class="fas fa-angle-right"></i>
+												</a></li>
+												<li class="page-item"><a class="page-link" href="">
+														<i class="fas fa-angle-double-right"></i>
+												</a></li>
+											</ul>
+										</div>
+									</div>
+
+								</div>
+								<div class="tab-pane fade" id="custom-tabs-one-menual"
+									role="tabpanel" aria-labelledby="custom-tabs-one-menual-tab">
+									<div class="row">
+										<div class="col-12">
+											<a style="float: right;" href="#"> <i
+												class="fas fa-light fa-arrow-right"></i>
+											</a>
+										</div>
+										<div class="col-12 mt-3">
+											<table class="table table-hover text-nowrap"
+												style="text-align: center; table-layout: fixed;">
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">홍길동</td>
+													<td style="width: 60%;">휴가작성메뉴얼</td>
+													<td style="width: 15%">휴가</td>
+													<td style="width: 15%"><i class="fas fa-light fa-eye"></i>
+														1024</td>
+													<td style="width: 15%">2022-06-28</td>
+												</tr>
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">이순신</td>
+													<td style="width: 60%;">전자결제 작성 메뉴얼</td>
+													<td style="width: 15%">전자결재</td>
+													<td style="width: 15%"><i class="fas fa-light fa-eye"></i>
+														985</td>
+													<td style="width: 15%">2022-06-05</td>
+												</tr>
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">강감찬</td>
+													<td style="width: 60%;">업무 절차 메뉴얼</td>
+													<td style="width: 15%">업무</td>
+													<td style="width: 15%"><i class="fas fa-light fa-eye"></i>
+														920</td>
+													<td style="width: 15%">2022-04-27</td>
+												</tr>
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">전우치</td>
+													<td style="width: 60%;">일정 등록 메뉴얼</td>
+													<td style="width: 15%">일정</td>
+													<td style="width: 15%"><i class="fas fa-light fa-eye"></i>
+														890</td>
+													<td style="width: 15%">2022-04-21</td>
+												</tr>
+
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">홍길동</td>
+													<td style="width: 60%;">휴가작성메뉴얼</td>
+													<td style="width: 15%">휴가</td>
+													<td style="width: 15%"><i class="fas fa-light fa-eye"></i>
+														850</td>
+													<td style="width: 15%">2022-06-28</td>
+												</tr>
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">이순신</td>
+													<td style="width: 60%;">전자결제 작성 메뉴얼</td>
+													<td style="width: 15%">전자결재</td>
+													<td style="width: 15%"><i class="fas fa-light fa-eye"></i>
+														821</td>
+													<td style="width: 15%">2022-06-05</td>
+												</tr>
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">강감찬</td>
+													<td style="width: 60%;">업무 절차 메뉴얼</td>
+													<td style="width: 15%">업무</td>
+													<td style="width: 15%"><i class="fas fa-light fa-eye"></i>
+														804</td>
+													<td style="width: 15%">2022-04-27</td>
+												</tr>
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">전우치</td>
+													<td style="width: 60%;">일정 등록 메뉴얼</td>
+													<td style="width: 15%">일정</td>
+													<td style="width: 15%"><i class="fas fa-light fa-eye"></i>
+														754</td>
+													<td style="width: 15%">2022-04-21</td>
+												</tr>
+
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">강감찬</td>
+													<td style="width: 60%;">업무 절차 메뉴얼</td>
+													<td style="width: 15%">업무</td>
+													<td style="width: 15%"><i class="fas fa-light fa-eye"></i>
+														687</td>
+													<td style="width: 15%">2022-04-27</td>
+												</tr>
+												<tr style='font-size: 0.85em;'>
+													<td style="width: 10%">전우치</td>
+													<td style="width: 60%;">일정 등록 메뉴얼</td>
+													<td style="width: 15%">일정</td>
+													<td style="width: 15%"><i class="fas fa-light fa-eye"></i>
+														652</td>
+													<td style="width: 15%">2022-04-21</td>
+												</tr>
+
+
+
+											</table>
+											<ul class="pagination justify-content-center m-0">
+												<li class="page-item"><a class="page-link" href="">
+														<i class="fas fa-angle-double-left"></i>
+												</a>
+												<li class="page-item"><a class="page-link" href="">
+														<i class="fas fa-angle-left"></i>
+												</a></li>
+
+												<li class="page-item active"><a class="page-link"
+													href="">1</a></li>
+
+												<li class="page-item"><a class="page-link" href="">
+														<i class="fas fa-angle-right"></i>
+												</a></li>
+												<li class="page-item"><a class="page-link" href="">
+														<i class="fas fa-angle-double-right"></i>
+												</a></li>
+											</ul>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- first section -->
+
+		<!-- second section -->
+		<section class="content">
+			<div class="row ml-2">
+				<div class="col-12 row">
+					<div class="col-6 elevation-1"
+						style="border: 1px solid #17a2b8; border-radius: 5px;">
+						<a
+							href="javascript:OpenWindow('hashTagListForm.do','인기 해시태그',800,700);"
+							style="float: right; color: black;" class="mb-3">더보기 <i
+							class="fas fa-light fa-arrow-right"></i></a>
+						<canvas id="myChart" width="385" height="300"
+							style="display: block; box-sizing: border-box; height: 192px; width: 385px;"></canvas>
+					</div>
+
+					<div class="col-6">
+						<div class="card card-info">
+							<div class="card-header">
+								<h3 class="card-title">인기 사원</h3>
+							</div>
+							<div class="card-body " style="overflow: auto;">
+								<table class="table table-hover text-nowrap"
+									style="text-align: center;">
+									<tbody>
+										<tr>
+											<td>1</td>
+											<td>개발</td>
+											<td><a
+												href="javascript:OpenWindow('empWorkListForm.do','인기 해시태그',800,700);"><img
+													class="direct-chat-img emp_profile"
+													src="<%=request.getContextPath()%>/resources/images/noimg.jpg"
+													alt="noimg"></a></td>
+											<td>이순신 대리</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>영업</td>
+											<td><img class="direct-chat-img "
+												src="<%=request.getContextPath()%>/resources/images/noimg.jpg"
+												alt="noimg"></td>
+											<td>신사임당 과장</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>인사</td>
+											<td><img class="direct-chat-img "
+												src="<%=request.getContextPath()%>/resources/images/noimg.jpg"
+												alt="noimg"></td>
+											<td>세종대왕 사원</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>개발</td>
+											<td><img class="direct-chat-img "
+												src="<%=request.getContextPath()%>/resources/images/noimg.jpg"
+												alt="noimg"></td>
+											<td>궁예 과장</td>
+										</tr>
+										<tr>
+											<td>5</td>
+											<td>운영</td>
+											<td><img class="direct-chat-img "
+												src="<%=request.getContextPath()%>/resources/images/noimg.jpg"
+												alt="noimg"></td>
+											<td>이성계 부장</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- second section -->
+		<div class="emp_card" style="height: 100px;">
+			<div class="row">
+				<div class="col-4 row"
+					style="border-right: 1px solid lightgray; text-align: center; margin: auto;">
+					<img class="direct-chat-img col-12 ml-1"
+						src="<%=request.getContextPath()%>/resources/images/noimg.jpg"
+						alt="noimg"> <span class="ml-1">이순신 팀장</span>
+				</div>
+				<div class="col-8">
+					<table class="table table-hover text-nowrap"
+						style="text-align: center;">
+						<tbody>
+							<tr>
+								<td><a
+									href="javascript:OpenWindow('empWorkListForm.do','노하우 목록',800,700);">노하우20개
+										<i class="fas fa-light fa-arrow-right" style="float: right;"></i>
+								</a></td>
+							</tr>
+							<tr>
+								<td><a href="javascript:OpenWindow('empDocumentListForm.do','노하우 목록',800,700);">문서14개 <i
+										class="fas fa-light fa-arrow-right" style="float: right;"></i></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
+
+	<script>
+		const ctx = document.getElementById('myChart').getContext('2d');
+		const myChart = new Chart(ctx,
+				{
+					type : 'bar',
+					data : {
+						labels : [ '#휴가', '#전자결재', '#메인', '#개발', '#업무' ],
+						datasets : [ {
+							label : '인기 HashTag',
+							data : [ 126, 104, 54, 39, 25 ],
+							backgroundColor : [ 'rgba(255, 99, 132, 0.2)',
+									'rgba(54, 162, 235, 0.2)',
+									'rgba(75, 192, 192, 0.2)',
+									'rgba(153, 102, 255, 0.2)',
+									'rgba(255, 206, 86, 0.2)' ],
+							borderColor : [ 'rgba(255, 99, 132, 1)',
+									'rgba(54, 162, 235, 1)',
+									'rgba(75, 192, 192, 1)',
+									'rgba(153, 102, 255, 1)',
+									'rgba(255, 206, 86, 1)' ],
+							borderWidth : 1
+						} ]
+					},
+					options : {
+						scales : {
+							y : {
+								beginAtZero : true
+							}
+						}
+					}
+				});
+	</script>
+	<script type="text/javascript">
+		$('ul').Treeview(options)
+	</script>
+</body>

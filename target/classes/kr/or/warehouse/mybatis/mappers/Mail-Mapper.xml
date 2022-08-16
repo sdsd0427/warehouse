@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Mail-Mapper">
+
+	<sql id="search">
+		<if test="searchType == 't'.toString()">
+			and title like '%'||#{keyword}||'%'
+		</if>
+		<if test="searchType == 'w'.toString()">
+			and eno = (select distinct a.eno
+                         from mto a, employee b
+                        where a.eno = b.eno
+                          and b.name like '%'||#{keyword}||'%')
+		</if>
+	</sql>
+
+	<select id="selectName" resultType="str">
+		select b.name
+		  from mail a, employee b
+		 where a.mfrom = b.eno
+		   and a.mailno = #{mailNo}
+	</select>
+
+	<select id="selectEnoByName" resultType="int">
+		select eno 
+		  from employee 
+		 where name = #{name}
+	</select>
+
+	<select id="selectNameByEno" resultType="String">
+		select name 
+		  from employee 
+		 where eno = #{eno}
+	</select>
+
+	<select id="selectMtoList" resultType="mto">
+		SELECT
+		    mailno
+		   ,eno
+		   ,mtodel
+		   ,mtocheck
+		   ,mtoImpor
+		FROM
+		    mto 
+		where mailno = #{mailNo}
+	</select>
+
+	<select id="selectMailList" resultType="mail">
+		select
+		    a.mailno
+		   ,a.mfrom
+		   ,a.title
+		   ,a.content
+		   ,a.mdate
+		   ,a.impormail
+		   ,a.clean
+		   ,a.mfromdel
+		   ,a.emergency
+		   ,a.tempmail
+		from
+		    mail a, mto b
+		where a.mailno = b.mailno
+		  and b.eno = #{eno}
+          and a.clean = 0
+          and a.tempmail = 0
+          and a.mfrom != b.eno
+		order by 5 desc  
+	</select>
+
+	<select id="selectMailListCount" resultType="int">
+		select
+			count(*)
+		from
+		    mail a, mto b
+		where a.mailno = b.mailno
+		  and b.eno = #{eno}
+          and a.clean = 0
+          and a.tempmail = 0
+          and a.mfrom != b.eno
+	</select>
+	
+	<select id="selectNoReadMailListCount" resultType="int">
+		select count(*)
+           from mail a, mto b
+          where a.mailno = b.mailno
+            and b.eno = #{eno}
+            and a.clean = 0
+            and a.tempmail = 0
+            and a.mfrom != b.eno
+            and b.mtoDel = 0
+            and b.mtocheck = 0
+	</select>
+
+	<select id="selectSendMailList" resultType="mail">
+        select distinct
+		    a.mailno
+		   ,a.mfrom
+		   ,a.title
+		   ,a.content
+		   ,a.mdate
+		   ,a.impormail
+		   ,a.clean
+		   ,a.mfromdel
+		   ,a.emergency
+		   ,a.tempmail
+		  from mail a, mto b
+		 where a.mailno = b.mailno
+           and a.clean = 0
+           and a.tempmail = 0
+           and a.mfromdel = 0
+           and a.mfrom != b.eno
+		   and a.mfrom = #{eno}
+		 order by mdate desc
+	</select>
+	
+	<select id="selectReceiver" resultType="mto">
+		select a.name, b.mtocheck 
+	      from employee a,(select mailno, eno, mtodel, mtocheck
+	                         from mto
+	                        where mailno = #{mailNo}) b
+	     where a.eno = b.eno
+	     order by b.mtocheck desc
+	 </select>
+	
+	<select id="selectSearchSendMailListCount" resultType="int">
+		select count(DISTINCT b.mailno)
+		  from mail a, mto b
+		 where a.mailno = b.mailno
+           and a.clean = 0
+           and a.tempmail = 0
+           and a.mfromdel = 0
+           and a.mfrom != b.eno
+		   and a.mfrom = #{eno}
+	</select>
+	
+	<select id="selectImporMailList" resultType="mail">
+		select
+		    a.mailno
+		   ,a.mfrom
+		   ,a.title
+		   ,a.content
+		   ,a.mdate
+		   ,a.impormail
+		   ,a.clean
+		   ,a.mfromdel
+		   ,a.emergency
+		   ,a.tempmail
+		from
+		    mail a, mto b
+		where a.mailno = b.mailno
+		  and b.eno = #{eno}
+		  and b.mtoimpor = 1
+          and a.clean = 0
+          and a.tempmail = 0
+          and a.mfromdel = 0
+		
+        union
+
+		select
+		    mailno
+		   ,mfrom
+		   ,title
+		   ,content
+		   ,mdate
+		   ,impormail
+		   ,clean
+		   ,mfromdel
+		   ,emergency
+		   ,tempmail
+		from
+		    mail
+		where mfrom = #{eno}
+		  and impormail = 1
+          and clean = 0
+          and tempmail = 0
+		order by mdate desc
+	</select>
+	
+	<select id="selectImporMailListCount" resultType="int">
+		SELECT
+		   count(*)
+		FROM	
+		(
+	        select
+			    a.mailno
+			   ,a.mfrom
+			   ,a.title
+			   ,a.content
+			   ,a.mdate
+			   ,a.impormail
+			   ,a.clean
+			   ,a.mfromdel
+			   ,a.emergency
+			   ,a.tempmail
+			from
+			    mail a, mto b
+			where a.mailno = b.mailno
+			  and b.eno = #{eno}
+			  and b.mtoimpor = 1
+	          and a.clean = 0
+	          and a.tempmail = 0
+	          and a.mfromdel = 0
+			
+	        union
+	
+			select
+			    mailno
+			   ,mfrom
+			   ,title
+			   ,content
+			   ,mdate
+			   ,impormail
+			   ,clean
+			   ,mfromdel
+			   ,emergency
+			   ,tempmail
+			from
+			    mail
+			where mfrom = #{eno}
+			  and impormail = 1
+	          and clean = 0
+	          and tempmail = 0
+			order by mdate desc)
+	</select>
+	
+	<select id="selectNoReadImporMailListCount" resultType="int">
+		 select count(*)
+           from mail a, mto b
+          where a.mailno = b.mailno
+            and b.eno = #{eno}
+            and a.impormail = 1
+            and a.tempmail = 0
+            and a.clean = 0
+            and b.mtoDel = 0
+            and b.mtocheck = 0
+	</select>
+	
+	<select id="selectTrashMailList" resultType="mail">
+		select
+		    a.mailno
+		   ,a.mfrom
+		   ,a.title
+		   ,a.content
+		   ,a.mdate
+		   ,a.impormail
+		   ,a.clean
+		   ,a.mfromdel
+		   ,a.emergency
+		   ,a.tempmail
+		from
+		    mail a, mto b
+		where a.mailno = b.mailno
+		  and b.eno = #{eno}
+		  and clean = 1
+		  and a.mfromdel = 0
+		  and b.mtoDel = 0
+		  and a.tempmail = 0
+		
+        union
+        
+		select
+		    mailno
+		   ,mfrom
+		   ,title
+		   ,content
+		   ,mdate
+		   ,impormail
+		   ,clean
+		   ,mfromdel
+		   ,tempmail
+		   ,emergency
+		FROM
+		    mail
+		where mfrom = #{eno}
+		  and clean = 1
+		  and mfromdel = 0
+		  and tempmail = 0
+		order by mdate desc
+
+	</select>
+	
+	<select id="selectSearchTrashMailListCount" resultType="int">
+		SELECT
+		    count(*)
+		FROM		
+		        (select
+				    a.mailno
+				   ,a.mfrom
+				   ,a.title
+				   ,a.content
+				   ,a.mdate
+				   ,a.impormail
+				   ,a.clean
+				   ,a.mfromdel
+				   ,a.emergency
+				   ,a.tempmail
+				from
+				    mail a, mto b
+				where a.mailno = b.mailno
+				  and b.eno = #{eno}
+				  and clean = 1
+				  and a.mfromdel = 0
+				  and b.mtoDel = 0
+				  and a.tempmail = 0
+				
+		        union
+		        
+				select
+				    mailno
+				   ,mfrom
+				   ,title
+				   ,content
+				   ,mdate
+				   ,impormail
+				   ,clean
+				   ,mfromdel
+				   ,tempmail
+				   ,emergency
+				FROM
+				    mail
+				where mfrom = #{eno}
+		        
+				  and clean = 1
+				  and mfromdel = 0
+				  and tempmail = 0
+				order by mdate desc)
+	</select>
+	
+	<select id="selectToMeMailList" resultType="mail">
+		select
+		    a.mailno
+		   ,a.mfrom
+		   ,a.title
+		   ,a.content
+		   ,a.mdate
+		   ,a.impormail
+		   ,a.clean
+		   ,a.mfromdel
+		   ,a.emergency
+		   ,a.tempmail
+		from
+		    mail a, mto b
+		where a.mailno = b.mailno
+		  and b.eno = #{eno}
+          and tempMail = 0
+		  and clean = 0
+		  and a.mfromdel = 0
+		  and b.mtodel = 0
+		
+        intersect
+        
+		select
+		    mailno
+		   ,mfrom
+		   ,title
+		   ,content
+		   ,mdate
+		   ,impormail
+		   ,clean
+		   ,mfromdel
+		   ,tempmail
+		   ,emergency
+		FROM
+		    mail
+		where mfrom = #{eno}
+          and tempMail = 0
+		  and clean = 0
+		  and mfromdel = 0
+		order by mdate desc
+	</select>
+	
+	<select id="selectToMeMailListCount" resultType="int">
+		SELECT
+		    count(*)
+		FROM		
+		        (select
+				    a.mailno
+				   ,a.mfrom
+				   ,a.title
+				   ,a.content
+				   ,a.mdate
+				   ,a.impormail
+				   ,a.clean
+				   ,a.mfromdel
+				   ,a.emergency
+				   ,a.tempmail
+				from
+				    mail a, mto b
+				where a.mailno = b.mailno
+				  and b.eno = #{eno}
+		          and tempMail = 0
+				  and clean = 0
+				  and a.mfromdel = 0
+				  and b.mtodel = 0
+				
+		        intersect
+		        
+				select
+				    mailno
+				   ,mfrom
+				   ,title
+				   ,content
+				   ,mdate
+				   ,impormail
+				   ,clean
+				   ,mfromdel
+				   ,tempmail
+				   ,emergency
+				FROM
+				    mail
+				where mfrom = #{eno}
+		          and tempMail = 0
+				  and clean = 0
+				  and mfromdel = 0
+				order by mdate desc)
+	</select>
+	
+	<select id="selectNoReadToMeMailListCount" resultType="int">
+     	select count(*)
+		  from mail a, mto b
+		 where a.mailno = b.mailno
+           and a.mfrom = b.eno
+           and b.eno = #{eno}
+           and a.clean = 0
+           and a.tempmail = 0
+           and b.mtoDel = 0
+           and b.mtocheck = 0
+	</select>
+	
+	<select id="selectTempMailList" resultType="mail">
+		select
+		    mailno
+		   ,mfrom
+		   ,title
+		   ,content
+		   ,mdate
+		   ,impormail
+		   ,clean
+		   ,mfromdel
+		   ,tempmail
+		   ,emergency
+		from
+		    mail
+		where tempmail = 1
+		  and clean = 0
+		  and mfromdel = 0
+		order by mdate desc
+	</select>
+		
+	<select id="selectSearchTempMailListCount" resultType="int">
+        select
+		   count(*)
+		from
+		    mail
+		where tempmail = 1
+		  and clean = 0
+		  and mfromdel = 0
+	</select>
+	
+	<update id="insertMail" parameterType="mail">
+		INSERT INTO mail (
+		    mailno
+		   ,mfrom
+		   ,title
+		   ,content
+		   ,emergency
+		) VALUES (
+		    #{mailNo}
+		    ,#{mFrom}
+		    ,#{title}
+		    ,#{content}
+		    ,#{emergency}
+		)
+	</update>
+	
+	<update id="insertTempMail" parameterType="mail">
+		INSERT INTO mail (
+		    mailno
+		   ,mfrom
+		   ,title
+		   ,content
+		   ,tempmail
+		   ,emergency
+		) VALUES (
+		    #{mailNo}
+		    ,#{mFrom}
+		    ,#{title}
+		    ,#{content}
+		    ,1
+		    ,#{emergency}
+		)
+	</update>
+	
+	<update id="insertMto" parameterType="mto">
+		INSERT INTO mto (
+		    mailno
+		   ,eno
+		) VALUES (
+		    #{mailNo}
+		   ,#{eno}
+		)
+	</update>
+	
+	<update id="updateMailImportant" parameterType="mail">
+		 update mail
+		    set impormail = 1
+		  where
+		    mailno = #{mailNo}
+	</update>
+	
+	<update id="updateMailImportantCancel" parameterType="mail">
+		 update mail
+		    set impormail = 0
+		  where
+		    mailno = #{mailNo}
+	</update>
+	
+	<update id="updateMtoImportant" parameterType="mto">
+		 update mto
+		    set mtoImpor = 1
+		  where
+		    mailno = #{mailNo}
+		    and eno = #{eno}
+	</update>
+	
+	<update id="updateMtoImportantCancel" parameterType="mto">
+		 update mto
+		    set mtoImpor = 0
+		  where
+		    mailno = #{mailNo}
+		    and eno = #{eno}
+	</update>
+	
+	
+	
+	
+	
+	<update id="updateMailTrash" parameterType="mail">
+		 update mail
+		    set clean = 1
+		  where
+		    mailno = #{mailNo}
+	</update>
+	
+	<update id="updateMailTrashRevert" parameterType="mail">
+		 update mail
+		    set clean = 0
+		  where
+		    mailno = #{mailNo}
+	</update>
+	
+	<update id="updateMailTrashMtoDel" parameterType="mto">
+		 update mto
+		    set mtoDel = 1
+		  where mailno = #{mailNo}
+		    and eno = #{eno}
+	</update>
+	
+	<update id="updateMailTrashMFromDel" parameterType="mail">
+		 update mail
+		    set mFromDel = 1
+		  where mailno = #{mailNo}
+		    and mfrom = #{mFrom}
+	</update>
+
+	<update id="updateMailMtoCheck" parameterType="mail">
+		UPDATE mto
+		   SET
+		        mtoCheck = 1
+		 WHERE
+		    mailno = #{mailNo}
+		   and eno = #{mFrom}
+	</update>
+
+	<update id="updateMailMtoCheckByChecked" parameterType="mto">
+		UPDATE mto
+		   SET
+		        mtoCheck = 1
+		 WHERE
+		    mailno = #{mailNo}
+		   and eno = #{eno}
+	</update>
+
+
+
+
+
+	<select id="selectMailByMailNo" resultType="mail">
+		select
+		    mailno
+		   ,mfrom
+		   ,title
+		   ,content
+		   ,mdate
+		   ,impormail
+		   ,clean
+		   ,mfromdel
+		   ,tempmail
+		   ,emergency
+		from
+		    mail
+		where mailno = #{mailNo}
+	</select>
+
+	<select id="selectMailNo" resultType="String">
+		select 'MA' ||
+		trim(nvl(max(to_char(to_number(substr(mailno,3))+1,'000000')),'000001'))
+		as mailno
+		from mail
+
+		union
+
+		select nvl(null,'CA000001') as mailno
+		from
+		dual
+		where not exists (select mailno
+		from mail)		
+	</select>
+	
+</mapper>
+

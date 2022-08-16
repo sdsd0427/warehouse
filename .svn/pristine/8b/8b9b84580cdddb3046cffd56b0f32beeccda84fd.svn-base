@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Work-Mapper">
+
+	<select id="selectMyWorkAllStatusList" resultType="work">
+		SELECT
+		    a.wcode
+		   ,a.wtitle
+		   ,a.wdate
+		   ,a.wend
+		   ,a.wopen
+		   ,a.walarm
+		   ,a.eno
+		   ,a.wprogress
+		   ,a.wstatus
+		   ,a.classcode
+		FROM
+		    work a, workmanager b
+		WHERE a.wcode = b.wcode
+		  AND b.eno = #{eno}
+	</select>
+
+	<select id="selectMyWorkList" resultType="work">
+		SELECT
+		    a.wcode
+		   ,a.wtitle
+		   ,a.wdate
+		   ,a.wend
+		   ,a.wopen
+		   ,a.walarm
+		   ,a.eno
+		   ,a.wprogress
+		   ,a.wstatus
+		   ,a.classcode
+		FROM
+		    work a, workmanager b
+		WHERE a.wcode = b.wcode
+		  AND b.eno = #{eno}
+		  AND a.wstatus = #{wstatus}
+		ORDER BY a.wcode desc
+	</select>
+
+	<select id="selectMyWorkTotalCount" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			work a, workmanager b
+		WHERE a.wcode = b.wcode
+		  AND b.eno = #{eno}
+		  AND a.wstatus = #{wstatus}
+	</select>
+
+	<select id="selectWorkManagerList" resultType="workmanager">
+		SELECT
+		    a.wmstep
+		   ,a.wcode
+		   ,a.eno
+		   ,a.isafter
+		   ,a.answer
+		   ,a.wcheck
+		   ,c.dname
+		   ,b.birth
+		   ,b.email
+		   ,b.name
+		   ,b.photo
+		   ,d.ppsname
+		   ,b.job
+		   ,b.phone
+		   ,b.call
+		   ,b.hiredate
+		   ,b.enabled
+		   ,b.mbti
+		   ,b.address
+		   ,b.retiredate
+		   ,b.retirereason
+		   ,b.pwd
+		   ,b.ipaddress
+		   ,b.signtype
+		   ,b.signpath
+		   ,b.condition
+		   ,b.year
+		FROM
+		    workmanager a, employee b, department c, postposition d
+		WHERE a.eno = b.eno
+		  AND b.ppscode = d.ppscode
+		  AND b.dno = c.dno
+		  AND a.wcode = #{wcode}
+	</select>
+
+	<select id="selectWorkRequestBy" resultType="employee">
+		SELECT
+		    b.eno
+		   ,c.dname
+		   ,b.birth
+		   ,b.email
+		   ,b.name
+		   ,b.photo
+		   ,d.ppsname
+		   ,b.job
+		   ,b.phone
+		   ,b.call
+		   ,b.hiredate
+		   ,b.enabled
+		   ,b.mbti
+		   ,b.address
+		   ,b.retiredate
+		   ,b.retirereason
+		   ,b.pwd
+		   ,b.ipaddress
+		   ,b.signtype
+		   ,b.signpath
+		   ,b.condition
+		   ,b.year
+		FROM
+		    work a, employee b, department c, postposition d
+		WHERE a.eno = b.eno
+		  AND b.dno = c.dno
+		  AND b.ppscode = d.ppscode
+		  AND a.wcode = #{wcode}
+	</select>
+</mapper>
+

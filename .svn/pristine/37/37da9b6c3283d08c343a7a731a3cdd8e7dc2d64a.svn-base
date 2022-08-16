@@ -1,0 +1,41 @@
+package kr.or.warehouse.controller.rest;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import kr.or.warehouse.dto.HrVO;
+import kr.or.warehouse.service.HrService;
+
+@RestController
+@RequestMapping("/ehr")
+public class EhrRestController {
+
+	@Autowired
+	private HrService hrService;
+
+	@RequestMapping("/hrTable")
+	public ResponseEntity<List<HrVO>> hrTableToJSON(@RequestParam(defaultValue = "14310056") int eno) throws Exception{
+		System.out.println("zz");
+		ResponseEntity<List<HrVO>> entity = null;
+
+		List<HrVO> hrTable = null;
+
+		try {
+			//Service
+			hrTable = hrService.getHrListForHrTable(eno);
+			entity = new ResponseEntity<List<HrVO>>(hrTable, HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<List<HrVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			e.printStackTrace();
+		}
+
+		return entity;
+	}
+
+}

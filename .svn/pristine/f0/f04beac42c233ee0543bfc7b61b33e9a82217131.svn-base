@@ -1,0 +1,487 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<head>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/indexPage.css">
+</head>
+<body>
+	<div style="overflow-x:hidden; overflow-y:auto; padding: 0 10px;">
+		<section id="top">
+			<div class="card" style=" justify-content: center; align-items:center;  width: 20%; height: 250px;">
+				<div class="card-header" style="display: flex;">
+					<div style="width: 50px; height: 50px;">
+						<img class="img" src="<%=request.getContextPath() %>/resources/images/indexPage/chopa.jpg"/>
+					</div>
+					<div style="width: 100px; display: flex; flex-direction: column; justify-content: center; padding-left: 30px;">
+						<p style="font-size: 16px; font-weight: bold">장문석 </p>
+						<div style="font-size: 12px;">
+							<p>팀장</p>
+							<p>개발1팀</p>
+						</div>
+					</div>
+				</div>
+				<div class="card-body" style="padding: 0">
+					<div>
+						<p class="timeCheck">
+							<span>출근시간</span>
+							<span>09 : 00</span>
+						</p>
+						<p class="timeCheck">
+							<span>퇴근시간</span>
+							<span>미등록</span>
+						</p>
+					</div>
+					<div style="margin-top: 10px;">
+						<div class="ehrClick" style="width: 210px;">
+							<button type="button" class="btn btn-info">
+								출근
+							</button>
+							<button type="button" class="btn btn-info">
+								퇴근
+							</button>
+						</div>
+					</div>
+					<div class="row" style="margin: 10px 0; padding: 0;">
+						<div class="btn-group" style="width: 100%;">
+							<button type="button" class="btn btn-info">근무상태</button>
+							<button type="button" class="btn btn-info dropdown-toggle dropdown-icon"></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="todo" class="card">
+				<div class="card-header ui-sortable-handle">
+					To do List
+					<div class="card-tools">
+						<button type="button" class="btn btn-info">
+							등록
+						</button>
+					</div>
+				</div>
+				<div id="todo_main">
+					<ul class="todo-list ui-sortable">
+						<li>
+							<div class="icheck-primary d-inline ml-2">
+								<input type="checkbox" id="todoCheck1">
+								<label for="todoCheck1"></label>
+							</div>
+							<span class="text">테스트 to do</span>
+						</li>
+						<li>
+							<div class="icheck-primary d-inline ml-2">
+								<input type="checkbox" id="todoCheck1">
+								<label for="todoCheck1"></label>
+							</div>
+							<span class="text">테스트 to do</span>
+						</li>
+						<li>
+							<div class="icheck-primary d-inline ml-2">
+								<input type="checkbox" id="todoCheck1">
+								<label for="todoCheck1"></label>
+							</div>
+							<span class="text">테스트 to do</span>
+						</li>
+						<li>
+							<div class="icheck-primary d-inline ml-2">
+								<input type="checkbox" id="todoCheck1">
+								<label for="todoCheck1"></label>
+							</div>
+							<span class="text">테스트 to do</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div id="recentNotice" class="card">
+				<div class="row">
+					<div class="col-12">
+						<div class="card-header">
+			                <h3 class="card-title" >최근 공지사항</h3>
+		              	</div>
+						<div class="card-body table-responsive p-0">
+			                <table class="table table-hover text-nowrap">
+			                  <thead>
+			                    <tr>
+			                      <th>번호</th>
+			                      <th>제목</th>
+			                      <th>작성자</th>
+			                      <th>등록일</th>
+			                    </tr>
+			                  </thead>
+			                  <tbody>
+			                    <tr>
+			                      <td>219</td>
+			                      <td>Alexander Pierce</td>
+			                      <td>11-7-2014</td>
+			                      <td><span class="tag tag-warning">Pending</span></td>
+			                    </tr>
+			                    <tr>
+			                      <td>657</td>
+			                      <td>Bob Doe</td>
+			                      <td>11-7-2014</td>
+			                      <td><span class="tag tag-primary">Approved</span></td>
+			                    </tr>
+			                    <tr>
+			                      <td>175</td>
+			                      <td>Mike Doe</td>
+			                      <td>11-7-2014</td>
+			                      <td><span class="tag tag-danger">Denied</span></td>
+			                    </tr>
+			                  </tbody>
+			                </table>
+			              </div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="row" style="margin: 0;">
+			<div class="card col-12" style="margin-top: 10px; padding: 0">
+				<div class="card-header bg-info">
+					<b>나의 관심 해시태그</b>
+				</div>
+				<div class="card-body" style="display: flex;">
+					<div class="col-4" style="border-right: 1px solid gray; padding-right: 20px;">
+						<div style="display: flex">
+							<input type="text" class="form-control" placeholder="해시태그를 입력하세요.">
+							<button class="btn btn-info">
+								<span class="material-symbols-outlined">
+								add
+								</span>
+							</button>
+						</div>
+						<div class="card col-12" style="margin-top: 20px">
+							<div style="display: flex; padding: 10px; flex-wrap: wrap;">
+								<button class="btn btn-info col-4" onclick="" style="margin: 5px">#Spring</button>
+								<button class="btn btn-outline-info col-4" onclick="" style="margin: 5px">#개발</button>
+								<button class="btn btn-outline-info col-4" onclick="" style="margin: 5px">#그룹웨어</button>
+								<button class="btn btn-outline-info col-4" onclick="" style="margin: 5px">#그룹웨어</button>
+								<button class="btn btn-outline-info col-4" onclick="" style="margin: 5px">#그룹웨어</button>
+							</div>
+						</div>
+					</div>
+					<div class="col-8">
+						<table class="table table-hover projects" style="table-layout: fixed;">
+							<tr>
+								<th style="width: 30%;">제목</th>
+								<th style="width: 20%;">요청자</th>
+								<th style="width: 25%;">담당자</th>
+								<th style="width: 10%;">조회수</th>
+								<th style="width: 15%;">즐겨찾기</th>
+							</tr>
+
+							<tr style='font-size: 0.85em;'  onclick="OpenWindow('manualDetail.do','상세보기',800,700);">
+								<td>[기능]전자결재</td>
+								<td>
+									<div style="align-items: center; display: flex;">
+										<div >
+											<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+										</div>
+										<div>
+											<p style="font-size: 16px; font-weight: bold">김형민 </p>
+											<div style="font-size: 12px;">
+												<p>부장</p>
+												<p>개발1팀</p>
+											</div>
+										</div>
+									</div>
+								</td>
+								<td>
+									<div style="align-items: center; display: flex;">
+											<div >
+												<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+											</div>
+											<div>
+												<p style="font-size: 16px; font-weight: bold">장문석 </p>
+												<div style="font-size: 12px;">
+													<p>팀장</p>
+													<p>개발1팀</p>
+												</div>
+											</div>
+											<div style="font-size: 12px">
+												<span>외 2명</span>
+											</div>
+									</div>
+								</td>
+								<td>
+									<i class="fas fa-light fa-eye" ></i> 345
+								</td>
+								<td>
+									<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+<!-- 										<i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+								</td>
+							</tr>
+							<tr style='font-size: 0.85em;'  onclick="OpenWindow('manualDetail.do','상세보기',800,700);">
+								<td>[기능]전자결재</td>
+								<td>
+									<div style="align-items: center; display: flex;">
+										<div >
+											<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+										</div>
+										<div>
+											<p style="font-size: 16px; font-weight: bold">김형민 </p>
+											<div style="font-size: 12px;">
+												<p>부장</p>
+												<p>개발1팀</p>
+											</div>
+										</div>
+									</div>
+								</td>
+								<td>
+									<div style="align-items: center; display: flex;">
+											<div >
+												<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+											</div>
+											<div>
+												<p style="font-size: 16px; font-weight: bold">장문석 </p>
+												<div style="font-size: 12px;">
+													<p>팀장</p>
+													<p>개발1팀</p>
+												</div>
+											</div>
+											<div style="font-size: 12px">
+												<span>외 2명</span>
+											</div>
+									</div>
+								</td>
+								<td>
+									<i class="fas fa-light fa-eye" ></i> 345
+								</td>
+								<td>
+									<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+<!-- 										<i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+								</td>
+							</tr>
+							<tr style='font-size: 0.85em;'  onclick="OpenWindow('manualDetail.do','상세보기',800,700);">
+								<td>[기능]전자결재</td>
+								<td>
+									<div style="align-items: center; display: flex;">
+										<div >
+											<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+										</div>
+										<div>
+											<p style="font-size: 16px; font-weight: bold">김형민 </p>
+											<div style="font-size: 12px;">
+												<p>부장</p>
+												<p>개발1팀</p>
+											</div>
+										</div>
+									</div>
+								</td>
+								<td>
+									<div style="align-items: center; display: flex;">
+											<div >
+												<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png">
+											</div>
+											<div>
+												<p style="font-size: 16px; font-weight: bold">장문석 </p>
+												<div style="font-size: 12px;">
+													<p>팀장</p>
+													<p>개발1팀</p>
+												</div>
+											</div>
+											<div style="font-size: 12px">
+												<span>외 2명</span>
+											</div>
+									</div>
+								</td>
+								<td>
+									<i class="fas fa-light fa-eye" ></i> 345
+								</td>
+								<td>
+									<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+<!-- 										<i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="row" style="margin: 0; justify-content: space-between;">
+			<div class="card" style="margin-top: 10px; padding:0; width: 76%;">
+				<div class="card-header bg-info">
+					<b>멘토의 활동</b>
+				</div>
+				<div class="card-body" style="display: flex;">
+					<div  style="border-right: 1px solid gray; padding-right: 20px; width: 40%">
+						<table class="table table-hover projects">
+							<tr>
+								<th style="width: 30%">부서</th>
+								<th style="width:30%">직책</th>
+								<th style="width: 40%">이름</th>
+							</tr>
+							<tr>
+								<td>
+									개발1팀
+								</td>
+								<td>팀장</td>
+								<td>
+									<div style="align-items: center; display: flex;">
+										<div >
+											<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+										</div>
+										<div>
+											<p style="font-size: 16px; font-weight: bold">김형민 </p>
+											<div style="font-size: 12px;">
+												<p>부장</p>
+												<p>개발1팀</p>
+											</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									개발1팀
+								</td>
+								<td>팀장</td>
+								<td>
+									<div style="align-items: center; display: flex;">
+										<div >
+											<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+										</div>
+										<div>
+											<p style="font-size: 16px; font-weight: bold">김형민 </p>
+											<div style="font-size: 12px;">
+												<p>부장</p>
+												<p>개발1팀</p>
+											</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									개발1팀
+								</td>
+								<td>팀장</td>
+								<td>
+									<div style="align-items: center; display: flex;">
+										<div >
+											<img class="table-avatar emp_profile" src="<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar.png">
+										</div>
+										<div>
+											<p style="font-size: 16px; font-weight: bold">김형민 </p>
+											<div style="font-size: 12px;">
+												<p>부장</p>
+												<p>개발1팀</p>
+											</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div style="width: 60%">
+						<div>
+							<ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+								<li class="nav-item">
+									<a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home"
+									aria-selected="true" data-link="detail">노하우</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home"
+									aria-selected="true" data-link="report">전사문서</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home"
+									aria-selected="true" data-link="proceeding">메뉴얼</a>
+								</li>
+							</ul>
+						</div>
+						<table class="table table-hover projects">
+							<tr>
+								<th>제목</th>
+								<th>조회수</th>
+								<th>즐겨찾기</th>
+							</tr>
+							<tr>
+								<td>[기능]전자결재
+								</td>
+								<td>
+									<i class="fas fa-light fa-eye" ></i> 345
+								</td>
+								<td>
+									<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+<!-- 										<i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+								</td>
+							</tr>
+							<tr>
+								<td>[기능]전자결재
+								</td>
+								<td>
+									<i class="fas fa-light fa-eye" ></i> 345
+								</td>
+								<td>
+									<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+<!-- 										<i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+								</td>
+							</tr>
+							<tr>
+								<td>[기능]전자결재
+								</td>
+								<td>
+									<i class="fas fa-light fa-eye" ></i> 345
+								</td>
+								<td>
+									<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+<!-- 										<i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+								</td>
+							</tr>
+							<tr>
+								<td>[기능]전자결재
+								</td>
+								<td>
+									<i class="fas fa-light fa-eye" ></i> 345
+								</td>
+								<td>
+									<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+<!-- 										<i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="card" style="margin-top: 10px; width: 22%">
+				<div class="card-header bg-info"><b>빠른메뉴</b></div>
+				<div class="card-body" style="padding: 10px; margin-top: 10px;">
+					<button type="button" class="btn btn-app" style="margin:0; background: transparent;">
+						<span class="material-symbols-outlined">
+						post_add
+						</span>
+						<small style="display: block">새 결재</small>
+					</button>
+					<button type="button" class="btn btn-app" style="margin: 0; background: transparent;">
+						<span class="material-symbols-outlined">
+						create_new_folder
+						</span>
+						<small style="display: block">자료 등록</small>
+					</button>
+					<button type="button" class="btn btn-app" style="margin: 0; background: transparent;">
+						<span class="material-symbols-outlined">
+						mail
+						</span>
+						<small style="display: block">메일 작성</small>
+					</button>
+					<button type="button" class="btn btn-app" style="margin: 0; background: transparent;">
+						<span class="material-symbols-outlined">
+						work
+						</span>
+						<small style="display: block">업무 등록</small>
+					</button>
+					<button type="button" class="btn btn-app" style="margin: 0; background: transparent;">
+						<span class="material-symbols-outlined">
+						calendar_month
+						</span>
+						<small style="display: block">일정 등록</small>
+					</button>
+					<button type="button" class="btn btn-app" style="margin: 0; background: transparent;">
+						<span class="material-symbols-outlined">
+						group
+						</span>
+						<small style="display: block">클래스룸</small>
+					</button>
+				</div>
+			</div>
+		</section>
+	</div>
+</body>

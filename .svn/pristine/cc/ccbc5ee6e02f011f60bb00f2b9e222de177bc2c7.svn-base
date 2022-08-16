@@ -1,0 +1,31 @@
+package kr.or.warehouse.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.dto.BoardVO;
+
+public interface BoardDAO {
+	List<BoardVO> selectSearchBoardList(Criteria cri) throws SQLException;
+
+	int selectSearchBoardListCount(Criteria cri) throws SQLException;
+
+	int selectEno(String boardNo) throws SQLException;
+	String selectName(String boardNo) throws SQLException;
+	BoardVO selectBoardByBoardNo(String boardNo) throws SQLException;
+
+	//BoardVO selectBoardByImage ( String imageFile) throws SQLException;
+
+	void insertBoard(BoardVO board) throws SQLException;
+
+	void updateBoard(BoardVO board) throws SQLException;
+
+	void deleteBoard(String boardNo) throws SQLException;
+
+	void increaseViewCnt(String boardNo) throws SQLException;
+
+	String selectNoticeNo() throws SQLException;
+	String selectFreeNo() throws SQLException;
+	String selectEventNo() throws SQLException;
+}

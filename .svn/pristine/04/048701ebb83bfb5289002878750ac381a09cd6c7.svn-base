@@ -1,0 +1,243 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+
+<style>
+.navbar {
+	margin-bottom: 50px;
+	border-radius: 0;
+}
+
+/* Remove the jumbotron's default bottom margin */
+.jumbotron {
+	margin-bottom: 0;
+}
+
+/* Add a gray background color and some padding to the footer */
+#footer {
+	margin-top: 50px;
+	background-color: #f2f2f2;
+	padding: 25px;
+}
+
+#content {
+	margin-left: 50px;
+	margin-right: 50px;
+	overflow: hidden;
+}
+
+/*  */
+#title {
+	border-bottom: 2px solid #727377;
+}
+
+#rightMenu {
+	margin-top: 10px;
+}
+
+.profileImg {
+	height: 128px;
+	width: 96px;
+}
+
+#officerList>thead>tr>th, #officerList>tbody>tr>td {
+	text-align: center;
+}
+
+.page-link {
+	line-height: 1;
+	color: #17a2b8;
+	background-color: #fff;
+	border: 1px solid #dee2e6;
+}
+
+.page-item.active .page-link {
+	z-index: 3;
+	color: #fff;
+	background-color: #17a2b8;
+	border-color: #17a2b8;
+}
+
+.upWord .word {
+	list-style-type: none;
+	float: left;
+	margin: 5px;
+}
+
+.btn_submenu {
+	display: inline-block;
+}
+
+span#RecName {
+	margin-left: 120px;
+}
+
+pribut {
+	border: 1px solid;
+}
+
+div#chart {
+	padding-top: 10px;
+}
+
+select#perPageNum, select#searchType {
+	list-style-type: none;
+	width: 140px;
+	float: left;
+}
+
+input.form-control {
+	list-style-type: none;
+	width: 180px;
+	float: left;
+}
+
+div#inName {
+	width: 290px;
+	height: 40px;
+	margin-left: 8px;
+	margin-top: 3px;
+	background-color: #ffc107;
+	padding-top: 8px;
+}
+
+div#botle {
+	margin-left: 500px;
+}
+
+div#b {
+	border-radius: 5px;
+}
+
+.sename {
+	color: black;
+	"
+}
+
+div#bottom {
+	margin-left: 40px;
+	margin-top: -30PX;
+}
+
+ul.upWord {
+	margin-left: -30px;
+}
+
+.emailcur {
+	cursor: pointer;
+}
+
+img.table-avatar {
+	width: 40px;
+	border: 1px solid #17a2b8;
+	border-radius: 10px;
+	height: 40px
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+	color: #fff;
+	background-color: #17a2b8;
+}
+
+button {
+	background-color: #F9B514;
+	padding: 5px 10px;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.modal .bg {
+	width: 100%;
+	height: 100%;
+}
+
+.modalBox {
+	position: absolute;
+	background-color: #fff;
+	padding: 15px;
+}
+
+.modalBox button {
+	/*  width: 80px; */
+	margin: 0 auto;
+}
+
+.hidden {
+	display: none;
+}
+
+a {
+	color: black;
+}
+
+.filename {
+	border: 1px dotted;
+	width: 500px;
+	margin-left: 30px;
+	text-align: center;
+	height: 40px;
+	padding-top: 7px;
+	display: flex;
+	padding-left: 80px;
+}
+
+.btn-info {
+	border: none !important;
+}
+</style>
+
+
+</head>
+
+<body>
+<div class="wrapper">
+	<section class="content-header">
+			<div class="row md-2">
+				<div class="col-lg-10" style="margin-top: 20px;margin-left: 30px;">
+					<h3><strong>해외출장 신청</strong></h3>
+				</div>
+			</div> <!--row md-2  -->
+		</section>
+	<div id="bottom">
+		<div class="upAll" style="display: flex; padding-top: 20px; justify-content: space-between;">
+			<div style="display: flex;">
+				<button type="button" class="groupbtn btn btn-info col-5" data-toggle="modal" data-target="#myModalAdd" data-backdrop="false" style="display: flex; justify-content: center; width: 150px;">
+					<span class="material-symbols-outlined">file_download</span>
+					<span>다운로드</span>
+				</button>
+				<button type="button" class="groupbtn btn btn-info col-5" onclick="OpenWindow('../mail/send.do','메일보내기',1000,800);" style="margin-left:10px; display: flex;justify-content: center;width: 150px; ">
+					<span class="material-symbols-outlined">mail</span>
+					<span>메일보내기</span>
+				</button>
+			</div>
+			<div class="firstreq">
+				<button type="button" class="groupbtn btn btn-info" onClick="location.href='approvalList.do'"style="background-color: #6c757d!important;margin-left: 10px;display: flex; ">
+					<span class="material-symbols-outlined">menu</span>
+					<span>목록</span>
+				</button>
+			</div>
+		</div> <!-- class="upAll" -->
+
+	<hr>
+
+
+	<div class="row" style="justify-content: center;overflow-x: hidden; margin: 0">
+		<div  class="col-lg-11 card" style="border:1px solid;padding-bottom: 50px;">
+			<div style="padding-top:10px; ">
+				<%@ include file="../approval/registDoc.jsp" %>
+			</div> <!-- chart -->
+
+
+		</div> <!-- col-lg-8 card  -->
+
+		</div> <!-- 참조자 tab-content -->
+	</div> <!-- card-baby -->
+</div> <!-- card -->
+
+
+
+
+
+</body>

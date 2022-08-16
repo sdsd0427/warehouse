@@ -1,0 +1,781 @@
+draftListDetailProceeding.jsp<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<head>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+
+<style>
+.navbar {
+	margin-bottom: 50px;
+	border-radius: 0;
+}
+
+/* Remove the jumbotron's default bottom margin */
+.jumbotron {
+	margin-bottom: 0;
+}
+
+/* Add a gray background color and some padding to the footer */
+#footer {
+	margin-top: 50px;
+	background-color: #f2f2f2;
+	padding: 25px;
+}
+
+#content {
+	margin-left: 50px;
+	margin-right: 50px;
+	overflow: hidden;
+}
+
+/*  */
+#title {
+	border-bottom: 2px solid #727377;
+}
+
+#rightMenu {
+	margin-top: 10px;
+}
+
+.profileImg {
+	height: 128px;
+	width: 96px;
+}
+
+#officerList>thead>tr>th, #officerList>tbody>tr>td {
+	text-align: center;
+}
+
+.page-link {
+	line-height: 1;
+	color: #17a2b8;
+	background-color: #fff;
+	border: 1px solid #dee2e6;
+}
+
+.page-item.active .page-link {
+	z-index: 3;
+	color: #fff;
+	background-color: #17a2b8;
+	border-color: #17a2b8;
+}
+
+.upWord .word {
+	list-style-type: none;
+	float: left;
+	margin: 5px;
+}
+
+.btn_submenu {
+	display: inline-block;
+}
+
+span#RecName {
+	margin-left: 120px;
+}
+
+pribut {
+	border: 1px solid;
+}
+
+div#chart {
+	padding-top: 10px;
+}
+
+select#perPageNum, select#searchType {
+	list-style-type: none;
+	width: 140px;
+	float: left;
+}
+
+input.form-control {
+	list-style-type: none;
+	width: 180px;
+	float: left;
+}
+
+div#inName {
+	width: 290px;
+	height: 40px;
+	margin-left: 8px;
+	margin-top: 3px;
+	background-color: #ffc107;
+	padding-top: 8px;
+}
+
+div#botle {
+	margin-left: 500px;
+}
+
+div#b {
+	border-radius: 5px;
+}
+
+.sename {
+	color: black;
+	"
+}
+
+div#bottom {
+	margin-left: 40px;
+	margin-top: -30PX;
+}
+
+ul.upWord {
+	margin-left: -30px;
+}
+
+.emailcur {
+	cursor: pointer;
+}
+
+img.table-avatar {
+	width: 40px;
+	border: 1px solid #17a2b8;
+	border-radius: 10px;
+	height: 40px
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+	color: #fff;
+	background-color: #17a2b8;
+}
+
+button {
+	background-color: #F9B514;
+	padding: 5px 10px;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.modal .bg {
+	width: 100%;
+	height: 100%;
+}
+
+.modalBox {
+	position: absolute;
+	background-color: #fff;
+	padding: 15px;
+}
+
+.modalBox button {
+	/*  width: 80px; */
+	margin: 0 auto;
+}
+
+.hidden {
+	display: none;
+}
+
+a {
+	color: black;
+}
+
+.filename {
+	border: 1px dotted;
+	width: 500px;
+	margin-left: 30px;
+	text-align: center;
+	height: 40px;
+	padding-top: 7px;
+	display: flex;
+	padding-left: 80px;
+}
+
+.btn-info {
+	border: none !important;
+}
+</style>
+
+</head>
+<body>
+
+	<div class="wrapper">
+		<section class="content-header">
+			<div class="row md-2">
+				<div class="col-lg-10" style="margin-top: 20px;margin-left: 50px;">
+					<h5 style="font-weight: bold; margin-left: -18px;">업무기안</h5>
+				</div>
+			</div>
+		</section>
+		<!-- <div id="a" > <h2>주소록 > 전체주소록</h2></div> -->
+		<div id="bottom">
+			<div style=" justify-content: space-between; padding: 20px 0 ">
+				<div class="upAll"style="display: flex;">
+					<button type="submit" class=" btn btn-secondary" style="width: 90px;">
+						재기안
+					</button>
+					<button type="submit" class=" btn btn-secondary" style="width: 90px;">
+						삭제
+					</button>
+					<button type="submit" class=" btn btn-secondary" >
+						다운로드
+					</button>
+				</div>
+			</div>
+	
+			<div class="row" style="justify-content: space-between;">
+				<div  class="col-lg-8 card" style="border:1px solid;padding-bottom: 50px">
+					<div style="padding-top:10px;">
+						<%@ include file="./viewerDoc.jsp" %>
+					</div> <!-- chart -->
+			
+					<div class="botall" style="display: flex;">
+						<p>파일첨부</p>
+						<div class="filename" > 파일 없음
+<!-- 							<span class="material-symbols-outlined">attach_file</span> -->
+<!-- 							이곳에 파일을 드래그하세요. 또는 <a href="#" style="color: blue;">파일 선택</a> -->
+						</div>
+					</div>
+			
+					<div class="botall" style="display: flex;margin-top: 15px">
+						<p>알림설정</p>
+						<div>
+							<select style="margin-left: 30px;">
+								<option value="" selected>문자 알림</option>
+								<option value="" disabled>이메일 알림</option>
+							</select>
+						</div>
+					</div>
+				</div> <!-- class="col-lg-8 card"  -->
+		
+				<div class="col-lg-4 card">
+					<div class="card">
+						<div class="card-header p-2">
+							<ul class="nav nav-pills">
+								<li class="nav-item">
+									<a class="nav-link active"style="padding: .0.5rem 1rem;padding-top: 10px" href="#activity" data-toggle="tab">관련문서</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#timeline"style="padding: .0.5rem 1rem;padding-top: 10px" data-toggle="tab">문서정보</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#settings"style="padding: .0.5rem 1rem;padding-top: 10px" data-toggle="tab">결재선</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#refer"style="padding: .0.5rem 1rem;padding-top: 10px" data-toggle="tab">참조자</a>
+								</li>
+							</ul>
+						</div>
+						<div class="card-body">
+							<div class="tab-content">
+								<div class="tab-pane active" id="activity">
+									<div id="reldoc" class="bot" style="margin-left: 7px;">
+										<div class="input-group row">
+											<input class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value=""> 
+											<span class="input-group-append">
+												<button class="btn btn-info" type="button" data-card-widget="search">
+													<i class="fa fa-fw fa-search"></i>
+												</button>
+											</span>
+										</div>
+										<a href="#">
+											<div class="info-box" style="margin-left: -5px">
+												<div class="imgContainer">
+													<li class="list-inline-item">
+														<img class="table-avatar" src="/warehouse/resources/bootstrap/dist/img/avatar.png">
+													</li>
+												</div>
+												<div class="info-box-content">
+													<div class="infoandspan" style="display: flex;">
+														<span class="info-box-text">베트남 해외 출장</span>
+														<span class="material-symbols-outlined">assignment</span>
+													</div>
+													<span class="info-box-number"> 강정인 부장</span>
+												</div>
+											</div>
+										</a>
+										<a href="#">
+											<div class="info-box" style="margin-left: -5px;">
+												<div class="imgContainer">
+													<li class="list-inline-item">
+														<img class="table-avatar" src="/warehouse/resources/bootstrap/dist/img/avatar.png">
+													</li>
+												</div>
+	
+												<div class="info-box-content ">
+													<div class="infoandspan" style="display: flex;">
+														<span class="info-box-text">중국 해외 출장</span>
+														<span class="material-symbols-outlined">assignment</span>
+													</div>
+													<span class="info-box-number">오지현 차장</span>
+												</div>
+											</div>
+										</a>
+										<a href="#">
+											<div class="info-box" style="margin-left: -5px;">
+												<div class="imgContainer">
+													<li class="list-inline-item">
+														<img class="table-avatar" src="/warehouse/resources/bootstrap/dist/img/avatar.png">
+													</li>
+												</div>
+												<div class="info-box-content">
+													<div class="infoandspan" style="display: flex;">
+														<span class="info-box-text">일본 해외 출장</span>
+														<span class="material-symbols-outlined">assignment</span>
+													</div>
+													<span class="info-box-number">서난희 부장</span>
+												</div>
+											</div>
+										</a>
+									</div>
+								</div> <!-- activity -->
+		
+								<!-- 문서정보 -->
+								<div class="tab-pane" id="timeline">
+									<div id="docInfo">
+										<strong><span style="margin-right: 30px">문서정보</span></strong>
+										<span>012022689</span>
+										<br><br>
+										<strong><span style="margin-right: 30px">공개여부</span></strong>
+										<label><input type="radio" name="fruit" value="apple" disabled> 공개  </label>
+										<label><input type="radio" name="fruit" value="apple" style="margin-left: 5px" checked disabled> 비공개</label>
+										<br><br>
+										<strong><span style="margin-right: 30px">보존연한</span></strong>
+										<span>5년</span>
+										<br><br>
+										<strong><span style="margin-right: 30px">기안부서</span></strong><span>경영지원본부</span>
+									</div>
+								</div>
+		
+								<!-- 결재선 -->
+								<div class="tab-pane" id="settings">
+									<div class="info-box" style="margin-left: -5px">
+										<div class="imgContainer">
+											<li class="list-inline-item">
+												<img class="table-avatar" src="/warehouse/resources/bootstrap/dist/img/avatar.png">
+											</li>
+										</div>
+										<div class="info-box-content">
+											<div class="infoandspan" >
+												<span class="info-box-number">오지현 과장</span>
+												<span class="info-box-text">개발팀</span>
+												<span class="info-box-text">결재대기</span>
+											</div>
+										</div>
+									</div>
+									<div class="info-box" style="margin-left: -5px;">
+										<div class="imgContainer">
+											<li class="list-inline-item">
+												<img class="table-avatar" src="/warehouse/resources/bootstrap/dist/img/avatar.png">
+											</li>
+										</div>
+										<div class="info-box-content">
+											<div class="infoandspan" >
+												<span class="info-box-number">강정인 상무</span>
+												<span class="info-box-text">개발팀</span>
+												<span class="info-box-text">결재대기</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<!-- 참조자 -->
+								<div class="tab-pane" id="refer">
+									<div class="info-box" style="margin-left: -5px;">
+										<div class="imgContainer">
+											<li class="list-inline-item">
+												<img class="table-avatar" src="/warehouse/resources/bootstrap/dist/img/avatar.png">
+											</li>
+										</div>
+										<div class="info-box-content">
+											<div class="infoandspan" >
+												<span class="info-box-number">오지현 과장</span>
+												<span class="info-box-text">개발팀</span>
+											</div>
+										</div>
+									</div>
+		
+									<div class="info-box" style="margin-left: -5px;">
+										<div class="imgContainer">
+											<li class="list-inline-item">
+												<img class="table-avatar" src="/warehouse/resources/bootstrap/dist/img/avatar.png">
+											</li>
+										</div>
+		
+										<div class="info-box-content">
+											<div class="infoandspan" >
+												<span class="info-box-number">강정인 상무</span>
+												<span class="info-box-text">개발팀</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> <!-- <div class="col-lg-4 card"> -->
+			</div> <!-- class="row" -->
+		</div> <!-- <div id="bottom"> -->
+	
+		<!-- 개인결재선 모달  -->
+		<div id="priappro" >
+			<div class="modal fade" id="myModal" role="dialog" style="z-index:1060">
+				<div class="modal-dialog modal-mg">
+					<div class="modal-content" style="width: 400px">
+						<div class="modal-header">
+							<h5 class="modal-title">나의결재선으로 저장하시겠습니까?</h5>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+						<div class="modal-body">
+							<label>결재선 이름
+								<input type="text" style="margin-left: 20px"></label><br>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+							<button type="button" class="btn btn-info" data-dismiss="modal">저장</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<!-- 결재선/참조자 모달 -->
+		<div class="modal" id="myModal2"  style="z-index:1040">
+			<div class="modalBox" style="width: 850px;height: 530px;">
+				<div class="card card-info" style="border: 1px solid;">
+					<div class="card-header">
+						<h3 class="card-title"><span id="infoname"></span></h3>
+					</div>
+					<div class="card-body" style="display: block;">
+						<div class="chart">
+							<div class="chartjs-size-monitor">
+								<div class="row" >
+				 					<div class="col-lg-5">
+										<div class="card card-info card-outline card-outline-tabs">
+											<div class="card-header p-0 border-bottom-0">
+												<ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist" style="text-align: center;">
+													<li class="nav-item">
+														<a class="nav-link active"
+															id="custom-tabs-four-home-tab" data-toggle="pill"
+															href="#custom-tabs-four-home" role="tab"
+															aria-controls="custom-tabs-four-home"
+															aria-selected="true" style="width: 150px">조직도
+														</a>
+													</li>
+													<li class="nav-item">
+														<a class="nav-link"
+															id="custom-tabs-four-profile-tab" data-toggle="pill"
+															href="#custom-tabs-four-profile" role="tab"
+															aria-controls="custom-tabs-four-profile"
+															aria-selected="false" style="width: 150px">
+															<span id="myLine">나의 그룹</span>
+														</a>
+													</li>
+												</ul>
+											</div>
+											
+											<div class="card-body" style="overflow: scroll;height: 415px;overflow-x: hidden">
+												<div class="tab-content" id="custom-tabs-four-tabContent">
+													<div class="tab-pane fade active show"
+														id="custom-tabs-four-home" role="tabpanel"
+														aria-labelledby="custom-tabs-four-home-tab" style="margin-top: -30px">
+														<%@ include file="../contact/organization.jsp" %>
+													</div>
+													<div class="tab-pane fade" id="custom-tabs-four-profile"
+														role="tabpanel" aria-labelledby="custom-tabs-four-profile-tab">
+														<div class="card">
+															<div class="card-body table-responsive p-0">
+																<table class="table table-hover text-nowrap">
+																	<tbody>
+																		<tr>
+																			<td>
+																				<a href="#">결재1</a>
+																			</td>
+																		</tr>
+																		<tr>
+																			<td>
+																				<a href="#">영업팀 결재</a>
+																			</td>
+																		</tr>
+																		<tr>
+																			<td>
+																				<a href="#">우리 부서</a>
+																			</td>
+																		</tr>
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div><!-- div class="tab-content" -->
+											</div><!-- card-body" -->
+										</div>
+				 					</div><!-- <div class="col-lg-5"> -->
+				 					
+				 					<div class="col-lg-7">
+										<div class="card card-info card-tabs">
+											<div class="card-header p-0 pt-1">
+												<ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+													<li class="nav-item active">
+														<a class="nav-link active" id="custom-tabs-one-work-tab" data-toggle="pill" href="#custom-tabs-one-work" role="tab" aria-controls="custom-tabs-one-work" aria-selected="true">
+															결재선</a>
+													</li>
+													<li class="nav-item">
+														<a class="nav-link" id="custom-tabs-one-document-tab" data-toggle="pill" href="#custom-tabs-one-document" role="tab" aria-controls="custom-tabs-one-document" aria-selected="false">
+															참조자</a>
+													</li>
+													<li class="nav-item">
+														<a class="nav-link" id="custom-tabs-one-menual-tab" data-toggle="pill" href="#custom-tabs-one-menual" role="tab" aria-controls="custom-tabs-one-menual" aria-selected="false">
+															열람자</a>
+													</li>
+												</ul>
+											</div>
+											
+											<div class="card-body">
+												<div class="tab-content" id="custom-tabs-one-tabContent">
+													<div class="tab-pane fade active show in" id="custom-tabs-one-work" role="tabpanel" aria-labelledby="custom-tabs-one-work-tab">
+														<div class="row">
+															<div class="col-12 mt-3">
+																<div class="card">
+																	<div class="card-body table-responsive p-0">
+																		<table class="table table-hover text-nowrap">
+																				<tr>
+																					<th  style="width:10%"></th>
+																					<th  style="width:20%">이름</th>
+																					<th  style="width:50%">부서</th>
+																					<th  style="margin-left: 15px;width:20%">상태</th>
+																					<th>
+																						<span class="material-symbols-outlined">delete</span>
+																					</th>
+																				</tr>
+																		</table>
+																	 <div class="apply"style="background-color: #6c757d!important;color: white;padding-left: 15px;">
+																	   신청
+																	 </div>
+																	 <div class="apply">
+																   		<table class="table table-hover text-nowrap">
+																			<tr>
+																				<th style="width:10%"></th>
+																				<th style="width:20%">오지현</th>
+																				<th style="width:50%">경영지원본부</th>
+																				<th style="width:20%">예정</th>
+																				<th >
+																				 	<a href="#" style="color:black">
+																						<span class="material-symbols-outlined">delete</span>
+																					</a>
+																				</th>
+																			</tr>
+																		</table>
+																	 </div>
+																	 <div class="apply"style="background-color: #6c757d!important;color: white;padding-left: 15px;margin-top: -20px">
+																	  승인
+																	 </div>
+																 	<div class="empty_approval_line" style="height: 100%">
+																         <table style="height: 100%">
+																             <tbody style="height: 100%">
+																                 <tr class="appr-activity activity ui-droppable" data-isnullactivity="true" style="height: 100%">
+																                     <td style="width: 100%; height: 100%"></td>
+																                 </tr>
+																             </tbody>
+																         </table>
+			
+																         <table class="table table-hover text-nowrap" style="height: 160px;">
+																		<tr>
+																			<th style="width:10%"></th>
+																			<th style="width:20%"></th>
+																			<th style="width:50%"></th>
+																			<th style="margin-left: 15px;width:20%"></th>
+																			<th></th>
+																		</tr>
+																		</table>
+																     </div>
+																</div>
+															<div class="card-footer clearfix">
+																<ul class="pagination pagination-sm m-0 float-right"></ul>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+											<div class="tab-pane fade" id="custom-tabs-one-document" role="tabpanel" aria-labelledby="custom-tabs-one-document-tab">
+												<div class="row">
+													<div class="col-12 mt-3">
+														<div class="card">
+															<div class="card-body table-responsive p-0">
+																<table class="table table-hover text-nowrap">
+																	<tr>
+																		<th  style="width:10%"></th>
+																		<th  style="width:20%">이름</th>
+																		<th  style="width:50%">부서</th>
+																		<th  style="margin-left: 15px;width:20%">상태</th>
+																		<th>
+																			<span class="material-symbols-outlined">delete</span>
+																		</th>
+																	</tr>
+																</table>
+																<div class="apply"style="background-color: #6c757d!important;color: white;padding-left: 15px;">
+																  신청
+																</div>
+																<div class="apply">
+															   		<table class="table table-hover text-nowrap">
+																		<tr>
+																			<th style="width:10%"></th>
+																			<th style="width:20%">오지현</th>
+																			<th style="width:50%">경영지원본부</th>
+																			<th style="width:20%">예정</th>
+																			<th>
+																			 	<a href="#" style="color:black">
+																					<span class="material-symbols-outlined">delete</span>
+																				</a>
+																			</th>
+																		</tr>
+																	</table>
+																 </div>
+																 <div class="apply"style="background-color: #6c757d!important;color: white;padding-left: 15px;margin-top: -20px">
+																  참조
+																 </div>
+																 <div class="empty_approval_line" style="height: 100%">
+																     <table style="height: 100%">
+																         <tbody style="height: 100%">
+																             <tr class="appr-activity activity ui-droppable" data-isnullactivity="true" style="height: 100%">
+																                 <td style="width: 100%; height: 100%"></td>
+																             </tr>
+																         </tbody>
+																     </table>
+																     <table class="table table-hover text-nowrap" style="height: 160px;">
+																		<tr>
+																			<th style="width:10%"></th>
+																			<th style="width:20%"></th>
+																			<th style="width:50%"></th>
+																			<th style="margin-left: 15px;width:20%"></th>
+																			<th></th>
+																		</tr>
+																	</table>
+																 </div>
+															 </div>
+															<div class="card-footer clearfix">
+																<ul class="pagination pagination-sm m-0 float-right">
+																</ul>
+															</div>
+														</div> <!-- <div class="card"> -->
+													</div> <!-- <div class="col-12 mt-3"> -->
+												</div> <!-- <div class="row"> -->
+											</div>
+											
+											
+											<div class="tab-pane fade" id="custom-tabs-one-menual" role="tabpanel" aria-labelledby="custom-tabs-one-menual-tab">
+												<div class="row">
+													<div class="col-12 mt-3">
+														<div class="card">
+															<div class="card-body table-responsive p-0">
+															<table class="table table-hover text-nowrap">
+																<tbody>
+																	<tr>
+																		<th style="width:10%"></th>
+																		<th style="width:20%">이름</th>
+																		<th style="width:50%">부서</th>
+																		<th style="margin-left: 15px;width:20%">상태</th>
+																		<th>
+																			<span class="material-symbols-outlined">delete</span>
+																		</th>
+																	</tr>
+																</tbody>
+															</table>
+															<div class="apply" style="background-color: #6c757d!important;color: white;padding-left: 15px;">
+															 신청
+															</div>
+															<div class="apply">
+														   		<table class="table table-hover text-nowrap">
+																	<tbody>
+																		<tr>
+																			<th style="width:10%"></th>
+																			<th style="width:20%">오지현</th>
+																			<th style="width:50%">경영지원본부</th>
+																			<th style="width:20%">예정</th>
+																			<th>
+																			 	<a href="#" style="color:black">
+																					<span class="material-symbols-outlined">delete</span>
+																				</a>
+																			</th>
+																		</tr>
+																	</tbody>
+																</table>
+															 </div>
+															 <div class="apply" style="background-color: #6c757d!important;color: white;padding-left: 15px;margin-top: -20px">
+															  열람
+															 </div>
+															 	<div class="empty_approval_line" style="height: 100%">
+															         <table style="height: 100%">
+															             <tbody style="height: 100%">
+															                 <tr class="appr-activity activity ui-droppable" data-isnullactivity="true" style="height: 100%">
+															                     <td style="width: 100%; height: 100%"></td>
+															                 </tr>
+															             </tbody>
+															         </table>
+	
+															         <table class="table table-hover text-nowrap" style="height: 160px;">
+																		 <tbody>
+																		 	<tr>
+																				<th style="width:10%"></th>
+																				<th style="width:20%"></th>
+																				<th style="width:50%"></th>
+																				<th style="margin-left: 15px;width:20%"></th>
+																				<th>
+																				</th>
+																			</tr>
+																		</tbody>
+																	</table>
+														    	</div>
+															</div>
+															<div class="card-footer clearfix">
+																<ul class="pagination pagination-sm m-0 float-right">
+																</ul>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+											</div>
+										</div>
+				 					</div> <!-- <div class="col-lg-7"> -->
+				 					
+				 				</div> <!-- <div class="row" > -->
+								<div class="chartjs-size-monitor-expand">
+									<div class=""></div>
+								</div>
+								<div class="chartjs-size-monitor-shrink">
+									<div class=""></div>
+								</div>
+							</div>
+						</div>
+					</div>
+		 			<div style="margin: 10px; margin-top: -20px">
+					    <button class="btn-info" data-toggle="modal" data-target="#myModal" data-backdrop="false" style="margin-right: 20px;margin-left: 180px">개인그룹 저장</button>
+					    <div class="twosaca" style="float: right;margin-right: 13px">
+					    	<button class="saca saveBtn btn-info" data-toggle="modal" style="margin-right: 20px">확인</button>
+				    		<button class="saca btn-secondary" data-dismiss="modal">취소</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 모달 끝  -->
+	
+		<!-- 결재요청 모달 -->
+		<div class="modal fade" id="myModalAdd" role="dialog" style="display:none">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">그룹추가</h4>
+			       		<button type="button" class="close" data-dismiss="modal">&times;</button>
+			    	</div>
+			    	<div class="modal-body">
+			        	<label>
+			        		<span>새 그룹 </span>&nbsp;
+			        		<input type="text">
+			        	</label>
+			    	</div>
+				    <div class="modal-footer">
+				      <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+				      <button type="button" class="btn btn-info" data-dismiss="modal">저장</button>
+				    </div>
+			  	</div>
+			</div>
+		</div><!-- Modal 끝-->
+	</div>
+</body>

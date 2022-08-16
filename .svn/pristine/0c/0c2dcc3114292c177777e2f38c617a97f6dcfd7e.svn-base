@@ -1,0 +1,40 @@
+package kr.or.warehouse.service;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.command.PageMaker;
+import kr.or.warehouse.dao.WorkDAO;
+import kr.or.warehouse.dto.WorkVO;
+
+@Service
+public class WorkServiceImpl implements WorkService{
+
+	@Autowired
+	private WorkDAO workDAO;
+
+	@Override
+	public Map<String, Object> getMyWorkList(Criteria cri, int wstatus) throws SQLException {
+		int eno = 14310056;
+
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		List<WorkVO> myWorkList = workDAO.selectMyWorkList(eno);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(myWorkList.size());
+
+		dataMap.put("myWorkList", myWorkList);
+		dataMap.put("pageMaker", pageMaker);
+
+		return dataMap;
+	}
+
+
+}

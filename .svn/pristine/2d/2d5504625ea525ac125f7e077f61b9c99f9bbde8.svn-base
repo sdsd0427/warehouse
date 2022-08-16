@@ -1,0 +1,61 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<head>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/community.css">
+</head>
+
+<title></title>
+
+<body class="hold-transition skin-blue sidebar-collapse">
+	<div class="wrapper">
+		<section class="content-header">
+			<div class="row md-2">
+				<div class="col-sm-12">
+					<h2>커뮤니티 개설</h2>
+				</div>
+			</div>
+		</section>
+
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row card-header">
+					<div class="col-lg-12">
+						<button class="btn btn-danger" style="float: right; margin-left:20px;" type="button" onclick="javascript:history.back();">취소</button>
+						<button class="btn btn-primary" style="float: right;" type="button" onclick="">신청</button>
+					</div>
+				</div>
+				
+				<div class="card-body">
+						<div class="row ">
+							<label class="col-1">커뮤니티 명</label>
+							<input class="form-control col-11" type="text" id="" name='' class="form-control" placeholder="커뮤니티 명을 쓰세요">
+							
+							<label class="col-1 mt-3">소개글</label>
+							<textarea class="form-control col-11 mt-3" rows="5" cols="" placeholder="소개글을 작성하세요"></textarea>
+							
+							<label class="col-1 mt-3">공개 여부</label>
+							<div class="custom-control custom-radio col-1 mt-3">
+								<input class="custom-control-input" type="radio" id="open" name="open" checked>
+								<label for="open" class="custom-control-label">공개</label>
+							</div>
+							<div class="custom-control custom-radio col-10 mt-3">
+								<input class="custom-control-input" type="radio" id="notOpen" name="open" >
+								<label for="notOpen" class="custom-control-label">비공개</label>
+							</div>
+						</div>	
+						
+							
+				</div>
+				
+			</div>
+		</section>
+
+
+
+
+	</div>
+
+
+</body>

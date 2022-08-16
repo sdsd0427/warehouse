@@ -1,0 +1,372 @@
+@charset "UTF-8";
+
+body, img, p {
+	margin: 0;
+	padding: 0
+}
+
+span.editor_span {
+	display: block;
+	width: auto !important;
+	margin: 5px
+}
+
+span.editor_span table {
+	word-break: normal
+}
+
+span.editor_span, span.editor_span table, span.editor_span p, span.editor_span span
+	{
+	font-size: 12px;
+	font-family: dotum;
+	line-height: 1.5
+}
+
+.editor_span td {
+	padding: 0 !important
+}
+
+.editor_span ol, .editor_span ul {
+	list-style-position: inside;
+	padding-left: 40px
+}
+
+img {
+	border: 0
+} /* sign_type1 */
+div.sign_type1 {
+	display: inline-block;
+	margin-right: -1px;
+	font-size: 12px;
+}
+
+div.sign_type1.last table.tb_sign_type1 {
+	border-left: 0
+}
+
+div.sign_type1 table.tb_sign_type1, table.sign_member {
+	border-spacing: 0;
+	border-collapse: collapse;
+	width: 60px
+}
+
+div.sign_type1 table.tb_sign_type1 {
+	border: 1px solid #666
+}
+
+div.sign_type1 table.tb_sign_type1 tbody tr th {
+	width: 20px;
+	background: #eee;
+	padding: 4px;
+	text-align: center;
+	word-break: break-word;
+	white-space: normal
+}
+
+div.sign_type1 table.tb_sign_type1 tbody tr td {
+	border-left: 1px solid #666;
+	padding: 0 !important
+}
+
+div.sign_type1 table.tb_sign_type1 tbody tr td table.sign_member tbody tr td
+	{
+	height: 26px;
+	border-left: 0;
+	border-bottom: 1px solid #666;
+	min-height: 26px;
+	vertical-align: middle
+}
+
+div.sign_type1 table.tb_sign_type1 tbody tr td table.sign_member tbody tr td.last
+	{
+	border-bottom: 0
+}
+
+div.sign_type1 table.tb_sign_type1 tbody tr td table.sign_member tbody tr td span
+	{
+	display: block;
+	text-align: center;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 70px;
+	padding: 4px;
+	font-size: 12px
+}
+
+div.sign_type1 table.tb_sign_type1 tbody tr td table.sign_member tbody tr td span.sign_name
+	{
+	height: 36px
+}
+
+div.sign_type1 table.tb_sign_type1 tbody tr td table.sign_member tbody tr td span.arbitrary
+	{
+	background: url(../images/arbitrary.gif) no-repeat
+}
+
+div.sign_type1 table.tb_sign_type1 tbody tr td table.sign_member tbody tr td span img
+	{
+	width: auto;
+	height: 100%
+}
+
+div.sign_type1 table.tb_sign_type1 tbody tr td table.sign_member tbody tr td span.doc_return
+	{
+	padding: 0;
+} /* sign_type_new */
+div.sign_type_new {
+	display: inline-block;
+	margin-right: -1px;
+	font-size: 12px
+}
+
+div.sign_type_new.last table.tb_sign_type1 {
+	border-left: 0
+}
+
+div.sign_type_new table.tb_sign_type1 {
+	border: 1px solid #666
+}
+
+div.sign_type_new table.tb_sign_type1 tbody tr td table.sign_member tbody tr td span.sign_name
+	{
+	height: auto
+}
+
+div.sign_type_new table.tb_sign_type1 tbody tr th {
+	width: 15px;
+	background: #eee;
+	padding: 6px;
+	text-align: center;
+	word-break: break-word;
+	white-space: normal
+}
+
+div.sign_type_new table.tb_sign_type1 tbody tr td {
+	border-left: 1px solid #666;
+	padding: 0 !important
+}
+
+div.sign_type_new table.tb_sign_type1 tbody tr td table.sign_member tbody tr td
+	{
+	height: 26px;
+	border-left: 0;
+	border-bottom: 1px solid #666;
+	min-height: 26px
+}
+
+div.sign_type_new table.tb_sign_type1 tbody tr td table.sign_member tbody tr td.last
+	{
+	border-bottom: 0
+}
+
+div.sign_type_new table.tb_sign_type1 tbody tr td table.sign_member tbody tr td span
+	{
+	display: block;
+	text-align: center;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 70px;
+	font-size: 12px;
+	padding: 2px 4px
+}
+
+div.sign_type_new table.tb_sign_type1 tbody tr td table.sign_member tbody tr td.wrap_name,
+	div.sign_type_new table.tb_sign_type1 tbody tr td table.sign_member tbody tr td.wrap_position,
+	div.sign_type_new table.tb_sign_type1 tbody tr td table.sign_member tbody tr td.wrap_rank,
+	div.sign_type_new table.tb_sign_type1 tbody tr td table.sign_member tbody tr td.wrap_type
+	{
+	height: 48px;
+	text-align: center
+}
+
+div.sign_type_new table.tb_sign_type1 tbody tr td table.sign_member tbody tr td.wrap_sign
+	{
+	height: 74px;
+	text-align: center;
+}
+
+div.sign_type_new table.tb_sign_type1 tbody tr td table.sign_member tbody tr td span.sign_stamp
+	{
+	height: 40px;
+	padding-bottom: 0
+}
+
+div.sign_type_new table.tb_sign_type1 tbody tr td table.sign_member tbody tr td span.sign_stamp img
+	{
+	width: auto;
+	height: 100%
+}
+
+div.sign_type_new table.tb_sign_type1 tbody tr td table.sign_member tbody tr td span.arbitrary
+	{
+	background: url(../images/arbitrary.gif) no-repeat;
+	height: 36px;
+	padding: 0
+}
+
+div.sign_type_new table.tb_sign_type1 tbody tr td table.sign_member tbody tr td.wrap_arbitrary
+	{
+	padding: 0
+}
+
+span.sign_type2 span.sign_member {
+	border: 1px solid #000;
+	padding: 4px;
+	display: block;
+	margin: 0 0 -1px
+}
+
+span.sign_type2 span.sign_member span.name {
+	color: #333
+}
+
+span.sign_type2 span.sign_member span.date {
+	margin: 0 !important
+}
+
+span.sign_type2 span.sign_member span.rank {
+	margin: 0 0 0 4px
+} /* sign_type1_iline */
+.sign_type1_inline {
+	position: relative;
+	display: inline-table !important;
+	border-collapse: separate;
+	border-spacing: 0;
+	white-space: normal;
+	font-size: 12px;
+	margin: 1px -1px 0 0;
+	padding-left: 26px;
+}
+
+.sign_type1_inline:after {
+	display: block;
+	clear: left;
+	overflow: hidden;
+	height: 0;
+	content: ''
+}
+
+.sign_type1_inline:empty {
+	padding-left: 0;
+}
+
+.sign_type1_inline .sign_tit_wrap {
+	position: absolute;
+	top: -1px;
+	left: 0;
+	/* bottom: 0; */
+	vertical-align: middle;
+	border: 1px solid #000;
+	width: 24px;
+	background: #eee;
+	display: table-cell;
+	height: 130px;
+}
+
+.sign_type1_inline .sign_tit_wrap .sign_tit {
+	display: table;
+	padding: 0 2px;
+	text-align: center;
+	word-break: break-all;
+	white-space: normal;
+	height: 100%
+}
+
+.sign_type1_inline .sign_tit_wrap .sign_tit strong {
+	display: table-cell;
+	vertical-align: middle
+}
+
+.sign_type1_inline .sign_member_wrap {
+	vertical-align: top;
+	background: #fff;
+	display: table-cell;
+	float: left;
+	border: 1px solid #000;
+	border-left: 0;
+	margin: -1px 0 0 0
+}
+
+.sign_type1_inline .sign_member_wrap .sign_member {
+	width: 79px;
+	vertical-align: top;
+	display: table;
+	table-layout: fixed
+}
+
+.sign_type1_inline .sign_member_wrap .sign_member .sign_rank_wrap,
+	.sign_type1_inline .sign_member_wrap .sign_member .sign_date_wrap {
+	display: table-row
+}
+
+.sign_type1_inline .sign_member_wrap .sign_member .sign_rank,
+	.sign_type1_inline .sign_member_wrap .sign_member .sign_wrap,
+	.sign_type1_inline .sign_member_wrap .sign_member .sign_date {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	width: 79px
+}
+
+.sign_type1_inline .sign_member_wrap .sign_member .sign_rank {
+	height: 26px
+}
+
+.sign_type1_inline .sign_member_wrap .sign_member .sign_wrap {
+	height: 75px;
+	border-top: 1px solid #000
+}
+
+.sign_type1_inline strong {
+	font-weight: bold;
+}
+
+.sign_type1_inline .sign_member_wrap .sign_member .sign_wrap .arbitrary
+	{
+	background: url(../images/arbitrary.gif) no-repeat;
+	height: 40px;
+	width: 79px;
+	padding: 0;
+}
+
+.sign_type1_inline .sign_member_wrap .sign_member .sign_date {
+	height: 26px;
+	border-top: 1px solid #000
+}
+
+.sign_type1_inline .sign_member_wrap .sign_member .sign_stamp {
+	width: 79px;
+	height: 40px
+}
+
+.sign_type1_inline .sign_member_wrap .sign_member .sign_stamp img {
+	width: auto;
+	height: 100%;
+}
+
+.sign_type1_inline .sign_member_wrap .sign_member .sign_wrap>span {
+	padding: 2px 0;
+	display: block
+}
+
+.sign_type1_inline .sign_rank, .sign_type1_inline .sign_name,
+	.sign_type1_inline .sign_position, .sign_type1_inline .sign_type,
+	.sign_type1_inline .sign_date {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-width: 79px;
+}
+
+.sign_arbitrary {
+	background: url(../images/arbitrary.gif) no-repeat;
+	height: 40px;
+	width: 79px;
+	padding: 0;
+}
+
+.sign_type1_inline .txt_caution, .sign_type1 .txt_caution {
+	color: red
+}

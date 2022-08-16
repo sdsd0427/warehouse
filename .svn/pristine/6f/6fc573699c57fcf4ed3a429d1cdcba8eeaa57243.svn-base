@@ -1,0 +1,65 @@
+package kr.or.warehouse.dto;
+
+import java.util.Date;
+
+public class MailVO {
+
+	private String mailno;
+	private int mfrom;
+	private String title;
+	private String content;
+	private Date mdate;
+	private int impormail;
+	private int clean;
+	private int mfromdel;
+	public String getMailno() {
+		return mailno;
+	}
+	public void setMailno(String mailno) {
+		this.mailno = mailno;
+	}
+	public int getMfrom() {
+		return mfrom;
+	}
+	public void setMfrom(int mfrom) {
+		this.mfrom = mfrom;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public Date getMdate() {
+		return mdate;
+	}
+	public void setMdate(Date mdate) {
+		this.mdate = mdate;
+	}
+	public int getImpormail() {
+		return impormail;
+	}
+	public void setImpormail(int impormail) {
+		this.impormail = impormail;
+	}
+	public int getClean() {
+		return clean;
+	}
+	public void setClean(int clean) {
+		this.clean = clean;
+	}
+	public int getMfromdel() {
+		return mfromdel;
+	}
+	public void setMfromdel(int mfromdel) {
+		this.mfromdel = mfromdel;
+	}
+	
+	
+}

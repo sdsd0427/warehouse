@@ -1,0 +1,64 @@
+package kr.or.warehouse.dao;
+
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.dto.EmployeeVO;
+import kr.or.warehouse.dto.WorkManagerVO;
+import kr.or.warehouse.dto.WorkVO;
+
+@Repository
+public class WorkDAOImpl implements WorkDAO{
+
+	@Autowired
+	SqlSession session;
+
+	@Override
+	public List<WorkVO> selectMyWorkList(int eno,String wstatus, Criteria cri) throws SQLException {
+		int offset = cri.getStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno", eno);
+		param.put("wstatus", wstatus);
+
+		return session.selectList("Work-Mapper.selectMyWorkList", param, rowBounds);
+	}
+
+	@Override
+	public List<WorkManagerVO> selectWorkManagerList(String wcode) throws SQLException {
+		return session.selectList("Work-Mapper.selectWorkManagerList", wcode);
+	}
+
+	@Override
+	public EmployeeVO selectWorkRequestBy(String wcode) throws SQLException {
+		return session.selectOne("Work-Mapper.selectWorkRequestBy", wcode);
+	}
+
+	@Override
+	public int selectMyWorkTotalCount(int eno, String wstatus) throws SQLException {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("eno", eno);
+		param.put("wstatus", wstatus);
+
+		return session.selectOne("Work-Mapper.selectMyWorkTotalCount", param);
+
+	}
+
+	@Override
+	public List<WorkVO> selectMyWorkAllStatusList(int eno) throws SQLException {
+		return session.selectList("Work-Mapper.selectMyWorkAllStatusList");
+	}
+
+
+
+}

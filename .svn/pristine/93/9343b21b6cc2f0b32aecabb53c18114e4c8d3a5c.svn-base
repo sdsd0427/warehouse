@@ -1,0 +1,345 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<head>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/ehr.css">
+</head>
+
+<body>
+
+<div class="wrapper">
+	<h3 class="title">부서 인사정보&nbsp;&nbsp;&gt;&nbsp;&nbsp;인사관리팀</h3>
+	<span style="">전체인원 22명</span>
+
+<!-- 	<span style="margin-left: 7px;">전체인원 22명</span> -->
+
+
+	<section class="content">
+			<div class="container-fluid">
+				<div class="row md-2 mt-5">
+					<div class="col-md-12">
+
+						<div class="card card-info card-outline">
+							<div class="card-header with-border">
+								<button type="button" class="btn btn-sm btn-default">
+									<span class="badge rounded-circle bg-success mt-1 mr-2" style="width:10px; height: 10px;"><span class="visually-hidden"></span></span>업무중(18명)
+								</button>
+								<button type="button" class="btn btn-sm btn-default">
+									<span class="badge rounded-circle bg-warning mt-1 mr-2" style="width:10px; height: 10px;"><span class="visually-hidden"></span></span>자리비움(2명)
+								</button>
+								<button type="button" class="btn btn-sm btn-default">
+									<span class="badge rounded-circle bg-danger mt-1 mr-2" style="width:10px; height: 10px;"><span class="visually-hidden"></span></span>업무종료(2명)
+								</button>
+<!-- 								<section id="marker"> -->
+<!-- 					                <ul style="display: flex; list-style: disc; padding-left: 30px;"> -->
+<!-- 					                    <li style="width: 72px; color: green"><span style="color: black;">업무중</span></li> -->
+<!-- 					                    <li style="width: 90px; color: red;"><span style="color: black;">업무종료</span></li> -->
+<!-- 					                    <li style="width: 90px; color: #ffc107;"><span style="color: black;">자리비움</span></li> -->
+<!-- 					                </ul> -->
+<!-- 					            </section> -->
+<!-- 								<span style="float: left;">전체인원 22명</span> -->
+								<div id="" class="card-tools" style="width: 450px;">
+									<div class="input-group row">
+										<select class="form-control col-md-3" name="searchNum"
+											id="searchNum">
+											<option value="">정렬개수</option>
+											<option value="">10개</option>
+											<option value="">20개</option>
+											<option value="">30개</option>
+										</select>
+										<select class="form-control col-md-3" name="searchType"
+											id="searchType">
+											<option value="">이름</option>
+											<option value="">직위</option>
+										</select>
+										<input class="form-control" type="text" name="keyword"
+											placeholder="검색어를 입력하세요." value="${param.keyword }" />
+										<span class="input-group-append">
+											<button class="btn btn-info" type="button"
+												onclick="list_go(1);" data-card-widget="search">
+												<i class="fa fa-fw fa-search"></i>
+											</button>
+										</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="card-body">
+								<table class="table table-hover text-center">
+									<tr style="font-size: 0.95em;">
+										<th>이름</th>
+										<th>사번</th>
+										<th>직위</th>
+										<th>직위</th>
+										<th>이메일</th>
+										<th>내선번호</th>
+										<th>상태</th>
+									</tr>
+
+									<tr style='font-size: 0.95em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="position-relative">
+												<img src="https://adminlte.io/themes/v3/dist/img/user5-128x128.jpg" alt="User" width="25" height="25" class="rounded-circle" loading="lazy">
+												<span style="right: 81!important;" class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden">online</span></span>
+												<span class="ml-2">김형민</span>
+						                    </div>
+										</td>
+										<td>093100056
+										</td>
+										<td>부장
+										</td>
+										<td>팀장
+										</td>
+										<td>nimicosara@naver.com
+										</td>
+										<td>5561
+										</td>
+										<td>정상
+										</td>
+									</tr>
+
+									<tr style='font-size: 0.95em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="position-relative">
+												<img style="right: 81!important;" src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg" alt="User" width="25" height="25" class="rounded-circle" loading="lazy">
+												<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden">online</span></span>
+												<span class="ml-2">최민규</span>
+						                    </div>
+										</td>
+										<td>143100056
+										</td>
+										<td>과장
+										</td>
+										<td>팀원
+										</td>
+										<td>sdsd0427@gmail.com
+										</td>
+										<td>5562
+										</td>
+										<td>정상
+										</td>
+									</tr>
+
+									<tr style='font-size: 0.95em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="position-relative">
+												<img style="right: 81!important;" src="https://adminlte.io/themes/v3/dist/img/user1-128x128.jpg" alt="User" width="25" height="25" class="rounded-circle" loading="lazy">
+												<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-warning p-1"><span class="visually-hidden">online</span></span>
+												<span class="ml-2">장문석</span>
+						                    </div>
+										</td>
+										<td>183100056
+										</td>
+										<td>차장
+										</td>
+										<td>팀원
+										</td>
+										<td>aaaa@ddit.or.kr
+										</td>
+										<td>5563
+										</td>
+										<td>정상
+										</td>
+									</tr>
+
+									<tr style='font-size: 0.95em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="position-relative">
+												<img style="right: 81!important;" src="https://adminlte.io/themes/v3/dist/img/user7-128x128.jpg" alt="User" width="25" height="25" class="rounded-circle" loading="lazy">
+												<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-danger p-1"><span class="visually-hidden">online</span></span>
+												<span class="ml-2">서난희</span>
+						                    </div>
+										</td>
+										<td>183100056
+										</td>
+										<td>부장
+										</td>
+										<td>팀원
+										</td>
+										<td>bbbb@ddit.or.kr
+										</td>
+										<td>5564
+										</td>
+										<td>정상
+										</td>
+									</tr>
+
+									<tr style='font-size: 0.95em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="position-relative">
+												<img style="right: 81!important;" src="https://adminlte.io/themes/v3/dist/img/user4-128x128.jpg" alt="User" width="25" height="25" class="rounded-circle" loading="lazy">
+												<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden">online</span></span>
+												<span class="ml-2">강정인</span>
+						                    </div>
+										</td>
+										<td>203100056
+										</td>
+										<td>주임
+										</td>
+										<td>팀원
+										</td>
+										<td>cccc@ddit.or.kr
+										</td>
+										<td>5565
+										</td>
+										<td>정상
+										</td>
+									</tr>
+
+									<tr style='font-size: 0.95em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="position-relative">
+												<img src="https://adminlte.io/themes/v3/dist/img/user5-128x128.jpg" alt="User" width="25" height="25" class="rounded-circle" loading="lazy">
+												<span style="right: 81!important;" class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden">online</span></span>
+												<span class="ml-2">김형민</span>
+						                    </div>
+										</td>
+										<td>093100056
+										</td>
+										<td>부장
+										</td>
+										<td>팀장
+										</td>
+										<td>nimicosara@naver.com
+										</td>
+										<td>5561
+										</td>
+										<td>정상
+										</td>
+									</tr>
+
+									<tr style='font-size: 0.95em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="position-relative">
+												<img style="right: 81!important;" src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg" alt="User" width="25" height="25" class="rounded-circle" loading="lazy">
+												<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden">online</span></span>
+												<span class="ml-2">최민규</span>
+						                    </div>
+										</td>
+										<td>143100056
+										</td>
+										<td>과장
+										</td>
+										<td>팀원
+										</td>
+										<td>sdsd0427@gmail.com
+										</td>
+										<td>5562
+										</td>
+										<td>정상
+										</td>
+									</tr>
+
+									<tr style='font-size: 0.95em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="position-relative">
+												<img style="right: 81!important;" src="https://adminlte.io/themes/v3/dist/img/user1-128x128.jpg" alt="User" width="25" height="25" class="rounded-circle" loading="lazy">
+												<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-warning p-1"><span class="visually-hidden">online</span></span>
+												<span class="ml-2">장문석</span>
+						                    </div>
+										</td>
+										<td>183100056
+										</td>
+										<td>차장
+										</td>
+										<td>팀원
+										</td>
+										<td>aaaa@ddit.or.kr
+										</td>
+										<td>5563
+										</td>
+										<td>정상
+										</td>
+									</tr>
+
+									<tr style='font-size: 0.95em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="position-relative">
+												<img style="right: 81!important;" src="https://adminlte.io/themes/v3/dist/img/user7-128x128.jpg" alt="User" width="25" height="25" class="rounded-circle" loading="lazy">
+												<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-danger p-1"><span class="visually-hidden">online</span></span>
+												<span class="ml-2">서난희</span>
+						                    </div>
+										</td>
+										<td>183100056
+										</td>
+										<td>부장
+										</td>
+										<td>팀원
+										</td>
+										<td>bbbb@ddit.or.kr
+										</td>
+										<td>5564
+										</td>
+										<td>정상
+										</td>
+									</tr>
+
+									<tr style='font-size: 0.95em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="position-relative">
+												<img style="right: 81!important;" src="https://adminlte.io/themes/v3/dist/img/user4-128x128.jpg" alt="User" width="25" height="25" class="rounded-circle" loading="lazy">
+												<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden">online</span></span>
+												<span class="ml-2">강정인</span>
+						                    </div>
+										</td>
+										<td>203100056
+										</td>
+										<td>주임
+										</td>
+										<td>팀원
+										</td>
+										<td>cccc@ddit.or.kr
+										</td>
+										<td>5565
+										</td>
+										<td>정상
+										</td>
+									</tr>
+
+								</table>
+							</div>
+
+							<div class="card-footer">
+								<ul class="pagination justify-content-center m-0">
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+									</li>
+
+										<li class="page-item active">
+											<a class="page-link" href="">1</a>
+										</li>
+										<li class="page-item">
+											<a class="page-link" href="">2</a>
+										</li>
+										<li class="page-item">
+											<a class="page-link" href="">3</a>
+										</li>
+										<li class="page-item">
+											<a class="page-link" href="">4</a>
+										</li>
+										<li class="page-item">
+											<a class="page-link" href="">5</a>
+										</li>
+
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+									</li>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+									</li>
+								</ul>
+							</div>
+
+						</div>
+
+
+
+					</div>
+				</div>
+			</div>
+		</section>
+
+</div>
+
+</body>

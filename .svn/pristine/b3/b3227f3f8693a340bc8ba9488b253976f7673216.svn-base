@@ -1,0 +1,504 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<head>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mentoring.css">
+</head>
+
+<body>
+
+<div class="wrapper">
+	<h3 class="title">멘토링</h3>
+
+	<!-- Main content -->
+	<section class="top">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="card bg-light d-flex flex-fill">
+						<div class="card-header text-muted border-bottom-0">
+<!-- 							<div class="text-left"> -->
+<!-- 								<a href="#" class="btn btn-sm btn-info">  -->
+<!-- 									<i class="fas fa-user"></i> 수정 -->
+<!-- 								</a> -->
+<!-- 							</div> -->
+						</div>
+						<div class="card-body pt-0 pb-4">
+							<div class="row">
+								<div class="col-7">
+									<h2 class="lead">
+										<b>서서서</b>&nbsp;&nbsp;대리
+										<a href="#" class="btn btn-tool">
+											<i class="fas fa-pen"></i>
+										</a>
+									</h2>
+									<p class="text-muted text-sm">
+										<b>영업팀 팀원</b>
+									</p>
+									<ul class="text-muted">
+										<li class="small text-left">
+											<span class=""></span> 열심히 하겠습니다.<br> 잘 부탁드립니다^^
+										</li>
+									</ul>
+								</div>
+								<div class="col-5 text-center">
+									<img width="75px;" data-cfsrc="../../dist/img/user1-128x128.jpg"
+										alt="user-avatar" class="img-circle img-fluid"
+										src="https://adminlte.io/themes/v3/dist/img/user1-128x128.jpg">
+									<p class="text-muted text-sm">
+										<b>MBTI</b>&nbsp;&nbsp;ESFJ
+									</p>	
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-7">
+									<p class="text-muted text-sm">
+										<b>대표 이력사항</b>
+									</p>
+								</div>
+								<div class="col-5 text-center">
+								</div>
+							</div>
+							<ul class="text-muted ml-3" style="list-style: disc;">
+								<li class="small">
+									<span class="">점심 메뉴 고르고 예약하기</span>
+								</li>
+								<li class="small">
+									<span class="">ABCDEFG</span>
+								</li>
+								<li class="small">
+									<span class="">ABCDEFG</span>
+								</li>
+							</ul>
+							
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-md-8">
+					<div class="card card-info card-outline">
+						<div class="card-header pb-0 border-bottom-0">
+							<div class="row">
+								<div class="col-11">
+									<ul class="nav nav-tabs border-bottom-0" id="custom-tabs-three-tab" role="tablist">
+										<li class="nav-item">
+											<a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">전체</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">멘토</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" id="custom-tabs-three-home-tab" data-toggle="pill" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">멘티</a>
+										</li>
+									</ul>							
+								</div>
+								<div class="col-1">
+									<button type="button" class="btn">
+										<i class="fas fa-plus fa-xs"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="card-body pt-0  pb-0" style="display : block;">
+								<table class="table table-hover text-nowrap projects">
+									<tbody>
+										<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+											<td>
+												<div class="row">
+													<div class="col-1">
+														<span class="info-box-icon">
+															<img class="direct-chat-img" data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image" 
+															src="https://adminlte.io/themes/v3/dist/img/user1-128x128.jpg">
+														</span>	
+													</div>
+													<div class="col-11">
+														<span><b>강정인 주임이(가) 새로운 업무 '테스트'을(를) 시작했습니다.</b></span>&nbsp;<span class="right badge badge-danger">New</span><br>
+														<span class="text-muted">06-27 15:00</span>&nbsp;&nbsp;<span>강정인 주임</span>											
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+											<td>
+												<div class="row">
+													<div class="col-1">
+														<span class="info-box-icon">
+															<img class="direct-chat-img" data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image" 
+															src="https://adminlte.io/themes/v3/dist/img/user1-128x128.jpg">
+														</span>	
+													</div>
+													<div class="col-11">
+														<span><b>강정인 주임이(가) 새로운 업무 '테스트'을(를) 시작했습니다.</b></span>&nbsp;<span class="right badge badge-danger">New</span><br>
+														<span class="text-muted">06-27 15:00</span>&nbsp;&nbsp;<span>강정인 주임</span>											
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+											<td>
+												<div class="row">
+													<div class="col-1">
+														<span class="info-box-icon">
+															<img class="direct-chat-img" data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image" 
+															src="https://adminlte.io/themes/v3/dist/img/user1-128x128.jpg">
+														</span>	
+													</div>
+													<div class="col-11 text-muted">
+														<span>강정인 주임이(가) 새로운 업무 '테스트'을(를) 시작했습니다.</span><br>
+														<span class="text-muted">06-27 15:00</span>&nbsp;&nbsp;<span>강정인 주임</span>											
+													</div>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+						
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-4">
+					<div class="card card-primary">
+						<div class="card-header">
+							<div class="row">
+								<div class="col-10">
+									<span class="">나의 멘토</span>
+								</div>
+								<div class="col-2">
+									<button type="button" class="btn" >
+										<i class="fas fa-plus fa-xs"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="card-body table-responsive p-0">
+							<table class="table table-hover text-nowrap projects" style="border: none;">
+								<tbody>
+									<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="position-relative">
+												<img src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg" alt="User" width="25" height="25" class="rounded-circle" loading="lazy">
+												<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden">online</span></span>
+												<span class="ml-2"><b>강정인 주임</b></span>
+						                    </div>
+										</td>
+										<td>
+											금주 활동 7건
+										</td>
+									</tr>
+									<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="position-relative">
+												<img src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg" alt="User" width="25" height="25" class="rounded-circle" loading="lazy">
+												<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden">online</span></span>
+												<span class="ml-2"><b>강정인 주임</b></span>
+						                    </div>
+										</td>
+										<td>
+											금주 활동 6건
+										</td>
+									</tr>
+									<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="position-relative">
+												<img src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg" alt="User" width="25" height="25" class="rounded-circle" loading="lazy">
+												<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden">online</span></span>
+												<span class="ml-2"><b>강정인 주임</b></span>
+						                    </div>
+										</td>
+										<td>
+											금주 활동 5건
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-md-4">
+					<div class="card card-success">
+						<div class="card-header border-bottom-0">
+							<div class="row">
+								<div class="col-10">
+									<span class="">나의 멘티</span>
+								</div>
+								<div class="col-2">
+<!-- 									<button type="button" class="btn btn-info btn-sm">수정</button> -->
+									<button type="button" class="btn" >
+										<i class="fas fa-plus fa-xs"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="card-body table-responsive p-0">
+							<table class="table table-hover text-nowrap projects" style="border: none;">
+								<tbody>
+									<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="position-relative">
+												<img src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg" alt="User" width="25" height="25" class="rounded-circle" loading="lazy">
+												<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden">online</span></span>
+												<span class="ml-2"><b>강정인 주임</b></span>
+						                    </div>
+										</td>
+										<td>
+											금주 활동 7건
+										</td>
+									</tr>
+									<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="position-relative">
+												<img src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg" alt="User" width="25" height="25" class="rounded-circle" loading="lazy">
+												<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden">online</span></span>
+												<span class="ml-2"><b>강정인 주임</b></span>
+						                    </div>
+										</td>
+										<td>
+											금주 활동 6건
+										</td>
+									</tr>
+									<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="position-relative">
+												<img src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg" alt="User" width="25" height="25" class="rounded-circle" loading="lazy">
+												<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden">online</span></span>
+												<span class="ml-2"><b>강정인 주임</b></span>
+						                    </div>
+										</td>
+										<td>
+											금주 활동 5건
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-md-4">
+					<div class="card card-warning">
+						<div class="card-header">
+							<div class="row">
+								<div class="col-10">
+									<span class="">사내 인기 멘토</span>
+								</div>
+								<div class="col-2">
+<!-- 									<button type="button" class="btn btn-info btn-sm">수정</button> -->
+									<button type="button" class="btn" >
+										<i class="fas fa-plus fa-xs"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="card-body table-responsive p-0">
+							<table class="table table-hover text-nowrap projects" style="border: none;">
+								<tbody>
+									<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="position-relative">
+												<img src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg" alt="User" width="25" height="25" class="rounded-circle" loading="lazy">
+												<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden">online</span></span>
+												<span class="ml-2"><b>강정인 주임</b></span>
+						                    </div>
+										</td>
+										<td>
+											&nbsp;&nbsp;&nbsp;팔로워 12명
+										</td>
+									</tr>
+									<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="position-relative">
+												<img src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg" alt="User" width="25" height="25" class="rounded-circle" loading="lazy">
+												<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden">online</span></span>
+												<span class="ml-2"><b>강정인 주임</b></span>
+						                    </div>
+										</td>
+										<td>
+											&nbsp;&nbsp;&nbsp;팔로워 11명
+										</td>
+									</tr>
+									<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td>
+											<div class="position-relative">
+												<img src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg" alt="User" width="25" height="25" class="rounded-circle" loading="lazy">
+												<span class="position-absolute bottom-0 end-0 badge border border-white rounded-circle bg-success p-1"><span class="visually-hidden">online</span></span>
+												<span class="ml-2"><b>강정인 주임</b></span>
+						                    </div>
+										</td>
+										<td>
+											&nbsp;&nbsp;&nbsp;팔로워 10명
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-6">
+					<div class="card card-info card-outline">
+						<div class="card-header border-bottom-0">
+							<div class="row">
+								<div class="col-11">
+									<span class="">멘토링 신청내역</span>
+								</div>
+								<div class="col-1">
+<!-- 									<button type="button" class="btn btn-info btn-sm">수정</button> -->
+									<button type="button" class="btn" >
+										<i class="fas fa-plus fa-xs"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="card-body p-0">
+							<table class="table table-hover text-nowrap projects">
+									<tbody>
+										<tr style='font-size: 0.9em; height: 65px;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+											<td>
+												<div class="row">
+													<div class="col-1 pl-0">
+														<span class="info-box-icon">
+															<img src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg" alt="User" width="40" height="40" class="rounded-circle" loading="lazy">
+<!-- 															<img class="direct-chat-img" data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"  -->
+<!-- 															src="https://adminlte.io/themes/v3/dist/img/user1-128x128.jpg"> -->
+														</span>	
+													</div>
+													<div class="col-11">
+														<span><b>김기웅 인턴이(가) 나를 멘토로 등록하고자 합니다.</b></span>&nbsp;<span class="right badge badge-danger">New</span><br>
+														<span class="text-muted">06-27 15:00</span>&nbsp;&nbsp;<span>강정인 주임</span>											
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+											<td>
+												<div class="row">
+													<div class="col-1 pl-0">
+														<span class="info-box-icon">
+															<img src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg" alt="User" width="40" height="40" class="rounded-circle" loading="lazy">
+<!-- 															<img class="direct-chat-img" data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"  -->
+<!-- 															src="https://adminlte.io/themes/v3/dist/img/user1-128x128.jpg"> -->
+														</span>	
+													</div>
+													<div class="col-11">
+														<span><b>김기웅 인턴이(가) 나를 멘토로 등록하고자 합니다.</b></span>&nbsp;<span class="right badge badge-danger">New</span><br>
+														<span class="text-muted">06-27 15:00</span>&nbsp;&nbsp;<span>강정인 주임</span>											
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+											<td>
+												<div class="row">
+													<div class="col-1 pl-0">
+														<span class="info-box-icon">
+															<img src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg" alt="User" width="40" height="40" class="rounded-circle" loading="lazy">
+<!-- 															<img class="direct-chat-img" data-cfsrc="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"  -->
+<!-- 															src="https://adminlte.io/themes/v3/dist/img/user1-128x128.jpg"> -->
+														</span>	
+													</div>
+													<div class="col-11 text-muted">
+														<span>김기웅 인턴이(가) 나를 멘토로 등록하고자 합니다.</span><br>
+														<span class="text-muted">06-27 15:00</span>&nbsp;&nbsp;<span>강정인 주임</span>											
+													</div>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-md-6">
+					<div class="card card-info card-outline">
+						<div class="card-header">
+							<div class="row">
+								<div class="col-10">
+									<span class="">만료직전 멘토링</span>
+								</div>
+								<div class="col-2">
+<!-- 									<button type="button" class="btn btn-info btn-sm">수정</button> -->
+									<button type="button" class="btn" style="visibility: hidden;" >
+										<i class="fas fa-plus fa-xs"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="card-body p-0">
+							<table class="table table-hover text-nowrap projects">
+								<tbody>
+<!-- 									<tr style='font-size: 0.9em;' onclick="OpenWindow('detail.do','상세보기',800,600);"> -->
+<!-- 										<td> -->
+<!-- 											이름 -->
+<!-- 										</td> -->
+<!-- 										<td> -->
+<!-- 											만료일 -->
+<!-- 										</td> -->
+<!-- 										<td> -->
+<!-- 											D-day -->
+<!-- 										</td> -->
+<!-- 										<td> -->
+<!-- 											연장 -->
+<!-- 										</td> -->
+<!-- 									</tr> -->
+									<tr style='font-size: 0.9em; height: 65px;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td style="width: 30%">
+											<img src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg" alt="User" width="25" height="25" class="rounded-circle" loading="lazy">
+											<span>강정인 멘토</span>
+										</td>
+										<td style="width: 50%">
+											<span>만료일 : 2022.07.10</span>&nbsp;&nbsp;&nbsp;<span class="right badge badge-danger">D-3</span><br>
+											<span class="text-muted">(시작일 : 2021.07.10)</span>
+										</td>
+										<td style="width: 20%">
+											<button type="button" class="btn btn-info btn-sm">연장신청</button>
+										</td>
+									</tr>
+									<tr style='font-size: 0.9em; height: 65px;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td style="width: 30%">
+											<img src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg" alt="User" width="25" height="25" class="rounded-circle" loading="lazy">
+											<span>강정인 멘토</span>
+										</td>
+										<td style="width: 50%">
+											<span>만료일 : 2022.07.10</span>&nbsp;&nbsp;&nbsp;<span class="right badge badge-danger">D-3</span><br>
+											<span class="text-muted">(시작일 : 2021.07.10)</span>
+										</td>
+										<td style="width: 20%">
+											<button type="button" class="btn btn-info btn-sm">연장신청</button>
+										</td>
+									</tr>
+									<tr style='font-size: 0.9em; height: 65px;' onclick="OpenWindow('detail.do','상세보기',800,600);">
+										<td style="width: 30%">
+											<img src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg" alt="User" width="25" height="25" class="rounded-circle" loading="lazy">
+											<span>강정인 멘토</span>
+										</td>
+										<td style="width: 50%">
+											<span>만료일 : 2022.07.10</span>&nbsp;&nbsp;&nbsp;<span class="right badge badge-danger">D-3</span><br>
+											<span class="text-muted">(시작일 : 2021.07.10)</span>
+										</td>
+										<td style="width: 20%">
+											<button type="button" class="btn btn-info btn-sm">연장신청</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+   	</section>
+</div>
+<script type="text/javascript">
+$(document).on('click', 'body > aside > div > ul > li:nth-child(2) > a', function(){
+	$(this).attr("href", "#");
+	OpenWindow('registForm.do','멘토링 신청',800,600);
+})
+</script>
+</body>

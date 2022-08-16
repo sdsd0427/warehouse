@@ -1,0 +1,41 @@
+package kr.or.warehouse.dto;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+public class CalAlarmVO {
+
+	private String ccode;
+	private String calamtime;
+	private String calammethod;
+
+	public String getCcode() {
+		return ccode;
+	}
+
+	public void setCcode(String ccode) {
+		this.ccode = ccode;
+	}
+
+	public String getCalamtime() {
+		return calamtime;
+	}
+
+	public void setCalamtime(String calamtime) {
+		this.calamtime = calamtime;
+	}
+
+	public String getCalammethod() {
+		return calammethod;
+	}
+
+	public void setCalammethod(String calammethod) {
+		this.calammethod = calammethod;
+	}
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+	}
+
+}

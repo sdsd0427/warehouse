@@ -1,0 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<script>
+	function goDetail(url, state){
+		if(state == 0){
+			OpenWindow(url, '업무 상세보기', 800, 600);
+		}
+		
+		if(state == 1){
+			location.href = url
+		}
+
+	}
+</script>

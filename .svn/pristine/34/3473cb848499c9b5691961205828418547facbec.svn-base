@@ -1,0 +1,578 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<head>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/community.css" type="text/css">
+<style>
+.page-link {
+    line-height: 1;
+    color: #17a2b8;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+
+.cata{
+margin-right: 10px;
+}
+</style>
+</head>
+
+<title></title>
+
+<body class="hold-transition skin-blue sidebar-collapse">
+	<div class="wrapper">
+		<section class="content-header ">
+			<div class="row md-2">
+				<div class="col-sm-12" style="display: flex;">
+					<h3>전사문서함</h3>
+				</div>
+			</div>
+		</section>
+
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row md-2">
+					<div class="col-12">
+						<div class="card card-info card-tabs">
+							<div class="card-header p-0 pt-1">
+								<ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+									<li class="nav-item"><a class="nav-link active" id="custom-tabs-one-work-tab" data-toggle="pill" href="#custom-tabs-one-work" role="tab" aria-controls="custom-tabs-one-work" aria-selected="true">
+											업무기안</a></li>
+									<li class="nav-item"><a class="nav-link" id="custom-tabs-one-document-tab" data-toggle="pill" href="#custom-tabs-one-document" role="tab" aria-controls="custom-tabs-one-document" aria-selected="false">
+											업무협조</a></li>
+									<li class="nav-item"><a class="nav-link" id="custom-tabs-one-menual-tab" data-toggle="pill" href="#custom-tabs-one-menual" role="tab" aria-controls="custom-tabs-one-menual" aria-selected="false">
+											일반품의서</a></li>
+
+								</ul>
+							</div>
+							<div class="card-body">
+
+
+								<div class="input-group row" style="display: inline-flex;width: 40%;margin-left: 60%;">
+										<select class="form-control col-md-3" name="searchType" id="searchType">
+											<option value="">전체</option>
+											<option value="">제목</option>
+											<option value="">작성자</option>
+											<option value="">해시태그</option>
+										</select> <input class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value=""> <span class="input-group-append">
+											<button class="btn btn-info" type="button" onclick="list_go(1);" data-card-widget="search">
+												<i class="fa fa-fw fa-search"></i>
+											</button>
+										</span>
+									</div>
+
+
+
+								<div class="tab-content" id="custom-tabs-one-tabContent">
+									<div class="tab-pane fade show active" id="custom-tabs-one-work" role="tabpanel" aria-labelledby="custom-tabs-one-work-tab">
+										<div class="row">
+											<div class="col-12 mt-3">
+												<div class="col-12">
+													<table class="table table-hover text-nowrap" style="table-layout: fixed;">
+														<tbody><tr style="font-size: 0.95em;">
+															<th style="width: 40%;">제목</th>
+															<th style="width: 10%;">작성자</th>
+															<th style="width: 15%;">카테고리</th>
+															<th style="width: 15%;">등록일</th>
+															<th style="width: 10%;">조회수</th>
+															<th style="width: 10%;">즐겨찾기</th>
+														</tr>
+
+														<tr style="font-size: 0.85em;"  onClick="OpenWindow('approvalDetail.do', '문서 상세보기', '1000', '800')">
+															<td>고객사 대상 만족도 조사 이벤트 진행</td>
+															<td>홍길동</td>
+															<td>업무기안</td>
+															<td>2022-06-27</td>
+															<td>
+																<i class="fas fa-light fa-eye"></i> 345
+															</td>
+															<td>
+					 											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+																<!-- <i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+															</td>
+														</tr>
+														<tr style="font-size: 0.85em;">
+															<td>그룹웨어 만족도 조사</td>
+															<td>이순신</td>
+															<td>업무기안</td>
+															<td>2022-06-24</td>
+															<td>
+																<i class="fas fa-light fa-eye"></i> 721
+															</td>
+															<td>
+					 											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+																<!-- <i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+															</td>
+														</tr>
+														<tr style="font-size: 0.85em;">
+															<td>warehouse 인지도 조사</td>
+															<td>이순신</td>
+															<td>업무기안</td>
+															<td>2022-06-24</td>
+															<td>
+																<i class="fas fa-light fa-eye"></i> 721
+															</td>
+															<td>
+					 											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+																<!-- <i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+															</td>
+														</tr>
+														<tr style="font-size: 0.85em;">
+															<td>그룹웨어 만족도 조사</td>
+															<td>이순신</td>
+															<td>업무기안</td>
+															<td>2022-06-24</td>
+															<td>
+																<i class="fas fa-light fa-eye"></i> 721
+															</td>
+															<td>
+					 											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+																<!-- <i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+															</td>
+														</tr>
+														<tr style="font-size: 0.85em;">
+															<td>그룹웨어 만족도 조사</td>
+															<td>이순신</td>
+															<td>업무기안</td>
+															<td>2022-06-24</td>
+															<td>
+																<i class="fas fa-light fa-eye"></i> 721
+															</td>
+															<td>
+					 											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+																<!-- <i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+															</td>
+														</tr>
+														<tr style="font-size: 0.85em;">
+															<td>그룹웨어 만족도 조사</td>
+															<td>이순신</td>
+															<td>업무기안</td>
+															<td>2022-06-24</td>
+															<td>
+																<i class="fas fa-light fa-eye"></i> 721
+															</td>
+															<td>
+					 											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+																<!-- <i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+															</td>
+														</tr>
+														<tr style="font-size: 0.85em;">
+															<td>warehouse 인지도 조사</td>
+															<td>이순신</td>
+															<td>업무기안</td>
+															<td>2022-06-24</td>
+															<td>
+																<i class="fas fa-light fa-eye"></i> 721
+															</td>
+															<td>
+					 											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+																<!-- <i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+															</td>
+														</tr>
+
+													</tbody></table>
+													<div class="card-footer">
+														<ul class="pagination justify-content-center m-0">
+															<li class="page-item">
+																<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+															</li><li class="page-item">
+																<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+															</li>
+
+																<li class="page-item active">
+																	<a class="page-link" href="">1</a>
+																</li>
+
+															<li class="page-item">
+																<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+															</li>
+															<li class="page-item">
+																<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+															</li>
+														</ul>
+													</div>
+												</div>
+												</div>
+										</div>
+
+									</div>
+									<div class="tab-pane fade" id="custom-tabs-one-document" role="tabpanel" aria-labelledby="custom-tabs-one-document-tab">
+										<div class="row">
+											<div class="col-12 mt-3">
+												<div class="col-12">
+												<table class="table table-hover text-nowrap" style="table-layout: fixed;">
+													<tbody><tr style="font-size: 0.95em;">
+														<th style="width: 40%;">제목</th>
+														<th style="width: 10%;">작성자</th>
+														<th style="width: 15%;">카테고리</th>
+														<th style="width: 15%;">등록일</th>
+														<th style="width: 10%;">조회수</th>
+														<th style="width: 10%;">즐겨찾기</th>
+													</tr>
+
+													<tr style="font-size: 0.85em;">
+														<td>고객사 대상 만족도 조사 이벤트 진행</td>
+														<td>홍길동</td>
+														<td>업무협조</td>
+														<td>2022-06-27</td>
+														<td>
+															<i class="fas fa-light fa-eye"></i> 345
+														</td>
+														<td>
+				 											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+															<!-- <i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+														</td>
+													</tr>
+													<tr style="font-size: 0.85em;">
+														<td>그룹웨어 만족도 조사</td>
+														<td>이순신</td>
+														<td>업무협조</td>
+														<td>2022-06-24</td>
+														<td>
+															<i class="fas fa-light fa-eye"></i> 721
+														</td>
+														<td>
+				 											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+															<!-- <i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+														</td>
+													</tr>
+													<tr style="font-size: 0.85em;">
+														<td>warehouse 인지도 조사</td>
+														<td>이순신</td>
+														<td>업무협조</td>
+														<td>2022-06-24</td>
+														<td>
+															<i class="fas fa-light fa-eye"></i> 721
+														</td>
+														<td>
+				 											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+															<!-- <i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+														</td>
+													</tr>
+													<tr style="font-size: 0.85em;">
+														<td>그룹웨어 만족도 조사</td>
+														<td>이순신</td>
+														<td>업무협조</td>
+														<td>2022-06-24</td>
+														<td>
+															<i class="fas fa-light fa-eye"></i> 721
+														</td>
+														<td>
+				 											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+															<!-- <i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+														</td>
+													</tr>
+													<tr style="font-size: 0.85em;">
+														<td>그룹웨어 만족도 조사</td>
+														<td>이순신</td>
+														<td>업무협조</td>
+														<td>2022-06-24</td>
+														<td>
+															<i class="fas fa-light fa-eye"></i> 721
+														</td>
+														<td>
+				 											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+															<!-- <i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+														</td>
+													</tr>
+													<tr style="font-size: 0.85em;">
+														<td>그룹웨어 만족도 조사</td>
+														<td>이순신</td>
+														<td>업무협조</td>
+														<td>2022-06-24</td>
+														<td>
+															<i class="fas fa-light fa-eye"></i> 721
+														</td>
+														<td>
+				 											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+															<!-- <i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+														</td>
+													</tr>
+													<tr style="font-size: 0.85em;">
+														<td>warehouse 인지도 조사</td>
+														<td>이순신</td>
+														<td>업무협조</td>
+														<td>2022-06-24</td>
+														<td>
+															<i class="fas fa-light fa-eye"></i> 721
+														</td>
+														<td>
+				 											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+															<!-- <i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+														</td>
+													</tr>
+
+												</tbody></table>
+												<div class="card-footer">
+													<ul class="pagination justify-content-center m-0">
+														<li class="page-item">
+															<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+														</li><li class="page-item">
+															<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+														</li>
+
+															<li class="page-item active">
+																<a class="page-link" href="">1</a>
+															</li>
+
+														<li class="page-item">
+															<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+														</li>
+														<li class="page-item">
+															<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+														</li>
+													</ul>
+												</div>
+											</div>
+											</div>
+										</div>
+
+									</div>
+									<div class="tab-pane fade" id="custom-tabs-one-menual" role="tabpanel" aria-labelledby="custom-tabs-one-menual-tab">
+										<div class="row">
+											<div class="col-12 mt-3">
+														<div class="col-12">
+												<table class="table table-hover text-nowrap" style="table-layout: fixed;">
+													<tbody><tr style="font-size: 0.95em;">
+														<th style="width: 40%;">제목</th>
+														<th style="width: 10%;">작성자</th>
+														<th style="width: 15%;">카테고리</th>
+														<th style="width: 15%;">등록일</th>
+														<th style="width: 10%;">조회수</th>
+														<th style="width: 10%;">즐겨찾기</th>
+													</tr>
+
+													<tr style="font-size: 0.85em;">
+														<td>고객사 대상 만족도 조사 이벤트 진행</td>
+														<td>홍길동</td>
+														<td>일반품의서</td>
+														<td>2022-06-27</td>
+														<td>
+															<i class="fas fa-light fa-eye"></i> 345
+														</td>
+														<td>
+				 											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+															<!-- <i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+														</td>
+													</tr>
+													<tr style="font-size: 0.85em;">
+														<td>그룹웨어 만족도 조사</td>
+														<td>이순신</td>
+														<td>일반품의서</td>
+														<td>2022-06-24</td>
+														<td>
+															<i class="fas fa-light fa-eye"></i> 721
+														</td>
+														<td>
+				 											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+															<!-- <i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+														</td>
+													</tr>
+													<tr style="font-size: 0.85em;">
+														<td>warehouse 인지도 조사</td>
+														<td>이순신</td>
+														<td>일반품의서</td>
+														<td>2022-06-24</td>
+														<td>
+															<i class="fas fa-light fa-eye"></i> 721
+														</td>
+														<td>
+				 											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+															<!-- <i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+														</td>
+													</tr>
+													<tr style="font-size: 0.85em;">
+														<td>그룹웨어 만족도 조사</td>
+														<td>이순신</td>
+														<td>일반품의서</td>
+														<td>2022-06-24</td>
+														<td>
+															<i class="fas fa-light fa-eye"></i> 721
+														</td>
+														<td>
+				 											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+															<!-- <i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+														</td>
+													</tr>
+													<tr style="font-size: 0.85em;">
+														<td>그룹웨어 만족도 조사</td>
+														<td>이순신</td>
+														<td>업무기안</td>
+														<td>2022-06-24</td>
+														<td>
+															<i class="fas fa-light fa-eye"></i> 721
+														</td>
+														<td>
+				 											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+															<!-- <i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+														</td>
+													</tr>
+													<tr style="font-size: 0.85em;">
+														<td>그룹웨어 만족도 조사</td>
+														<td>이순신</td>
+														<td>일반품의서</td>
+														<td>2022-06-24</td>
+														<td>
+															<i class="fas fa-light fa-eye"></i> 721
+														</td>
+														<td>
+				 											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+															<!-- <i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+														</td>
+													</tr>
+													<tr style="font-size: 0.85em;">
+														<td>warehouse 인지도 조사</td>
+														<td>이순신</td>
+														<td>일반품의서</td>
+														<td>2022-06-24</td>
+														<td>
+															<i class="fas fa-light fa-eye"></i> 721
+														</td>
+														<td>
+				 											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+															<!-- <i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+														</td>
+													</tr>
+
+												</tbody></table>
+												<div class="card-footer">
+													<ul class="pagination justify-content-center m-0">
+														<li class="page-item">
+															<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+														</li><li class="page-item">
+															<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+														</li>
+
+															<li class="page-item active">
+																<a class="page-link" href="">1</a>
+															</li>
+
+														<li class="page-item">
+															<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+														</li>
+														<li class="page-item">
+															<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+														</li>
+													</ul>
+												</div>
+											</div>
+
+
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+
+
+
+
+
+
+
+
+					<div class="card card-info card-outline">
+							<div class="card-header with-border">
+									<span>관심 문서함</span>
+								<div id="" class="card-tools" style="width: 450px;">
+									<div class="input-group row">
+										<select class="form-control col-md-3" name="searchType"
+											id="searchType">
+											<option value="">전체</option>
+											<option value="">제목</option>
+											<option value="">작성자</option>
+											<option value="">카테고리</option>
+											<option value="">해시태그</option>
+										</select> <input class="form-control" type="text" name="keyword"
+											placeholder="검색어를 입력하세요." value="${param.keyword }" /> <span
+											class="input-group-append">
+											<button class="btn btn-info" type="button"
+												onclick="list_go(1);" data-card-widget="search">
+												<i class="fa fa-fw fa-search"></i>
+											</button>
+										</span>
+									</div>
+								</div>
+							</div>
+							<div class="card-body">
+								<table class="table table-hover text-nowrap" style="table-layout: fixed;">
+									<tr style="font-size: 0.95em;">
+										<th style="width: 40%;">제목</th>
+										<th style="width: 10%;">작성자</th>
+										<th style="width: 15%;">카테고리</th>
+										<th style="width: 15%;">등록일</th>
+										<th style="width: 10%;">조회수</th>
+										<th style="width: 10%;">즐겨찾기</th>
+									</tr>
+
+									<tr style='font-size: 0.85em;'>
+										<td>그룹웨어 만족도 조사</td>
+										<td>홍길동</td>
+										<td>업무기안</td>
+										<td>2022-06-27</td>
+										<td>
+											<i class="fas fa-light fa-eye" ></i> 345
+										</td>
+										<td>
+<!-- 											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+											<i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+										</td>
+									</tr>
+									<tr style='font-size: 0.85em;'>
+										<td>그룹웨어 만족도 조사</td>
+										<td>이순신</td>
+										<td>업무기안</td>
+										<td>2022-06-24</td>
+										<td>
+											<i class="fas fa-light fa-eye" ></i> 721
+										</td>
+										<td>
+<!-- 											<i class="far fa-star" style="font-size: 1.5em; color:#ffc107;"></i> -->
+											<i class="fas fa-solid fa-star" style="font-size: 1.5em; color:#ffc107;"></i>
+										</td>
+									</tr>
+
+								</table>
+							</div>
+							<div class="card-footer">
+								<ul class="pagination justify-content-center m-0">
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+									</li>
+
+										<li class="page-item active">
+											<a class="page-link" href="">1</a>
+										</li>
+
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+									</li>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+									</li>
+								</ul>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</section>
+
+		</div>
+
+	>
+
+</body>

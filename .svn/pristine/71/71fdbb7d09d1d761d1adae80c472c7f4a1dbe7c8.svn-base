@@ -1,0 +1,48 @@
+package kr.or.warehouse.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import kr.or.warehouse.command.Criteria;
+import kr.or.warehouse.dto.BoardVO;
+import kr.or.warehouse.dto.EmployeeVO;
+
+@Repository
+public class ContactDAOImpl implements ContactDAO{
+
+	@Autowired
+	private SqlSession session;
+
+
+	@Override
+	public List<EmployeeVO> selectSearchContactList(Criteria cri) throws SQLException {
+		return session.selectList("Contact-Mapper.selectSearchContactList", cri);
+	}
+
+
+
+	@Override
+	public List<EmployeeVO> selectTeamContactList(Criteria cri, String dname) throws SQLException {
+		System.out.println("Teamdao");
+		return session.selectList("Contact-Mapper.selectTeamContactList", dname);
+	}
+
+
+
+	@Override
+	public int selectSearchContactListCount(Criteria cri) throws SQLException {
+		return session.selectOne("Contact-Mapper.selectSearchContactListCount",cri);
+	}
+
+
+
+
+
+
+
+
+}

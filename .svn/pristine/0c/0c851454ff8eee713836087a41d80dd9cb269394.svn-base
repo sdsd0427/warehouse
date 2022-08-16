@@ -1,0 +1,354 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<head>
+<style type="text/css">
+.page-link {
+    line-height: 1;
+    color: #17a2b8;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+.mentoring .table-avatar img, .mentoring img.table-avatar {
+    border-radius: 50%;
+    display: inline;
+    width: 2.5rem;
+}
+.emp_card .table-avatar img, .emp_card img.table-avatar {
+    border-radius: 50%;
+    display: inline;
+    width: 8rem;
+}
+.emp_card {
+    display: none;
+    width: 350px;
+    height: 170px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 0 0 1pxrgba(0,0,0,.125),0 1px 3pxrgba(0,0,0,.2);
+}
+</style>
+</head>
+
+<div class="wrapper" style="padding-left: 40px;">
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row md-2">
+				<div class="col-sm-6">
+					<h3>나의 멘토</h3>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	<section>
+		<div class="row">
+			<div class="col-12">
+				<div class="card card-info card-outline">
+				
+					<div class="card-header with-border">
+						<span style="float: left;">나의 멘토 목록</span>
+					</div>
+
+					<div class="card-body table-responsive p-0">
+						<table class="table table-hover text-nowrap mentoring">
+							<thead>
+								<tr>
+									<th>이름</th>
+									<th>부서</th>
+									<th>직위</th>
+									<th>직책</th>
+									<th>기간</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><img class="table-avatar emp_profile" src="/warehouse/resources/bootstrap/dist/img/avatar.png" data-name="최민규 팀장">&nbsp;&nbsp;최민규</td>
+									<td>영업팀</td>
+									<td>팀장</td>
+									<td>부장</td>
+									<td>2022-07-12~2022-07-28</td>
+									<td><button class="btn btn-xs btn-secondary" type="button" onclick="">멘토링 종료</button></td>
+								</tr>
+								<tr>
+									<td><img class="table-avatar emp_profile" src="/warehouse/resources/bootstrap/dist/img/avatar.png" data-name="최민규 팀장">&nbsp;&nbsp;최민규</td>
+									<td>영업팀</td>
+									<td>팀장</td>
+									<td>부장</td>
+									<td>2022-07-12~2022-07-28</td>
+									<td><button class="btn btn-xs btn-secondary" type="button" onclick="">멘토링 종료</button></td>
+								</tr>
+								<tr>
+									<td><img class="table-avatar emp_profile" src="/warehouse/resources/bootstrap/dist/img/avatar.png" data-name="최민규 팀장">&nbsp;&nbsp;최민규</td>
+									<td>영업팀</td>
+									<td>팀장</td>
+									<td>부장</td>
+									<td>2022-07-12~2022-07-28</td>
+									<td><button class="btn btn-xs btn-secondary" type="button" onclick="">멘토링 종료</button></td>
+								</tr>
+								<tr>
+									<td><img class="table-avatar emp_profile" src="/warehouse/resources/bootstrap/dist/img/avatar.png" data-name="최민규 팀장">&nbsp;&nbsp;최민규</td>
+									<td>영업팀</td>
+									<td>팀장</td>
+									<td>부장</td>
+									<td>2022-07-12~2022-07-28</td>
+									<td><button class="btn btn-xs btn-secondary" type="button" onclick="">멘토링 종료</button></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="card-footer">
+						<ul class="pagination justify-content-center m-0">
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+							</li><li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+							</li>
+
+								<li class="page-item active">
+									<a class="page-link" href="">1</a>
+								</li>
+
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+							</li>
+						</ul>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-6">
+				<div class="card card-info">
+				
+					<div class="card-header with-border">
+						<span style="float: left;">나의 멘토 업무</span>
+					</div>
+
+					<div class="card-body table-responsive p-0">
+						<table class="table table-hover text-nowrap mentoring">
+							<thead>
+								<tr>
+									<th>제목</th>
+									<th>담당자</th>
+									<th>기한</th>
+									<th>상태</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>영업팀</td>
+									<td><img class="table-avatar emp_profile" src="/warehouse/resources/bootstrap/dist/img/avatar.png" data-name="최민규 팀장"></td>
+									<td>2022-07-28</td>
+									<td class="project-state">
+									<span class="badge bg-info">진행</span>
+									</td>
+								</tr>
+								<tr>
+									<td>영업팀</td>
+									<td><img class="table-avatar emp_profile" src="/warehouse/resources/bootstrap/dist/img/avatar.png" data-name="최민규 팀장"></td>
+									<td>2022-07-28</td>
+									<td class="project-state">
+									<span class="badge bg-info">진행</span>
+									</td>
+								</tr>
+								<tr>
+									<td>영업팀</td>
+									<td><img class="table-avatar emp_profile" src="/warehouse/resources/bootstrap/dist/img/avatar.png" data-name="최민규 팀장"></td>
+									<td>2022-07-28</td>
+									<td class="project-state">
+									<span class="badge bg-info">진행</span>
+									</td>
+								</tr>
+								<tr>
+									<td>영업팀</td>
+									<td><img class="table-avatar emp_profile" src="/warehouse/resources/bootstrap/dist/img/avatar.png" data-name="최민규 팀장"></td>
+									<td>2022-07-28</td>
+									<td class="project-state">
+									<span class="badge bg-info">진행</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="card-footer">
+						<ul class="pagination justify-content-center m-0">
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+							</li><li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+							</li>
+
+								<li class="page-item active">
+									<a class="page-link" href="">1</a>
+								</li>
+
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+							</li>
+						</ul>
+					</div>
+					
+				</div>
+			</div>
+		
+		
+			<div class="col-6">
+				<div class="card card-info">
+				
+					<div class="card-header with-border">
+						<span style="float: left;">나의 멘토 문서</span>
+					</div>
+
+					<div class="card-body table-responsive p-0">
+						<table class="table table-hover text-nowrap mentoring">
+							<thead>
+								<tr>
+									<th>기안일</th>
+									<th>결재양식</th>
+									<th>제목</th>
+									<th>상태</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>2022-07-28</td>
+									<td>휴가신청서</td>
+									<td>테스트</td>
+									<td class="project-state">
+									<span class="badge bg-info">진행</span>
+									</td>
+								</tr>
+								<tr>
+									<td>2022-07-28</td>
+									<td>휴가신청서</td>
+									<td>테스트</td>
+									<td class="project-state">
+									<span class="badge bg-info">진행</span>
+									</td>
+								</tr>
+								<tr>
+									<td>2022-07-28</td>
+									<td>휴가신청서</td>
+									<td>테스트</td>
+									<td class="project-state">
+									<span class="badge bg-info">진행</span>
+									</td>
+								</tr>
+								<tr>
+									<td>2022-07-28</td>
+									<td>휴가신청서</td>
+									<td>테스트</td>
+									<td class="project-state">
+									<span class="badge bg-info">진행</span>
+									</td>
+								</tr>
+								<tr>
+									<td>2022-07-28</td>
+									<td>휴가신청서</td>
+									<td>테스트</td>
+									<td class="project-state">
+									<span class="badge bg-info">진행</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="card-footer">
+						<ul class="pagination justify-content-center m-0">
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+							</li><li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+							</li>
+
+								<li class="page-item active">
+									<a class="page-link" href="">1</a>
+								</li>
+
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+							</li>
+						</ul>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+	</section>
+	
+</div>	
+
+<div class="emp_card bg-light d-flex flex-fill " style="top: 0px; left: 0px; display: none;">
+<div class="card-body pt-0">
+<div class="row" style="padding-top: 17px;">
+<div class="col-7">
+<h2 class="lead"><b>최민규 팀장</b></h2>
+<p class="text-muted text-sm"><b>부서: </b>영업팀</p>
+<p class="text-muted text-sm"><b>직책/직위: </b>영업팀/부장</p>
+<p class="text-muted text-sm"><b>MBTI: </b>CUTE</p>
+<ul class="ml-4 mb-0 fa-ul text-muted">
+<li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span>fds@naver.com</li>
+<li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span>070-123-4567</li>
+</ul>
+</div>
+<div class="col-5 text-center">
+<img src="/warehouse/resources/bootstrap/dist/img/avatar.png" alt="user-avatar" class="table-avatar emp_profile">
+</div>
+</div>
+</div>
+
+</div>	
+
+<!-- 
+<div class="emp_card" style="top: 0px; left: 0px; display: none;">
+			<div class="card-header" style="display: flex; align-items: center;">
+				<img class="table-avatar emp_profile" src="/warehouse/resources/bootstrap/dist/img/avatar.png">&nbsp;&nbsp;<span class="name" style="font-weight: bold;">최민규 팀장</span>
+				<a class="mail" href="#">
+					<span class="material-symbols-outlined">
+					mail
+					</span>
+				</a>
+			</div>
+			<div class="card-body">
+				<span>부서: </span>
+				<span class="dep">개발팀</span>
+				<br>
+				<span>연락처: </span>
+				<span>010-1111-1111</span>
+				<br>
+				<span>내선번호: </span>
+				<span>070-111-1111</span>
+			</div>
+		</div>
+ -->		
+		
+	
+		
+		

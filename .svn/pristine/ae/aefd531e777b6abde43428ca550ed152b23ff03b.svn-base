@@ -1,0 +1,187 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<head>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/community.css" type="text/css">
+</head>
+
+<title></title>
+
+<body class="hold-transition skin-blue sidebar-collapse">
+	<div class="wrapper" style="margin-left: 190px;">
+		<div class="row" style="height: 100%;">
+
+		<%@ include file="./sideBar.jsp" %>
+
+
+		<section class="content-header col-10">
+			<div class="row md-2">
+				<div class="col-sm-12">
+					<h2>가입인사</h2>
+				</div>
+			</div>
+
+			<div class="col-sm-12 mt-4">
+					<div class="card card-outline card-info">
+						<div class="card-header">
+							<h3 class="card-title">게시판 소개</h3>
+						</div>
+						<div class="card-body">가입 인사 게시판 입니다 처음 가입하신 분들은 가입인사 게시판에 글 작성 부탁드려요~</div>
+					</div>
+				</div>
+
+
+			<div class="container-fluid">
+				<div class="row md-2">
+					<div class="col-md-12">
+
+						<div class="card">
+							<div class="card-header with-border">
+								<button style="float: left; " type="button" id="" class="btn btn-info" onclick="OpenWindow('boardRegistForm.do','게시글 작성',800,700);">작성</button>
+								<div id="" class="card-tools" style="width: 450px;">
+									<div class="input-group row">
+										<select class="form-control col-md-4" name="searchType"
+											id="searchType">
+											<option value="">전체</option>
+											<option value="">커뮤니티</option>
+											<option value="">회장</option>
+										</select> <input class="form-control" type="text" name="keyword"
+											placeholder="검색어를 입력하세요." value="${param.keyword }" /> <span
+											class="input-group-append">
+											<button class="btn btn-info" type="button"
+												onclick="list_go(1);" data-card-widget="search">
+												<i class="fa fa-fw fa-search"></i>
+											</button>
+										</span>
+									</div>
+								</div>
+							</div>
+							<div class="card-body">
+								<table class="table table-hover text-nowrap" style="text-align:center;table-layout: fixed;">
+									<tr style="font-size: 0.95em;">
+										<th style="width: 10%;">번호</th>
+										<th style="width: 55%;">제목</th>
+										<th style="width: 10%;">작성자</th>
+										<th style="width: 10%;">조회 수</th>
+										<th style="width: 15%;">등록일</th>
+									</tr>
+
+									<tr style='font-size: 0.85em;' onclick="OpenWindow('boardDetail.do','게시글 작성',800,700);">
+										<td>1</td>
+										<td>가입인사 드립니다.</td>
+										<td>신사입당</td>
+										<td>0</td>
+										<td>2022-06-27</td>
+									</tr>
+
+									<tr style='font-size: 0.85em;'>
+										<td>2</td>
+										<td>가입인사</td>
+										<td>홍길동</td>
+										<td>4</td>
+										<td>2022-06-26</td>
+									</tr>
+
+									<tr style='font-size: 0.85em;'>
+										<td>3</td>
+										<td>가입인사 할게요</td>
+										<td>강감찬</td>
+										<td>1</td>
+										<td>2022-06-26</td>
+									</tr>
+
+									<tr style='font-size: 0.85em;'>
+										<td>4</td>
+										<td>가입인사</td>
+										<td>전우치</td>
+										<td>4</td>
+										<td>2022-06-26</td>
+									</tr>
+
+									<tr style='font-size: 0.85em;'>
+										<td>5</td>
+										<td>가입인사해요</td>
+										<td>이순신</td>
+										<td>2</td>
+										<td>2022-06-24</td>
+									</tr>
+
+									<tr style='font-size: 0.85em;'>
+										<td>6</td>
+										<td>가입인사 드립니다.</td>
+										<td>홍길동</td>
+										<td>2</td>
+										<td>2022-06-24</td>
+									</tr>
+
+									<tr style='font-size: 0.85em;'>
+										<td>7</td>
+										<td>가입인사 드립니다.</td>
+										<td>신사입당</td>
+										<td>3</td>
+										<td>2022-06-23</td>
+									</tr>
+
+									<tr style='font-size: 0.85em;'>
+										<td>8</td>
+										<td>가입인사 드립니다.</td>
+										<td>강감찬</td>
+										<td>5</td>
+										<td>2022-05-27</td>
+									</tr>
+
+									<tr style='font-size: 0.85em;'>
+										<td>9</td>
+										<td>가입인사 드립니다.</td>
+										<td>이성계</td>
+										<td>8</td>
+										<td>2022-05-21</td>
+									</tr>
+
+									<tr style='font-size: 0.85em;'>
+										<td>10</td>
+										<td>가입인사 드립니다.</td>
+										<td>세종대왕</td>
+										<td>2</td>
+										<td>2022-05-14</td>
+									</tr>
+
+
+
+
+
+
+								</table>
+							</div>
+							<div class="card-footer">
+								<ul class="pagination justify-content-center m-0">
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-left"></i></a>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-left"></i></a>
+									</li>
+
+										<li class="page-item active">
+											<a class="page-link" href="">1</a>
+										</li>
+
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-right"></i></a>
+									</li>
+									<li class="page-item">
+										<a class="page-link" href=""> <i class="fas fa-angle-double-right"></i></a>
+									</li>
+								</ul>
+							</div>
+						</div>
+
+
+
+					</div>
+				</div>
+			</div>
+			</section>
+		</div>
+	</div>
+
+</body>

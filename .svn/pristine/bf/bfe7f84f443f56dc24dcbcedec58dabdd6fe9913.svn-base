@@ -1,0 +1,67 @@
+package kr.or.warehouse.controller.view;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/board")
+public class BoardController {
+	
+	@RequestMapping("/notice/list.do")
+	public void notice()throws Exception {
+	}
+	@RequestMapping("/notice/registGo.do")
+	public String noticeRegistForm()throws Exception {
+		String url="board/notice/registForm";
+		return url;
+	}
+	@RequestMapping("/notice/modifyGo.do")
+	public String noticeModifyForm()throws Exception {
+		String url="board/notice/modifyForm";
+		return url;
+	}
+	@RequestMapping("/notice/detailGo.do")
+	public String noticeDetail()throws Exception {
+		String url="board/notice/detail";
+		return url;
+	}
+	
+	@RequestMapping("/free/list.do")
+	public void free()throws Exception {
+	}
+	@RequestMapping("/free/registGo.do")
+	public String freeRegistForm()throws Exception {
+		String url="board/free/registForm";
+		return url;
+	}
+	@RequestMapping("/free/modifyGo.do")
+	public String freeModifyForm()throws Exception {
+		String url="board/free/modifyForm";
+		return url;
+	}
+	@RequestMapping("/free/detailGo.do")
+	public String freeDetail()throws Exception {
+		String url="board/free/detail";
+		return url;
+	}
+	
+	@RequestMapping("/event/list.do")
+	public void event()throws Exception {
+	}
+	@RequestMapping("/event/registGo.do")
+	public String eventRegistForm()throws Exception {
+		String url="board/event/registForm";
+		return url;
+	}
+	@RequestMapping("/event/modifyGo.do")
+	public String eventModifyForm()throws Exception {
+		String url="board/event/modifyForm";
+		return url;
+	}
+	@RequestMapping("/event/detailGo.do")
+	public String eventDetail()throws Exception {
+		String url="board/event/detail";
+		return url;
+	}
+
+}

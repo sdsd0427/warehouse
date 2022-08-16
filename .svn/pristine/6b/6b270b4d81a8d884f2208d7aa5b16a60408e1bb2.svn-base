@@ -1,0 +1,52 @@
+package kr.or.warehouse.controller.view;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/mail")
+public class MailController {
+
+//	@Autowired
+//	private CalendarService calendarService;
+	
+	@RequestMapping("/main")
+	public String main() throws Exception {
+		String url="mail/main";
+		return url;
+	}
+	
+	@RequestMapping("/send")
+	public void send() throws Exception {
+	}
+	
+	@RequestMapping("/receiveMail")
+	public void receiveMail() throws Exception {
+	}
+	
+	@RequestMapping("/sendMail")
+	public void sendMail() throws Exception {
+	}
+	
+	@RequestMapping("/tempMail")
+	public void tempMail() throws Exception {
+	}
+	
+	@RequestMapping("/toMeMail")
+	public void toMeMail() throws Exception {
+	}
+	
+	@RequestMapping("/importantMail")
+	public void importantMail() throws Exception {
+	}
+	
+	@RequestMapping("/trash")
+	public void trash() throws Exception {
+	}
+	
+	@RequestMapping("/detail")
+	public void detail() throws Exception {
+	}
+	
+
+}

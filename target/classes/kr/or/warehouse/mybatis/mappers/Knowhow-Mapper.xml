@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Knowhow-Mapper">
+	<sql id="knowhowSearch">
+		<if test="searchType == 't'.toString()">
+			and a.wtitle like '%'||#{keyword}||'%'
+		</if>
+
+		<if test="searchType == 'm'.toString()">
+			AND a.wcode in (SELECT b.wcode
+                         FROM workmanager b, employee c
+                         WHERE b.eno = c.eno
+                           AND c.name = #{keyword}
+                                )
+		</if>
+
+		<if test="searchType == 'r'.toString()">
+			AND a.wcode in (SELECT b.wcode
+                         FROM work b, employee c
+                         WHERE b.eno = c.eno
+                           AND c.name = #{keyword}
+                                )
+		</if>
+
+		<if test="searchType == 'h'.toString()">
+			AND a.wcode in (SELECT hashno
+                         FROM hashtag
+                         WHERE tagcontent like '%'||#{keyword}||'%'
+                                )
+		</if>
+	</sql>
+
+	<select id="selectRecommendWorkList" resultType="work">
+		select distinct g.wcode, g.wtitle, g.wdate, g.wend, g.wopen,walarm, g.eno, g.wprogress, g.wstatus, g.classcode, g.wcontent, h.viewcnt
+		  from hashtag f, work g, knowhow h,
+		       (select distinct b.tagcontent
+		          from(select regexp_substr(a.langlist, '[^ ]+', 1, level) as tagcontent
+		                 from (select tagcontent as langlist
+		                         from hashtag
+							    where classcode = 'B103') a
+							    <![CDATA[
+			   		  connect by level <= length(regexp_replace(a.langlist, '[^ ]+','')) + 1) b
+			   		  ]]>
+				 where not b.tagcontent like '%'||'년차'||'%'
+
+				intersect
+
+				select distinct d.tagcontent
+				  from(select regexp_substr(c.tagcontent, '[^ ]+', 1, level) as tagcontent
+		                 from (select b.tagcontent
+		                         from work a, hashtag b
+				        where a.wcode = b.hashno
+						  and a.wcode = #{wcode}
+						  and a.wstatus !='완료') c
+						     <![CDATA[
+					  connect by level <= length(regexp_replace(c.tagcontent, '[^ ]+','')) + 1) d
+					   ]]>
+				 where not d.tagcontent like '%'||'년차'||'%'
+				 ) e
+		 where f.hashno = g.wcode
+		   and g.wcode = h.wcode
+		   and f.tagcontent like '%'||e.tagcontent||'%'
+			 <if test="keyword != ''.toString()">
+				 and f.tagcontent like '%'||#{keyword}||'%'
+			 </if>
+		 order by h.viewcnt desc
+	</select>
+
+	<select id="selectRecommendWorkListCount" resultType="int">
+	select  count(*)
+	  from  (select distinct g.wcode, g.wtitle, g.wdate, g.wend, g.wopen,walarm, g.eno, g.wprogress, g.wstatus, g.classcode, g.wcontent, h.viewcnt
+			  from hashtag f, work g, knowhow h,
+			       (select distinct b.tagcontent
+			          from(select regexp_substr(a.langlist, '[^ ]+', 1, level) as tagcontent
+			                 from (select tagcontent as langlist
+			                         from hashtag
+								    where classcode = 'B103') a
+								    <![CDATA[
+				   		  connect by level <= length(regexp_replace(a.langlist, '[^ ]+','')) + 1) b
+				   		  ]]>
+					 where not b.tagcontent like '%'||'년차'||'%'
+
+					intersect
+
+					select distinct d.tagcontent
+					  from(select regexp_substr(c.tagcontent, '[^ ]+', 1, level) as tagcontent
+			                 from (select b.tagcontent
+			                         from work a, hashtag b
+					        where a.wcode = b.hashno
+							  and a.wcode = #{wcode}
+						  	  and a.wstatus !='완료') c
+							     <![CDATA[
+						  connect by level <= length(regexp_replace(c.tagcontent, '[^ ]+','')) + 1) d
+						   ]]>
+					 where not d.tagcontent like '%'||'년차'||'%'
+					 ) e
+			 where f.hashno = g.wcode
+			   and g.wcode = h.wcode
+			   and f.tagcontent like '%'||e.tagcontent||'%'
+			  <if test="keyword != ''.toString()">
+			 and f.tagcontent like '%'||#{keyword}||'%'
+			 </if>)
+	</select>
+
+	<select id="selectWorkManagerList" resultType="workmanager">
+		SELECT
+		    a.wmstep
+		   ,a.wcode
+		   ,a.eno
+		   ,a.isafter
+		   ,a.answer
+		   ,a.wcheck
+		   ,c.dname
+		   ,b.birth
+		   ,b.email
+		   ,b.name
+		   ,b.photo
+		   ,d.ppsname
+		   ,b.job
+		   ,b.phone
+		   ,b.call
+		   ,b.hiredate
+		   ,b.enabled
+		   ,b.mbti
+		   ,b.address
+		   ,b.retiredate
+		   ,b.retirereason
+		   ,b.pwd
+		   ,b.ipaddress
+		   ,b.signtype
+		   ,b.signpath
+		   ,b.condition
+		   ,b.year
+		FROM
+		    workmanager a, employee b, department c, postposition d
+		WHERE a.eno = b.eno
+		  AND b.ppscode = d.ppscode
+		  AND b.dno = c.dno
+		  AND a.wcode = #{wcode}
+	</select>
+
+	<select id="selectWorkRequestBy" resultType="employee">
+		SELECT
+		    b.eno
+		   ,c.dname
+		   ,b.birth
+		   ,b.email
+		   ,b.name
+		   ,b.photo
+		   ,d.ppsname
+		   ,b.job
+		   ,b.phone
+		   ,b.call
+		   ,b.hiredate
+		   ,b.enabled
+		   ,b.mbti
+		   ,b.address
+		   ,b.retiredate
+		   ,b.retirereason
+		   ,b.pwd
+		   ,b.ipaddress
+		   ,b.signtype
+		   ,b.signpath
+		   ,b.condition
+		   ,b.year
+		FROM
+		    work a, employee b, department c, postposition d
+		WHERE a.eno = b.eno
+		  AND b.dno = c.dno
+		  AND b.ppscode = d.ppscode
+		  AND a.wcode = #{wcode}
+	</select>
+
+	<select id="selectPopularEmpWorkList" resultType="work">
+		select a.wcode
+           ,a.wtitle
+           ,a.wdate
+           ,a.wend
+           ,a.wopen
+           ,a.walarm
+           ,a.eno
+           ,a.wprogress
+           ,a.wstatus
+           ,a.classcode
+           ,a.wcontent
+           ,c.viewCnt
+     from work a, workmanager b, knowhow c
+     where a.wcode = b.wcode
+       and a.wcode = c.wcode
+       and b.eno = #{eno}
+
+	</select>
+
+	<select id="selectMyWorkList" resultType="work">
+		select a.wcode
+		   ,a.wtitle
+		   ,a.wdate
+		   ,a.wend
+		   ,a.wopen
+		   ,a.walarm
+		   ,a.eno
+		   ,a.wprogress
+		   ,a.wstatus
+		   ,a.classcode
+		   ,a.wcontent
+		  from work a, workmanager b
+		 where a.wcode = b.wcode
+		   and A.wstatus = '진행'
+		   and b.eno = #{eno}
+
+	</select>
+
+	<update id="insertKnowHow">
+		INSERT INTO knowhow (
+		    wcode
+		   ,viewcnt
+		) VALUES (
+		    #{wcode}
+		   ,0
+		)
+	</update>
+
+	<select id="selectAllKnowHow" resultType="work">
+		SELECT
+		    a.wcode
+		   ,a.wtitle
+		   ,a.wdate
+		   ,a.wend
+		   ,a.wopen
+		   ,a.walarm
+		   ,a.eno
+		   ,a.wprogress
+		   ,a.wstatus
+		   ,a.classcode
+		   ,a.wcontent
+		   ,b.VIEWCNT
+		FROM
+		    work a, knowhow b
+		WHERE a.wcode = b.wcode
+		<include refid="knowhowSearch"></include>
+		ORDER BY b.viewcnt desc
+	</select>
+
+	<select id="selectAllKnowHowTotalCount" resultType="int">
+		SELECT
+		   count(*)
+		FROM
+		    work a, knowhow b
+		WHERE a.wcode = b.wcode
+		<include refid="knowhowSearch"></include>
+	</select>
+
+	<update id="increaseKnowHowViewCnt">
+		update knowhow
+		set viewcnt = viewcnt + 1
+		where wcode = #{wcode}
+	</update>
+
+	<select id="selectMyHashTagList" resultType="str">
+		select DISTINCT
+		     REGEXP_SUBSTR(a.tagcontent, '[^ ]+', 1, c.lv) as tagcontent
+		from hashtag a, (select a.wcode as wcode
+		                    from  work a, workmanager b
+		                    where a.wcode = b.wcode
+		                    and b.eno = #{eno}) b,
+		                    (SELECT LEVEL AS lv
+								FROM dual
+							CONNECT BY LEVEL  <![CDATA[<=]]> 10)c
+		where a.hashno = b.wcode
+		AND REGEXP_SUBSTR(a.tagcontent, '[^ ]+', 1, c.lv) IS NOT NULL
+
+
+	</select>
+
+	<update id="insertFavKnowhow">
+		INSERT INTO favknowhow (
+		    regdate
+		   ,wcode
+		   ,eno
+		) VALUES (
+		    sysdate
+		   ,#{wcode}
+		   ,#{eno}
+		)
+	</update>
+
+	<update id="deleteFavKnowhow">
+		delete from favknowhow
+		where wcode = #{wcode}
+		and eno = #{eno}
+	</update>
+
+	<select id="favKnowhowCheck" resultType="int">
+		select
+			count(*)
+		from favknowhow
+		where wcode = #{wcode}
+		and eno = #{eno}
+	</select>
+
+	<select id="selectFavKnowhowList" resultType="work">
+		select
+		 	b.wcode
+		   ,b.wtitle
+		   ,b.wdate
+		   ,b.wend
+		   ,b.wopen
+		   ,b.walarm
+		   ,b.eno
+		   ,b.wprogress
+		   ,b.wstatus
+		   ,b.classcode
+		   ,b.wcontent
+	       ,c.viewcnt
+		from favknowhow a, work b, knowhow c
+		where a.wcode = b.wcode
+		and a.wcode = c.wcode
+		and a.eno = #{eno}
+	</select>
+
+	<select id="selectFavKnowhowTotalCount" resultType='int'>
+		select
+		 	count(*)
+		from favknowhow a, work b, knowhow c
+		where a.wcode = b.wcode
+		and a.wcode = c.wcode
+		and a.eno = #{eno}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

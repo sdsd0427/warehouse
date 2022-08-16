@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+.titleLine{
+	border-bottom: 1px solid gray;
+}
+
+.wrapper{
+	padding: 0px 5px;
+}
+
+
+.longSen{
+	text-overflow: ellipsis;
+ 	overflow: hidden;
+	white-space: nowrap;
+
+/* 	word-break : break-all; */
+}
+
+.bc{
+	border: 1px solid;
+	border-radius: 10px;
+	padding:5px;
+	height: 100px;
+	font-size:0.8em;
+}
+
+
+ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+}
+
+.side a {
+          text-decoration: none;
+          display: block;
+          color: black;
+          font-weight: bold;
+          padding: 5px;
+          border-radius: 5px;
+}
+
+.side a:hover {
+          background-color: lightgray;
+          color:black;
+     }
+
+.table td,.card-footer{
+	padding: 6px 0.75rem;
+}
+.card-header, .table th{
+	padding: 8px 0.75rem;
+}
+
+
+
+

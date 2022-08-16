@@ -1,0 +1,1429 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<c:set var="pageMaker" value="${dataMap.pageMaker }" />
+<c:set var="cri" value="${dataMap.pageMaker.cri }" />
+<c:set var="myRelateDocList" value="${dataMap.myRelateDocList }" />
+<c:set var="myRefLineList" value="${dataRefLine.myRefLineList }" />
+<c:set var="mySignLineList" value="${dataSignLine.mySignLineList }" />
+<c:set var="mySignGroupList" value="${dataSignLineGr.mySignGroupList }" />
+
+<head>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/approveRegist.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+	
+	<style type="text/css">
+	.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+	    color: #fff;
+	    background-color: #001F3F;
+	}
+	</style>
+</head>
+
+<body>
+<a id="loginUserEno"  data-value="${loginUser.eno }" ></a>
+<a id="loginUserdno"  data-value="${loginUser.dno }" ></a>
+
+<div class="wrapper mt-4">
+	<div id="bottom">
+		<div class="upAll" style="display: flex; ">
+			<div class="firstreq">
+				<button type="button" class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#myModalAdd" data-backdrop="false" style="display: flex;">
+					<span class="material-symbols-outlined">inventory</span>
+					<span>결재요청</span>
+				</button>
+			</div>
+			<div class="firstreq">
+				<button type="button" class="btn btn-block btn-outline-primary" style="margin-left:15px; display: flex; width: 114px;"id="tempSave" name="tempSave" value="1" onclick="butTempSave()">
+					<span class="material-symbols-outlined">archive</span>
+					<span>임시저장</span>
+				</button>
+			</div>
+			<div class="firstreq">
+				<button type="button" class="btn btn-block btn-outline-secondary" style="margin-left: 10px;display: flex; width: 114px;" onclick="goIframPage('<%=request.getContextPath()%>/approval/draftList.do','${menu.mcode }')">
+					<span class="material-symbols-outlined" style="margin-left: 15px">cancel</span>
+					<span>취소</span>
+				</button>
+			</div>
+		</div> <!-- class="upAll" -->
+
+	<hr>
+
+
+	<div class="row" style="justify-content: space-between;">
+		<div  class="col-lg-8 card" style="border:1px solid;padding-bottom: 50px">
+			<div style="padding-top:10px;" id="document">
+				<c:if test="${allSign.sformNo eq 'SF000001' }">
+				   <%@ include file="./reWorkDoc.jsp" %>
+				</c:if>
+				<c:if test="${allSign.sformNo eq 'SF000005' }">
+				   <%@ include file="./reVacationDoc.jsp" %>
+				</c:if>
+			</div> <!-- chart -->
+
+			<div class="card card-light card-outline">
+					<div class="card-header">
+					<h5 class="card-title"><i class="fas fa-paperclip"></i>&nbsp;&nbsp;첨부파일</h5>
+					&nbsp;&nbsp;&nbsp;
+					<button class="btn btn-xs bg-navy" onclick="addFile_go();"	type="button" id="addFileBtn">Add File</button>
+					</div>
+					<div class="card-footer fileInput">
+						<c:forEach items="${allSign.attachList}" var="attach">
+							<button type="button" class="btn btn-outline-default" style="width: 83px; height: 30px; padding: 1px 6px; margin: 0 4px 0 0; background: #f0f0f0; border: 1px solid black;">파일선택</button>
+							${attach.fileName }
+							<button  style="border:0;outline:0;" class="badge bg-red" type="button">X</button>
+						</c:forEach>
+					</div>
+			</div>
+
+
+			<div>
+					<!-- <p >해시태그</p> -->
+					해시태그<div style=" word-break:break-all;">
+						<input type="text" id="hashTag" name="hashTag" class="form-control form-control-sm" value="${allSign.tagContent }" style="width: 100%">
+					</div>
+			</div>
+
+
+
+
+
+
+			<div class="botall" style="display: flex;margin-top: 15px">
+				<p>알림설정</p>
+				<div>
+					<select style="margin-left: 30px;">
+						<option value="">문자 알림</option>
+						<option value="">이메일 알림</option>
+					</select>
+				</div>
+			</div>
+		</div> <!-- col-lg-8 card  -->
+		<div class="col-lg-4 card">
+				<div class="card">
+					<div class="card-header p-2">
+						<ul class="nav nav-pills">
+							<li class="nav-item"><a class="nav-link active"style="padding: .0.5rem 1rem;padding-top: 10px"
+								href="#activity" data-toggle="tab">관련문서</a></li>
+							<li class="nav-item"><a class="nav-link" href="#timeline"style="padding: .0.5rem 1rem;padding-top: 10px"
+								data-toggle="tab">문서정보</a></li>
+							<li class="nav-item"><a class="nav-link" href="#settings"style="padding: .0.5rem 1rem;padding-top: 10px"
+								data-toggle="tab">결재선</a></li>
+							<li class="nav-item"><a class="nav-link" href="#refer"style="padding: .0.5rem 1rem;padding-top: 10px"
+								data-toggle="tab">참조자</a></li>
+						</ul>
+					</div>
+							<div class="card-body">
+								<div class="tab-content">
+									<div class="tab-pane active" id="activity">
+										<div id="reldoc" class="bot" style="margin-left: 7px;">
+											<div class="input-group row"><input class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="">
+												<span class="input-group-append">
+													<button class="btn btn bg-navy" type="button" data-card-widget="search">
+														<i class="fa fa-fw fa-search"></i>
+													</button>
+												</span>
+											</div>
+											<div style="overflow: scroll;height: 600px;overflow-x: hidden">
+												<c:forEach items="${myRelateDocList }" var="RelateDocList">
+
+													<div class="info-box" style="margin-left: -5px;" onclick="OpenWindow('../kw/RelateddetailDocform.do?signNo=${RelateDocList.signNo }','관련문서',1000,800);">
+														<div class="imgContainer">
+															<li class="list-inline-item">
+																<img class="table-avatar emp_profile" src="${RelateDocList.photo}">
+															</li>
+														</div>
+														<div class="info-box-content">
+															<div class="infoandspan" style="display: flex;">
+																<span class="info-box-text">${RelateDocList.title}</span>
+																<span class="material-symbols-outlined">
+																assignment
+																</span>
+															</div>
+															<span class="info-box-number">${RelateDocList.name} ${RelateDocList.ppsname}</span>
+
+														</div>
+													</div>
+
+													<input type="hidden" name="sFormNo" id="${RelateDocList.sFormNo}" value="">
+
+												</c:forEach>
+											</div> <!-- 결재선 목록 전체 -->
+										</div> <!-- id="reldoc" -->
+									</div> <!-- activity -->
+
+
+
+							<!-- 문서정보 -->
+							<div class="tab-pane" id="timeline">
+								<div id="docInfo">
+									<strong><span style="margin-right: 30px">문서정보</span></strong><span id="signDOCNO2">${allSign.signNo }</span>
+									 <br>
+									 <br>
+									<strong><span style="margin-right: 30px">공개여부</span></strong>
+									  <label><input type="radio" name="sOpen" value="1" ${allSign.sopen eq '1' ? 'checked' : '' }> 공개  </label>
+									  <label><input type="radio" name="sOpen" value="0"  ${allSign.sopen eq '0' ? 'checked' : '' } style="margin-left: 5px"> 비공개</label>
+									  <br>
+									  <br>
+									<strong><span style="margin-right: 30px">보존연한</span></strong><span>5년</span>
+									  <br>
+									  <br>
+									<strong><span style="margin-right: 30px">기안부서</span></strong><span id="departName">${allSign.dname }</span>
+								</div>
+							</div> <!-- 문서정보 class="tab-pane" -->
+
+
+							<!-- 결재선 -->
+							<div class="tab-pane" id="settings">
+								<div id="signAdd" >
+					<c:forEach items="${allSign.signerList }" var="signer">
+										<div class="info-box dStamp" style="margin-left: -5px" id="OriginalEmp" data-signer="${signer.eno}">
+											<div class="imgContainer">
+												<li class="list-inline-item">
+													<img class="table-avatar emp_profile" src="${signer.photo}">
+												</li>
+											</div>
+											<div class="info-box-content">
+												<div class="infoandspan" >
+													<span class="info-box-number">
+													 ${signer.name}  ${signer.ppsName }
+													</span>
+													<span class="info-box-text">${signer.dname}</span>
+													<span class="info-box-text">결재 예정</span>
+
+												</div>
+											<!--  		<input type="hidden" name="sFormNo" id="${SignLineList.sFormNo}" value="">-->
+											</div>
+										</div><!--class="info-box"  -->
+					</c:forEach>
+									</div>
+							<button id="btn1" class="btn bg-navy"  style="width: 270px" data-toggle="modal" data-target="#myModal2" data-backdrop="false">결재선 추가</button>
+							</div> <!-- 결재선 class="tab-pane" -->
+
+
+
+							<!-- 참조자 -->
+								<div class="tab-pane" id="refer">
+									<div id="reFAdd"></div>
+									 <c:forEach items="${allSign.signRefList }" var="signRef">
+										<div class="info-box" style="margin-left: -5px" data-ref="${signRef.eno}">
+												<div class="imgContainer">
+													<li class="list-inline-item">
+														<img class="table-avatar emp_profile" src="${signRef.photo}">
+													</li>
+												</div>
+
+												<div class="info-box-content">
+													<div class="infoandspan" >
+														<span class="info-box-number">
+														 	  ${signRef.name}  ${signRef.ppsName }
+														</span>
+														 <span class="info-box-text">${signRef.dname}</span>
+													</div>
+
+												</div>
+										</div>
+									</c:forEach>
+									<button class="btn bg-navy"  style="width: 270px" data-toggle="modal" data-target="#myModal2" data-backdrop="false">참조자 추가</button>
+
+								</div><!-- tab-pane -->
+							</div> <!-- 참조자 tab-content -->
+						</div> <!-- card-baby -->
+					</div> <!-- card -->
+				</div> <!-- card-4 -->
+			</div> <!-- row -->
+	</div> <!-- class="bottom" -->
+</div> <!-- <div id="wrapper"> -->
+
+
+
+<!-- 개인결재선 모달  -->
+		<div id="priappro" >
+		  <div class="modal fade" id="myModal" role="dialog" style="z-index:1060">
+		    <div class="modal-dialog modal-mg">
+		      <div class="modal-content" style="width: 400px">
+		        <div class="modal-header">
+		          <h5 class="modal-title">개인결재선으로 저장</h5>
+		           <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        </div>
+		        <div class="modal-body">
+		            <label>결재선 이름<input type="text" name=signGroupName  style="margin-left: 20px"></label><br>
+		        </div>
+		        <div class="modal-footer">
+		          <button type="button" class="btn btn-sm btn-outline-secondary" data-dismiss="modal">취소</button>
+		          <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal" onclick='clickEvent()'>저장</button>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+
+
+
+<!-- 결재선/참조자 모달 -->
+	<div class="modal" id="myModal2"  style="z-index:1040">
+			  <div class="modalBox" style="width: 850px;height: 530px;">
+			  		<div class="card card-navy" style="border: 1px solid;">
+				<div class="card-header">
+					<h3 class="card-title"><span id="infoname"></span></h3>
+				</div>
+				<div class="card-body" style="display: block;">
+
+					<div class="chart">
+						<div class="chartjs-size-monitor">
+						<div class="row" >
+			 			<div class="col-lg-5">
+						<div
+							class="card card-navy card-outline card-outline-tabs">
+							<div class="card-header p-0 border-bottom-0">
+								<ul class="nav nav-tabs" id="custom-tabs-four-tab"
+									role="tablist" style="text-align: center;">
+									<li class="nav-item"><a class="nav-link active"
+										id="custom-tabs-four-home-tab" data-toggle="pill"
+										href="#custom-tabs-four-home" role="tab"
+										aria-controls="custom-tabs-four-home"
+										aria-selected="true" style="width: 150px">조직도</a></li>
+									<li class="nav-item"><a class="nav-link"
+										id="custom-tabs-four-profile-tab" data-toggle="pill"
+										href="#custom-tabs-four-profile" role="tab"
+										aria-controls="custom-tabs-four-profile"
+										aria-selected="false" style="width: 150px"><span id="myLine">나의 그룹</span></a></li>
+								</ul>
+							</div>
+							<div class="card-body" style="overflow: scroll;height: 415px;overflow-x: hidden">
+								<div class="tab-content" id="custom-tabs-four-tabContent" style="margin-top: 20px">
+									<div class="tab-pane fade active show"
+										id="custom-tabs-four-home" role="tabpanel"
+										aria-labelledby="custom-tabs-four-home-tab" style="margin-top: -30px">
+											<%-- <%@ include file="../contact/organization.jsp" %> --%>
+											<div id="container">
+											</div>
+
+									</div>
+									<div class="tab-pane fade" id="custom-tabs-four-profile"
+										role="tabpanel"
+										aria-labelledby="custom-tabs-four-profile-tab">
+										<div class="card">
+											<div class="card-body table-responsive p-0">
+												<table class="table table-hover text-nowrap">
+													<c:forEach items="${mySignGroupList }" var="SignGroupList">
+													<tbody>
+														<tr >
+															<td onclick="ClickSignGroupName('${SignGroupList.signGroupNo}')">
+																<a href="#">${SignGroupList.signGroupName}</a>
+																	<a href="#" onclick="removeGrName('${SignGroupList.signGroupNo}')">
+																		<i class="fas fa-times" style="float: right;color: burlywood;"></i>
+																	</a>
+															</td>
+														</tr>
+													</tbody>
+													</c:forEach>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+			 			</div>
+			 			<div class="col-lg-7">
+
+
+
+
+
+
+
+
+			 			 <div class="card card-navy card-tabs">
+						<div class="card-header p-0 pt-1">
+							<ul class="nav nav-tabs modalTab" id="custom-tabs-one-tab" role="tablist">
+								<li class="nav-item"><a class="nav-link active" id="custom-tabs-one-work-tab" data-toggle="pill" href="#custom-tabs-one-work" role="tab" aria-controls="custom-tabs-one-work" aria-selected="true">
+										결재선</a></li>
+								<li class="nav-item"><a class="nav-link" id="custom-tabs-one-document-tab" data-toggle="pill" href="#custom-tabs-one-document" role="tab" aria-controls="custom-tabs-one-document" aria-selected="false">
+										참조자</a></li>
+								<li class="nav-item"><a class="nav-link" id="custom-tabs-one-menual-tab" data-toggle="pill" href="#custom-tabs-one-menual" role="tab" aria-controls="custom-tabs-one-menual" aria-selected="false">
+										열람자</a></li>
+
+							</ul>
+						</div>
+						<div class="card-body">
+							<div class="tab-content" id="custom-tabs-one-tabContent">
+								<div class="tab-pane fade active show in" id="custom-tabs-one-work" role="tabpanel" aria-labelledby="custom-tabs-one-work-tab">
+									<div class="row">
+										<div class="col-12 mt-3">
+										<div class="card">
+												<div class="card-body table-responsive p-0" style="overflow: scroll;height: 315px;overflow-x: hidden;">
+													<table class="table table-hover text-nowrap">
+															<tr>
+																<th  style="width:10%"></th>
+																<th  style="width:20%">이름</th>
+																<th  style="width:50%">부서</th>
+																<th  style="margin-left: 15px;width:20%">상태</th>
+																<th>
+																	<span class="material-symbols-outlined">
+																	delete
+																	</span>
+																</th>
+															</tr>
+													</table>
+													 <div class="apply"style="background-color: #6c757d!important;color: white;padding-left: 15px;">
+													   신청
+													 </div>
+													 <div class="apply">
+												   		<table class="table table-hover text-nowrap">
+																<tr>
+																	<th style="width:10%"></th>
+																	<th style="width:20%" class="SignName">${loginUser.name }</th>
+																	<th style="width:50%" class="DepName" >${loginUser.dname }</th>
+																	<th style="width:20%;padding-right: 50px">예정</th>
+																	<th >
+																	</th>
+																</tr>
+														</table>
+													 </div>
+
+													 <div class="apply"style="background-color: #6c757d!important;color: white;padding-left: 15px;margin-top: -20px">
+													  승인
+													 </div>
+														<table >
+												            <tbody >
+												       			  <tr class="appr-activity activity ui-droppable" data-isnullactivity="true" style="height: 100%">
+												                     <td style="width: 100%; height: 100%"></td>
+												                </tr>
+												             </tbody>
+												        </table>
+												        <table class="table table-hover text-nowrap" id="approvalEmp" >
+															<c:forEach items="${allSign.signerList }" var="signer">
+																<tr data-eno="${signer.eno }"  data-signer="${signer.eno }" id="mySignEmp" class="FirstEmp">
+																	<th  style="width:10%"></th>
+																	<th  style="width:20%">${signer.name}</th>
+																	<th  style="width:50%">${signer.dname}</th>
+																	<th  style="margin-left: 15px;width:20%">예정</th>
+																	<th>
+																	<a href="javascript:removeSigner('${signer.eno }')">
+																	<span class="material-symbols-outlined" onclick="removeSigner('${signer.eno}')">delete</span>
+																	</a>
+																</th>
+
+																</tr>
+															</c:forEach>
+														 </table>
+
+
+
+												  <!--   </div> -->
+												</div>
+												<div class="card-footer clearfix">
+												<ul class="pagination pagination-sm m-0 float-right">
+												</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+								<div class="tab-pane fade" id="custom-tabs-one-document" role="tabpanel" aria-labelledby="custom-tabs-one-document-tab">
+									<div class="row">
+										<div class="col-12 mt-3">
+
+											<div class="card">
+
+
+
+												<div class="card-body table-responsive p-0" style="overflow: scroll;height: 315px;overflow-x: hidden;">
+													<table class="table table-hover text-nowrap">
+															<tr>
+																<th  style="width:10%"></th>
+																<th  style="width:20%">이름</th>
+																<th  style="width:50%">부서</th>
+																<th  style="margin-left: 15px;width:20%">상태</th>
+																<th>
+																	<span class="material-symbols-outlined">
+																	delete
+																	</span>
+																</th>
+															</tr>
+													</table>
+													 <div class="apply"style="background-color: #6c757d!important;color: white;padding-left: 15px;">
+													   신청
+													 </div>
+													 <div class="apply">
+												   		<table class="table table-hover text-nowrap">
+															<tr>
+																<th style="width:10%"></th>
+																<th style="width:20%" class="SignName">${loginUser.name }</th>
+																<th style="width:50%" class="DepName" >${loginUser.dname }</th>
+																<th style="width:20%;padding-right: 50px">예정</th>
+																<th >
+																</th>
+															</tr>
+														</table>
+													 </div>
+
+													 <div class="apply"style="background-color: #6c757d!important;color: white;padding-left: 15px;margin-top: -20px">
+													  참조
+													 </div>
+														<table >
+												            <tbody >
+												       			  <tr class="appr-activity activity ui-droppable" data-isnullactivity="true" style="height: 100%">
+												                     <td style="width: 100%; height: 100%"></td>
+												                </tr>
+												             </tbody>
+												        </table>
+												        <table class="table table-hover text-nowrap" id="twoEmp" >
+															<c:forEach items="${allSign.signRefList }" var="signRef">
+																<tr data-ref="${signRef.eno}" id="mySignEmp">
+																	<th  style="width:10%"></th>
+																	<th  style="width:20%">${signRef.name }</th>
+																	<th  style="width:50%">${signRef.dname }</th>
+																	<th  style="margin-left: 15px;width:20%">예정</th>
+																	<th>
+																	<span class="material-symbols-outlined" onclick="removeref('${signRef.eno}')">delete
+																	</span>
+																</th>
+
+																</tr>
+															</c:forEach>
+														 </table>
+
+
+
+												  <!--   </div> -->
+												</div>
+
+
+
+													<div class="card-footer clearfix">
+													<ul class="pagination pagination-sm m-0 float-right">
+													</ul>
+													</div>
+												</div>
+
+
+										</div>
+									</div>
+
+								</div>
+								<div class="tab-pane fade" id="custom-tabs-one-menual" role="tabpanel" aria-labelledby="custom-tabs-one-menual-tab">
+									<div class="row">
+										<div class="col-12 mt-3">
+
+											<div class="card">
+
+
+													<div class="card-body table-responsive p-0" style="overflow: scroll;height: 315px;overflow-x: hidden;">
+													<table class="table table-hover text-nowrap">
+															<tr>
+																<th  style="width:10%"></th>
+																<th  style="width:20%">이름</th>
+																<th  style="width:50%">부서</th>
+																<th  style="margin-left: 15px;width:20%">상태</th>
+																<th>
+																	<span class="material-symbols-outlined">
+																	delete
+																	</span>
+																</th>
+															</tr>
+													</table>
+													 <div class="apply"style="background-color: #6c757d!important;color: white;padding-left: 15px;">
+													   신청
+													 </div>
+													 <div class="apply">
+												   		<table class="table table-hover text-nowrap">
+															<tr>
+																<th style="width:10%"></th>
+																<th style="width:20%" class="SignName">${loginUser.name }</th>
+																<th style="width:50%" class="DepName" >${loginUser.dname }</th>
+																<th style="width:20%;padding-right: 50px">예정</th>
+																<th >
+																</th>
+															</tr>
+														</table>
+													 </div>
+
+													 <div class="apply"style="background-color: #6c757d!important;color: white;padding-left: 15px;margin-top: -20px">
+													  열람
+													 </div>
+														<table >
+												            <tbody >
+												       			  <tr class="appr-activity activity ui-droppable" data-isnullactivity="true" style="height: 100%">
+												                     <td style="width: 100%; height: 100%"></td>
+												                </tr>
+												             </tbody>
+												        </table>
+
+												        <table class="table table-hover text-nowrap" id="threeEmp" >
+															<c:forEach items="${allSign.signViewerList }" var="signViewer">
+																<tr data-viewer="${signViewer.eno }" id="mySignEmp">
+																	<th  style="width:10%"></th>
+																	<th  style="width:20%">${signViewer.name }</th>
+																	<th  style="width:50%">${signViewer.dname }</th>
+																	<th  style="margin-left: 15px;width:20%">예정</th>
+																	<th><span class="material-symbols-outlined" onclick="removeViewer('${signViewer.eno}')">delete</span>
+																</th>
+
+																</tr>
+															</c:forEach>
+														 </table>
+
+
+
+												  <!--   </div> -->
+												</div>
+
+
+													<div class="card-footer clearfix">
+													<ul class="pagination pagination-sm m-0 float-right">
+													</ul>
+													</div>
+												</div>
+
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			 			</div>
+			 		</div>
+							<div class="chartjs-size-monitor-expand">
+								<div class=""></div>
+							</div>
+							<div class="chartjs-size-monitor-shrink">
+								<div class=""></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			 			<div style="margin: 10px; margin-top: -20px">
+
+						    <button class="bg-navy" data-toggle="modal" data-target="#myModal" data-backdrop="false" style="margin-right: 20px;margin-left: 150px">개인결재선으로 저장</button>
+						    <div class="twosaca" style="float: right;margin-right: 13px">
+						    	<button class="saca saveBtn btn btn-sm btn-outline-primary " data-dismiss="modal" style="margin-right: 10px" onclick='clickSave()'>확인</button>
+					    		<button class="saca btn btn-sm btn-outline-secondary " data-dismiss="modal">취소</button>
+					    	<div>
+					    </div>
+			</div>
+			  </div>
+			</div>
+		</div>
+</div>
+<!-- 모달 끝  -->
+
+<!-- 결재요청 모달 -->
+ <!-- Modal -->
+						  <div class="modal fade" id="myModalAdd" role="dialog" style="display:none">
+						    <div class="modal-dialog modal-mg" style="width: 350px">
+						      <div class="modal-content">
+						        <div class="modal-header">
+
+						          <h5 class="modal-title"><strong>결재요청</strong></h5>
+						           <button type="button" class="close" data-dismiss="modal">&times;</button>
+						        </div>
+						        <div class="modal-body">
+						        	<label style="margin-right: 20px">
+										<span>결재문서명</span>
+									</label>
+										<c:if test="${not empty  myRelateDocList}">
+											<span>${myRelateDocList.get(0).formText}</span>
+										</c:if>
+
+									<br>
+									<label style="margin-right: 33px">
+										<span>긴급문서</span>
+									</label>
+											 <label><input type="checkbox" name="emergency" value="1">긴급</label>
+											<p style="color:silver;">결재자의 대기문서 가장 상단에 표시됩니다.</p>
+						        </div>
+
+						        <div class="modal-footer">
+						          <button type="button" class="btn btn-outline-dark" data-dismiss="modal">취소</button>
+						          <button type="button" class="btn btn-outline-primary" data-dismiss="modal" onclick="SignReq()" >결재요청
+						          </button>
+						        </div>
+						      </div>
+						    </div>
+						  </div>
+							<!-- Modal 끝-->
+
+<form id="signDocForm">
+	<input type="hidden" name="title" value="">
+	<input type="hidden" name="eno" value="">
+	<input type="hidden" name="signNo" value="">
+	<input type="hidden" name="dno" value="">
+	<input type="hidden" name="sFormNo" value="">
+	<input type="hidden" name="emergency" value="0">
+	<input type="hidden" name="sOpen" value="">
+	<input type="hidden" name="signContent" value="">
+	<input type="hidden" name="tempSave" value="0">
+	<input type="hidden" name="hashTag" value="">
+
+</form>
+
+
+<script>
+var dataNum=0;
+function addFile_go(){
+	if($('input[name="uploadFile"]').length>=(5- ${fn:length(allSign.attachList)})){
+		Swal.fire({
+		      icon: 'warning',
+		      title: '파일첨부는 5개까지만 가능합니다.',
+		      confirmButtonColor: '#3085d6',
+		    });
+		return;
+	}
+
+	var div=$('<div>').addClass("inputRow").attr("data-no",dataNum);
+	var input=$('<input>').attr({"type":"file","name":"uploadFile"}).css("display","inline");
+	div.append(input).append("<button onclick='remove_go("+dataNum+");' style='border:0;outline:0;' class='badge bg-red' type='button'>X</button>");
+
+	$('.fileInput').append(div);
+	dataNum++;
+}
+
+
+function remove_go(dataNum){
+	$('div[data-no="'+dataNum+'"]').remove();
+}
+
+
+
+</script>
+
+<script>
+$(function(){
+	   summernote_go($('textarea[name="boardContent"]'),'<%=request.getContextPath()%>');
+	});
+
+
+var signerMemberList = [];
+var signRank =[];
+var tempSave ='';
+
+var reFMemberList=[];
+var viewerMemberList=[];
+
+<c:forEach items="${allSign.signerList }" var="signer">
+	signRank.push(${signer.eno});
+	signerMemberList.push(${signer.eno});
+</c:forEach>
+
+<c:forEach items="${allSign.signRefList }" var="signRef">
+	reFMemberList.push(${signRef.eno});
+</c:forEach>
+
+<c:forEach items="${allSign.signViewerList }" var="signViewer">
+	viewerMemberList.push(${signViewer.eno});
+</c:forEach>
+
+var signDocForm = $('#signDocForm');
+var loginUserdno = document.getElementById("loginUserdno").getAttribute('data-value');
+var loginUserEno = document.getElementById("loginUserEno").getAttribute('data-value');
+var loginUser = ${loginUser.eno };
+
+	$('#container').jstree({
+		core : {
+			data :${organization}
+		},
+		types : {
+			'default' : {'icon': 'jstree-folder'}
+		},
+		 plugins: ['wholerow', 'types']
+	})
+
+
+//결재선 사원 추가
+$('#container').on('changed.jstree', function(event, data){
+	//console.log(data.node.id);
+	if(data.node.children.length == 0){
+		$.ajax({
+			url:'<%=request.getContextPath()%>/approval/getDeptName?eno=' + data.node.id,
+			type:'get',
+			dataType : 'json',
+			success:function(response){
+					console.log("response",response);
+					res='';
+
+					var active = $('.modalTab a.active').attr("href");
+					console.log($(active));
+					console.log("1234",$(active).attr("id"));
+
+
+				$.each(response.myDepList, function(i,v){
+						console.log("v.eno",v.eno);
+
+						//signerMemberList.push(v.eno);
+						signRank.push(v.eno);
+
+
+					res+='		<tr  data-eno="' + v.eno + '" data-signer="' + v.eno + '">';
+					res+='			<th  style="width:10%"></th>';
+					res+='			<th  style="width:20%">'+v.name+'</th>';
+					res+='			<th  style="width:50%">'+v.dname+'</th>';
+					res+='			<th  style="margin-left: 15px;width:20%">예정</th>';
+					res+='			<th><a href="javascript:removeSigner(' + v.eno + ')" onclick="deleteSigner(this, ' + v.eno + ');"><span class="material-symbols-outlined">delete</span></a>';
+					res+='			</th>';
+					res+='		</tr>';
+
+
+					//밖의 결재선 divnd
+					rew='';
+					rew+='	<div class="info-box" style="margin-left: -5px" id="AddEmp" data-signer="' + v.eno + '">                                                   ';
+					rew+='		<div class="imgContainer">                                                                     ';
+					rew+='			<li class="list-inline-item">                                                              ';
+					rew+='				<img class="table-avatar emp_profile" src='+v.photo+'>    ';
+					rew+='			</li>                                                                                      ';
+					rew+='		</div>                                                                                         ';
+					rew+='		<div class="info-box-content">                                                                 ';
+					rew+='			<div class="infoandspan" >                                                                 ';
+					rew+='				<span class="info-box-number">'+v.name+''+v.ppsname+'</span>   ';
+					rew+='				<span class="info-box-text">'+v.dname+'</span>                               ';
+					rew+='				<span class="info-box-text">결재 예정</span>                                           ';
+					rew+='			</div>                                                                                     ';
+					rew+='		</div>                                                                                         ';
+					rew+='	</div>                                                                                             ';
+
+					//승인란
+					ret='<div id="delStamp" style="display: inline-block" data-signer="' + v.eno + '">';
+					ret+='	<span class="sign_type1_inline" data-group-seq="1" data-group-name="승인" data-group-max-count="7" data-group-type="type1" data-is-reception="">  ';
+					ret+='	<span class="sign_tit_wrap"><span class="sign_tit"><strong>승인</strong></span></span>                                                            ';
+					ret+='	 <span class="sign_member_wrap" id="activity_14265">                                                                                              ';
+					ret+='	 <span class="sign_member"><span class="sign_rank_wrap">                                                                                          ';
+					ret+='	 <span class="sign_rank">'+v.ppsname+'</span></span><span class="sign_wrap">                                                            ';
+					ret+='	 <span class="sign_name"> <strong>'+v.name+'</strong>                                                                                   ';
+					ret+='			</span></span><span class="sign_date_wrap">                                                                                               ';
+					ret+='			<span class="sign_date " id="date_14265"></span></span></span></span></span>                                                              ';
+					ret+='</div>';
+
+
+
+					//참조자
+					refres='		<tr  data-eno="' + v.eno + '" data-ref="' + v.eno + '">';
+					//res+='		<tr   data-signer="' + v.eno + '">';
+					refres+='			<th  style="width:10%"></th>';
+					refres+='			<th  style="width:20%">'+v.name+'</th>';
+					refres+='			<th  style="width:50%">'+v.dname+'</th>';
+					refres+='			<th  style="margin-left: 15px;width:20%">예정</th>';
+					refres+='			<th><a href="javascript:removeref(' + v.eno + ')"><span class="material-symbols-outlined">delete</span></a>';
+					refres+='			</th>';
+					refres+='		</tr>';
+
+
+					//밖의 결재선 div
+					refrew='';
+					refrew+='	<div class="info-box" style="margin-left: -5px" id="AddEmp" data-ref="' + v.eno + '">                                                   ';
+					refrew+='		<div class="imgContainer">                                                                     ';
+					refrew+='			<li class="list-inline-item">                                                              ';
+					refrew+='				<img class="table-avatar emp_profile" src='+v.photo+'>    ';
+					refrew+='			</li>                                                                                      ';
+					refrew+='		</div>                                                                                         ';
+					refrew+='		<div class="info-box-content">                                                                 ';
+					refrew+='			<div class="infoandspan" >                                                                 ';
+					refrew+='				<span class="info-box-number">'+v.name+''+v.ppsname+'</span>   ';
+					refrew+='				<span class="info-box-text">'+v.dname+'</span>                               ';
+					refrew+='			</div>                                                                                     ';
+					refrew+='		</div>                                                                                         ';
+					refrew+='	</div> ';
+
+
+					//열람자
+					viewres='		<tr  data-eno="' + v.eno + '" data-viewer="' + v.eno + '">';
+					//res+='		<tr   data-signer="' + v.eno + '">';
+					viewres+='			<th  style="width:10%"></th>';
+					viewres+='			<th  style="width:20%">'+v.name+'</th>';
+					viewres+='			<th  style="width:50%">'+v.dname+'</th>';
+					viewres+='			<th  style="margin-left: 15px;width:20%">예정</th>';
+					viewres+='			<th><a href="javascript:removeViewer(' + v.eno + ')"><span class="material-symbols-outlined">delete</span></a>';
+					viewres+='			</th>';
+					viewres+='		</tr>';
+
+
+
+
+
+				//결재선
+				if($(active).attr("id")=='custom-tabs-one-work')	{
+
+					console.log($('tr[data-signer="' + v.eno + '"]').length);
+
+					 if(v.eno == loginUserEno){
+						 Swal.fire({
+						      icon: 'warning',
+						      title: '기안자는 결재선에 추가할 수 없습니다.',
+						      confirmButtonColor: '#3085d6',
+						    });
+						 return;
+					 }else if($('tr[data-signer="' + v.eno + '"]').length == 1){
+						 Swal.fire({
+						      icon: 'warning',
+						      title: '이미 결재선에 등록되었습니다.',
+						      confirmButtonColor: '#3085d6',
+						    });
+						 return;
+					 }
+
+					 console.log("11")
+					$('#approvalEmp').append(res);
+					$('#signAdd').append(rew);
+					$('#signStamp').append(ret);
+					signerMemberList.push(v.eno);
+
+				//참조자
+				}else if($(active).attr("id") == 'custom-tabs-one-document'){
+					console.log($('tr[data-ref="' + v.eno + '"]').length);
+
+
+					 if(v.eno == loginUserEno){
+						 Swal.fire({
+						      icon: 'warning',
+						      title: '기안자는 참조자에 추가할 수 없습니다.',
+						      confirmButtonColor: '#3085d6',
+						    });
+						 return;
+					 }else if($('tr[data-ref="' + v.eno + '"]').length == 1){
+						 Swal.fire({
+						      icon: 'warning',
+						      title: '이미 참조자에 등록되었습니다.',
+						      confirmButtonColor: '#3085d6',
+						    });
+						 return;
+					 }
+
+					console.log("22")
+					$('#twoEmp').append(refres);
+					$('#reFAdd').append(refrew);
+					reFMemberList.push(v.eno);
+
+				//열람자
+				}else{
+					console.log($('tr[data-viewer="' + v.eno + '"]').length);
+
+
+					 if(v.eno == loginUserEno){
+						 Swal.fire({
+						      icon: 'warning',
+						      title: '기안자는 열람자에 추가할 수 없습니다.',
+						      confirmButtonColor: '#3085d6',
+						    });
+						 return;
+					 }else if($('tr[data-viewer="' + v.eno + '"]').length == 1){
+						 Swal.fire({
+						      icon: 'warning',
+						      title: '이미 열람자에 등록되었습니다.',
+						      confirmButtonColor: '#3085d6',
+						    });
+						 return;
+					 }
+
+					console.log("33")
+					$('#threeEmp').append(viewres);
+					viewerMemberList.push(v.eno);
+				}
+
+				});
+
+				console.log("signerMemberList",signerMemberList);
+				console.log("reFMemberList",reFMemberList);
+				console.log("viewerMemberList",viewerMemberList);
+
+			},
+			error : function(xhr){
+				Swal.fire({
+				      icon: 'warning',
+				      title: "상태 : " + xhr.status,
+				      confirmButtonColor: '#3085d6',
+				    });
+					alert("상태 : " + xhr.status);
+				},
+		});
+	}
+});
+
+
+	var removeSigner =  function(eno){
+		console.log("결재!!!!!!!!!!!")
+
+		console.log("signer",$('tr[data-signer=' + eno + ']'));   //쓰레기통 모형 삭제
+		$('tr[data-signer=' + eno + ']').remove();
+		//$('tr[data-ref=' + eno + ']').remove();
+//		$('tr[data-viewer=' + eno + ']').remove();
+
+		 //const div = document.getElementById('AddEmp');  // 쓰레기통 모형 클릭 시 밖의 div 삭제
+		// const div2 = document.getElementById('delStamp');  // 승인란 삭제
+
+		 $('div[data-signer=' + eno + ']').remove();
+		// $('div[data-ref=' + eno + ']').remove();
+		 $('span[data-signer=' + eno + ']').remove();
+
+		 if(eno == signerMemberList[0] )
+		 signerMemberList.shift();
+
+
+		for(var i = 0; i < signerMemberList.length; i++){
+			console.log("결재자 확인:",signerMemberList)
+			  if (signerMemberList[i] === eno) {
+				  signerMemberList.splice(i, 1);
+			    i--;
+			  }
+			}
+		console.log("signerMemberList삭제된것",signerMemberList)
+		console.log("reFMemberList삭제된것",reFMemberList)
+		console.log("viewerMemberList삭제된것",viewerMemberList)
+	}
+
+	var removeref =  function(eno){
+		console.log("참조!!!!!!!!!!!")
+		console.log("signer",$('tr[data-signer=' + eno + ']'));   //쓰레기통 모형 삭제
+		//$('tr[data-signer=' + eno + ']').remove();
+		$('tr[data-ref=' + eno + ']').remove();
+		//$('tr[data-viewer=' + eno + ']').remove();
+
+		 //const div = document.getElementById('AddEmp');  // 쓰레기통 모형 클릭 시 밖의 div 삭제
+		// const div2 = document.getElementById('delStamp');  // 승인란 삭제
+
+		// $('div[data-signer=' + eno + ']').remove();
+		 $('div[data-ref=' + eno + ']').remove();
+		// $('span[data-signer=' + eno + ']').remove();
+
+
+
+		for(var i = 0; i < reFMemberList.length; i++){
+			  if (reFMemberList[i] === eno) {
+				  reFMemberList.splice(i, 1);
+			    i--;
+			  }
+			}
+		console.log("signerMemberList삭제된것",signerMemberList)
+		console.log("reFMemberList삭제된것",reFMemberList)
+		console.log("viewerMemberList삭제된것",viewerMemberList)
+	}
+
+	var removeViewer =  function(eno){
+		console.log("열람!!!!!!!!!!!")
+		console.log("signer",$('tr[data-signer=' + eno + ']'));   //쓰레기통 모형 삭제
+//		$('tr[data-signer=' + eno + ']').remove();
+//		$('tr[data-ref=' + eno + ']').remove();
+		$('tr[data-viewer=' + eno + ']').remove();
+
+		 //const div = document.getElementById('AddEmp');  // 쓰레기통 모형 클릭 시 밖의 div 삭제
+		// const div2 = document.getElementById('delStamp');  // 승인란 삭제
+
+//		 $('div[data-signer=' + eno + ']').remove();
+//		 $('div[data-ref=' + eno + ']').remove();
+//		 $('span[data-signer=' + eno + ']').remove();
+
+
+
+		for(var i = 0; i < viewerMemberList.length; i++){
+			  if (viewerMemberList[i] === eno) {
+				  viewerMemberList.splice(i, 1);
+			    i--;
+			  }
+			}
+		console.log("signerMemberList삭제된것",signerMemberList)
+		console.log("reFMemberList삭제된것",reFMemberList)
+		console.log("viewerMemberList삭제된것",viewerMemberList)
+		}
+
+
+
+	//결재요청
+	function SignReq(){
+		signDocForm.find("[name='title']").val($('input[name="title"]').val());
+		signDocForm.find("[name='eno']").val(loginUserEno);
+		signDocForm.find("[name='signContent']").val($('textarea[name="signContent"]').val());
+
+		signDocForm.find("[name='signNo']").val('${allSign.signNo}');
+		signDocForm.find("[name='dno']").val(loginUserdno);
+		signDocForm.find("[name='sFormNo']").val('${allSign.sformNo}');
+
+		signDocForm.find("[name='sOpen']").val($('input[name="sOpen"]:checked').val());
+		if(tempSave == 1){
+			signDocForm.find("[name='tempSave']").val(tempSave);
+		}
+
+		if($('input[name="emergency"]').is(':checked')){
+			signDocForm.find("[name='emergency']").val($('input[name="emergency"]').val());
+			console.log('긴급',signDocForm.find("[name='emergency']").val());
+		}
+
+
+		signDocForm.find("[name='hashTag']").val($('input[name="hashTag"]').val());
+
+		var files=$('input[name="uploadFile"]');
+		for(var file of files){
+			if(file.value==""){
+				Swal.fire({
+				      icon: 'warning',
+				      title: '파일을 선택하세요.',
+				      confirmButtonColor: '#3085d6',
+				    });
+				file.focus();
+				file.click();
+				return;
+			}
+		}
+
+		var formData = new FormData(signDocForm[0]);
+		formData.append("signerMemberList", signerMemberList);
+		formData.append("reFMemberList", reFMemberList);
+		formData.append("viewerMemberList", viewerMemberList);
+
+		for(var file of files){
+			console.log(file.files[0])
+			formData.append("uploadFile", file.files[0]);
+		}
+
+
+		parent.sendSignal(signerMemberList[0],signDocForm.find('[name=title]').val(),"C101","approval/approveList.do","M122000");
+
+	 	var request = new XMLHttpRequest();
+	 	request.onreadystatechange = function(){
+			if (request.readyState === XMLHttpRequest.DONE) {
+			      if (request.status == 200) {
+			    	  Swal.fire({
+   	  				      icon: 'success',
+   	  				      title: '결재가 요청되었습니다.',
+   	  				      confirmButtonColor: '#3085d6',
+   	  				    }).then(function(){
+       							goIframPage("<%=request.getContextPath()%>/approval/main.do", '${menu.mcode}');
+   	  				      });  
+			      }
+		    }
+		}
+
+	 	request.open("POST", "<%=request.getContextPath()%>/approval/reRegistSignDoc.do");
+	 	request.send(formData);
+
+	}
+
+
+
+	function butTempSave(){
+		 tempSave = document.getElementById("tempSave").value;
+		// alert("저장되었습니다.")
+
+
+		 signDocForm.find("[name='title']").val($('input[name="title"]').val());
+			signDocForm.find("[name='eno']").val($('input[name="eno"]').val());
+			signDocForm.find("[name='signContent']").val($('textarea[name="signContent"]').val());
+
+			signDocForm.find("[name='signNo']").val($('#signDOCNO2').text());
+			signDocForm.find("[name='dno']").val(loginUserdno);
+			signDocForm.find("[name='sFormNo']").val('${param.sFormNo}');
+
+			signDocForm.find("[name='sOpen']").val($('input[name="sOpen"]:checked').val());
+			if(tempSave == 1){
+				signDocForm.find("[name='tempSave']").val(tempSave);
+			}
+
+			if($('input[name="emergency"]').is(':checked')){
+				signDocForm.find("[name='emergency']").val($('input[name="emergency"]').val());
+				console.log('긴급',signDocForm.find("[name='emergency']").val());
+			}
+
+
+			signDocForm.find("[name='hashTag']").val($('input[name="hashTag"]').val());
+
+			var files=$('input[name="uploadFile"]');
+			for(var file of files){
+				if(file.value==""){
+					Swal.fire({
+					      icon: 'warning',
+					      title: '파일을 선택하세요.',
+					      confirmButtonColor: '#3085d6',
+					    });
+					file.focus();
+					file.click();
+					return;
+				}
+			}
+
+			var formData = new FormData(signDocForm[0]);
+			formData.append("signerMemberList", signerMemberList);
+			formData.append("reFMemberList", reFMemberList);
+			formData.append("viewerMemberList", viewerMemberList);
+
+			for(var file of files){
+				console.log(file.files[0])
+				formData.append("uploadFile", file.files[0]);
+			}
+
+
+		 	var request = new XMLHttpRequest();
+		 	request.onreadystatechange = function(){
+				if (request.readyState === XMLHttpRequest.DONE) {
+				      if (request.status == 200) {
+				    	  Swal.fire({
+						      icon: 'warning',
+						      title: '임시 저장 되었습니다.',
+						      confirmButtonColor: '#3085d6',
+						    });
+				      }
+			    }
+			}
+
+		 	request.open("POST", "<%=request.getContextPath()%>/approval/registSignDoc.do");
+		 	request.send(formData);
+
+
+
+	}
+
+
+
+	$(function(){
+		$.ajax({
+			url:'<%=request.getContextPath()%>/approval/getSignDocNo',
+			type:'get',
+			dataType : 'json',
+			success:function(response){
+				res=''+response.DocNo+'';
+				$('#signDOCNO2').text(res);
+			}
+		});
+	})
+
+
+	$(function(){
+	$.ajax({
+		url:'<%=request.getContextPath()%>/approval/getDrafterInfo?eno='+loginUserEno,
+		type:'get',
+		dataType : 'json',
+		success:function(response){
+
+			$.each(response.myconList, function(i, v){
+	res=''+v.signNo+'';
+	str=''+v.dname+'';
+	stq=''+v.name+'';
+	stw=''+v.dname+'';
+			$('#DocNo').text(res);
+			$('#departName').text(str);
+			$('.SignName').text(stq);
+			$('.DepName').text(stw);
+
+
+			//해시태그
+			//$('#hashTag').text(stw);
+
+			$('input[name=hashTag]').attr('value',"#"+stw);
+
+			var hashTag = $('input[name=hashTag]').val();
+
+			console.log("hashTag!!",hashTag);
+
+			var tagList = hashTag.split(" ");
+			console.log(tagList);
+
+			var hashCodeSet = new Set(tagList);
+			hashCodeSet.add("#" + v.year + "년차");
+			console.log(hashCodeSet);
+
+			var result = "";
+			for(var code of hashCodeSet){
+				result += code+" ";
+			}
+
+			$('input[name=hashTag]').val(result.trim());
+
+			})
+		}
+
+	});
+
+})
+
+
+	function clickEvent(){
+	//console.log("")
+
+	var formData = new FormData();
+
+	if($("input[name='signGroupName']").val()==""){
+		Swal.fire({
+		      icon: 'warning',
+		      title: '그룹은 필수입니다.',
+		      confirmButtonColor: '#3085d6',
+		    });
+		$("input[name='signGroupName']").focus();
+		return;
+	}
+
+	formData.append('signGroupName', $('input[name="signGroupName"]').val());
+	formData.append('signerMemberList',signerMemberList);
+
+	var request = new XMLHttpRequest();
+	request.onreadystatechange = function(){
+		if (request.readyState === XMLHttpRequest.DONE) {
+		      if (request.status === 200) {
+		    	  Swal.fire({
+				      icon: 'warning',
+				      title: '나의 결재선이 저장되었습니다.',
+				      confirmButtonColor: '#3085d6',
+				    }).then(function(){
+				        window.location.reload();
+				      });
+		      } else {
+		    	  Swal.fire({
+				      icon: 'error',
+				      title: 'error',
+				      confirmButtonColor: '#3085d6',
+				    });
+		      }
+	    }
+	}
+	request.open("POST", "<%=request.getContextPath()%>/approval/registMySign.do", true);
+	request.send(formData);
+
+
+	//formData 정보
+	for (var pair of formData.entries()) {
+	    console.log(pair[0]+ ', ' + pair[1]);
+	}
+}
+
+
+	//개인결재선 사원 리스트
+	function ClickSignGroupName(id){
+		$('.dStamp').remove();
+
+		 $.ajax({
+			 url:'<%=request.getContextPath()%>/approval/MySignList?signGroupNo='+id,
+			type:'get',
+			dataType : 'json',
+			success:function(response){
+					console.log("response123",response);
+					res='';
+					$.each(response.mySignGroupMemberList, function(i,v){
+					 //console.log("response.mySignGroupMemberList",response.mySignGroupMemberList);
+
+				 	res+='		<tr data-signer="' + v.eno + '">';
+					res+='			<th  style="width:10%"></th>';
+					res+='			<th  style="width:20%">'+v.name+'</th>';
+					res+='			<th  style="width:50%">'+v.dname+'</th>';
+					res+='			<th  style="margin-left: 15px;width:20%">예정</th>';
+					res+='			<th><a href="javascript:removeSigner(' + v.eno + ')"><span class="material-symbols-outlined">delete</span></a>';
+					res+='			</th>';
+					res+='		</tr>';
+
+
+					rew='';
+					rew+='	<div class="info-box dStamp" style="margin-left: -5px" id="AddEmp" data-signer="' + v.eno + '">                                                   ';
+					rew+='		<div class="imgContainer">                                                                     ';
+					rew+='			<li class="list-inline-item">                                                              ';
+					rew+='				<img class="table-avatar emp_profile" src='+v.photo+'>    ';
+					rew+='			</li>                                                                                      ';
+					rew+='		</div>                                                                                         ';
+					rew+='		<div class="info-box-content">                                                                 ';
+					rew+='			<div class="infoandspan" >                                                                 ';
+					rew+='				<span class="info-box-number">'+v.name+''+v.ppsname+'</span>   ';
+					rew+='				<span class="info-box-text">'+v.dname+'</span>                               ';
+					rew+='				<span class="info-box-text">결재 예정</span>                                           ';
+					rew+='			</div>                                                                                     ';
+					rew+='		</div>                                                                                         ';
+					rew+='	</div>                                                                                             ';
+
+					//승인란
+					ret='<div id="delStamp" class="dStamp" style="display: inline-block" data-signer="' + v.eno + '">';
+					ret+='	<span class="sign_type1_inline" data-group-seq="1" data-group-name="승인" data-group-max-count="7" data-group-type="type1" data-is-reception="">  ';
+					ret+='	<span class="sign_tit_wrap"><span class="sign_tit"><strong>승인</strong></span></span>                                                            ';
+					ret+='	 <span class="sign_member_wrap" id="activity_14265">                                                                                              ';
+					ret+='	 <span class="sign_member"><span class="sign_rank_wrap">                                                                                          ';
+					ret+='	 <span class="sign_rank">'+v.ppsname+'</span></span><span class="sign_wrap">                                                            ';
+					ret+='	 <span class="sign_name"> <strong>'+v.name+'</strong>                                                                                   ';
+					ret+='			</span></span><span class="sign_date_wrap">                                                                                               ';
+					ret+='			<span class="sign_date " id="date_14265"></span></span></span></span></span>                                                              ';
+					ret+='</div>';
+
+
+
+					$('#approvalEmp').html(res);
+					$('#signAdd').append(rew);
+					$('#signStamp').append(ret);
+
+					signerMemberList.push(v.eno);
+
+					});
+
+					console.log("signerMemberList개인 결재선",signerMemberList);
+
+				},
+			error : function(xhr){
+				Swal.fire({
+				      icon: 'warning',
+				      title: "상태 : " + xhr.status,
+				      confirmButtonColor: '#3085d6',
+				    });
+				},
+
+			})
+
+	}
+
+
+	function removeGrName(signGroupNo){
+
+		 var formData = new FormData();
+
+		 formData.append("signGroupNo",signGroupNo);
+
+		 var request = new XMLHttpRequest();
+			request.open("POST", "<%=request.getContextPath()%>/approval/removeSignGr.do");
+			request.send(formData);
+
+			Swal.fire({
+			      icon: 'warning',
+			      title: '그룹이 삭제되었습니다.',
+			      confirmButtonColor: '#3085d6',
+			    }).then(function(){
+					window.location.reload();
+			      });
+	}
+
+	function remove_go(dataNum){
+		$('div[data-no="'+dataNum+'"]').remove();
+	}
+
+
+	// 결재/참조/열람 모달 확인
+	function clickSave(){
+//	 	formData.append("signerMemberList", signerMemberList);
+		console.log("signerMemberList : ",signerMemberList); //결재사원들
+	}
+</script>
+
+
+<script>
+var signerMemberList = [];
+var signRank =[];
+var tempSave ='';
+
+var reFMemberList=[];
+var viewerMemberList=[];
+
+for(var i = 0; i < ${mySignLineList}.length; i++){
+	signerMemberList.push(${mySignLineList}[i].eno);
+}
+var signDocForm = $('#signDocForm');
+</script>
+
+<script>
+//delete function
+function deleteSigner(a, eno){
+	signerMemberList.splice(signerMemberList.indexOf(eno), 1);
+	console.log(signerMemberList);
+}
+</script>
+
+	<%@ include file="./approval_js.jsp" %>
+	<%@ include file="./approve_js.jsp" %>
+</body>

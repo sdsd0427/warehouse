@@ -1,0 +1,12 @@
+package kr.or.warehouse.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
+import kr.or.warehouse.dto.WorkVO;
+
+public interface WorkDAO {
+
+	public List<WorkVO> selectMyWorkList(int eno) throws SQLException;
+}

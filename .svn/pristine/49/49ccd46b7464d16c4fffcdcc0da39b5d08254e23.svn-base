@@ -1,0 +1,62 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<body>
+	<div class="wrapper">
+		<h2 class="title">업무 > 요청받은 업무</h2>	
+		<div class="row ml-2">
+			<div class="card">
+				<table class="table table-hover text-nowrap">
+					<thead>
+						<tr>
+							<th style="width: 50%">제목</th>
+							<th style="width: 25%">요청자</th>
+							<th style="width: 25%">기한</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>테스트 요청받은 업무</td>
+							<td>최민규 팀장</td>
+							<td>2022-07-04</td>
+						</tr>
+						<tr>
+							<td>테스트 요청받은 업무</td>
+							<td>최민규 팀장</td>
+							<td>2022-07-04</td>
+						</tr>
+						<tr>
+							<td>테스트 요청받은 업무</td>
+							<td>최민규 팀장</td>
+							<td>2022-07-04</td>
+						</tr>
+						<tr>
+							<td>테스트 요청받은 업무</td>
+							<td>최민규 팀장</td>
+							<td>2022-07-04</td>
+						</tr>
+						<tr>
+							<td>테스트 요청받은 업무</td>
+							<td>최민규 팀장</td>
+							<td>2022-07-04</td>
+						</tr>
+						<tr>
+							<td>테스트 요청받은 업무</td>
+							<td>최민규 팀장</td>
+							<td>2022-07-04</td>
+						</tr>
+						<tr>
+							<td>테스트 요청받은 업무</td>
+							<td>최민규 팀장</td>
+							<td>2022-07-04</td>
+						</tr>
+						<tr>
+							<td>테스트 요청받은 업무</td>
+							<td>최민규 팀장</td>
+							<td>2022-07-04</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div> 
+	</div>
+</body>

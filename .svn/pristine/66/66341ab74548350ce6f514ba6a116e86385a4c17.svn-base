@@ -1,0 +1,141 @@
+package kr.or.warehouse.service;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.or.warehouse.dao.HrDAO;
+import kr.or.warehouse.dto.HrTypeVO;
+import kr.or.warehouse.dto.HrVO;
+
+@Service
+public class HrServiceImpl implements HrService {
+
+	@Autowired
+	private HrDAO hrDAO;
+
+	@Override
+	public List<HrVO> getHrList(int eno) throws Exception {
+		List<HrVO> hrList = null;
+		hrList = hrDAO.selectHrList(eno);
+		return hrList;
+	}
+
+	@Override
+	public HrTypeVO getHrType(int eno) throws Exception {
+		HrTypeVO hrType = null;
+		hrType = hrDAO.selectHrType(eno);
+		return hrType;
+	}
+
+	@Override
+	public Map<String, String> calcHr(int eno) throws Exception {
+		Map<String, String> result = new HashMap<String, String>();
+
+		//해당 주차의 날짜 구하기
+		Date today = new Date();
+		String[] daysOfWeek = getDaysOfWeek(today);
+
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		List<String> hrTimes = new ArrayList<String>();
+		List<String> overTimes = new ArrayList<String>();
+
+		for(String date : daysOfWeek) {
+//			System.out.println("Service_Date"+date);
+			paramMap = new HashMap<String, Object>();
+			paramMap.put("eno", eno);
+			paramMap.put("hrDate", date);
+
+			HrVO hr = hrDAO.selectHrByDate(paramMap);
+//			System.out.println("Service_Hr"+hr);
+			if(hr != null) {
+//				System.out.println("Service_HrTime"+hr.getHrTime());
+//				System.out.println("Service_OverTime"+hr.getOverTime());
+				hrTimes.add(hr.getHrTime());
+				overTimes.add(hr.getOverTime());
+			}
+		}
+		result.put("hrTime", getTime(hrTimes));
+		result.put("overTime", getTime(overTimes));
+
+		return result;
+	}
+
+	//입력받은 날짜의 해당 주차 날짜 구하기
+	public static String[] getDaysOfWeek(Date date) {
+		String[] arrYMD = new String[7];
+
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+
+			int inYear = cal.get(cal.YEAR);
+		    int inMonth = cal.get(cal.MONTH);
+		    int inDay = cal.get(cal.DAY_OF_MONTH);
+
+		    int dayOfTheWeek = cal.get(cal.DAY_OF_WEEK); //요일나오게하기(숫자로)
+		    if(dayOfTheWeek != 1){   //해당요일이 일요일이 아닌경우
+		        dayOfTheWeek = dayOfTheWeek-2;
+		     }else{           //해당요일이 일요일인경우
+		        dayOfTheWeek = 7;
+		     }
+		    inDay = inDay-dayOfTheWeek;
+
+		    for(int i = 0; i < 7; i++){
+				cal.set(inYear, inMonth, inDay+i);
+				String y = Integer.toString(cal.get(cal.YEAR));
+				String m = Integer.toString(cal.get(cal.MONTH)+1);
+				String d = Integer.toString(cal.get(cal.DAY_OF_MONTH));
+				if(m.length() == 1) m = "0" + m;
+				if(d.length() == 1) d = "0" + d;
+
+			    arrYMD[i] = y +"-"+m +"-"+d;
+		    }
+		} catch (Exception e) {
+
+		}
+
+		return arrYMD;
+	}
+
+	public
+	
+	//근무시간, 초과시간 계산
+	public String getTime(List<String> times) {
+		String result = "";
+
+		int h = 0; int m = 0; int s = 0;
+
+		for(String time : times) {
+			String[] splitH = time.split("h");
+			String[] splitM = splitH[1].split("m");
+			String[] splitS = splitM[1].split("s");
+
+			h += Integer.parseInt(splitH[0]);
+			m += Integer.parseInt(splitM[0]);
+			s += Integer.parseInt(splitS[0]);
+		}
+
+		if(s > 59) {
+			s -= 60;
+			m += 1;
+		}
+		if(m > 59) {
+			m -= 60;
+			h += 1;
+		}
+
+		result = h + "h " + m + "m " + s + "s";
+//		System.out.println(result);
+
+		return result;
+	}
+}

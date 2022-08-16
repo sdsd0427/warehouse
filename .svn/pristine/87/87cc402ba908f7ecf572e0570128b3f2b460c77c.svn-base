@@ -1,0 +1,35 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="./regist.css">
+</head>
+<body>
+
+	<div class="wrapper">
+		<div class="Allmidle">
+			<div id="upAll">
+
+				<section class="content-header">
+					<div class="row md-2" style="margin-top: 30px">
+						<div class="col"
+							style="margin-top: 20px; margin-left: 50px; display: inline; width: 200px">
+							<h2 style="width: 200px; display: inline;">기안문서</h2>
+								<%@ include file="./registDoc.jsp" %>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+</body>
+</html>
