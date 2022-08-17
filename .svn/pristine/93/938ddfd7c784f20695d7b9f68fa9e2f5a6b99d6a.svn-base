@@ -46,6 +46,9 @@
 	padding: 8px 0.75rem;
 	text-align: center;
 }
+.card-body.p-0 .table tbody>tr>td:first-of-type{
+	padding-left: 0.75rem;
+}
 </style>
 </head>
 
@@ -55,10 +58,10 @@
 		<div class="container-fluid">
 			<div class="row md-2">
 				<div>
-					<h3>나의 멘토</h3>
+					<h3>나의 멘티</h3>
 				</div>
 				<div style="display: inline; margin-left: 10px; margin-top: 8px;">
-					<span  class="text-muted">멘토링 > 나의 멘토</span>
+					<span  class="text-muted">멘토링 > 나의 멘티</span>
 				</div>
 			</div>
 		</div>
@@ -70,7 +73,7 @@
 				<div class="card card-navy card-outline">
 
 					<div class="card-header with-border">
-						<span style="float: left;">나의 멘토 목록</span>
+						<span style="float: left;">나의 멘티 목록</span>
 					</div>
 
 					<div class="card-body p-0">
@@ -84,13 +87,13 @@
 									<th></th>
 								</tr>
 							</thead>
-							<tbody class="myMentoList">
+							<tbody class="myMenteeList">
 							</tbody>
 						</table>
 					</div>
 
 					<div class="card-footer">
-						<ul class="myMentoPage pagination pagination-sm justify-content-center m-0">
+						<ul class="myMenteePage pagination pagination-sm justify-content-center m-0">
 						</ul>
 					</div>
 
@@ -103,26 +106,26 @@
 				<div class="card card-navy">
 
 					<div class="card-header with-border">
-						<span style="float: left;">나의 멘토 업무</span>
+						<span style="float: left;">나의 멘티 업무</span>
 					</div>
 
 					<div class="card-body p-0">
-						<table class="table table-hover text-nowrap mentoring">
+						<table class="table table-hover text-nowrap mentoring" style="table-layout: fixed;">
 							<thead>
 								<tr>
 									<th style="width:35%">제목</th>
-									<th style="width:30%">담당자(멘토)</th>
+									<th style="width:30%">담당자(멘티)</th>
 									<th style="width:20%">기한</th>
 									<th style="width:15%">상태</th>
 								</tr>
 							</thead>
-							<tbody class="myMentoWorkList">
+							<tbody class="myMenteeWorkList">
 							</tbody>
 						</table>
 					</div>
 
 					<div class="card-footer">
-						<ul class="myMentoWorkPage pagination pagination-sm justify-content-center m-0">
+						<ul class="myMenteeWorkPage pagination pagination-sm justify-content-center m-0">
 						</ul>
 					</div>
 
@@ -134,26 +137,27 @@
 				<div class="card card-navy">
 
 					<div class="card-header with-border">
-						<span style="float: left;">나의 멘토 결재문서</span>
+						<span style="float: left;">나의 멘티 결재문서</span>
 					</div>
 
 					<div class="card-body p-0">
-						<table class="table table-hover text-nowrap mentoring docu">
+						<table class="table table-hover text-nowrap mentoring docu" style="table-layout: fixed;">
 							<thead>
 								<tr>
-									<th style="width: 25%">제목</th>
-									<th style="width: 25%">기안자(멘토)</th>
+									<th style="width: 20%">제목</th>
+									<th style="width: 25%">기안자(멘티)</th>
 									<th style="width: 20%">결재양식</th>
+									<th style="width: 20%">기안일</th>
 									<th style="width: 15%">상태</th>
 								</tr>
 							</thead>
-							<tbody class="myMentoDocList">
+							<tbody class="myMenteeDocList">
 							</tbody>
 						</table>
 					</div>
 
 					<div class="card-footer">
-						<ul class="myMentoDocPage pagination pagination-sm justify-content-center m-0">
+						<ul class="myMenteeDocPage pagination pagination-sm justify-content-center m-0">
 						</ul>
 					</div>
 
@@ -194,14 +198,13 @@ $(document).on('click', 'body > aside > div > ul > li:nth-child(2) > a', functio
 })
 
 $(function(){
-	myMentoListGo(1);
-	myMentoWorkListGo(1);
-	myMentoDocListGo(1);
+	myMenteeListGo(1);
+	myMenteeWorkListGo(1);
+	myMenteeDocListGo(1);
 });
 </script>
 
-<%@ include file="./mento_js.jsp" %>
+<%@ include file="./mentee_js.jsp" %>
 
 </body>
-
 

@@ -471,7 +471,7 @@
         and b.approve=1
         and a.eno=f.eno
         and f.sformno=g.sformno
-        and f.sopen=0
+        and f.sopen=1
 	</select>
 
 	<select id="myMenteeDocListCount" parameterType="int" resultType="int">
@@ -484,7 +484,7 @@
         and b.approve=1
         and a.eno=f.eno
         and f.sformno=g.sformno
-        and f.sopen=0
+        and f.sopen=1
 	</select>
 
 	<select id="sysdateMentoWork" resultType="submentoring">
